@@ -1,52 +1,163 @@
-<w!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luxury Eyewear Store</title>
+  <title>LUXEVUE | Luxury Eyewear & Store Locator</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
+    .gold-accent { color: #D4AF37; }
+    .bg-gold { background-color: #D4AF37; }
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+<body class="bg-stone-100 text-stone-800 font-sans antialiased min-h-screen pb-20">
 
-  <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden p-6 text-center">
-    <!-- Platzhalter für Produktbild -->
-    <div class="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center mb-6">
-      <span class="text-gray-400 font-light tracking-widest uppercase">Brillenbild</span>
+  <!-- Header -->
+  <header class="sticky top-0 z-50 glass border-b border-stone-200 px-4 py-3 flex justify-between items-center shadow-sm">
+    <div class="flex items-center space-x-2">
+      <i class="fa-solid fa-glasses text-xl gold-accent"></i>
+      <span class="text-xl font-serif tracking-widest font-bold text-stone-900">LUXEVUE</span>
     </div>
+    <div class="flex items-center space-x-4 text-stone-600">
+      <button onclick="alert('Wunschliste geöffnet')" class="hover:text-stone-900"><i class="fa-regular fa-heart text-lg"></i></button>
+      <button onclick="alert('Warenkorb ist leer')" class="hover:text-stone-900"><i class="fa-solid fa-bag-shopping text-lg"></i></button>
+    </div>
+  </header>
 
-    <!-- Produktinformationen -->
-    <h1 class="text-2xl font-light text-gray-900 mb-2">Cartier Signature</h1>
-    <p class="text-gray-500 mb-6 font-light">Exquisite Luxusbrille</p>
+  <!-- Hero / Brand Selector -->
+  <section class="px-4 py-6 text-center bg-stone-900 text-stone-100">
+    <p class="text-xs uppercase tracking-widest text-amber-400 mb-1">Exklusive Kollektion 2026</p>
+    <h1 class="text-2xl font-serif font-light mb-4">Maison d'Optique</h1>
+    <div class="flex justify-center space-x-2 overflow-x-auto pb-2 text-xs">
+      <button onclick="filterBrand('all')" class="px-3 py-1.5 rounded-full bg-stone-800 border border-stone-700 text-stone-200 active:bg-amber-500">Alle</button>
+      <button onclick="filterBrand('Cartier')" class="px-3 py-1.5 rounded-full bg-stone-800 border border-stone-700 text-stone-200">Cartier</button>
+      <button onclick="filterBrand('DITA')" class="px-3 py-1.5 rounded-full bg-stone-800 border border-stone-700 text-stone-200">DITA</button>
+      <button onclick="filterBrand('Tom Ford')" class="px-3 py-1.5 rounded-full bg-stone-800 border border-stone-700 text-stone-200">Tom Ford</button>
+    </div>
+  </section>
+
+  <!-- Product Showcase -->
+  <main class="max-w-md mx-auto px-4 mt-6">
+    <h2 class="text-sm font-semibold uppercase tracking-wider text-stone-500 mb-3">Ausgewählte Modelle</h2>
     
-    <!-- Store Locator / Verfügbarkeitsanzeige -->
-    <div class="border-t pt-4 text-left space-y-3">
-      <h2 class="text-lg font-medium text-gray-900">Verfügbarkeit im Store:</h2>
+    <div class="space-y-6" id="product-list">
       
-      <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-        <div>
-          <p class="font-medium text-sm">Optik Flensburg</p>
-          <p class="text-xs text-gray-500">Flensburg</p>
+      <!-- Product 1 -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-stone-200 transition hover:shadow-md">
+        <div class="relative w-full h-44 bg-stone-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden">
+          <span class="text-xs text-stone-400 font-mono">[ Cartier - Gold Frame ]</span>
+          <span class="absolute top-3 right-3 bg-stone-900 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">Neu</span>
         </div>
-        <span class="px-2 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded-full">3 auf Lager</span>
+        <div class="flex justify-between items-start mb-2">
+          <div>
+            <span class="text-xs gold-accent font-semibold uppercase tracking-wider">Cartier</span>
+            <h3 class="text-lg font-serif font-medium text-stone-900">Première de Cartier</h3>
+          </div>
+          <span class="text-base font-semibold text-stone-900">980 €</span>
+        </div>
+        <p class="text-xs text-stone-500 mb-4">Edles Acetat mit 18kt vergoldeten Bügeln und Handgravur.</p>
+        
+        <!-- Store Stock Trigger -->
+        <button onclick="toggleStores('cartier-stores')" class="w-full py-2.5 px-4 bg-stone-900 hover:bg-stone-800 text-white text-xs font-medium rounded-xl flex justify-between items-center transition">
+          <span><i class="fa-solid fa-location-dot mr-2 gold-accent"></i>Verfügbarkeit in Boutiquen</span>
+          <i class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+
+        <!-- Store List (Hidden by default) -->
+        <div id="cartier-stores" class="hidden mt-3 pt-3 border-t border-stone-100 space-y-2 text-xs">
+          <div class="flex justify-between items-center p-2 rounded-lg bg-stone-50">
+            <div>
+              <p class="font-medium text-stone-800">Flensburg City Boutique</p>
+              <p class="text-stone-400">Holmpassage</p>
+            </div>
+            <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-medium">2 verfügbar</span>
+          </div>
+          <div class="flex justify-between items-center p-2 rounded-lg bg-stone-50">
+            <div>
+              <p class="font-medium text-stone-800">Hamburg Neuer Wall</p>
+              <p class="text-stone-400">Neuer Wall 42</p>
+            </div>
+            <span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded font-medium">Letztes Stück</span>
+          </div>
+        </div>
       </div>
 
-      <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-        <div>
-          <p class="font-medium text-sm">Optik Hamburg</p>
-          <p class="text-xs text-gray-500">Hamburg</p>
+      <!-- Product 2 -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-stone-200 transition hover:shadow-md">
+        <div class="relative w-full h-44 bg-stone-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden">
+          <span class="text-xs text-stone-400 font-mono">[ DITA - Mach-One Titanium ]</span>
         </div>
-        <span class="px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded-full">Nicht verfügbar</span>
+        <div class="flex justify-between items-start mb-2">
+          <div>
+            <span class="text-xs gold-accent font-semibold uppercase tracking-wider">DITA</span>
+            <h3 class="text-lg font-serif font-medium text-stone-900">Flight-006 Titanium</h3>
+          </div>
+          <span class="text-base font-semibold text-stone-900">750 €</span>
+        </div>
+        <p class="text-xs text-stone-500 mb-4">Handgefertigt in Japan. Titan-Rahmen mit Diamantstruktur.</p>
+        
+        <button onclick="toggleStores('dita-stores')" class="w-full py-2.5 px-4 bg-stone-900 hover:bg-stone-800 text-white text-xs font-medium rounded-xl flex justify-between items-center transition">
+          <span><i class="fa-solid fa-location-dot mr-2 gold-accent"></i>Verfügbarkeit in Boutiquen</span>
+          <i class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+
+        <div id="dita-stores" class="hidden mt-3 pt-3 border-t border-stone-100 space-y-2 text-xs">
+          <div class="flex justify-between items-center p-2 rounded-lg bg-stone-50">
+            <div>
+              <p class="font-medium text-stone-800">Flensburg City Boutique</p>
+              <p class="text-stone-400">Holmpassage</p>
+            </div>
+            <span class="px-2 py-0.5 bg-rose-100 text-rose-800 rounded font-medium">Ausverkauft</span>
+          </div>
+          <div class="flex justify-between items-center p-2 rounded-lg bg-stone-50">
+            <div>
+              <p class="font-medium text-stone-800">Berlin Ku'damm</p>
+              <p class="text-stone-400">Kurfürstendamm 194</p>
+            </div>
+            <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-medium">5 verfügbar</span>
+          </div>
+        </div>
       </div>
 
-      <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-        <div>
-          <p class="font-medium text-sm">Optik Berlin</p>
-          <p class="text-xs text-gray-500">Berlin</p>
-        </div>
-        <span class="px-2 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded-full">1 auf Lager</span>
-      </div>
     </div>
-  </div>
+  </main>
 
+  <!-- Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 glass border-t border-stone-200 py-2 px-6 flex justify-between items-center text-xs text-stone-500 z-50">
+    <button class="flex flex-col items-center gold-accent font-medium">
+      <i class="fa-solid fa-house text-base mb-0.5"></i>
+      <span>Kollektion</span>
+    </button>
+    <button onclick="alert('Store Finder öffnet Karte...')" class="flex flex-col items-center hover:text-stone-900">
+      <i class="fa-solid fa-store text-base mb-0.5"></i>
+      <span>Stores</span>
+    </button>
+    <button onclick="alert('Suche aktiviert')" class="flex flex-col items-center hover:text-stone-900">
+      <i class="fa-solid fa-magnifying-glass text-base mb-0.5"></i>
+      <span>Suche</span>
+    </button>
+    <button onclick="alert('Profil geöffnet')" class="flex flex-col items-center hover:text-stone-900">
+      <i class="fa-solid fa-user text-base mb-0.5"></i>
+      <span>Konto</span>
+    </button>
+  </nav>
+
+  <!-- Simple Interactivity Script -->
+  <script>
+    function toggleStores(id) {
+      const el = document.getElementById(id);
+      if (el.classList.contains('hidden')) {
+        el.classList.remove('hidden');
+      } else {
+        el.classList.add('hidden');
+      }
+    }
+
+    function filterBrand(brand) {
+      alert('Filter gesetzt auf: ' + brand);
+    }
+  </script>
 </body>
 </html>
