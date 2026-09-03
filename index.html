@@ -32,7 +32,8 @@
       width: 100%;
       height: 100%;
       z-index: 9999;
-      cursor: pointer; /* Zeigt an, dass geklickt werden kann */
+      cursor: pointer;
+      pointer-events: auto; /* Sicherstellen, dass Klicks erkannt werden */
     }
     .panel {
       position: absolute;
@@ -332,22 +333,29 @@
     let wishlist = [];
     let cart = [];
 
-    // Intro-Klick: Panels öffnen und Musik starten
-    document.getElementById('intro').addEventListener('click', function() {
-      if (this.classList.contains('open')) return; // bereits geöffnet
-      this.classList.add('open');
+    // Funktion zum Öffnen des Intros (wird bei Klick oder Timer aufgerufen)
+    function openIntro() {
+      const intro = document.getElementById('intro');
+      if (intro.classList.contains('open')) return; // bereits geöffnet
+      intro.classList.add('open');
       
       // Musik starten
       const music = document.getElementById('bg-music');
       if (music) {
-        music.play().catch(err => console.log('Musik konnte nicht automatisch gestartet werden:', err));
+        music.play().catch(err => console.log('Musik konnte nicht gestartet werden:', err));
       }
       
       // Nach der Animation Intro ausblenden
       setTimeout(() => {
-        this.style.display = 'none';
+        intro.style.display = 'none';
       }, 1000);
-    });
+    }
+
+    // Klick auf das Intro
+    document.getElementById('intro').addEventListener('click', openIntro);
+
+    // Fallback: automatisch nach 5 Sekunden öffnen, falls nicht geklickt wurde
+    setTimeout(openIntro, 5000);
 
     // Erweiterte Store-Datenbank inkl. Cartier
     const STORE_DATABASE = [
