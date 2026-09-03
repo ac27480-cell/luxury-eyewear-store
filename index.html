@@ -50,31 +50,6 @@
     }
     #checkout-form.visible { max-height: 1200px; opacity: 1; }
 
-    /* Dropdown Menü */
-    #brandDropdown {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: white;
-      border: 1px solid #e2dbd1;
-      border-radius: 0 0 8px 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      z-index: 50;
-      min-width: 200px;
-    }
-    #brandDropdown.visible { display: block; }
-    #brandDropdown a {
-      display: block;
-      padding: 10px 20px;
-      font-size: 14px;
-      color: #2c2a29;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      transition: background 0.2s;
-    }
-    #brandDropdown a:hover { background: #f4f0eb; }
-
     /* Live-Chat Button */
     #liveChatBtn {
       position: fixed; bottom: 20px; right: 20px; z-index: 40;
@@ -110,15 +85,9 @@
 
   <!-- Header -->
   <header class="sticky top-0 z-40 bg-[#fbf9f6]/95 backdrop-blur-md border-b border-beige px-4 py-3">
-    <div class="max-w-5xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <button id="menuToggle" class="text-2xl focus:outline-none" aria-label="Menü öffnen">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-        <span onclick="navigateTo('home')" class="text-xl font-serif tracking-[0.25em] font-light uppercase cursor-pointer">LUXEVUE</span>
-      </div>
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+      <span onclick="navigateTo('home')" class="text-xl font-serif tracking-[0.25em] font-light uppercase cursor-pointer">LUXEVUE</span>
       <div class="flex items-center space-x-4 text-sm">
-        <button onclick="showCompareModal()" class="hidden md:block text-xs underline">Vergleichen (<span id="compare-count">0</span>)</button>
         <button onclick="navigateTo('wishlist')" class="relative p-1 cursor-pointer">
           <i class="fa-regular fa-heart text-lg"></i>
           <span id="wishlist-count" class="absolute -top-1 -right-1 bg-stone-900 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
@@ -130,19 +99,7 @@
       </div>
     </div>
 
-    <!-- Dropdown-Menü für Marken -->
-    <div id="brandDropdown" class="mt-2">
-      <a href="#" onclick="selectBrand('all', this); return false;">Alle</a>
-      <a href="#" onclick="selectBrand('Andy Wolf', this); return false;">Andy Wolf</a>
-      <a href="#" onclick="selectBrand('Lindberg', this); return false;">Lindberg</a>
-      <a href="#" onclick="selectBrand('Cartier', this); return false;">Cartier</a>
-      <a href="#" onclick="selectBrand('DITA', this); return false;">DITA</a>
-      <a href="#" onclick="selectBrand('Tom Ford', this); return false;">Tom Ford</a>
-      <a href="#" onclick="selectBrand('Oliver Peoples', this); return false;">Oliver Peoples</a>
-      <a href="#" onclick="selectBrand('Mykita', this); return false;">Mykita</a>
-      <a href="#" onclick="selectBrand('Ray-Ban', this); return false;">Ray-Ban</a>
-    </div>
-
+    <!-- Suchleiste -->
     <div class="max-w-5xl mx-auto mt-3 relative">
       <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suche: Stadt, Optiker, Marke..." class="w-full bg-[#f4f0eb] border border-beige rounded-full py-2 pl-9 pr-4 text-xs focus:outline-none">
       <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-stone-400 text-xs"></i>
@@ -152,6 +109,24 @@
   <!-- Hauptbereich -->
   <main id="page-home" class="page-content max-w-5xl mx-auto px-4 py-6">
     
+    <!-- Horizontale Markenfilterleiste -->
+    <div class="flex space-x-2 overflow-x-auto pb-4 mb-6 text-xs tracking-widest uppercase scrollbar-none" id="brand-filters">
+      <button onclick="filterBrand('all', this)" class="brand-btn px-4 py-2 bg-stone-900 text-white rounded-full whitespace-nowrap cursor-pointer">Alle</button>
+      <button onclick="filterBrand('Andy Wolf', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Andy Wolf</button>
+      <button onclick="filterBrand('Lindberg', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Lindberg</button>
+      <button onclick="filterBrand('Cartier', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Cartier</button>
+      <button onclick="filterBrand('DITA', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">DITA</button>
+      <button onclick="filterBrand('Tom Ford', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Tom Ford</button>
+      <button onclick="filterBrand('Oliver Peoples', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Oliver Peoples</button>
+      <button onclick="filterBrand('Mykita', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Mykita</button>
+      <button onclick="filterBrand('Ray-Ban', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Ray-Ban</button>
+      <button onclick="filterBrand('Jacques Marie Mage', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Jacques Marie Mage</button>
+      <button onclick="filterBrand('Matsuda', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Matsuda</button>
+      <button onclick="filterBrand('Cutler and Gross', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Cutler and Gross</button>
+      <button onclick="filterBrand('Peter and May', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Peter and May</button>
+      <button onclick="filterBrand('Maybach Icons of Luxury', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Maybach</button>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="product-list">
       <!-- Produktkarten werden hier dynamisch per JS generiert -->
     </div>
@@ -275,17 +250,6 @@
     </div>
   </div>
 
-  <!-- Vergleichs-Modal -->
-  <div id="compareModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
-    <div class="bg-white w-full max-w-3xl rounded-lg p-6 max-h-[90vh] overflow-y-auto">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-serif">Produktvergleich</h3>
-        <button onclick="closeCompare()" class="text-2xl">&times;</button>
-      </div>
-      <div id="compare-content"></div>
-    </div>
-  </div>
-
   <!-- Footer -->
   <footer class="mt-16 px-4 py-8">
     <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-xs">
@@ -342,21 +306,33 @@
       { id: 6, brand: 'Cartier', name: 'Panthère de Cartier', price: '980 €', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Verführerische Cat-Eye-Form mit goldenen Akzenten.', rating: 4.9, reviews: 27, search: 'cartier panthere cat eye' },
       { id: 7, brand: 'Cartier', name: 'C Décor', price: '760 €', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Auffällige Acetatfassung mit dem ikonischen C-Décor-Element.', rating: 4.6, reviews: 15, search: 'cartier c decor acetat' },
       { id: 8, brand: 'Cartier', name: 'Trinity', price: '720 €', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Feine Metallfassung, inspiriert vom Trinity-Ring.', rating: 4.4, reviews: 20, search: 'cartier trinity metall' },
-      // Neue Andy-Wolf-Produkte
       { id: 9, brand: 'Andy Wolf', name: 'Grace Col. B', price: '340 €', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Runde Acetatfassung mit feinem Schliff – ein zeitloser Klassiker.', rating: 4.3, reviews: 12, search: 'andy wolf grace rund acetat' },
       { id: 10, brand: 'Andy Wolf', name: 'Rimless Titan', price: '450 €', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Randlose Titanfassung – ultraleicht und puristisch.', rating: 4.6, reviews: 15, search: 'andy wolf rimless titan randlos' },
       { id: 11, brand: 'Andy Wolf', name: 'Sunrise Col. C', price: '410 €', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Moderne Sonnenbrille mit UV-Schutz und farbigen Gläsern.', rating: 4.4, reviews: 10, search: 'andy wolf sunrise sonnenbrille' }
     ];
 
+    // Erweiterte Store-Datenbank – unabhängige Luxus-Optiker
     const STORE_DATABASE = [
-      { name: "Brillenlaboratorium", type: "online", state: "Online E-Shop", desc: "Expressversand & Premium-Partner", url: "https://brillenlaboratorium.shop", status: "Sofort lieferbar", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Lindberg"] },
+      // Online-Shops (bestehend)
+      { name: "Brillenlaboratorium", type: "online", state: "Online E-Shop", desc: "Expressversand & Premium-Partner", url: "https://brillenlaboratorium.shop", status: "Sofort lieferbar", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Lindberg", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury"] },
       { name: "Andy Wolf Official Store", type: "online", state: "Online E-Shop", desc: "Offizieller Markenshop", url: "https://www.andy-wolf.com", status: "Direkt ab Werk", brands: ["Andy Wolf"] },
-      { name: "Mister Spex Luxury", type: "online", state: "Online E-Shop", desc: "Versandkostenfrei & Anprobe", url: "https://www.misterspex.de", status: "Auf Lager", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Oliver Peoples"] },
-      { name: "Edel-Optics Boutique", type: "online", state: "Online E-Shop", desc: "Global Luxury Store", url: "https://www.edel-optics.de", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg"] },
+      { name: "Mister Spex Luxury", type: "online", state: "Online E-Shop", desc: "Versandkostenfrei & Anprobe", url: "https://www.misterspex.de", status: "Auf Lager", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Oliver Peoples", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May"] },
+      { name: "Edel-Optics Boutique", type: "online", state: "Online E-Shop", desc: "Global Luxury Store", url: "https://www.edel-optics.de", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury"] },
       { name: "Cartier Official Eyewear", type: "online", state: "Online E-Shop", desc: "Offizieller Cartier Online-Store", url: "https://www.cartier.com", status: "Exklusiv", brands: ["Cartier"] },
-      { name: "Fielmann Online", type: "online", state: "Online E-Shop", desc: "Große Auswahl & Filialservice", url: "https://www.fielmann.de", status: "Lieferbar", brands: ["Cartier", "Andy Wolf", "Tom Ford", "Lindberg"] },
+      { name: "Fielmann Online", type: "online", state: "Online E-Shop", desc: "Große Auswahl & Filialservice", url: "https://www.fielmann.de", status: "Lieferbar", brands: ["Cartier", "Andy Wolf", "Tom Ford", "Lindberg", "DITA"] },
       { name: "Apollo-Optik", type: "online", state: "Online E-Shop", desc: "Premium-Marken im Sortiment", url: "https://www.apollo.de", status: "Verfügbar", brands: ["Cartier", "DITA", "Ray-Ban"] },
-      { name: "Brillen.de", type: "online", state: "Online E-Shop", desc: "Luxusbrillen & Fachberatung", url: "https://www.brillen.de", status: "Auf Lager", brands: ["Cartier", "Tom Ford", "Oliver Peoples"] },
+      { name: "Brillen.de", type: "online", state: "Online E-Shop", desc: "Luxusbrillen & Fachberatung", url: "https://www.brillen.de", status: "Auf Lager", brands: ["Cartier", "Tom Ford", "Oliver Peoples", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May"] },
+
+      // Neue unabhängige Luxus-Optiker (Fachgeschäfte)
+      { name: "Leidmann München", type: "store", state: "München", desc: "Benchmark für Independent Luxury Eyewear – Cartier-Vertragspartner, Jacques Marie Mage, DITA, Matsuda, Linda Farrow", url: "#", status: "Exklusiv", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury"] },
+      { name: "specs.berlin", type: "store", state: "Berlin", desc: "Crème de la Crème der Independent-Szene – Jacques Marie Mage, Cutler and Gross, Oscar Magnuson, Leisure Society", url: "#", status: "Limitierte Serien", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "Peter and May"] },
+      { name: "Noble Optic House Berlin", type: "store", state: "Berlin", desc: "Luxus- und Couture-Segment – Cartier, Maybach Icons of Luxury, Linda Farrow, Maßanfertigung", url: "#", status: "VIP-Betreuung", brands: ["Cartier", "Maybach Icons of Luxury", "DITA", "Jacques Marie Mage"] },
+      { name: "Söhnges / Rheingold-Optik", type: "store", state: "Düsseldorf", desc: "Königsallee-Umfeld – japanische Titan-Manufakturen (Eyevan, DITA) sowie edle Acetat-Kollektionen", url: "#", status: "Diskrete Beratung", brands: ["DITA", "Matsuda", "Cutler and Gross", "Jacques Marie Mage", "Peter and May"] },
+      { name: "Bellevue Optical Hamburg", type: "store", state: "Hamburg", desc: "Renommiertester Independent-Optiker im Norden für avantgardistische Designs, handgefertigte Acetat-Klassiker", url: "#", status: "Seltene Nischenmarken", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "DITA", "Peter and May"] },
+      { name: "Hanse-Viertel Optik", type: "store", state: "Hamburg", desc: "Offizielle Lizenzen für Cartier, DITA und Jacques Marie Mage, diskrete Einzelberatung", url: "#", status: "Exklusive Modelle", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Maybach Icons of Luxury"] },
+      { name: "Sehwerk / Optik Kollektiv Köln", type: "store", state: "Köln", desc: "Inhabergeführte Boutiquen mit Fokus auf Handwerkskunst, limitierte Serien (T-Henri, Peter and May), Kering-Luxuslizenzen", url: "#", status: "Limitierte Serien", brands: ["Cartier", "Peter and May", "Jacques Marie Mage", "Matsuda", "Cutler and Gross"] },
+
+      // Bestehende Fachgeschäfte (gekürzt, aber noch vorhanden)
       { name: "Cartier Boutique Berlin", type: "store", state: "Berlin", desc: "Kurfürstendamm 186, 10707 Berlin", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
       { name: "Cartier Boutique München", type: "store", state: "Bayern", desc: "Maximilianstraße 20, 80539 München", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
       { name: "Cartier Boutique Wien", type: "store", state: "Wien (AT)", desc: "Kohlmarkt 1, 1010 Wien", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
@@ -374,9 +350,7 @@
     // ---------- State ----------
     let wishlist = [];
     let cart = [];
-    let compareList = [];
     let lastViewedBrand = null;
-    let activeBrand = 'all';
 
     // ---------- Init ----------
     function init() {
@@ -387,17 +361,6 @@
       updateRecommendations();
       document.getElementById('intro').addEventListener('click', openIntro);
       setTimeout(openIntro, 5000);
-      
-      const menuToggle = document.getElementById('menuToggle');
-      const brandDropdown = document.getElementById('brandDropdown');
-      menuToggle.addEventListener('click', () => {
-        brandDropdown.classList.toggle('visible');
-      });
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('#menuToggle') && !e.target.closest('#brandDropdown')) {
-          brandDropdown.classList.remove('visible');
-        }
-      });
     }
 
     function openIntro() {
@@ -421,10 +384,6 @@
         card.innerHTML = `
           <div class="relative">
             <img src="${product.img}" alt="${product.name}" class="w-full h-56 object-cover rounded cursor-pointer" onclick="openDetail(${product.id})" loading="lazy">
-            <label class="absolute top-2 left-2 bg-white/90 px-2 py-1 rounded text-xs flex items-center gap-1">
-              <input type="checkbox" class="compare-checkbox" data-id="${product.id}" onchange="toggleCompare(${product.id}, this.checked)">
-              Vergleichen
-            </label>
           </div>
           <div class="flex justify-between items-baseline mt-3">
             <h2 class="text-lg font-serif tracking-widest uppercase">${product.brand}</h2>
@@ -443,19 +402,28 @@
       });
     }
 
-    // Filterfunktion für Dropdown
-    function selectBrand(brand, link) {
-      activeBrand = brand;
-      document.getElementById('brandDropdown').classList.remove('visible');
-      document.getElementById('searchInput').value = '';
-      renderProducts(brand, '');
+    // Filterfunktion für Marken-Buttons
+    function filterBrand(brand, btn) {
+      // Aktiven Button visuell hervorheben
+      document.querySelectorAll('.brand-btn').forEach(b => {
+        b.classList.remove('bg-stone-900', 'text-white');
+        b.classList.add('bg-beige-light', 'border', 'border-beige');
+      });
+      if (btn) {
+        btn.classList.add('bg-stone-900', 'text-white');
+        btn.classList.remove('bg-beige-light', 'border', 'border-beige');
+      }
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      renderProducts(brand, query);
+      // Empfehlungen aktualisieren
       lastViewedBrand = brand === 'all' ? null : brand;
       updateRecommendations();
     }
 
     function filterProducts() {
       const query = document.getElementById('searchInput').value.toLowerCase();
-      renderProducts(activeBrand, query);
+      const activeBrand = document.querySelector('.brand-btn.bg-stone-900')?.textContent.trim() || 'all';
+      renderProducts(activeBrand === 'Alle' ? 'all' : activeBrand, query);
     }
 
     // ---------- Produkt-Details ----------
@@ -504,46 +472,7 @@
       });
     }
 
-    // ---------- Vergleich ----------
-    function toggleCompare(id, checked) {
-      if (checked) {
-        if (!compareList.includes(id)) compareList.push(id);
-      } else {
-        compareList = compareList.filter(x => x !== id);
-      }
-      document.getElementById('compare-count').innerText = compareList.length;
-    }
-    function showCompareModal() {
-      const modal = document.getElementById('compareModal');
-      const content = document.getElementById('compare-content');
-      if (compareList.length < 2) {
-        showToast('Bitte mindestens 2 Produkte zum Vergleichen auswählen');
-        return;
-      }
-      const selected = PRODUCTS.filter(p => compareList.includes(p.id));
-      let table = '<table class="compare-table w-full text-xs"><thead><tr><th>Attribut</th>';
-      selected.forEach(p => { table += `<th>${p.name}</th>`; });
-      table += '</tr></thead><tbody>';
-      ['Marke','Preis','Bewertung','Beschreibung'].forEach(attr => {
-        table += `<tr><td class="font-semibold">${attr}</td>`;
-        selected.forEach(p => {
-          if (attr === 'Marke') table += `<td>${p.brand}</td>`;
-          if (attr === 'Preis') table += `<td>${p.price}</td>`;
-          if (attr === 'Bewertung') table += `<td>${p.rating}★ (${p.reviews})</td>`;
-          if (attr === 'Beschreibung') table += `<td>${p.desc}</td>`;
-        });
-        table += '</tr>';
-      });
-      table += '</tbody></table>';
-      content.innerHTML = table;
-      modal.classList.remove('hidden'); modal.classList.add('flex');
-    }
-    function closeCompare() {
-      document.getElementById('compareModal').classList.add('hidden');
-      document.getElementById('compareModal').classList.remove('flex');
-    }
-
-    // ---------- Store-Anzeige (verbessert) ----------
+    // ---------- Store-Anzeige ----------
     function toggleStores(brand, containerId) {
       const container = document.getElementById(containerId);
       if (!container) return;
