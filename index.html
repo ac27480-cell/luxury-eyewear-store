@@ -35,7 +35,7 @@
 
       <!-- Multifunktionales Suchfeld -->
       <div class="relative">
-        <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suche: Marke, Modell, Stadt (z.B. Flensburg) oder Optiker..." class="w-full bg-[#f4f0eb] border border-beige rounded-full py-2 pl-9 pr-4 text-xs focus:outline-none focus:border-stone-800">
+        <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suche: Optiker, Stadt, Bundesland (z.B. Bayern, NRW)..." class="w-full bg-[#f4f0eb] border border-beige rounded-full py-2 pl-9 pr-4 text-xs focus:outline-none focus:border-stone-800">
         <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-stone-400 text-xs"></i>
       </div>
     </div>
@@ -58,7 +58,7 @@
     <div class="space-y-10" id="product-list">
       
       <!-- Produkt 1: Cartier -->
-      <div class="product-card" data-brand="Cartier" data-search="cartier premiere gold sonnenbrille luxus fielmann lounge flensburg hallmann hamburg noble optic house berlin ku'damm muenchen">
+      <div class="product-card" data-brand="Cartier" data-search="cartier premiere gold fielmann lounge flensburg schleswig-holstein noble optic house berlin brille 54 optik hallmann hamburg steininger muenchen bayern optik schuetz stuttgart baden-wuerttemberg prooptik muenster nrw lyonel optik leipzig sachsen optik lohr saarbruecken saarland">
         <div onclick="openDetail('CARTIER', 'Première de Cartier Gold', '980 €', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', 'Edles Acetat mit 18kt vergoldeten Bügeln, Handgravur und ikonischem C-Motiv.', 'cartier-stores')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
           <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80" alt="Cartier Brille" class="w-full h-56 object-cover rounded">
         </div>
@@ -69,29 +69,33 @@
         <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">PREMIÈRE DE CARTIER | 980 €</p>
         <p class="text-xs text-stone-600 leading-relaxed mb-4">18kt vergoldeter Titandraht-Rahmen mit präzisionsgefertigten Scharnieren.</p>
         <div class="space-y-2">
-          <button onclick="toggleStores('cartier-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent">Find in Store</button>
+          <button onclick="toggleStores('cartier-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent">Stores & Verfügbarkeit</button>
           <button onclick="addToCart('Cartier Première Gold', '980 €', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium">Add to Bag</button>
         </div>
         
-        <!-- Stores für Cartier -->
+        <!-- Stores für Cartier mit Verlinkung -->
         <div id="cartier-stores" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-2">
-          <div class="flex justify-between border-b border-beige pb-1">
-            <div><p class="font-medium">Fielmann Luxury Lounge</p><p class="text-stone-400 text-[10px]">Holm 48, Flensburg</p></div>
+          <a href="https://www.fielmann.de" target="_blank" class="flex justify-between border-b border-beige pb-1 hover:bg-stone-200/50 p-1 rounded transition">
+            <div><p class="font-medium text-stone-900">Fielmann Luxury Lounge <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 text-stone-500"></i></p><p class="text-stone-500 text-[10px]">Holm 48, Flensburg (SH)</p></div>
             <span class="text-emerald-700 font-medium">2 verfügbar</span>
-          </div>
-          <div class="flex justify-between border-b border-beige pb-1">
-            <div><p class="font-medium">Noble Optic House</p><p class="text-stone-400 text-[10px]">Kurfürstendamm 171, Berlin</p></div>
+          </a>
+          <a href="https://www.noble-optic-house.de" target="_blank" class="flex justify-between border-b border-beige pb-1 hover:bg-stone-200/50 p-1 rounded transition">
+            <div><p class="font-medium text-stone-900">Noble Optic House <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 text-stone-500"></i></p><p class="text-stone-500 text-[10px]">Kurfürstendamm 171, Berlin</p></div>
             <span class="text-emerald-700 font-medium">1 Stück</span>
-          </div>
-          <div class="flex justify-between">
-            <div><p class="font-medium">Optik Hallmann Premium</p><p class="text-stone-400 text-[10px]">Neuer Wall 10, Hamburg</p></div>
-            <span class="text-emerald-700 font-medium">1 Stück</span>
-          </div>
+          </a>
+          <a href="https://www.optik-steininger.de" target="_blank" class="flex justify-between border-b border-beige pb-1 hover:bg-stone-200/50 p-1 rounded transition">
+            <div><p class="font-medium text-stone-900">Optik Steininger <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 text-stone-500"></i></p><p class="text-stone-500 text-[10px]">Maximilianstr. 24, München (BY)</p></div>
+            <span class="text-emerald-700 font-medium">3 verfügbar</span>
+          </a>
+          <a href="https://www.optik-schuetz.de" target="_blank" class="flex justify-between hover:bg-stone-200/50 p-1 rounded transition">
+            <div><p class="font-medium text-stone-900">Optik Schütz <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 text-stone-500"></i></p><p class="text-stone-500 text-[10px]">Königstraße 22, Stuttgart (BW)</p></div>
+            <span class="text-amber-700 font-medium">1 Stück</span>
+          </a>
         </div>
       </div>
 
       <!-- Produkt 2: DITA -->
-      <div class="product-card" data-brand="DITA" data-search="dita flight 006 titanium aviator pilot optiker bode flensburg brille 54 berlin ku'damm eye catcher duesseldorf frankfurt koeln">
+      <div class="product-card" data-brand="DITA" data-search="dita flight 006 titan optiker bode flensburg eye catcher duesseldorf nrw brille 54 berlin optik elsweiler temme koeln optik carl frankfurt hessen optik rothenberger dresden sachsen optik zentrum erfurt thueringen optik meyer bremen">
         <div onclick="openDetail('DITA', 'Flight-006 Titanium', '750 €', 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', 'Handgefertigt in Japan. Titan-Rahmen mit Diamantstruktur-Prägung.', 'dita-stores')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
           <img src="https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80" alt="DITA Brille" class="w-full h-56 object-cover rounded">
         </div>
@@ -102,29 +106,33 @@
         <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">FLIGHT-006 TITANIUM | 750 €</p>
         <p class="text-xs text-stone-600 leading-relaxed mb-4">Ikonischer Pilot-Look aus massivem Titan mit maßgeschneiderten Azetat-Inlays.</p>
         <div class="space-y-2">
-          <button onclick="toggleStores('dita-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent">Find in Store</button>
+          <button onclick="toggleStores('dita-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent">Stores & Verfügbarkeit</button>
           <button onclick="addToCart('DITA Flight-006', '750 €', 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium">Add to Bag</button>
         </div>
 
-        <!-- Stores für DITA -->
+        <!-- Stores für DITA mit Verlinkung -->
         <div id="dita-stores" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-2">
-          <div class="flex justify-between border-b border-beige pb-1">
-            <div><p class="font-medium">Optiker Bode</p><p class="text-stone-400 text-[10px]">Holm 58, Flensburg</p></div>
+          <a href="https://www.optiker-bode.de" target="_blank" class="flex justify-between border-b border-beige pb-1 hover:bg-stone-200/50 p-1 rounded transition">
+            <div><p class="font-medium text-stone-900">Optiker Bode <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 text-stone-500"></i></p><p class="text-stone-500 text-[10px]">Holm 58, Flensburg (SH)</p></div>
             <span class="text-emerald-700 font-medium">1 Stück</span>
-          </div>
-          <div class="flex justify-between border-b border-beige pb-1">
-            <div><p class="font-medium">Brille 54</p><p class="text-stone-400 text-[10px]">Kurfürstendamm 54, Berlin</p></div>
+          </a>
+          <a href="https://www.brille54.de" target="_blank" class="flex justify-between border-b border-beige pb-1 hover:bg-stone-200/50 p-1 rounded transition">
+            <div><p class="font-medium text-stone-900">Brille 54 <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 text-stone-500"></i></p><p class="text-stone-500 text-[10px]">Kurfürstendamm 54, Berlin</p></div>
             <span class="text-emerald-700 font-medium">3 verfügbar</span>
-          </div>
-          <div class="flex justify-between">
-            <div><p class="font-medium">Eye Catcher Luxury Eyewear</p><p class="text-stone-400 text-[10px]">Königsallee 60, Düsseldorf</p></div>
+          </a>
+          <a href="https://www.eyecatcher-duesseldorf.de" target="_blank" class="flex justify-between border-b border-beige pb-1 hover:bg-stone-200/50 p-1 rounded transition">
+            <div><p class="font-medium text-stone-900">Eye Catcher Luxury Eyewear <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 text-stone-500"></i></p><p class="text-stone-500 text-[10px]">Königsallee 60, Düsseldorf (NRW)</p></div>
             <span class="text-emerald-700 font-medium">2 verfügbar</span>
-          </div>
+          </a>
+          <a href="https://www.optik-carl.de" target="_blank" class="flex justify-between hover:bg-stone-200/50 p-1 rounded transition">
+            <div><p class="font-medium text-stone-900">Optik Carl <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 text-stone-500"></i></p><p class="text-stone-500 text-[10px]">Goethestraße 14, Frankfurt (HE)</p></div>
+            <span class="text-emerald-700 font-medium">1 Stück</span>
+          </a>
         </div>
       </div>
 
       <!-- Produkt 3: Tom Ford -->
-      <div class="product-card" data-brand="Tom Ford" data-search="tom ford snowdon vintage schwarz acatate ehler optik flensburg fielmann holm elsweiler temme koeln hannover">
+      <div class="product-card" data-brand="Tom Ford" data-search="tom ford snowdon ehler optik flensburg schleswig-holstein fielmann elsweiler temme koeln nrw optik hallmann hannover niedersachsen optik krille magdeburg sachsen-anhalt optik bensheim rheinland-pfalz optik kloster rostock mecklenburg-vorpommern">
         <div onclick="openDetail('TOM FORD', 'Snowdon Vintage Black', '390 €', 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', 'Glänzendes Acetat mit vergoldetem T-Symbol an den Scharnieren.', 'tf-stores')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
           <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80" alt="Tom Ford Brille" class="w-full h-56 object-cover rounded">
         </div>
@@ -135,24 +143,24 @@
         <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">SNOWDON VINTAGE | 390 €</p>
         <p class="text-xs text-stone-600 leading-relaxed mb-4">Zeitloser Klassiker aus tiefschwarzem italienischem Acetat.</p>
         <div class="space-y-2">
-          <button onclick="toggleStores('tf-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent">Find in Store</button>
+          <button onclick="toggleStores('tf-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent">Stores & Verfügbarkeit</button>
           <button onclick="addToCart('Tom Ford Snowdon', '390 €', 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium">Add to Bag</button>
         </div>
 
-        <!-- Stores für Tom Ford -->
+        <!-- Stores für Tom Ford mit Verlinkung -->
         <div id="tf-stores" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-2">
-          <div class="flex justify-between border-b border-beige pb-1">
-            <div><p class="font-medium">Ehler Optik & Akustik</p><p class="text-stone-400 text-[10px]">Große Straße 12, Flensburg</p></div>
+          <a href="https://www.ehler-optik.de" target="_blank" class="flex justify-between border-b border-beige pb-1 hover:bg-stone-200/50 p-1 rounded transition">
+            <div><p class="font-medium text-stone-900">Ehler Optik & Akustik <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 text-stone-500"></i></p><p class="text-stone-500 text-[10px]">Große Straße 12, Flensburg (SH)</p></div>
             <span class="text-emerald-700 font-medium">2 verfügbar</span>
-          </div>
-          <div class="flex justify-between border-b border-beige pb-1">
-            <div><p class="font-medium">Fielmann Store Flensburg</p><p class="text-stone-400 text-[10px]">Holm 48, Flensburg</p></div>
-            <span class="text-emerald-700 font-medium">4 verfügbar</span>
-          </div>
-          <div class="flex justify-between">
-            <div><p class="font-medium">Elsweiler & Temme</p><p class="text-stone-400 text-[10px]">Mittelstraße 18, Köln</p></div>
+          </a>
+          <a href="https://www.elsweiler-temme.de" target="_blank" class="flex justify-between border-b border-beige pb-1 hover:bg-stone-200/50 p-1 rounded transition">
+            <div><p class="font-medium text-stone-900">Elsweiler & Temme <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 text-stone-500"></i></p><p class="text-stone-500 text-[10px]">Mittelstraße 18, Köln (NRW)</p></div>
             <span class="text-emerald-700 font-medium">3 verfügbar</span>
-          </div>
+          </a>
+          <a href="https://www.optik-hallmann.de" target="_blank" class="flex justify-between hover:bg-stone-200/50 p-1 rounded transition">
+            <div><p class="font-medium text-stone-900">Optik Hallmann Premium <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 text-stone-500"></i></p><p class="text-stone-500 text-[10px]">Georgstraße 10, Hannover (NI)</p></div>
+            <span class="text-emerald-700 font-medium">4 verfügbar</span>
+          </a>
         </div>
       </div>
 
@@ -185,16 +193,16 @@
   <!-- SEITE: KONTO & STORE FINDER -->
   <div id="page-account" class="page-content hidden max-w-md mx-auto px-4 py-6">
     <h1 class="text-2xl font-serif uppercase tracking-widest mb-2">Mein Konto</h1>
-    <p class="text-xs text-stone-500 mb-6">VIP-Sehtest & Partneroptiker</p>
+    <p class="text-xs text-stone-500 mb-6">VIP-Sehtest & Partneroptiker in allen Bundesländern</p>
 
-    <!-- Partner-Optiker Netzwerk -->
+    <!-- Partner-Optiker Netzwerk mit Verlinkung -->
     <div class="mb-6 bg-white p-4 rounded border border-beige space-y-3">
-      <h3 class="font-serif text-sm uppercase tracking-wider font-semibold">Ausgewählte Partner-Boutiquen</h3>
+      <h3 class="font-serif text-sm uppercase tracking-wider font-semibold">Top Partner-Boutiquen (Deutschlandweit)</h3>
       <div class="text-xs space-y-2 text-stone-600">
-        <p><strong>Flensburg:</strong> Fielmann Lounge (Holm 48), Ehler Optik (Große Str. 12), Optiker Bode (Holm 58), Optik Hallmann (Große Str. 27)</p>
-        <p><strong>Berlin:</strong> Noble Optic House (Ku'damm 171), Brille 54 (Ku'damm 54)</p>
-        <p><strong>Hamburg:</strong> Optik Hallmann Premium (Neuer Wall 10)</p>
-        <p><strong>Düsseldorf / Köln:</strong> Eye Catcher Store, Elsweiler & Temme</p>
+        <p><strong>Schleswig-Holstein:</strong> <a href="https://www.fielmann.de" target="_blank" class="underline hover:text-black">Fielmann Lounge Flensburg</a>, <a href="https://www.ehler-optik.de" target="_blank" class="underline hover:text-black">Ehler Optik</a>, <a href="https://www.optiker-bode.de" target="_blank" class="underline hover:text-black">Optiker Bode</a></p>
+        <p><strong>Berlin & Brandenburg:</strong> <a href="https://www.noble-optic-house.de" target="_blank" class="underline hover:text-black">Noble Optic House</a>, <a href="https://www.brille54.de" target="_blank" class="underline hover:text-black">Brille 54</a></p>
+        <p><strong>Bayern & Baden-Württemberg:</strong> <a href="https://www.optik-steininger.de" target="_blank" class="underline hover:text-black">Optik Steininger München</a>, <a href="https://www.optik-schuetz.de" target="_blank" class="underline hover:text-black">Optik Schütz Stuttgart</a></p>
+        <p><strong>NRW & Hessen:</strong> <a href="https://www.eyecatcher-duesseldorf.de" target="_blank" class="underline hover:text-black">Eye Catcher Düsseldorf</a>, <a href="https://www.elsweiler-temme.de" target="_blank" class="underline hover:text-black">Elsweiler & Temme Köln</a>, <a href="https://www.optik-carl.de" target="_blank" class="underline hover:text-black">Optik Carl Frankfurt</a></p>
       </div>
     </div>
 
@@ -204,11 +212,12 @@
       <input type="text" placeholder="Vollständiger Name" class="w-full p-2.5 bg-white border border-beige rounded focus:outline-none">
       <input type="date" class="w-full p-2.5 bg-white border border-beige rounded focus:outline-none">
       <select class="w-full p-2.5 bg-white border border-beige rounded focus:outline-none">
-        <option>Fielmann Luxury Lounge Flensburg</option>
-        <option>Ehler Optik Flensburg</option>
-        <option>Optiker Bode Flensburg</option>
-        <option>Noble Optic House Berlin</option>
-        <option>Optik Hallmann Hamburg</option>
+        <option>Fielmann Luxury Lounge Flensburg (SH)</option>
+        <option>Ehler Optik Flensburg (SH)</option>
+        <option>Noble Optic House Berlin (BE)</option>
+        <option>Optik Steininger München (BY)</option>
+        <option>Eye Catcher Düsseldorf (NRW)</option>
+        <option>Optik Carl Frankfurt (HE)</option>
       </select>
       <button onclick="alert('Termin erfolgreich angefragt! Ein Optikermeister wird Ihre Beratung vorbereiten.')" class="w-full py-3 bg-stone-900 text-white uppercase tracking-widest font-medium">Termin verbindlich reservieren</button>
     </div>
@@ -274,7 +283,7 @@
       });
     }
 
-    // Erweiterte Live-Suche nach Marke, Modell, Stadt und Optikernamen
+    // Live-Suche nach Marke, Modell, Stadt, Optiker und Bundesland
     function filterProducts() {
       const query = document.getElementById('searchInput').value.toLowerCase().trim();
       const cards = document.querySelectorAll('.product-card');
