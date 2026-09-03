@@ -24,7 +24,7 @@
     .scrollbar-none::-webkit-scrollbar { display: none; }
     .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Intro-Overlay ohne Label */
+    /* Intro-Overlay */
     #intro {
       position: fixed;
       top: 0;
@@ -33,7 +33,7 @@
       height: 100%;
       z-index: 9999;
       cursor: pointer;
-      pointer-events: auto; /* Sicherstellen, dass Klicks erkannt werden */
+      pointer-events: auto;
     }
     .panel {
       position: absolute;
@@ -41,20 +41,40 @@
       width: 50%;
       height: 100%;
       transition: transform 1s ease-in-out;
-      background-color: #2c2a29;
+      background-color: #fbf9f6; /* Helle Farbe statt Schwarz */
     }
     .panel.left { left: 0; transform: translateX(0); }
     .panel.right { right: 0; transform: translateX(0); }
+
+    /* Schriftzug in der Mitte */
+    .intro-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10000;
+      font-size: 2rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: #2c2a29;
+      font-weight: 300;
+      transition: opacity 0.5s;
+      pointer-events: none; /* Damit Klicks auf das Intro durchgehen */
+      text-align: center;
+    }
+
     #intro.open .panel.left { transform: translateX(-100%); }
     #intro.open .panel.right { transform: translateX(100%); }
+    #intro.open .intro-text { opacity: 0; }
   </style>
 </head>
 <body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
 
-  <!-- INTRO OVERLAY (ohne Label) -->
+  <!-- INTRO OVERLAY -->
   <div id="intro">
     <div class="panel left"></div>
     <div class="panel right"></div>
+    <div class="intro-text">Enter Luxevue</div>
   </div>
 
   <!-- Hintergrundmusik – Bitte src anpassen: eigene Datei oder URL -->
@@ -333,10 +353,10 @@
     let wishlist = [];
     let cart = [];
 
-    // Funktion zum Öffnen des Intros (wird bei Klick oder Timer aufgerufen)
+    // Funktion zum Öffnen des Intros
     function openIntro() {
       const intro = document.getElementById('intro');
-      if (intro.classList.contains('open')) return; // bereits geöffnet
+      if (intro.classList.contains('open')) return;
       intro.classList.add('open');
       
       // Musik starten
@@ -354,7 +374,7 @@
     // Klick auf das Intro
     document.getElementById('intro').addEventListener('click', openIntro);
 
-    // Fallback: automatisch nach 5 Sekunden öffnen, falls nicht geklickt wurde
+    // Fallback: automatisch nach 5 Sekunden öffnen
     setTimeout(openIntro, 5000);
 
     // Erweiterte Store-Datenbank inkl. Cartier
