@@ -9,32 +9,39 @@
   <style>
     .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
     .gold-accent { color: #D4AF37; }
-    .bg-gold { background-color: #D4AF37; }
   </style>
 </head>
-<body class="bg-stone-100 text-stone-800 font-sans antialiased min-h-screen pb-20">
+<body class="bg-stone-100 text-stone-800 font-sans antialiased min-h-screen pb-24">
 
-  <!-- Header -->
-  <header class="sticky top-0 z-50 glass border-b border-stone-200 px-4 py-3 flex justify-between items-center shadow-sm">
-    <div class="flex items-center space-x-2">
-      <i class="fa-solid fa-glasses text-xl gold-accent"></i>
-      <span class="text-xl font-serif tracking-widest font-bold text-stone-900">LUXEVUE</span>
+  <!-- Header mit Suchleiste -->
+  <header class="sticky top-0 z-50 glass border-b border-stone-200 px-4 py-3 shadow-sm">
+    <div class="flex justify-between items-center mb-2">
+      <div class="flex items-center space-x-2">
+        <i class="fa-solid fa-glasses text-xl gold-accent"></i>
+        <span class="text-xl font-serif tracking-widest font-bold text-stone-900">LUXEVUE</span>
+      </div>
+      <div class="flex items-center space-x-4 text-stone-600">
+        <button onclick="alert('Wunschliste geöffnet')" class="hover:text-stone-900"><i class="fa-regular fa-heart text-lg"></i></button>
+        <button onclick="alert('Warenkorb ist leer')" class="hover:text-stone-900"><i class="fa-solid fa-bag-shopping text-lg"></i></button>
+      </div>
     </div>
-    <div class="flex items-center space-x-4 text-stone-600">
-      <button onclick="alert('Wunschliste geöffnet')" class="hover:text-stone-900"><i class="fa-regular fa-heart text-lg"></i></button>
-      <button onclick="alert('Warenkorb ist leer')" class="hover:text-stone-900"><i class="fa-solid fa-bag-shopping text-lg"></i></button>
+    
+    <!-- Live Suchleiste -->
+    <div class="relative">
+      <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Modell oder Marke suchen..." class="w-full bg-stone-50 border border-stone-300 rounded-xl py-2 pl-9 pr-4 text-xs focus:outline-none focus:border-stone-500">
+      <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-stone-400 text-xs"></i>
     </div>
   </header>
 
   <!-- Hero / Brand Selector -->
-  <section class="px-4 py-6 text-center bg-stone-900 text-stone-100">
+  <section class="px-4 py-5 text-center bg-stone-900 text-stone-100">
     <p class="text-xs uppercase tracking-widest text-amber-400 mb-1">Exklusive Kollektion 2026</p>
-    <h1 class="text-2xl font-serif font-light mb-4">Maison d'Optique</h1>
-    <div class="flex justify-center space-x-2 overflow-x-auto pb-2 text-xs">
-      <button onclick="filterBrand('all')" class="px-3 py-1.5 rounded-full bg-stone-800 border border-stone-700 text-stone-200 active:bg-amber-500">Alle</button>
-      <button onclick="filterBrand('Cartier')" class="px-3 py-1.5 rounded-full bg-stone-800 border border-stone-700 text-stone-200">Cartier</button>
-      <button onclick="filterBrand('DITA')" class="px-3 py-1.5 rounded-full bg-stone-800 border border-stone-700 text-stone-200">DITA</button>
-      <button onclick="filterBrand('Tom Ford')" class="px-3 py-1.5 rounded-full bg-stone-800 border border-stone-700 text-stone-200">Tom Ford</button>
+    <h1 class="text-2xl font-serif font-light mb-3">Maison d'Optique</h1>
+    <div class="flex justify-center space-x-2 overflow-x-auto pb-1 text-xs">
+      <button onclick="filterBrand('all')" class="brand-btn px-3 py-1.5 rounded-full bg-amber-500 text-stone-900 font-semibold">Alle</button>
+      <button onclick="filterBrand('Cartier')" class="brand-btn px-3 py-1.5 rounded-full bg-stone-800 border border-stone-700 text-stone-200">Cartier</button>
+      <button onclick="filterBrand('DITA')" class="brand-btn px-3 py-1.5 rounded-full bg-stone-800 border border-stone-700 text-stone-200">DITA</button>
+      <button onclick="filterBrand('Tom Ford')" class="brand-btn px-3 py-1.5 rounded-full bg-stone-800 border border-stone-700 text-stone-200">Tom Ford</button>
     </div>
   </section>
 
@@ -44,10 +51,10 @@
     
     <div class="space-y-6" id="product-list">
       
-      <!-- Product 1 -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-stone-200 transition hover:shadow-md">
-        <div class="relative w-full h-44 bg-stone-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden">
-          <span class="text-xs text-stone-400 font-mono">[ Cartier - Gold Frame ]</span>
+      <!-- Product 1: Cartier -->
+      <div class="product-card bg-white rounded-2xl p-5 shadow-sm border border-stone-200" data-brand="Cartier" data-name="Première de Cartier">
+        <div class="relative w-full h-48 bg-stone-50 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=600&q=80" alt="Cartier Brille" class="w-full h-full object-cover">
           <span class="absolute top-3 right-3 bg-stone-900 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">Neu</span>
         </div>
         <div class="flex justify-between items-start mb-2">
@@ -59,13 +66,11 @@
         </div>
         <p class="text-xs text-stone-500 mb-4">Edles Acetat mit 18kt vergoldeten Bügeln und Handgravur.</p>
         
-        <!-- Store Stock Trigger -->
-        <button onclick="toggleStores('cartier-stores')" class="w-full py-2.5 px-4 bg-stone-900 hover:bg-stone-800 text-white text-xs font-medium rounded-xl flex justify-between items-center transition">
+        <button onclick="toggleStores('cartier-stores')" class="w-full py-2.5 px-4 bg-stone-900 hover:bg-stone-800 text-white text-xs font-medium rounded-xl flex justify-between items-center">
           <span><i class="fa-solid fa-location-dot mr-2 gold-accent"></i>Verfügbarkeit in Boutiquen</span>
           <i class="fa-solid fa-chevron-down text-xs"></i>
         </button>
 
-        <!-- Store List (Hidden by default) -->
         <div id="cartier-stores" class="hidden mt-3 pt-3 border-t border-stone-100 space-y-2 text-xs">
           <div class="flex justify-between items-center p-2 rounded-lg bg-stone-50">
             <div>
@@ -84,10 +89,10 @@
         </div>
       </div>
 
-      <!-- Product 2 -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-stone-200 transition hover:shadow-md">
-        <div class="relative w-full h-44 bg-stone-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden">
-          <span class="text-xs text-stone-400 font-mono">[ DITA - Mach-One Titanium ]</span>
+      <!-- Product 2: DITA -->
+      <div class="product-card bg-white rounded-2xl p-5 shadow-sm border border-stone-200" data-brand="DITA" data-name="Flight-006 Titanium">
+        <div class="relative w-full h-48 bg-stone-50 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=600&q=80" alt="DITA Brille" class="w-full h-full object-cover">
         </div>
         <div class="flex justify-between items-start mb-2">
           <div>
@@ -98,7 +103,7 @@
         </div>
         <p class="text-xs text-stone-500 mb-4">Handgefertigt in Japan. Titan-Rahmen mit Diamantstruktur.</p>
         
-        <button onclick="toggleStores('dita-stores')" class="w-full py-2.5 px-4 bg-stone-900 hover:bg-stone-800 text-white text-xs font-medium rounded-xl flex justify-between items-center transition">
+        <button onclick="toggleStores('dita-stores')" class="w-full py-2.5 px-4 bg-stone-900 hover:bg-stone-800 text-white text-xs font-medium rounded-xl flex justify-between items-center">
           <span><i class="fa-solid fa-location-dot mr-2 gold-accent"></i>Verfügbarkeit in Boutiquen</span>
           <i class="fa-solid fa-chevron-down text-xs"></i>
         </button>
@@ -121,6 +126,36 @@
         </div>
       </div>
 
+      <!-- Product 3: Tom Ford -->
+      <div class="product-card bg-white rounded-2xl p-5 shadow-sm border border-stone-200" data-brand="Tom Ford" data-name="Tom Ford FT0237">
+        <div class="relative w-full h-48 bg-stone-50 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" alt="Tom Ford Brille" class="w-full h-full object-cover">
+        </div>
+        <div class="flex justify-between items-start mb-2">
+          <div>
+            <span class="text-xs gold-accent font-semibold uppercase tracking-wider">Tom Ford</span>
+            <h3 class="text-lg font-serif font-medium text-stone-900">Snowdon Vintage</h3>
+          </div>
+          <span class="text-base font-semibold text-stone-900">390 €</span>
+        </div>
+        <p class="text-xs text-stone-500 mb-4">Klassischer Acetat-Rahmen mit ikonischem T-Metall-Inlay.</p>
+        
+        <button onclick="toggleStores('tf-stores')" class="w-full py-2.5 px-4 bg-stone-900 hover:bg-stone-800 text-white text-xs font-medium rounded-xl flex justify-between items-center">
+          <span><i class="fa-solid fa-location-dot mr-2 gold-accent"></i>Verfügbarkeit in Boutiquen</span>
+          <i class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+
+        <div id="tf-stores" class="hidden mt-3 pt-3 border-t border-stone-100 space-y-2 text-xs">
+          <div class="flex justify-between items-center p-2 rounded-lg bg-stone-50">
+            <div>
+              <p class="font-medium text-stone-800">Flensburg City Boutique</p>
+              <p class="text-stone-400">Holmpassage</p>
+            </div>
+            <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-medium">4 verfügbar</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
 
@@ -130,33 +165,50 @@
       <i class="fa-solid fa-house text-base mb-0.5"></i>
       <span>Kollektion</span>
     </button>
-    <button onclick="alert('Store Finder öffnet Karte...')" class="flex flex-col items-center hover:text-stone-900">
+    <button onclick="alert('Store Finder Karte lädt...')" class="flex flex-col items-center hover:text-stone-900">
       <i class="fa-solid fa-store text-base mb-0.5"></i>
       <span>Stores</span>
     </button>
-    <button onclick="alert('Suche aktiviert')" class="flex flex-col items-center hover:text-stone-900">
+    <button onclick="document.getElementById('searchInput').focus()" class="flex flex-col items-center hover:text-stone-900">
       <i class="fa-solid fa-magnifying-glass text-base mb-0.5"></i>
       <span>Suche</span>
     </button>
-    <button onclick="alert('Profil geöffnet')" class="flex flex-col items-center hover:text-stone-900">
+    <button onclick="alert('Konto geöffnet')" class="flex flex-col items-center hover:text-stone-900">
       <i class="fa-solid fa-user text-base mb-0.5"></i>
       <span>Konto</span>
     </button>
   </nav>
 
-  <!-- Simple Interactivity Script -->
+  <!-- Logik für Suche, Filter & Ausklappen -->
   <script>
     function toggleStores(id) {
       const el = document.getElementById(id);
-      if (el.classList.contains('hidden')) {
-        el.classList.remove('hidden');
-      } else {
-        el.classList.add('hidden');
-      }
+      el.classList.toggle('hidden');
     }
 
     function filterBrand(brand) {
-      alert('Filter gesetzt auf: ' + brand);
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        if (brand === 'all' || card.getAttribute('data-brand') === brand) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function filterProducts() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name').toLowerCase();
+        const brand = card.getAttribute('data-brand').toLowerCase();
+        if (name.includes(query) || brand.includes(query)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
     }
   </script>
 </body>
