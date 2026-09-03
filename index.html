@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LUXEVUE | Haute Eyewear & Store Locator</title>
   
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
@@ -25,18 +23,66 @@
     .btn-outline { border: 1px solid #2c2a29 !important; }
     .scrollbar-none::-webkit-scrollbar { display: none; }
     .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Intro-Overlay */
+    #intro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .panel {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      transition: transform 1s ease-in-out;
+      background-color: #2c2a29;
+    }
+    .panel.left { left: 0; transform: translateX(0); }
+    .panel.right { right: 0; transform: translateX(0); }
+    .intro-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #e6dfd5;
+      color: #2c2a29;
+      padding: 1.2rem 2.5rem;
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      pointer-events: auto;
+      z-index: 10000;
+      transition: opacity 0.5s;
+      font-weight: 500;
+    }
+    #intro.open .panel.left { transform: translateX(-100%); }
+    #intro.open .panel.right { transform: translateX(100%); }
+    #intro.open .intro-label { opacity: 0; pointer-events: none; }
   </style>
 </head>
 <body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
 
-  <!-- Toast Benachrichtigung -->
+  <!-- INTRO OVERLAY -->
+  <div id="intro">
+    <div class="panel left"></div>
+    <div class="panel right"></div>
+    <div class="intro-label" id="introLabel">Enter Luxevue</div>
+  </div>
+
   <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 bg-stone-900 text-white text-xs px-4 py-2.5 rounded-full shadow-lg z-50 transition-opacity duration-300 opacity-0 pointer-events-none">
     <span id="toast-msg">Hinweis</span>
   </div>
 
-  <!-- Header -->
   <header class="sticky top-0 z-40 bg-[#fbf9f6]/95 backdrop-blur-md border-b border-beige px-4 py-3">
-    <div class="max-w-md mx-auto">
+    <div class="max-w-md md:max-w-4xl mx-auto">
       <div class="flex justify-between items-center mb-3">
         <span onclick="navigateTo('home')" class="text-xl font-serif tracking-[0.25em] font-light uppercase cursor-pointer">LUXEVUE</span>
         <div class="flex items-center space-x-5 text-sm">
@@ -51,19 +97,16 @@
         </div>
       </div>
 
-      <!-- Suche -->
       <div class="relative">
-        <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suche: Stadt, Optiker, Marke (z.B. Andy Wolf)..." class="w-full bg-[#f4f0eb] border border-beige rounded-full py-2 pl-9 pr-4 text-xs focus:outline-none focus:border-stone-800 text-[#2c2a29]">
+        <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suche: Stadt, Optiker, Marke (z.B. Andy Wolf, Florence, Hartberg)..." class="w-full bg-[#f4f0eb] border border-beige rounded-full py-2 pl-9 pr-4 text-xs focus:outline-none focus:border-stone-800 text-[#2c2a29]">
         <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-stone-400 text-xs"></i>
       </div>
     </div>
   </header>
 
-  <!-- HAUPTSEITE: HOMEPAGE / KOLLEKTION -->
-  <main id="page-home" class="page-content max-w-md mx-auto px-4 py-6">
+  <main id="page-home" class="page-content max-w-md md:max-w-4xl mx-auto px-4 py-6">
     
-    <!-- Marken Filter Scrollbar -->
-    <div class="flex space-x-2 overflow-x-auto pb-4 mb-4 text-xs tracking-widest uppercase scrollbar-none" id="brand-filters">
+    <div class="flex space-x-2 overflow-x-auto pb-4 mb-6 text-xs tracking-widest uppercase scrollbar-none" id="brand-filters">
       <button onclick="filterBrand('all', this)" class="brand-btn px-4 py-2 bg-stone-900 text-white rounded-full whitespace-nowrap cursor-pointer">Alle</button>
       <button onclick="filterBrand('Andy Wolf', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Andy Wolf</button>
       <button onclick="filterBrand('Lindberg', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Lindberg</button>
@@ -73,16 +116,13 @@
       <button onclick="filterBrand('Oliver Peoples', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Oliver Peoples</button>
       <button onclick="filterBrand('Mykita', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Mykita</button>
       <button onclick="filterBrand('Ray-Ban', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Ray-Ban</button>
-      <button onclick="filterBrand('Prada', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Prada</button>
     </div>
 
-    <!-- Produkt-Liste -->
-    <div class="space-y-10" id="product-list">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="product-list">
       
-      <!-- Produkt: Andy Wolf -->
-      <div class="product-card" data-brand="Andy Wolf" data-search="andy wolf austria handgemacht hartberg wien berlin hamburg muenchen fielmann ehler optik">
+      <div class="product-card" data-brand="Andy Wolf" data-search="andy wolf 5086 achensee hartberg wien berlin hamburg muenchen fielmann ehler optik mr spex mrz optik">
         <div onclick="openDetail('Andy Wolf', '5086 Col. A', '380 €', 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', 'Handgefertigt in Österreich. Nachhaltiges Acetat mit moderner geometrischer Linsenform.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
-          <img src="https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80" alt="Andy Wolf Brille" class="w-full h-56 object-cover rounded">
+          <img src="https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80" alt="Andy Wolf 5086" class="w-full h-56 object-cover rounded">
         </div>
         <div class="flex justify-between items-baseline mb-1">
           <h2 class="text-lg font-serif tracking-widest uppercase">ANDY WOLF</h2>
@@ -91,16 +131,49 @@
         <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">5086 COL. A | 380 €</p>
         <p class="text-xs text-stone-600 leading-relaxed mb-4">Markanter Acetat-Rahmen, gefertigt in eigener Manufaktur in Hartberg (Österreich).</p>
         <div class="space-y-2">
-          <button onclick="toggleStores('Andy Wolf', 'aw-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent text-[#2c2a29] cursor-pointer">Verfügbare Stores & E-Shops</button>
+          <button onclick="toggleStores('Andy Wolf', 'aw-stores-1')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent text-[#2c2a29] cursor-pointer">Verfügbare Stores & E-Shops</button>
           <button onclick="addToCart('Andy Wolf 5086 Col. A', '380 €', 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
         </div>
-        <div id="aw-stores" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
+        <div id="aw-stores-1" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
       </div>
 
-      <!-- Produkt: Lindberg -->
+      <div class="product-card" data-brand="Andy Wolf" data-search="andy wolf florence sonnenbrille cat eye acetat hartberg wien berlin hamburg fielmann mr spex">
+        <div onclick="openDetail('Andy Wolf', 'Florence Cat-Eye', '420 €', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', 'Elegante Cat-Eye Sonnenbrille aus nachhaltigem Bio-Acetat. 100% UV-Schutz, handgefertigt in Frankreich/Österreich.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
+          <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80" alt="Andy Wolf Florence" class="w-full h-56 object-cover rounded">
+        </div>
+        <div class="flex justify-between items-baseline mb-1">
+          <h2 class="text-lg font-serif tracking-widest uppercase">ANDY WOLF</h2>
+          <button onclick="toggleWishlist(this, 'Andy Wolf Florence Cat-Eye')" class="text-stone-400 hover:text-rose-600 text-base cursor-pointer"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">FLORENCE CAT-EYE | 420 €</p>
+        <p class="text-xs text-stone-600 leading-relaxed mb-4">Expressive Damen-Sonnenbrille mit facettiertem Acetat-Schliff und Entspiegelung.</p>
+        <div class="space-y-2">
+          <button onclick="toggleStores('Andy Wolf', 'aw-stores-2')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent text-[#2c2a29] cursor-pointer">Verfügbare Stores & E-Shops</button>
+          <button onclick="addToCart('Andy Wolf Florence Cat-Eye', '420 €', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
+        </div>
+        <div id="aw-stores-2" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
+      </div>
+
+      <div class="product-card" data-brand="Andy Wolf" data-search="andy wolf hume metall titan korrekturbrille hartberg wien berlin hamburg flensburg ehler optik">
+        <div onclick="openDetail('Andy Wolf', 'Hume Titanium', '395 €', 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', 'Filigranes Metall-Design mit Acetat-Innenring. Maximaler Tragekomfort und federleichtes Gewicht.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
+          <img src="https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80" alt="Andy Wolf Hume" class="w-full h-56 object-cover rounded">
+        </div>
+        <div class="flex justify-between items-baseline mb-1">
+          <h2 class="text-lg font-serif tracking-widest uppercase">ANDY WOLF</h2>
+          <button onclick="toggleWishlist(this, 'Andy Wolf Hume Titanium')" class="text-stone-400 hover:text-rose-600 text-base cursor-pointer"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">HUME TITANIUM | 395 €</p>
+        <p class="text-xs text-stone-600 leading-relaxed mb-4">Unisex-Korrekturbrille mit feiner Doppelbrücke aus flexiblem Edelstahl/Titan.</p>
+        <div class="space-y-2">
+          <button onclick="toggleStores('Andy Wolf', 'aw-stores-3')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent text-[#2c2a29] cursor-pointer">Verfügbare Stores & E-Shops</button>
+          <button onclick="addToCart('Andy Wolf Hume Titanium', '395 €', 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
+        </div>
+        <div id="aw-stores-3" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
+      </div>
+
       <div class="product-card" data-brand="Lindberg" data-search="lindberg titan daenemark kopenhagen fein randlos hamburg berlin muenchen fielmann edel optics">
-        <div onclick="openDetail('Lindberg', 'Air Titanium Rim', '620 €', 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', 'Dänisches Minimal-Design. Patentierter Titandraht ohne Schrauben und Nieten.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
-          <img src="https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80" alt="Lindberg Brille" class="w-full h-56 object-cover rounded">
+        <div onclick="openDetail('Lindberg', 'Air Titanium Rim', '620 €', 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', 'Dänisches Minimal-Design. Patentierter Titandraht ohne Schrauben und Nieten.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
+          <img src="https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80" alt="Lindberg Brille" class="w-full h-56 object-cover rounded">
         </div>
         <div class="flex justify-between items-baseline mb-1">
           <h2 class="text-lg font-serif tracking-widest uppercase">LINDBERG</h2>
@@ -110,78 +183,22 @@
         <p class="text-xs text-stone-600 leading-relaxed mb-4">Ultra-leichte Titanfassung aus Dänemark. Maximale Flexibilität und Eleganz.</p>
         <div class="space-y-2">
           <button onclick="toggleStores('Lindberg', 'lindberg-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent text-[#2c2a29] cursor-pointer">Verfügbare Stores & E-Shops</button>
-          <button onclick="addToCart('Lindberg Air Titanium', '620 €', 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
+          <button onclick="addToCart('Lindberg Air Titanium', '620 €', 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
         </div>
         <div id="lindberg-stores" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
-      </div>
-
-      <!-- Produkt: Cartier -->
-      <div class="product-card" data-brand="Cartier" data-search="cartier premiere gold brillenlaboratorium deutschland berlin hamburg muenchen koeln frankfurt stuttgart duesseldorf fielmann">
-        <div onclick="openDetail('Cartier', 'Première de Cartier Gold', '980 €', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', 'Edles Acetat mit 18kt vergoldeten Bügeln, Handgravur und ikonischem C-Motiv.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
-          <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80" alt="Cartier Brille" class="w-full h-56 object-cover rounded">
-        </div>
-        <div class="flex justify-between items-baseline mb-1">
-          <h2 class="text-lg font-serif tracking-widest uppercase">CARTIER</h2>
-          <button onclick="toggleWishlist(this, 'Cartier Première Gold')" class="text-stone-400 hover:text-rose-600 text-base cursor-pointer"><i class="fa-regular fa-heart"></i></button>
-        </div>
-        <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">PREMIÈRE DE CARTIER | 980 €</p>
-        <p class="text-xs text-stone-600 leading-relaxed mb-4">18kt vergoldeter Titandraht-Rahmen mit präzisionsgefertigten Scharnieren.</p>
-        <div class="space-y-2">
-          <button onclick="toggleStores('Cartier', 'cartier-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent text-[#2c2a29] cursor-pointer">Verfügbare Stores & E-Shops</button>
-          <button onclick="addToCart('Cartier Première Gold', '980 €', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
-        </div>
-        <div id="cartier-stores" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
-      </div>
-
-      <!-- Produkt: DITA -->
-      <div class="product-card" data-brand="DITA" data-search="dita flight 006 titan japan berlin hamburg muenchen koeln mister spex brille 54">
-        <div onclick="openDetail('DITA', 'Flight-006 Titanium', '750 €', 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', 'Handgefertigt in Japan. Titan-Rahmen mit Diamantstruktur-Prägung.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
-          <img src="https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80" alt="DITA Brille" class="w-full h-56 object-cover rounded">
-        </div>
-        <div class="flex justify-between items-baseline mb-1">
-          <h2 class="text-lg font-serif tracking-widest uppercase">DITA</h2>
-          <button onclick="toggleWishlist(this, 'DITA Flight-006')" class="text-stone-400 hover:text-rose-600 text-base cursor-pointer"><i class="fa-regular fa-heart"></i></button>
-        </div>
-        <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">FLIGHT-006 TITANIUM | 750 €</p>
-        <p class="text-xs text-stone-600 leading-relaxed mb-4">Ikonischer Pilot-Look aus massivem Titan mit maßgeschneiderten Azetat-Inlays.</p>
-        <div class="space-y-2">
-          <button onclick="toggleStores('DITA', 'dita-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent text-[#2c2a29] cursor-pointer">Verfügbare Stores & E-Shops</button>
-          <button onclick="addToCart('DITA Flight-006', '750 €', 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
-        </div>
-        <div id="dita-stores" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
-      </div>
-
-      <!-- Produkt: Ray-Ban -->
-      <div class="product-card" data-brand="Ray-Ban" data-search="ray-ban wayfarer klassiker italien fielmann mr spex edel optics flensburg berlin">
-        <div onclick="openDetail('Ray-Ban', 'Original Wayfarer Classic', '165 €', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', 'Der zeitlose Klassiker seit 1952. Hochwertiges Acetat mit Polarisationsgläsern.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
-          <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80" alt="Ray-Ban Brille" class="w-full h-56 object-cover rounded">
-        </div>
-        <div class="flex justify-between items-baseline mb-1">
-          <h2 class="text-lg font-serif tracking-widest uppercase">RAY-BAN</h2>
-          <button onclick="toggleWishlist(this, 'Ray-Ban Wayfarer Classic')" class="text-stone-400 hover:text-rose-600 text-base cursor-pointer"><i class="fa-regular fa-heart"></i></button>
-        </div>
-        <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">WAYFARER CLASSIC | 165 €</p>
-        <p class="text-xs text-stone-600 leading-relaxed mb-4">Ikonische Acetatfassung. Weltweiter Standard für Stil und UV-Schutz.</p>
-        <div class="space-y-2">
-          <button onclick="toggleStores('Ray-Ban', 'rb-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent text-[#2c2a29] cursor-pointer">Verfügbare Stores & E-Shops</button>
-          <button onclick="addToCart('Ray-Ban Wayfarer Classic', '165 €', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
-        </div>
-        <div id="rb-stores" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
       </div>
 
     </div>
   </main>
 
-  <!-- SEITE: WUNSCHLISTE -->
-  <section id="page-wishlist" class="page-content hidden max-w-md mx-auto px-4 py-6">
+  <section id="page-wishlist" class="page-content hidden max-w-md md:max-w-4xl mx-auto px-4 py-6">
     <h1 class="text-2xl font-serif uppercase tracking-widest mb-4">Deine Wunschliste</h1>
     <div id="wishlist-container" class="space-y-4 text-xs text-stone-500">
       <p>Deine Wunschliste ist derzeit leer.</p>
     </div>
   </section>
 
-  <!-- SEITE: WARENKORB -->
-  <section id="page-cart" class="page-content hidden max-w-md mx-auto px-4 py-6">
+  <section id="page-cart" class="page-content hidden max-w-md md:max-w-4xl mx-auto px-4 py-6">
     <h1 class="text-2xl font-serif uppercase tracking-widest mb-4">Warenkorb</h1>
     <div id="cart-container" class="space-y-4 text-xs">
       <p class="text-stone-500">Dein Warenkorb ist noch leer.</p>
@@ -195,8 +212,7 @@
     </div>
   </section>
 
-  <!-- SEITE: KONTO & STORE FINDER -->
-  <section id="page-account" class="page-content hidden max-w-md mx-auto px-4 py-6">
+  <section id="page-account" class="page-content hidden max-w-md md:max-w-4xl mx-auto px-4 py-6">
     <h1 class="text-2xl font-serif uppercase tracking-widest mb-2">Mein Konto & Stores</h1>
     <p class="text-xs text-stone-500 mb-6">VIP-Sehtest, Partneroptiker & E-Shops weltweit</p>
 
@@ -212,19 +228,17 @@
       <select class="w-full p-2.5 bg-white border border-beige rounded focus:outline-none">
         <option>Brillenlaboratorium (Online Order Support)</option>
         <option>Andy Wolf Flagship Store (Wien, Österreich)</option>
+        <option>Ehler Optik & Akustik (Flensburg, SH)</option>
+        <option>Fielmann Flagship Store (Flensburg / Hamburg)</option>
         <option>Noble Optic House (Berlin)</option>
         <option>Optik Steininger (München, Bayern)</option>
-        <option>Brille 54 (Berlin)</option>
-        <option>Fielmann Luxury Lounge (Flensburg, SH)</option>
-        <option>Ehler Optik & Akustik (Flensburg, SH)</option>
         <option>Mykita Shop (Berlin / Zürich)</option>
       </select>
       <button onclick="showToast('Termin erfolgreich angefragt!')" class="w-full py-3 bg-stone-900 text-white uppercase tracking-widest font-medium cursor-pointer">Termin verbindlich reservieren</button>
     </div>
   </section>
 
-  <!-- DETAIL MODAL -->
-  <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
     <div class="bg-[#fbf9f6] w-full max-w-lg rounded-lg p-6 relative shadow-2xl max-h-[90vh] overflow-y-auto">
       <button onclick="closeDetail()" class="absolute top-4 right-4 text-2xl text-stone-600 cursor-pointer">&times;</button>
       <div class="bg-[#f4f0eb] p-2 rounded mb-4">
@@ -237,8 +251,7 @@
     </div>
   </div>
 
-  <!-- Bottom Navigation -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-[#fbf9f6] border-t border-beige py-3 px-6 flex justify-between items-center text-xs text-stone-600 z-40 max-w-md mx-auto">
+  <nav class="fixed bottom-0 left-0 right-0 bg-[#fbf9f6] border-t border-beige py-3 px-6 flex justify-between items-center text-xs text-stone-600 z-40 max-w-md md:max-w-4xl mx-auto">
     <button onclick="navigateTo('home')" class="nav-btn flex flex-col items-center text-black font-semibold cursor-pointer">
       <i class="fa-solid fa-house text-base mb-0.5"></i>
       <span class="text-[9px] tracking-widest uppercase">Kollektion</span>
@@ -257,24 +270,30 @@
     </button>
   </nav>
 
-  <!-- JavaScript -->
   <script>
     let wishlist = [];
     let cart = [];
 
+    // Intro-Logik
+    document.getElementById('introLabel').addEventListener('click', function() {
+      document.getElementById('intro').classList.add('open');
+      setTimeout(() => {
+        document.getElementById('intro').style.display = 'none';
+      }, 1000); // Dauer passend zur CSS-Transition (1s)
+    });
+
+    // Erweiterte Datenbank für Andy Wolf Bezugsquellen
     const STORE_DATABASE = [
-      { name: "Brillenlaboratorium", type: "online", state: "Online E-Shop", desc: "Direktkauf & Expressversand", url: "https://brillenlaboratorium.shop", status: "Sofort lieferbar", brands: ["Cartier", "DITA", "Tom Ford", "Gucci", "YSL", "Andy Wolf", "Mykita", "Ray-Ban", "Lindberg"] },
-      { name: "Edel-Optics Boutique", type: "online", state: "Online E-Shop", desc: "Global Luxury Store", url: "https://www.edel-optics.de", status: "Auf Lager", brands: ["Cartier", "Tom Ford", "Gucci", "YSL", "Ray-Ban", "Prada", "Lindberg"] },
-      { name: "Mister Spex Luxury", type: "online", state: "Online E-Shop", desc: "E-Commerce Platform", url: "https://www.misterspex.de", status: "Verfügbar", brands: ["DITA", "Tom Ford", "Gucci", "YSL", "Andy Wolf", "Ray-Ban", "Oliver Peoples"] },
-      { name: "Andy Wolf Flagship Store", type: "store", state: "Wien (AT)", desc: "Tuchlauben 11, Wien", url: "#", status: "Exklusiv vorrätig", brands: ["Andy Wolf"] },
-      { name: "Blickfang Optik", type: "store", state: "Baden-Württemberg", desc: "Königstraße 22, Stuttgart", url: "#", status: "1 Stück", brands: ["Cartier", "DITA", "Tom Ford", "Andy Wolf"] },
-      { name: "Sehwerk Karlsruhe", type: "store", state: "Baden-Württemberg", desc: "Kaiserstraße 140, Karlsruhe", url: "#", status: "Verfügbar", brands: ["Tom Ford", "Gucci", "YSL", "Andy Wolf"] },
-      { name: "Optik Steininger", type: "store", state: "Bayern", desc: "Maximilianstraße 12, München", url: "#", status: "2 verfügbar", brands: ["Cartier", "DITA", "YSL", "Oliver Peoples", "Lindberg"] },
-      { name: "Noble Optic House", type: "store", state: "Berlin", desc: "Kurfürstendamm 171, Berlin", url: "#", status: "1 Stück", brands: ["Cartier", "DITA", "Tom Ford", "YSL", "Mykita", "Lindberg"] },
-      { name: "Brille 54", type: "store", state: "Berlin", desc: "Kurfürstendamm 54, Berlin", url: "#", status: "2 verfügbar", brands: ["DITA", "Gucci", "Andy Wolf"] },
-      { name: "Alster Optik Boutique", type: "store", state: "Hamburg", desc: "Jungfernstieg 8, Hamburg", url: "#", status: "Auf Lager", brands: ["Cartier", "Tom Ford", "Gucci", "YSL", "Oliver Peoples", "Lindberg"] },
-      { name: "Fielmann Luxury Lounge", type: "store", state: "Schleswig-Holstein", desc: "Holm 48, Flensburg", url: "#", status: "2 verfügbar", brands: ["Cartier", "Tom Ford", "Gucci", "Ray-Ban", "Andy Wolf", "Lindberg"] },
-      { name: "Ehler Optik & Akustik", type: "store", state: "Schleswig-Holstein", desc: "Große Straße 12, Flensburg", url: "#", status: "1 Stück", brands: ["Tom Ford", "DITA", "Andy Wolf"] }
+      { name: "Brillenlaboratorium", type: "online", state: "Online E-Shop", desc: "Expressversand & Andy Wolf Partner", url: "https://brillenlaboratorium.shop", status: "Sofort lieferbar", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Lindberg"] },
+      { name: "Andy Wolf Official Store", type: "online", state: "Online E-Shop", desc: "Offizieller Markenshop", url: "https://www.andy-wolf.com", status: "Direkt ab Werk", brands: ["Andy Wolf"] },
+      { name: "Mister Spex Luxury", type: "online", state: "Online E-Shop", desc: "Versandkostenfrei & Anprobe", url: "https://www.misterspex.de", status: "Auf Lager", brands: ["Andy Wolf", "DITA", "Tom Ford", "Oliver Peoples"] },
+      { name: "Edel-Optics Boutique", type: "online", state: "Online E-Shop", desc: "Global Luxury Store", url: "https://www.edel-optics.de", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg"] },
+      { name: "Andy Wolf Flagship Store", type: "store", state: "Wien (AT)", desc: "Tuchlauben 11, 1010 Wien", url: "#", status: "Alle Kollektionen", brands: ["Andy Wolf"] },
+      { name: "Ehler Optik & Akustik", type: "store", state: "Schleswig-Holstein", desc: "Große Straße 12, Flensburg", url: "#", status: "Vorort vorrätig", brands: ["Andy Wolf", "Tom Ford", "DITA"] },
+      { name: "Fielmann Luxury Lounge", type: "store", state: "Schleswig-Holstein", desc: "Holm 48, Flensburg", url: "#", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg"] },
+      { name: "Brille 54", type: "store", state: "Berlin", desc: "Kurfürstendamm 54, Berlin", url: "#", status: "Exklusive Modelle", brands: ["Andy Wolf", "DITA"] },
+      { name: "Blickfang Optik", type: "store", state: "Baden-Württemberg", desc: "Königstraße 22, Stuttgart", url: "#", status: "1 Stück", brands: ["Andy Wolf", "Cartier", "DITA"] },
+      { name: "Sehwerk Karlsruhe", type: "store", state: "Baden-Württemberg", desc: "Kaiserstraße 140, Karlsruhe", url: "#", status: "Verfügbar", brands: ["Andy Wolf", "Tom Ford"] }
     ];
 
     function showToast(msg) {
@@ -302,6 +321,8 @@
     window.addEventListener('DOMContentLoaded', () => {
       const hash = window.location.hash.replace('#', '') || 'home';
       navigateTo(hash);
+      updateWishlistUI();
+      updateCartUI();
     });
 
     function toggleStores(brand, containerId) {
@@ -472,11 +493,15 @@
         addToCart(name, price, img);
         closeDetail();
       };
-      document.getElementById('detailModal').classList.remove('hidden');
+      const modal = document.getElementById('detailModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
     }
 
     function closeDetail() {
-      document.getElementById('detailModal').classList.add('hidden');
+      const modal = document.getElementById('detailModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
     }
   </script>
 </body>
