@@ -231,4 +231,110 @@
       
       matchingStores.filter(s => s.type === 'online').forEach(store => {
         html += `
-          <a href="${store.url}" target="_blank" class
+          <a href="${store.url}" target="_blank" class="flex justify-between border-b border-beige/60 pb-1.5 hover:bg-stone-200/50 p-1 rounded transition">
+            <div>
+              <p class="font-medium text-stone-900">${store.name} <i class="fa-solid fa-cart-shopping text-[10px] ml-1 text-amber-700"></i></p>
+              <p class="text-stone-500 text-[10px]">${store.desc}</p>
+            </div>
+            <span class="text-emerald-700 font-medium text-[11px]">${store.status}</span>
+          </a>
+        `;
+      });
+
+      html += '<div class="font-semibold text-stone-900 border-b border-beige pb-1 mt-3 mb-2">Optiker Fachgeschäfte (Deutschlandweit)</div>';
+
+      matchingStores.filter(s => s.type === 'store').forEach(store => {
+        html += `
+          <a href="${store.url}" target="_blank" class="flex justify-between border-b border-beige/60 pb-1.5 hover:bg-stone-200/50 p-1 rounded transition">
+            <div>
+              <p class="font-medium text-stone-900">${store.name} <span class="text-[9px] bg-stone-200 text-stone-700 px-1 py-0.5 rounded ml-1">${store.state}</span></p>
+              <p class="text-stone-500 text-[10px]">${store.desc}</p>
+            </div>
+            <span class="text-emerald-700 font-medium text-[11px]">${store.status}</span>
+          </a>
+        `;
+      });
+
+      container.innerHTML = html;
+      container.classList.remove('hidden');
+    }
+
+    function filterBrand(brand) {
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        if (brand === 'all' || card.getAttribute('data-brand') === brand) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function filterProducts() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.product-card');
+      
+      cards.forEach(card => {
+        const searchText = card.getAttribute('data-search').toLowerCase();
+        if (searchText.includes(query)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function toggleWishlist(btn, name) {
+      const icon = btn.querySelector('i');
+      if (wishlist.includes(name)) {
+        wishlist = wishlist.filter(item => item !== name);
+        icon.classList.remove('fa-solid', 'text-rose-600');
+        icon.classList.add('fa-regular');
+      } else {
+        wishlist.push(name);
+        icon.classList.remove('fa-regular');
+        icon.classList.add('fa-solid', 'text-rose-600');
+      }
+      updateWishlistUI();
+    }
+
+    function updateWishlistUI() {
+      const badge = document.getElementById('wishlist-count');
+      const container = document.getElementById('wishlist-container');
+      badge.innerText = wishlist.length;
+      badge.classList.toggle('hidden', wishlist.length === 0);
+
+      if (wishlist.length === 0) {
+        container.innerHTML = '<p class="text-stone-500">Deine Wunschliste ist derzeit leer.</p>';
+      } else {
+        container.innerHTML = wishlist.map(item => `
+          <div class="flex justify-between items-center p-3 bg-beige-light rounded border border-beige">
+            <span class="font-serif font-medium text-stone-900">${item}</span>
+            <span class="text-xs text-amber-800 uppercase font-semibold">Gespeichert</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    function addToCart(name, price, img) {
+      cart.push({ name, price, img });
+      updateCartUI();
+      alert(name + ' wurde zum Warenkorb hinzugefügt.');
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cart-count');
+      const container = document.getElementById('cart-container');
+      const summary = document.getElementById('cart-summary');
+      const totalEl = document.getElementById('cart-total');
+
+      badge.innerText = cart.length;
+      badge.classList.toggle('hidden', cart.length === 0);
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-stone-500">Dein Warenkorb ist noch leer.</p>';
+        summary.classList.add('hidden');
+      } else {
+        let total = 0;
+        container.innerHTML = cart.map((item, index) => {
+          const numPrice
