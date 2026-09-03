@@ -1,42 +1,725 @@
-function toggleStores(brand, containerId) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUXEVUE | Haute Eyewear & Store Locator</title>
   
-  if (!container.classList.contains('hidden')) {
-    container.classList.add('hidden');
-    return;
-  }
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    html, body {
+      background-color: #fbf9f6 !important;
+      color: #2c2a29 !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .bg-beige { background-color: #e6dfd5 !important; }
+    .bg-beige-light { background-color: #f4f0eb !important; }
+    .border-beige { border-color: #e2dbd1 !important; }
+    .btn-outline { border: 1px solid #2c2a29 !important; }
+    .scrollbar-none::-webkit-scrollbar { display: none; }
+    .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 
-  const matchingStores = STORE_DATABASE.filter(store => store.brands.includes(brand));
-  
-  let html = '<div class="font-semibold text-stone-900 border-b border-beige pb-1 mb-2">Online E-Commerce Shops</div>';
-  
-  matchingStores.filter(s => s.type === 'online').forEach(store => {
-    html += `
-      <a href="${store.url}" target="_blank" class="flex justify-between border-b border-beige/60 pb-1.5 hover:bg-stone-200/50 p-1 rounded transition">
-        <div>
-          <p class="font-medium text-stone-900">${store.name} <i class="fa-solid fa-cart-shopping text-[10px] ml-1 text-amber-800"></i></p>
-          <p class="text-stone-500 text-[10px]">${store.desc}</p>
+    /* Intro */
+    #intro {
+      position: fixed; inset: 0; z-index: 9999; cursor: pointer; pointer-events: auto;
+    }
+    .panel {
+      position: absolute; top: 0; width: 50%; height: 100%;
+      transition: transform 1s ease-in-out; background-color: #fbf9f6;
+    }
+    .panel.left { left: 0; transform: translateX(0); }
+    .panel.right { right: 0; transform: translateX(0); }
+    .intro-text {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      z-index: 10000; font-size: 2rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: #2c2a29; font-weight: 300; transition: opacity 0.5s; pointer-events: none;
+      text-align: center;
+    }
+    #intro.open .panel.left { transform: translateX(-100%); }
+    #intro.open .panel.right { transform: translateX(100%); }
+    #intro.open .intro-text { opacity: 0; }
+
+    /* Checkout */
+    #checkout-form {
+      transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+      max-height: 0; opacity: 0; overflow: hidden;
+    }
+    #checkout-form.visible { max-height: 1200px; opacity: 1; }
+
+    /* Dropdown Menü */
+    #brandDropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      border: 1px solid #e2dbd1;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 50;
+      min-width: 200px;
+    }
+    #brandDropdown.visible { display: block; }
+    #brandDropdown a {
+      display: block;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #2c2a29;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: background 0.2s;
+    }
+    #brandDropdown a:hover { background: #f4f0eb; }
+
+    /* Live-Chat Button */
+    #liveChatBtn {
+      position: fixed; bottom: 20px; right: 20px; z-index: 40;
+      background: #25D366; color: white; width: 50px; height: 50px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
+
+  <!-- Intro -->
+  <div id="intro">
+    <div class="panel left"></div>
+    <div class="panel right"></div>
+    <div class="intro-text">Enter Luxevue</div>
+  </div>
+
+  <!-- Audio (bitte src anpassen) -->
+  <audio id="bg-music" preload="auto" loop>
+    <source src="thin_air.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 bg-stone-900 text-white text-xs px-4 py-2.5 rounded-full shadow-lg z-50 transition-opacity duration-300 opacity-0 pointer-events-none">
+    <span id="toast-msg">Hinweis</span>
+  </div>
+
+  <!-- Live-Chat Button -->
+  <a id="liveChatBtn" href="https://wa.me/491234567890" target="_blank" title="Live-Chat via WhatsApp">
+    <i class="fa-brands fa-whatsapp text-2xl"></i>
+  </a>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-[#fbf9f6]/95 backdrop-blur-md border-b border-beige px-4 py-3">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <button id="menuToggle" class="text-2xl focus:outline-none" aria-label="Menü öffnen">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <span onclick="navigateTo('home')" class="text-xl font-serif tracking-[0.25em] font-light uppercase cursor-pointer">LUXEVUE</span>
+      </div>
+      <div class="flex items-center space-x-4 text-sm">
+        <button onclick="showCompareModal()" class="hidden md:block text-xs underline">Vergleichen (<span id="compare-count">0</span>)</button>
+        <button onclick="navigateTo('wishlist')" class="relative p-1 cursor-pointer">
+          <i class="fa-regular fa-heart text-lg"></i>
+          <span id="wishlist-count" class="absolute -top-1 -right-1 bg-stone-900 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+        </button>
+        <button onclick="navigateTo('cart')" class="relative p-1 cursor-pointer">
+          <i class="fa-solid fa-bag-shopping text-lg"></i>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-amber-800 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Dropdown-Menü für Marken -->
+    <div id="brandDropdown" class="mt-2">
+      <a href="#" onclick="selectBrand('all', this); return false;">Alle</a>
+      <a href="#" onclick="selectBrand('Andy Wolf', this); return false;">Andy Wolf</a>
+      <a href="#" onclick="selectBrand('Lindberg', this); return false;">Lindberg</a>
+      <a href="#" onclick="selectBrand('Cartier', this); return false;">Cartier</a>
+      <a href="#" onclick="selectBrand('DITA', this); return false;">DITA</a>
+      <a href="#" onclick="selectBrand('Tom Ford', this); return false;">Tom Ford</a>
+      <a href="#" onclick="selectBrand('Oliver Peoples', this); return false;">Oliver Peoples</a>
+      <a href="#" onclick="selectBrand('Mykita', this); return false;">Mykita</a>
+      <a href="#" onclick="selectBrand('Ray-Ban', this); return false;">Ray-Ban</a>
+    </div>
+
+    <div class="max-w-5xl mx-auto mt-3 relative">
+      <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suche: Stadt, Optiker, Marke..." class="w-full bg-[#f4f0eb] border border-beige rounded-full py-2 pl-9 pr-4 text-xs focus:outline-none">
+      <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-stone-400 text-xs"></i>
+    </div>
+  </header>
+
+  <!-- Hauptbereich -->
+  <main id="page-home" class="page-content max-w-5xl mx-auto px-4 py-6">
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="product-list">
+      <!-- Produktkarten werden hier dynamisch per JS generiert -->
+    </div>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-serif tracking-widest uppercase mb-4">Für Sie empfohlen</h2>
+      <div id="recommendations" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+    </section>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-serif tracking-widest uppercase mb-4">Markenwelten</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-4 rounded border border-beige">
+          <img src="https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=600&q=80" alt="Andy Wolf" class="w-full h-40 object-cover rounded mb-3" loading="lazy">
+          <h3 class="font-serif text-lg">ANDY WOLF</h3>
+          <p class="text-xs text-stone-600">Handgefertigt in Österreich – seit 2006 verbindet Andy Wolf traditionelles Handwerk mit modernem Design.</p>
         </div>
-        <span class="text-emerald-700 font-medium text-[11px]">${store.status}</span>
-      </a>
-    `;
-  });
-
-  html += '<div class="font-semibold text-stone-900 border-b border-beige pb-1 mt-3 mb-2">Optiker Fachgeschäfte & Partner</div>';
-
-  matchingStores.filter(s => s.type === 'store').forEach(store => {
-    html += `
-      <a href="#" onclick="showStoreInfo('${store.name}', '${store.desc}'); return false;" class="flex justify-between border-b border-beige/60 pb-1.5 hover:bg-stone-200/50 p-1 rounded transition">
-        <div>
-          <p class="font-medium text-stone-900">${store.name} <span class="text-[9px] bg-stone-200 text-stone-700 px-1 py-0.5 rounded ml-1">${store.state}</span></p>
-          <p class="text-stone-500 text-[10px]">${store.desc}</p>
+        <div class="bg-white p-4 rounded border border-beige">
+          <img src="https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" alt="Lindberg" class="w-full h-40 object-cover rounded mb-3" loading="lazy">
+          <h3 class="font-serif text-lg">LINDBERG</h3>
+          <p class="text-xs text-stone-600">Dänische Ingenieurskunst – ultraleichte Titanfassungen ohne Schrauben, getragen von Architekten und Kreativen.</p>
         </div>
-        <span class="text-emerald-700 font-medium text-[11px]">${store.status}</span>
-      </a>
-    `;
-  });
+        <div class="bg-white p-4 rounded border border-beige">
+          <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=600&q=80" alt="Cartier" class="w-full h-40 object-cover rounded mb-3" loading="lazy">
+          <h3 class="font-serif text-lg">CARTIER</h3>
+          <p class="text-xs text-stone-600">Französischer Luxus – Brillen als Schmuckstücke, gefertigt aus edelsten Materialien mit unverwechselbarer Eleganz.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  container.innerHTML = html;
-  container.classList.remove('hidden');
-}
+  <!-- Wunschliste -->
+  <section id="page-wishlist" class="page-content hidden max-w-5xl mx-auto px-4 py-6">
+    <h1 class="text-2xl font-serif uppercase tracking-widest mb-4">Deine Wunschliste</h1>
+    <div id="wishlist-container" class="space-y-4 text-xs"></div>
+    <button onclick="shareWishlist()" class="mt-4 px-4 py-2 bg-stone-900 text-white text-xs uppercase tracking-widest rounded">Wunschliste teilen</button>
+  </section>
+
+  <!-- Warenkorb -->
+  <section id="page-cart" class="page-content hidden max-w-5xl mx-auto px-4 py-6">
+    <h1 class="text-2xl font-serif uppercase tracking-widest mb-4">Warenkorb</h1>
+    <div id="cart-container" class="space-y-4 text-xs"></div>
+    <div id="cart-summary" class="hidden mt-8 pt-4 border-t border-beige">
+      <div class="flex justify-between font-serif text-base mb-4">
+        <span>Gesamtsumme:</span>
+        <span id="cart-total">0 €</span>
+      </div>
+      <div class="flex gap-2 mb-4">
+        <button onclick="showToast('PayPal Express – in Entwicklung')" class="flex-1 py-2 bg-blue-600 text-white text-xs rounded">PayPal</button>
+        <button onclick="showToast('Apple Pay – in Entwicklung')" class="flex-1 py-2 bg-black text-white text-xs rounded">Apple Pay</button>
+        <button onclick="showToast('Google Pay – in Entwicklung')" class="flex-1 py-2 bg-gray-100 text-black text-xs rounded">G Pay</button>
+      </div>
+      <button onclick="showCheckoutForm()" class="w-full py-3.5 bg-stone-900 text-white text-xs uppercase tracking-widest font-semibold cursor-pointer">Zur Kasse / Reservieren</button>
+    </div>
+
+    <div id="checkout-form" class="mt-6 p-4 bg-beige-light rounded border border-beige">
+      <h2 class="text-lg font-serif tracking-widest uppercase mb-4">Bestellung abschließen</h2>
+      <div class="mb-4">
+        <label class="block text-xs font-medium text-stone-700 mb-1">Gewünschter Store / E-Shop</label>
+        <select id="checkout-store" class="w-full p-2.5 bg-white border border-beige rounded focus:outline-none text-sm">
+          <option value="">Bitte wählen...</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="block text-xs font-medium text-stone-700 mb-2">Zahlungsmethode</label>
+        <div class="space-y-2">
+          <label class="flex items-center space-x-2 text-sm"><input type="radio" name="payment" value="Kreditkarte" class="accent-stone-900"> Kreditkarte</label>
+          <label class="flex items-center space-x-2 text-sm"><input type="radio" name="payment" value="PayPal" class="accent-stone-900"> PayPal</label>
+          <label class="flex items-center space-x-2 text-sm"><input type="radio" name="payment" value="Rechnung" class="accent-stone-900" checked> Rechnung</label>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-xs font-medium text-stone-700 mb-1">Vollständiger Name</label>
+        <input type="text" id="checkout-name" class="w-full p-2.5 bg-white border border-beige rounded focus:outline-none text-sm">
+      </div>
+      <div class="mb-4">
+        <label class="block text-xs font-medium text-stone-700 mb-1">E-Mail-Adresse</label>
+        <input type="email" id="checkout-email" class="w-full p-2.5 bg-white border border-beige rounded focus:outline-none text-sm">
+      </div>
+      <button onclick="submitCheckout()" class="w-full py-3.5 bg-stone-900 text-white text-xs uppercase tracking-widest font-semibold cursor-pointer">Bestellung übermitteln</button>
+    </div>
+  </section>
+
+  <!-- Konto -->
+  <section id="page-account" class="page-content hidden max-w-5xl mx-auto px-4 py-6">
+    <h1 class="text-2xl font-serif uppercase tracking-widest mb-2">Mein Konto & Stores</h1>
+    <p class="text-xs text-stone-500 mb-6">VIP-Sehtest, Partneroptiker & E-Shops weltweit</p>
+    <div class="mb-6 bg-white p-4 rounded border border-beige space-y-3 text-xs">
+      <h3 class="font-serif text-sm uppercase tracking-wider font-semibold">Netzwerk & Partneroptiker</h3>
+      <p class="text-stone-600">Entdecke angebundene E-Commerce Shops und lokale Premium-Optiker.</p>
+    </div>
+    <div class="bg-beige-light p-4 rounded border border-beige space-y-4 text-xs">
+      <h3 class="font-semibold uppercase tracking-wider">Sehtest & VIP-Beratung buchen</h3>
+      <input type="text" placeholder="Vollständiger Name" class="w-full p-2.5 bg-white border border-beige rounded focus:outline-none">
+      <input type="date" class="w-full p-2.5 bg-white border border-beige rounded focus:outline-none">
+      <select class="w-full p-2.5 bg-white border border-beige rounded focus:outline-none">
+        <option>Brillenlaboratorium</option>
+        <option>Andy Wolf Flagship Store (Wien)</option>
+        <option>Ehler Optik & Akustik (Flensburg)</option>
+        <option>Fielmann Luxury Lounge (Flensburg)</option>
+        <option>Noble Optic House (Berlin)</option>
+        <option>Cartier Boutique (Berlin)</option>
+      </select>
+      <button onclick="showToast('Termin erfolgreich angefragt!')" class="w-full py-3 bg-stone-900 text-white uppercase tracking-widest font-medium cursor-pointer">Termin reservieren</button>
+    </div>
+  </section>
+
+  <!-- Produkt-Detail Modal -->
+  <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-[#fbf9f6] w-full max-w-lg rounded-lg p-6 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+      <button onclick="closeDetail()" class="absolute top-4 right-4 text-2xl text-stone-600 cursor-pointer">&times;</button>
+      <div class="bg-[#f4f0eb] p-2 rounded mb-4">
+        <img id="modalImg" src="" class="w-full h-64 object-cover rounded">
+      </div>
+      <h2 id="modalBrand" class="text-xl font-serif tracking-widest uppercase mb-1"></h2>
+      <p id="modalPrice" class="text-xs uppercase tracking-wider text-amber-800 font-bold mb-3"></p>
+      <p id="modalDesc" class="text-xs text-stone-600 leading-relaxed mb-4"></p>
+      <div id="modalRating" class="text-sm text-yellow-500 mb-4"></div>
+      <button id="modalAddBtn" class="w-full py-3.5 bg-beige text-xs uppercase tracking-widest font-semibold text-[#2c2a29] cursor-pointer mb-2">IN DEN WARENKORB</button>
+      <button onclick="showToast('Express-Kauf wird vorbereitet')" class="w-full py-2 bg-blue-600 text-white text-xs rounded">Express-Kauf (PayPal)</button>
+    </div>
+  </div>
+
+  <!-- Vergleichs-Modal -->
+  <div id="compareModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
+    <div class="bg-white w-full max-w-3xl rounded-lg p-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-serif">Produktvergleich</h3>
+        <button onclick="closeCompare()" class="text-2xl">&times;</button>
+      </div>
+      <div id="compare-content"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-16 px-4 py-8">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-xs">
+      <div>
+        <h4 class="font-serif text-sm uppercase tracking-widest mb-2">Rechtliches</h4>
+        <ul class="space-y-1 text-stone-600">
+          <li><a href="#" class="hover:underline">Impressum</a></li>
+          <li><a href="#" class="hover:underline">Datenschutz</a></li>
+          <li><a href="#" class="hover:underline">AGB</a></li>
+          <li><a href="#" class="hover:underline">Widerrufsbelehrung</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-serif text-sm uppercase tracking-widest mb-2">Newsletter</h4>
+        <p class="text-stone-500 mb-2">5% Rabatt auf Ihre erste Bestellung!</p>
+        <div class="flex">
+          <input type="email" id="newsletter-email" placeholder="Ihre E-Mail" class="flex-1 p-2 border border-beige rounded-l text-xs">
+          <button onclick="subscribeNewsletter()" class="bg-stone-900 text-white px-4 rounded-r text-xs">Anmelden</button>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-serif text-sm uppercase tracking-widest mb-2">Kontakt & Beratung</h4>
+        <p class="text-stone-600">Persönliche Video-Beratung buchen:</p>
+        <button onclick="showToast('Beratungstermin wird geöffnet')" class="mt-2 bg-beige border border-stone-300 px-4 py-2 rounded text-xs">Termin anfragen</button>
+        <p class="mt-3 text-stone-500">SSL-verschlüsselt · Trusted Shops zertifiziert</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Untere Navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-[#fbf9f6] border-t border-beige py-3 px-6 flex justify-between items-center text-xs text-stone-600 z-40 max-w-5xl mx-auto">
+    <button onclick="navigateTo('home')" class="nav-btn flex flex-col items-center text-black font-semibold cursor-pointer">
+      <i class="fa-solid fa-house text-base mb-0.5"></i><span class="text-[9px]">Kollektion</span>
+    </button>
+    <button onclick="navigateTo('wishlist')" class="nav-btn flex flex-col items-center cursor-pointer">
+      <i class="fa-solid fa-heart text-base mb-0.5"></i><span class="text-[9px]">Favoriten</span>
+    </button>
+    <button onclick="navigateTo('cart')" class="nav-btn flex flex-col items-center cursor-pointer">
+      <i class="fa-solid fa-bag-shopping text-base mb-0.5"></i><span class="text-[9px]">Tasche</span>
+    </button>
+    <button onclick="navigateTo('account')" class="nav-btn flex flex-col items-center cursor-pointer">
+      <i class="fa-solid fa-user text-base mb-0.5"></i><span class="text-[9px]">Konto</span>
+    </button>
+  </nav>
+
+  <script>
+    // ---------- Daten ----------
+    const PRODUCTS = [
+      { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Handgefertigt in Österreich. Nachhaltiges Acetat mit moderner geometrischer Linsenform.', rating: 4.5, reviews: 32, search: 'andy wolf 5086 achensee hartberg wien berlin' },
+      { id: 2, brand: 'Andy Wolf', name: 'Florence Cat-Eye', price: '420 €', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Elegante Cat-Eye Sonnenbrille aus nachhaltigem Bio-Acetat.', rating: 4.8, reviews: 18, search: 'andy wolf florence cat eye acetat' },
+      { id: 3, brand: 'Andy Wolf', name: 'Hume Titanium', price: '395 €', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Filigranes Metall-Design mit Acetat-Innenring.', rating: 4.2, reviews: 9, search: 'andy wolf hume titan korrekturbrille' },
+      { id: 4, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Dänisches Minimal-Design. Patentierter Titandraht.', rating: 4.7, reviews: 24, search: 'lindberg titan daenemark randlos' },
+      { id: 5, brand: 'Cartier', name: 'Santos de Cartier', price: '890 €', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', desc: 'Ikonische Metallbrille mit klaren Linien und Doppelbrücke.', rating: 5.0, reviews: 41, search: 'cartier santos metall klassisch' },
+      { id: 6, brand: 'Cartier', name: 'Panthère de Cartier', price: '980 €', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Verführerische Cat-Eye-Form mit goldenen Akzenten.', rating: 4.9, reviews: 27, search: 'cartier panthere cat eye' },
+      { id: 7, brand: 'Cartier', name: 'C Décor', price: '760 €', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Auffällige Acetatfassung mit dem ikonischen C-Décor-Element.', rating: 4.6, reviews: 15, search: 'cartier c decor acetat' },
+      { id: 8, brand: 'Cartier', name: 'Trinity', price: '720 €', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Feine Metallfassung, inspiriert vom Trinity-Ring.', rating: 4.4, reviews: 20, search: 'cartier trinity metall' }
+    ];
+
+    const STORE_DATABASE = [
+      { name: "Brillenlaboratorium", type: "online", state: "Online E-Shop", desc: "Expressversand & Premium-Partner", url: "https://brillenlaboratorium.shop", status: "Sofort lieferbar", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Lindberg"] },
+      { name: "Andy Wolf Official Store", type: "online", state: "Online E-Shop", desc: "Offizieller Markenshop", url: "https://www.andy-wolf.com", status: "Direkt ab Werk", brands: ["Andy Wolf"] },
+      { name: "Mister Spex Luxury", type: "online", state: "Online E-Shop", desc: "Versandkostenfrei & Anprobe", url: "https://www.misterspex.de", status: "Auf Lager", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Oliver Peoples"] },
+      { name: "Edel-Optics Boutique", type: "online", state: "Online E-Shop", desc: "Global Luxury Store", url: "https://www.edel-optics.de", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg"] },
+      { name: "Cartier Official Eyewear", type: "online", state: "Online E-Shop", desc: "Offizieller Cartier Online-Store", url: "https://www.cartier.com", status: "Exklusiv", brands: ["Cartier"] },
+      { name: "Fielmann Online", type: "online", state: "Online E-Shop", desc: "Große Auswahl & Filialservice", url: "https://www.fielmann.de", status: "Lieferbar", brands: ["Cartier", "Andy Wolf", "Tom Ford", "Lindberg"] },
+      { name: "Apollo-Optik", type: "online", state: "Online E-Shop", desc: "Premium-Marken im Sortiment", url: "https://www.apollo.de", status: "Verfügbar", brands: ["Cartier", "DITA", "Ray-Ban"] },
+      { name: "Brillen.de", type: "online", state: "Online E-Shop", desc: "Luxusbrillen & Fachberatung", url: "https://www.brillen.de", status: "Auf Lager", brands: ["Cartier", "Tom Ford", "Oliver Peoples"] },
+      { name: "Cartier Boutique Berlin", type: "store", state: "Berlin", desc: "Kurfürstendamm 186, 10707 Berlin", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
+      { name: "Cartier Boutique München", type: "store", state: "Bayern", desc: "Maximilianstraße 20, 80539 München", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
+      { name: "Cartier Boutique Wien", type: "store", state: "Wien (AT)", desc: "Kohlmarkt 1, 1010 Wien", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
+      { name: "Ehler Optik & Akustik", type: "store", state: "Schleswig-Holstein", desc: "Große Straße 12, Flensburg", url: "#", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "DITA"] },
+      { name: "Fielmann Luxury Lounge", type: "store", state: "Schleswig-Holstein", desc: "Holm 48, Flensburg", url: "#", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg"] },
+      { name: "Fielmann Flagship Hamburg", type: "store", state: "Hamburg", desc: "Jungfernstieg 40, 20354 Hamburg", url: "#", status: "Große Auswahl", brands: ["Cartier", "Andy Wolf", "Lindberg"] },
+      { name: "Optik Habel", type: "store", state: "Berlin", desc: "Schloßstraße 90, 12163 Berlin", url: "#", status: "Cartier exklusiv", brands: ["Cartier"] },
+      { name: "Brillenwerk Stuttgart", type: "store", state: "Baden-Württemberg", desc: "Königstraße 45, 70173 Stuttgart", url: "#", status: "Verfügbar", brands: ["Cartier", "DITA", "Tom Ford"] },
+      { name: "Sehwerk Karlsruhe", type: "store", state: "Baden-Württemberg", desc: "Kaiserstraße 140, Karlsruhe", url: "#", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford"] },
+      { name: "Blickfang Optik", type: "store", state: "Baden-Württemberg", desc: "Königstraße 22, Stuttgart", url: "#", status: "1 Stück", brands: ["Andy Wolf", "Cartier", "DITA"] },
+      { name: "Optik Steininger", type: "store", state: "Bayern", desc: "Sendlinger Straße 25, 80331 München", url: "#", status: "Cartier Partner", brands: ["Cartier"] },
+      { name: "Noble Optic House", type: "store", state: "Berlin", desc: "Friedrichstraße 150, 10117 Berlin", url: "#", status: "Exklusive Modelle", brands: ["Cartier", "DITA", "Tom Ford"] }
+    ];
+
+    // ---------- State ----------
+    let wishlist = [];
+    let cart = [];
+    let compareList = [];
+    let lastViewedBrand = null;
+    let activeBrand = 'all';
+
+    // ---------- Init ----------
+    function init() {
+      renderProducts();
+      updateWishlistUI();
+      updateCartUI();
+      populateStoreSelect();
+      updateRecommendations();
+      document.getElementById('intro').addEventListener('click', openIntro);
+      setTimeout(openIntro, 5000);
+      
+      const menuToggle = document.getElementById('menuToggle');
+      const brandDropdown = document.getElementById('brandDropdown');
+      menuToggle.addEventListener('click', () => {
+        brandDropdown.classList.toggle('visible');
+      });
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#menuToggle') && !e.target.closest('#brandDropdown')) {
+          brandDropdown.classList.remove('visible');
+        }
+      });
+    }
+
+    function openIntro() {
+      const intro = document.getElementById('intro');
+      if (intro.classList.contains('open')) return;
+      intro.classList.add('open');
+      const music = document.getElementById('bg-music');
+      if (music) music.play().catch(()=>{});
+      setTimeout(() => { intro.style.display = 'none'; }, 1000);
+    }
+
+    // ---------- Produkt-Rendering ----------
+    function renderProducts(filterBrand = 'all', query = '') {
+      const container = document.getElementById('product-list');
+      container.innerHTML = '';
+      PRODUCTS.forEach(product => {
+        if (filterBrand !== 'all' && product.brand !== filterBrand) return;
+        if (query && !(product.name + ' ' + product.brand + ' ' + product.search).toLowerCase().includes(query)) return;
+        const card = document.createElement('div');
+        card.className = 'product-card bg-white p-4 rounded-lg border border-beige';
+        card.innerHTML = `
+          <div class="relative">
+            <img src="${product.img}" alt="${product.name}" class="w-full h-56 object-cover rounded cursor-pointer" onclick="openDetail(${product.id})" loading="lazy">
+            <label class="absolute top-2 left-2 bg-white/90 px-2 py-1 rounded text-xs flex items-center gap-1">
+              <input type="checkbox" class="compare-checkbox" data-id="${product.id}" onchange="toggleCompare(${product.id}, this.checked)">
+              Vergleichen
+            </label>
+          </div>
+          <div class="flex justify-between items-baseline mt-3">
+            <h2 class="text-lg font-serif tracking-widest uppercase">${product.brand}</h2>
+            <button onclick="toggleWishlist(this, '${product.name}')" class="text-stone-400 hover:text-rose-600"><i class="fa-regular fa-heart"></i></button>
+          </div>
+          <p class="text-xs uppercase tracking-wider text-stone-500">${product.name} | ${product.price}</p>
+          <div class="text-yellow-500 text-sm">${'★'.repeat(Math.round(product.rating))}${'☆'.repeat(5-Math.round(product.rating))} <span class="text-stone-400">(${product.reviews})</span></div>
+          <p class="text-xs text-stone-600 mt-2 line-clamp-2">${product.desc}</p>
+          <div class="mt-3 space-y-2">
+            <button onclick="toggleStores('${product.brand}', 'stores-${product.id}')" class="w-full py-2 border border-stone-800 text-xs uppercase">Stores & Shops</button>
+            <button onclick="addToCart('${product.name}', '${product.price}', '${product.img}')" class="w-full py-2 bg-beige text-xs uppercase">In den Warenkorb</button>
+          </div>
+          <div id="stores-${product.id}" class="hidden mt-3 p-2 bg-beige-light rounded text-xs"></div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Filterfunktion für Dropdown
+    function selectBrand(brand, link) {
+      activeBrand = brand;
+      document.getElementById('brandDropdown').classList.remove('visible');
+      document.getElementById('searchInput').value = '';
+      renderProducts(brand, '');
+      lastViewedBrand = brand === 'all' ? null : brand;
+      updateRecommendations();
+    }
+
+    function filterProducts() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      renderProducts(activeBrand, query);
+    }
+
+    // ---------- Produkt-Details ----------
+    function openDetail(id) {
+      const p = PRODUCTS.find(x => x.id === id);
+      if (!p) return;
+      lastViewedBrand = p.brand;
+      document.getElementById('modalBrand').innerText = `${p.brand} - ${p.name}`;
+      document.getElementById('modalPrice').innerText = p.price;
+      document.getElementById('modalDesc').innerText = p.desc;
+      document.getElementById('modalImg').src = p.img;
+      document.getElementById('modalRating').innerHTML = `${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5-Math.round(p.rating))} (${p.reviews} Bewertungen)`;
+      document.getElementById('modalAddBtn').onclick = () => { addToCart(p.name, p.price, p.img); closeDetail(); };
+      const modal = document.getElementById('detailModal');
+      modal.classList.remove('hidden'); modal.classList.add('flex');
+      updateRecommendations();
+    }
+    function closeDetail() {
+      const modal = document.getElementById('detailModal');
+      modal.classList.add('hidden'); modal.classList.remove('flex');
+    }
+
+    // ---------- Empfehlungen ----------
+    function updateRecommendations() {
+      const container = document.getElementById('recommendations');
+      container.innerHTML = '';
+      let recommended = PRODUCTS;
+      if (lastViewedBrand) {
+        recommended = PRODUCTS.filter(p => p.brand === lastViewedBrand);
+        if (recommended.length < 3) {
+          const others = PRODUCTS.filter(p => p.brand !== lastViewedBrand);
+          recommended = recommended.concat(others).slice(0,3);
+        }
+      } else {
+        recommended = PRODUCTS.slice(0,3);
+      }
+      recommended.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'bg-white p-3 rounded border border-beige cursor-pointer';
+        div.innerHTML = `<img src="${p.img}" class="w-full h-32 object-cover rounded mb-2" loading="lazy">
+                         <p class="font-serif text-sm">${p.brand}</p>
+                         <p class="text-xs text-stone-600">${p.name}</p>
+                         <p class="text-xs font-bold">${p.price}</p>`;
+        div.onclick = () => openDetail(p.id);
+        container.appendChild(div);
+      });
+    }
+
+    // ---------- Vergleich ----------
+    function toggleCompare(id, checked) {
+      if (checked) {
+        if (!compareList.includes(id)) compareList.push(id);
+      } else {
+        compareList = compareList.filter(x => x !== id);
+      }
+      document.getElementById('compare-count').innerText = compareList.length;
+    }
+    function showCompareModal() {
+      const modal = document.getElementById('compareModal');
+      const content = document.getElementById('compare-content');
+      if (compareList.length < 2) {
+        showToast('Bitte mindestens 2 Produkte zum Vergleichen auswählen');
+        return;
+      }
+      const selected = PRODUCTS.filter(p => compareList.includes(p.id));
+      let table = '<table class="compare-table w-full text-xs"><thead><tr><th>Attribut</th>';
+      selected.forEach(p => { table += `<th>${p.name}</th>`; });
+      table += '</tr></thead><tbody>';
+      ['Marke','Preis','Bewertung','Beschreibung'].forEach(attr => {
+        table += `<tr><td class="font-semibold">${attr}</td>`;
+        selected.forEach(p => {
+          if (attr === 'Marke') table += `<td>${p.brand}</td>`;
+          if (attr === 'Preis') table += `<td>${p.price}</td>`;
+          if (attr === 'Bewertung') table += `<td>${p.rating}★ (${p.reviews})</td>`;
+          if (attr === 'Beschreibung') table += `<td>${p.desc}</td>`;
+        });
+        table += '</tr>';
+      });
+      table += '</tbody></table>';
+      content.innerHTML = table;
+      modal.classList.remove('hidden'); modal.classList.add('flex');
+    }
+    function closeCompare() {
+      document.getElementById('compareModal').classList.add('hidden');
+      document.getElementById('compareModal').classList.remove('flex');
+    }
+
+    // ---------- Store-Anzeige (verbessert) ----------
+    function toggleStores(brand, containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      
+      if (!container.classList.contains('hidden')) {
+        container.classList.add('hidden');
+        return;
+      }
+
+      const matchingStores = STORE_DATABASE.filter(store => store.brands.includes(brand));
+      
+      let html = '<div class="font-semibold text-stone-900 border-b border-beige pb-1 mb-2">Online E-Commerce Shops</div>';
+      
+      matchingStores.filter(s => s.type === 'online').forEach(store => {
+        html += `
+          <a href="${store.url}" target="_blank" class="flex justify-between border-b border-beige/60 pb-1.5 hover:bg-stone-200/50 p-1 rounded transition">
+            <div>
+              <p class="font-medium text-stone-900">${store.name} <i class="fa-solid fa-cart-shopping text-[10px] ml-1 text-amber-800"></i></p>
+              <p class="text-stone-500 text-[10px]">${store.desc}</p>
+            </div>
+            <span class="text-emerald-700 font-medium text-[11px]">${store.status}</span>
+          </a>
+        `;
+      });
+
+      html += '<div class="font-semibold text-stone-900 border-b border-beige pb-1 mt-3 mb-2">Optiker Fachgeschäfte & Partner</div>';
+
+      matchingStores.filter(s => s.type === 'store').forEach(store => {
+        html += `
+          <a href="#" onclick="showStoreInfo('${store.name}', '${store.desc}'); return false;" class="flex justify-between border-b border-beige/60 pb-1.5 hover:bg-stone-200/50 p-1 rounded transition">
+            <div>
+              <p class="font-medium text-stone-900">${store.name} <span class="text-[9px] bg-stone-200 text-stone-700 px-1 py-0.5 rounded ml-1">${store.state}</span></p>
+              <p class="text-stone-500 text-[10px]">${store.desc}</p>
+            </div>
+            <span class="text-emerald-700 font-medium text-[11px]">${store.status}</span>
+          </a>
+        `;
+      });
+
+      container.innerHTML = html;
+      container.classList.remove('hidden');
+    }
+
+    function showStoreInfo(name, desc) {
+      showToast(`${name} – ${desc}`);
+    }
+
+    // ---------- Warenkorb & Wunschliste ----------
+    function addToCart(name, price, img) {
+      cart.push({ name, price, img });
+      updateCartUI();
+      showToast(name + ' hinzugefügt');
+    }
+    function updateCartUI() {
+      const badge = document.getElementById('cart-count');
+      const container = document.getElementById('cart-container');
+      const summary = document.getElementById('cart-summary');
+      const totalEl = document.getElementById('cart-total');
+      badge.innerText = cart.length;
+      badge.classList.toggle('hidden', cart.length === 0);
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-stone-500">Warenkorb ist leer.</p>';
+        summary.classList.add('hidden');
+      } else {
+        let total = 0;
+        container.innerHTML = cart.map((item, index) => {
+          const price = parseInt(item.price.replace(/\D/g,'')) || 0;
+          total += price;
+          return `<div class="flex justify-between items-center p-2 bg-beige-light rounded">
+                    <div class="flex items-center gap-2">
+                      <img src="${item.img}" class="w-10 h-10 object-cover rounded">
+                      <div><p class="font-medium">${item.name}</p><p class="text-[10px]">${item.price}</p></div>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-xl">&times;</button>
+                  </div>`;
+        }).join('');
+        totalEl.innerText = total + ' €';
+        summary.classList.remove('hidden');
+      }
+    }
+    function removeFromCart(index) { cart.splice(index,1); updateCartUI(); }
+
+    function toggleWishlist(btn, name) {
+      const icon = btn.querySelector('i');
+      if (wishlist.includes(name)) {
+        wishlist = wishlist.filter(x => x !== name);
+        icon.classList.remove('fa-solid','text-rose-600'); icon.classList.add('fa-regular');
+        showToast('Aus Wunschliste entfernt');
+      } else {
+        wishlist.push(name);
+        icon.classList.remove('fa-regular'); icon.classList.add('fa-solid','text-rose-600');
+        showToast('Zur Wunschliste hinzugefügt');
+      }
+      updateWishlistUI();
+    }
+    function updateWishlistUI() {
+      const badge = document.getElementById('wishlist-count');
+      const container = document.getElementById('wishlist-container');
+      badge.innerText = wishlist.length;
+      badge.classList.toggle('hidden', wishlist.length === 0);
+      if (wishlist.length === 0) {
+        container.innerHTML = '<p class="text-stone-500">Wunschliste ist leer.</p>';
+      } else {
+        container.innerHTML = wishlist.map(item => `
+          <div class="flex justify-between items-center p-2 bg-beige-light rounded">
+            <span>${item}</span>
+            <span class="text-xs text-amber-800">Gespeichert</span>
+          </div>`).join('');
+      }
+    }
+    function shareWishlist() {
+      if (wishlist.length === 0) { showToast('Wunschliste ist leer'); return; }
+      const text = 'Meine Luxevue-Wunschliste: ' + wishlist.join(', ');
+      const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+
+    // ---------- Checkout ----------
+    function populateStoreSelect() {
+      const select = document.getElementById('checkout-store');
+      select.innerHTML = '<option value="">Bitte wählen...</option>';
+      STORE_DATABASE.forEach(s => {
+        select.innerHTML += `<option value="${s.name}">${s.name} (${s.type === 'online' ? 'Online' : 'Fachgeschäft'})</option>`;
+      });
+    }
+    function showCheckoutForm() {
+      document.getElementById('checkout-form').classList.toggle('visible');
+    }
+    function submitCheckout() {
+      const store = document.getElementById('checkout-store').value;
+      const name = document.getElementById('checkout-name').value.trim();
+      const email = document.getElementById('checkout-email').value.trim();
+      const payment = document.querySelector('input[name="payment"]:checked')?.value;
+      if (!store || !name || !email) { showToast('Bitte alle Felder ausfüllen'); return; }
+      showToast(`Bestellung an ${store} übermittelt. Zahlung per ${payment}.`);
+      cart = [];
+      updateCartUI();
+      document.getElementById('checkout-form').classList.remove('visible');
+      document.getElementById('checkout-name').value = '';
+      document.getElementById('checkout-email').value = '';
+      document.getElementById('checkout-store').value = '';
+    }
+
+    // ---------- Newsletter ----------
+    function subscribeNewsletter() {
+      const email = document.getElementById('newsletter-email').value;
+      if (!email.includes('@')) { showToast('Bitte gültige E-Mail eingeben'); return; }
+      showToast('Vielen Dank! 5% Rabattcode wurde gesendet.');
+      document.getElementById('newsletter-email').value = '';
+    }
+
+    // ---------- Toast ----------
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      toast.classList.remove('opacity-0','pointer-events-none');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0','pointer-events-none');
+      }, 3000);
+    }
+
+    // ---------- Navigation ----------
+    function navigateTo(pageId) {
+      document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+      const page = document.getElementById('page-' + pageId);
+      if (page) {
+        page.classList.remove('hidden');
+        window.location.hash = pageId;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    // ---------- Start ----------
+    window.addEventListener('DOMContentLoaded', () => {
+      init();
+      const hash = window.location.hash.replace('#', '') || 'home';
+      navigateTo(hash);
+    });
+  </script>
+</body>
+</html>
