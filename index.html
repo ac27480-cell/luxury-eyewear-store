@@ -57,6 +57,14 @@
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer;
     }
+
+    /* Video Modal */
+    #videoModal .modal-content {
+      background: #fbf9f6;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
   </style>
 </head>
 <body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
@@ -68,9 +76,11 @@
     <div class="intro-text">Enter Luxevue</div>
   </div>
 
-  <!-- Audio (bitte src anpassen) -->
+  <!-- Hintergrundmusik: "Mi Chico" von DJ Goja -->
   <audio id="bg-music" preload="auto" loop>
-    <source src="thin_air.mp3" type="audio/mpeg">
+    <!-- BITTE ANPASSEN: Ersetze "mi-chico.mp3" durch deine eigene Datei oder URL -->
+    <source src="mi-chico.mp3" type="audio/mpeg">
+    Dein Browser unterstützt das Audio-Element nicht.
   </audio>
 
   <!-- Toast -->
@@ -88,6 +98,14 @@
     <div class="max-w-5xl mx-auto flex justify-between items-center">
       <span onclick="navigateTo('home')" class="text-xl font-serif tracking-[0.25em] font-light uppercase cursor-pointer">LUXEVUE</span>
       <div class="flex items-center space-x-4 text-sm">
+        <!-- Musik-Button (Play/Pause) -->
+        <button id="music-toggle" onclick="toggleMusic()" class="relative p-1 cursor-pointer" title="Musik an/aus">
+          <i id="music-icon" class="fa-solid fa-play text-lg"></i>
+        </button>
+        <!-- Musikvideo-Button -->
+        <button onclick="openVideoModal()" class="relative p-1 cursor-pointer" title="Musikvideo ansehen">
+          <i class="fa-solid fa-film text-lg"></i>
+        </button>
         <button onclick="navigateTo('wishlist')" class="relative p-1 cursor-pointer">
           <i class="fa-regular fa-heart text-lg"></i>
           <span id="wishlist-count" class="absolute -top-1 -right-1 bg-stone-900 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
@@ -250,6 +268,27 @@
     </div>
   </div>
 
+  <!-- Musikvideo Modal -->
+  <div id="videoModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
+    <div class="modal-content w-full max-w-2xl">
+      <div class="flex justify-between items-center p-4 border-b border-beige">
+        <h3 class="font-serif text-lg">DJ Goja x Jason Derulo x Melody - Mi Chico</h3>
+        <button onclick="closeVideoModal()" class="text-2xl">&times;</button>
+      </div>
+      <div class="relative" style="padding-top: 56.25%;">
+        <iframe 
+          id="youtube-iframe"
+          class="absolute top-0 left-0 w-full h-full"
+          src="https://www.youtube-nocookie.com/embed/DEINE_VIDEO_ID" 
+          title="DJ Goja x Jason Derulo x Melody - Mi Chico Official Music Video" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="mt-16 px-4 py-8">
     <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-xs">
@@ -351,6 +390,7 @@
     let wishlist = [];
     let cart = [];
     let lastViewedBrand = null;
+    let musicPlaying = false;
 
     // ---------- Init ----------
     function init() {
@@ -367,9 +407,62 @@
       const intro = document.getElementById('intro');
       if (intro.classList.contains('open')) return;
       intro.classList.add('open');
-      const music = document.getElementById('bg-music');
-      if (music) music.play().catch(()=>{});
+      startMusic();
       setTimeout(() => { intro.style.display = 'none'; }, 1000);
+    }
+
+    // Musiksteuerung
+    function startMusic() {
+      const music = document.getElementById('bg-music');
+      if (music) {
+        music.play().then(() => {
+          musicPlaying = true;
+          updateMusicButton();
+        }).catch(err => {
+          console.log('Musik konnte nicht gestartet werden:', err);
+          musicPlaying = false;
+          updateMusicButton();
+        });
+      }
+    }
+
+    function toggleMusic() {
+      const music = document.getElementById('bg-music');
+      if (!music) return;
+      if (musicPlaying) {
+        music.pause();
+        musicPlaying = false;
+      } else {
+        music.play().then(() => {
+          musicPlaying = true;
+        }).catch(err => {
+          console.log('Fehler beim Abspielen:', err);
+        });
+      }
+      updateMusicButton();
+    }
+
+    function updateMusicButton() {
+      const icon = document.getElementById('music-icon');
+      if (musicPlaying) {
+        icon.className = 'fa-solid fa-pause text-lg';
+      } else {
+        icon.className = 'fa-solid fa-play text-lg';
+      }
+    }
+
+    // Video-Modal öffnen/schließen
+    function openVideoModal() {
+      document.getElementById('videoModal').classList.remove('hidden');
+      document.getElementById('videoModal').classList.add('flex');
+    }
+
+    function closeVideoModal() {
+      document.getElementById('videoModal').classList.add('hidden');
+      document.getElementById('videoModal').classList.remove('flex');
+      // Video stoppen
+      const iframe = document.getElementById('youtube-iframe');
+      iframe.src = iframe.src; // Neuladen, um Wiedergabe zu stoppen
     }
 
     // ---------- Produkt-Rendering ----------
@@ -404,7 +497,6 @@
 
     // Filterfunktion für Marken-Buttons
     function filterBrand(brand, btn) {
-      // Aktiven Button visuell hervorheben
       document.querySelectorAll('.brand-btn').forEach(b => {
         b.classList.remove('bg-stone-900', 'text-white');
         b.classList.add('bg-beige-light', 'border', 'border-beige');
@@ -415,7 +507,6 @@
       }
       const query = document.getElementById('searchInput').value.toLowerCase();
       renderProducts(brand, query);
-      // Empfehlungen aktualisieren
       lastViewedBrand = brand === 'all' ? null : brand;
       updateRecommendations();
     }
@@ -652,6 +743,7 @@
       init();
       const hash = window.location.hash.replace('#', '') || 'home';
       navigateTo(hash);
+      updateMusicButton();
     });
   </script>
 </body>
