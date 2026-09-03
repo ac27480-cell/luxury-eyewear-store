@@ -41,12 +41,11 @@
       width: 50%;
       height: 100%;
       transition: transform 1s ease-in-out;
-      background-color: #fbf9f6; /* Helle Farbe statt Schwarz */
+      background-color: #fbf9f6;
     }
     .panel.left { left: 0; transform: translateX(0); }
     .panel.right { right: 0; transform: translateX(0); }
 
-    /* Schriftzug in der Mitte */
     .intro-text {
       position: absolute;
       top: 50%;
@@ -59,13 +58,21 @@
       color: #2c2a29;
       font-weight: 300;
       transition: opacity 0.5s;
-      pointer-events: none; /* Damit Klicks auf das Intro durchgehen */
+      pointer-events: none;
       text-align: center;
     }
 
     #intro.open .panel.left { transform: translateX(-100%); }
     #intro.open .panel.right { transform: translateX(100%); }
     #intro.open .intro-text { opacity: 0; }
+
+    /* Cursor für Store-Karten */
+    .store-item {
+      cursor: pointer;
+    }
+    .store-item:hover {
+      background-color: rgba(0,0,0,0.03);
+    }
   </style>
 </head>
 <body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
@@ -353,31 +360,26 @@
     let wishlist = [];
     let cart = [];
 
-    // Funktion zum Öffnen des Intros
+    // Intro-Logik
     function openIntro() {
       const intro = document.getElementById('intro');
       if (intro.classList.contains('open')) return;
       intro.classList.add('open');
       
-      // Musik starten
       const music = document.getElementById('bg-music');
       if (music) {
         music.play().catch(err => console.log('Musik konnte nicht gestartet werden:', err));
       }
       
-      // Nach der Animation Intro ausblenden
       setTimeout(() => {
         intro.style.display = 'none';
       }, 1000);
     }
 
-    // Klick auf das Intro
     document.getElementById('intro').addEventListener('click', openIntro);
-
-    // Fallback: automatisch nach 5 Sekunden öffnen
     setTimeout(openIntro, 5000);
 
-    // Erweiterte Store-Datenbank inkl. Cartier
+    // Store-Datenbank
     const STORE_DATABASE = [
       // Online-Shops
       { name: "Brillenlaboratorium", type: "online", state: "Online E-Shop", desc: "Expressversand & Premium-Partner", url: "https://brillenlaboratorium.shop", status: "Sofort lieferbar", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Lindberg"] },
@@ -414,6 +416,10 @@
         toast.classList.remove('opacity-100');
         toast.classList.add('opacity-0', 'pointer-events-none');
       }, 3000);
+    }
+
+    function showStoreInfo(name, desc) {
+      showToast(name + ' – ' + desc);
     }
 
     function navigateTo(pageId) {
@@ -462,13 +468,13 @@
 
       matchingStores.filter(s => s.type === 'store').forEach(store => {
         html += `
-          <a href="${store.url}" target="_blank" class="flex justify-between border-b border-beige/60 pb-1.5 hover:bg-stone-200/50 p-1 rounded transition">
+          <div onclick="showStoreInfo('${store.name}', '${store.desc}')" class="store-item flex justify-between border-b border-beige/60 pb-1.5 hover:bg-stone-200/50 p-1 rounded transition">
             <div>
               <p class="font-medium text-stone-900">${store.name} <span class="text-[9px] bg-stone-200 text-stone-700 px-1 py-0.5 rounded ml-1">${store.state}</span></p>
               <p class="text-stone-500 text-[10px]">${store.desc}</p>
             </div>
             <span class="text-emerald-700 font-medium text-[11px]">${store.status}</span>
-          </a>
+          </div>
         `;
       });
 
