@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LUXEVUE | Haute Horlogerie & Eyewear</title>
+  <title>LUXEVUE | Haute Eyewear & Store Locator</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -14,185 +14,217 @@
     .btn-outline { border: 1px solid #2c2a29; }
   </style>
 </head>
-<body class="min-h-screen pb-20">
+<body class="min-h-screen pb-24">
 
-  <!-- Navigation -->
-  <header class="sticky top-0 z-40 bg-[#fbf9f6]/90 backdrop-blur-md border-b border-beige px-6 py-4 flex justify-between items-center">
-    <span class="text-xl font-serif tracking-[0.25em] font-light uppercase">LUXEVUE</span>
-    <div class="flex items-center space-x-5 text-sm">
-      <button onclick="alert('Wunschliste geöffnet')"><i class="fa-regular fa-heart"></i></button>
-      <button onclick="alert('Warenkorb ist leer')"><i class="fa-solid fa-bag-shopping"></i></button>
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-[#fbf9f6]/95 backdrop-blur-md border-b border-beige px-4 py-3">
+    <div class="max-w-md mx-auto">
+      <div class="flex justify-between items-center mb-3">
+        <span onclick="showPage('home')" class="text-xl font-serif tracking-[0.25em] font-light uppercase cursor-pointer">LUXEVUE</span>
+        <div class="flex items-center space-x-5 text-sm">
+          <button onclick="showPage('wishlist')" class="relative">
+            <i class="fa-regular fa-heart text-base"></i>
+            <span id="wishlist-count" class="absolute -top-1 -right-2 bg-stone-900 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          </button>
+          <button onclick="showPage('cart')" class="relative">
+            <i class="fa-solid fa-bag-shopping text-base"></i>
+            <span id="cart-count" class="absolute -top-1 -right-2 bg-amber-700 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Suche -->
+      <div class="relative">
+        <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Marke oder Modell suchen (z.B. Cartier, DITA, Gold)..." class="w-full bg-[#f4f0eb] border border-beige rounded-full py-2 pl-9 pr-4 text-xs focus:outline-none focus:border-stone-800">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-stone-400 text-xs"></i>
+      </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="max-w-md mx-auto px-4 py-6">
+  <!-- HAUPTSEITE: HOMEPAGE -->
+  <div id="page-home" class="page-content max-w-md mx-auto px-4 py-6">
     
     <!-- Marken Filter -->
-    <div class="flex justify-center space-x-2 mb-8 text-xs tracking-widest uppercase">
-      <button onclick="filterBrand('all')" class="px-4 py-2 bg-stone-900 text-white rounded-full">Alle</button>
-      <button onclick="filterBrand('AURÉLIA')" class="px-4 py-2 bg-beige-light border border-beige rounded-full">Aurélia</button>
-      <button onclick="filterBrand('Cartier')" class="px-4 py-2 bg-beige-light border border-beige rounded-full">Cartier</button>
-      <button onclick="filterBrand('DITA')" class="px-4 py-2 bg-beige-light border border-beige rounded-full">DITA</button>
+    <div class="flex space-x-2 overflow-x-auto pb-4 mb-4 text-xs tracking-widest uppercase scrollbar-none">
+      <button onclick="filterBrand('all')" class="brand-btn px-4 py-2 bg-stone-900 text-white rounded-full whitespace-nowrap">Alle</button>
+      <button onclick="filterBrand('Cartier')" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap">Cartier</button>
+      <button onclick="filterBrand('DITA')" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap">DITA</button>
+      <button onclick="filterBrand('Tom Ford')" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap">Tom Ford</button>
+      <button onclick="filterBrand('Gucci')" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap">Gucci</button>
+      <button onclick="filterBrand('YSL')" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap">YSL</button>
     </div>
 
-    <!-- Product Grid / List -->
-    <div class="space-y-12" id="product-list">
+    <!-- Produkt-Liste -->
+    <div class="space-y-10" id="product-list">
       
-      <!-- Produkt 1: Aurélia Paris -->
-      <div class="product-card" data-brand="AURÉLIA">
-        <div onclick="openDetail('AURÉLIA PARIS', 'THE ECLIPSE | AVIATOR FRAME', 'Exquisitely crafted from 18k gold-plated titanium, The Eclipse aviator frame embodies timeless sophistication. Featuring signature hand-engraved temples and precision-engineered hinges.', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', 'aurelia-stores')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-4 hover:opacity-95 transition">
-          <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80" alt="The Eclipse Aviator" class="w-full h-56 object-cover rounded">
+      <!-- Produkt 1: Cartier -->
+      <div class="product-card" data-brand="Cartier" data-search="cartier premiere gold sonnenbrille luxus">
+        <div onclick="openDetail('CARTIER', 'Première de Cartier Gold', '980 €', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', 'Edles Acetat mit 18kt vergoldeten Bügeln, Handgravur und ikonischem C-Motiv.', 'cartier-stores')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
+          <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80" alt="Cartier Brille" class="w-full h-56 object-cover rounded">
         </div>
-        
         <div class="flex justify-between items-baseline mb-1">
-          <h2 class="text-xl font-serif tracking-widest uppercase">AURÉLIA PARIS</h2>
-          <div class="space-x-3 text-stone-500 text-sm">
-            <button onclick="alert('Link kopiert')"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
-            <button onclick="alert('Zur Wunschliste hinzugefügt')"><i class="fa-regular fa-heart"></i></button>
-          </div>
+          <h2 class="text-lg font-serif tracking-widest uppercase">CARTIER</h2>
+          <button onclick="toggleWishlist(this, 'Cartier Première Gold')" class="text-stone-400 hover:text-rose-600 text-base"><i class="fa-regular fa-heart"></i></button>
         </div>
-        
-        <p class="text-xs uppercase tracking-wider text-stone-500 mb-4">THE ECLIPSE | AVIATOR FRAME</p>
-        
-        <p class="text-xs text-stone-600 leading-relaxed mb-6">
-          Exquisitely crafted from 18k gold-plated titanium, The Eclipse aviator frame embodies timeless sophistication. Featuring signature hand-engraved temples and precision-engineered hinges.
-        </p>
-
-        <!-- Buttons -->
+        <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">PREMIÈRE DE CARTIER | 980 €</p>
+        <p class="text-xs text-stone-600 leading-relaxed mb-4">18kt vergoldeter Titandraht-Rahmen mit präzisionsgefertigten Scharnieren.</p>
         <div class="space-y-2">
-          <button onclick="toggleStores('aurelia-stores')" class="w-full py-3 btn-outline text-xs uppercase tracking-widest bg-transparent hover:bg-stone-900 hover:text-white transition">
-            Find in Store
-          </button>
-          <button onclick="openDetail('AURÉLIA PARIS', 'THE ECLIPSE | AVIATOR FRAME', 'Exquisitely crafted from 18k gold-plated titanium, The Eclipse aviator frame embodies timeless sophistication. Featuring signature hand-engraved temples and precision-engineered hinges.', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', 'aurelia-stores')" class="w-full py-3 bg-beige text-xs uppercase tracking-widest font-medium hover:bg-[#dcd3c7] transition">
-            Add to Bag
-          </button>
+          <button onclick="toggleStores('cartier-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent">Find in Store</button>
+          <button onclick="addToCart('Cartier Première Gold', '980 €', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium">Add to Bag</button>
         </div>
-
-        <!-- Store Finder Results -->
-        <div id="aurelia-stores" class="hidden mt-4 p-4 bg-beige-light rounded border border-beige text-xs space-y-3">
-          <p class="font-semibold uppercase tracking-wider text-[10px] text-stone-500 mb-2">Vertragspartner & Fachgeschäfte:</p>
-          <div class="flex justify-between items-center pb-2 border-b border-beige">
-            <div>
-              <p class="font-medium">Fielmann Flagship & Luxury Lounge</p>
-              <p class="text-stone-500 text-[11px]">Holm 48, 24937 Flensburg</p>
-            </div>
-            <span class="text-emerald-700 font-medium">Auf Lager</span>
-          </div>
-          <div class="flex justify-between items-center pb-2 border-b border-beige">
-            <div>
-              <p class="font-medium">Optiker Bode Premium</p>
-              <p class="text-stone-500 text-[11px]">Grosse Strasse 22, 24937 Flensburg</p>
-            </div>
-            <span class="text-emerald-700 font-medium">1 Stück</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <div>
-              <p class="font-medium">Optik Hallmann Haute Lunetterie</p>
-              <p class="text-stone-500 text-[11px]">Neuer Wall 10, 20354 Hamburg</p>
-            </div>
-            <span class="text-stone-400">Auf Anfrage</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Produkt 2: Cartier -->
-      <div class="product-card" data-brand="Cartier">
-        <div onclick="openDetail('CARTIER', 'PREMIÈRE DE CARTIER', 'Klassische Fassung mit 18kt vergoldeten Akzenten, handpoliertem Acetat und den ikonischen C-Motiven an den Scharnieren.', 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', 'cartier-stores')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-4 hover:opacity-95 transition">
-          <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80" alt="Cartier" class="w-full h-56 object-cover rounded">
-        </div>
-        
-        <div class="flex justify-between items-baseline mb-1">
-          <h2 class="text-xl font-serif tracking-widest uppercase">CARTIER</h2>
-          <div class="space-x-3 text-stone-500 text-sm">
-            <button onclick="alert('Link kopiert')"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
-            <button onclick="alert('Zur Wunschliste hinzugefügt')"><i class="fa-regular fa-heart"></i></button>
-          </div>
-        </div>
-        
-        <p class="text-xs uppercase tracking-wider text-stone-500 mb-4">PREMIÈRE DE CARTIER</p>
-        
-        <p class="text-xs text-stone-600 leading-relaxed mb-6">
-          Klassische Fassung mit 18kt vergoldeten Akzenten, handpoliertem Acetat und den ikonischen C-Motiven an den Scharnieren.
-        </p>
-
-        <div class="space-y-2">
-          <button onclick="toggleStores('cartier-stores')" class="w-full py-3 btn-outline text-xs uppercase tracking-widest bg-transparent hover:bg-stone-900 hover:text-white transition">
-            Find in Store
-          </button>
-          <button onclick="openDetail('CARTIER', 'PREMIÈRE DE CARTIER', 'Klassische Fassung mit 18kt vergoldeten Akzenten, handpoliertem Acetat und den ikonischen C-Motiven an den Scharnieren.', 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', 'cartier-stores')" class="w-full py-3 bg-beige text-xs uppercase tracking-widest font-medium hover:bg-[#dcd3c7] transition">
-            Add to Bag
-          </button>
-        </div>
-
-        <div id="cartier-stores" class="hidden mt-4 p-4 bg-beige-light rounded border border-beige text-xs space-y-3">
-          <p class="font-semibold uppercase tracking-wider text-[10px] text-stone-500 mb-2">Vertragspartner & Fachgeschäfte:</p>
-          <div class="flex justify-between items-center pb-2 border-b border-beige">
-            <div>
-              <p class="font-medium">Fielmann Luxury Eyewear Studio</p>
-              <p class="text-stone-500 text-[11px]">Holm 48, 24937 Flensburg</p>
-            </div>
+        <div id="cartier-stores" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-2">
+          <div class="flex justify-between border-b border-beige pb-1">
+            <div><p class="font-medium">Fielmann Luxury Lounge</p><p class="text-stone-400 text-[10px]">Holm 48, Flensburg</p></div>
             <span class="text-emerald-700 font-medium">2 verfügbar</span>
           </div>
-          <div class="flex justify-between items-center">
-            <div>
-              <p class="font-medium">Optik Hallmann Premium</p>
-              <p class="text-stone-500 text-[11px]">Jungfernstieg 15, 20354 Hamburg</p>
-            </div>
+          <div class="flex justify-between">
+            <div><p class="font-medium">Optik Hallmann Premium</p><p class="text-stone-400 text-[10px]">Neuer Wall 10, Hamburg</p></div>
             <span class="text-emerald-700 font-medium">1 Stück</span>
           </div>
         </div>
       </div>
 
+      <!-- Produkt 2: DITA -->
+      <div class="product-card" data-brand="DITA" data-search="dita flight 006 titanium aviator pilot">
+        <div onclick="openDetail('DITA', 'Flight-006 Titanium', '750 €', 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', 'Handgefertigt in Japan. Titan-Rahmen mit Diamantstruktur-Prägung.', 'dita-stores')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
+          <img src="https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80" alt="DITA Brille" class="w-full h-56 object-cover rounded">
+        </div>
+        <div class="flex justify-between items-baseline mb-1">
+          <h2 class="text-lg font-serif tracking-widest uppercase">DITA</h2>
+          <button onclick="toggleWishlist(this, 'DITA Flight-006')" class="text-stone-400 hover:text-rose-600 text-base"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">FLIGHT-006 TITANIUM | 750 €</p>
+        <p class="text-xs text-stone-600 leading-relaxed mb-4">Ikonischer Pilot-Look aus massivem Titan mit maßgeschneiderten Azetat-Inlays.</p>
+        <div class="space-y-2">
+          <button onclick="toggleStores('dita-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent">Find in Store</button>
+          <button onclick="addToCart('DITA Flight-006', '750 €', 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium">Add to Bag</button>
+        </div>
+        <div id="dita-stores" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-2">
+          <div class="flex justify-between border-b border-beige pb-1">
+            <div><p class="font-medium">Optiker Bode Flensburg</p><p class="text-stone-400 text-[10px]">Große Straße 22, Flensburg</p></div>
+            <span class="text-emerald-700 font-medium">1 Stück</span>
+          </div>
+          <div class="flex justify-between">
+            <div><p class="font-medium">Optik Hallmann Berlin</p><p class="text-stone-400 text-[10px]">Kurfürstendamm 194, Berlin</p></div>
+            <span class="text-emerald-700 font-medium">3 verfügbar</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produkt 3: Tom Ford -->
+      <div class="product-card" data-brand="Tom Ford" data-search="tom ford snowdon vintage schwarz acatate">
+        <div onclick="openDetail('TOM FORD', 'Snowdon Vintage Black', '390 €', 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', 'Glänzendes Acetat mit vergoldetem T-Symbol an den Scharnieren.', 'tf-stores')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
+          <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80" alt="Tom Ford Brille" class="w-full h-56 object-cover rounded">
+        </div>
+        <div class="flex justify-between items-baseline mb-1">
+          <h2 class="text-lg font-serif tracking-widest uppercase">TOM FORD</h2>
+          <button onclick="toggleWishlist(this, 'Tom Ford Snowdon')" class="text-stone-400 hover:text-rose-600 text-base"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">SNOWDON VINTAGE | 390 €</p>
+        <p class="text-xs text-stone-600 leading-relaxed mb-4">Zeitloser Klassiker aus tiefschwarzem italienischem Acetat.</p>
+        <div class="space-y-2">
+          <button onclick="toggleStores('tf-stores')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent">Find in Store</button>
+          <button onclick="addToCart('Tom Ford Snowdon', '390 €', 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium">Add to Bag</button>
+        </div>
+        <div id="tf-stores" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-2">
+          <div class="flex justify-between">
+            <div><p class="font-medium">Fielmann Store Flensburg</p><p class="text-stone-400 text-[10px]">Holm 48, Flensburg</p></div>
+            <span class="text-emerald-700 font-medium">4 verfügbar</span>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </main>
+  </div>
 
-  <!-- DETAIL MODAL (Großansicht) -->
-  <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-[#fbf9f6] w-full max-w-lg rounded-lg p-6 relative shadow-2xl my-8">
-      <button onclick="closeDetail()" class="absolute top-4 right-4 text-xl text-stone-600 hover:text-black">&times;</button>
-      
-      <div class="bg-[#f4f0eb] p-2 rounded mb-6">
-        <img id="modalImg" src="" alt="Brille" class="w-full h-72 object-cover rounded">
+  <!-- SEITE: WUNSCHLISTE -->
+  <div id="page-wishlist" class="page-content hidden max-w-md mx-auto px-4 py-6">
+    <h1 class="text-2xl font-serif uppercase tracking-widest mb-4">Deine Wunschliste</h1>
+    <div id="wishlist-container" class="space-y-4 text-xs text-stone-500">
+      <p>Deine Wunschliste ist derzeit leer.</p>
+    </div>
+  </div>
+
+  <!-- SEITE: WARENKORB -->
+  <div id="page-cart" class="page-content hidden max-w-md mx-auto px-4 py-6">
+    <h1 class="text-2xl font-serif uppercase tracking-widest mb-4">Warenkorb</h1>
+    <div id="cart-container" class="space-y-4 text-xs">
+      <p class="text-stone-500">Dein Warenkorb ist noch leer.</p>
+    </div>
+    <div id="cart-summary" class="hidden mt-8 pt-4 border-t border-beige">
+      <div class="flex justify-between font-serif text-base mb-4">
+        <span>Gesamtsumme:</span>
+        <span id="cart-total">0 €</span>
       </div>
+      <button onclick="alert('Vielen Dank! Deine Reservierung zur Anprobe im Store wurde übermittelt.')" class="w-full py-3.5 bg-stone-900 text-white text-xs uppercase tracking-widest font-semibold">Zur Kasse / Reservieren</button>
+    </div>
+  </div>
 
-      <h2 id="modalBrand" class="text-2xl font-serif tracking-widest uppercase mb-1"></h2>
-      <p id="modalTitle" class="text-xs uppercase tracking-wider text-stone-500 mb-4"></p>
-      
+  <!-- SEITE: KONTO / OPTIKER-TERMIN -->
+  <div id="page-account" class="page-content hidden max-w-md mx-auto px-4 py-6">
+    <h1 class="text-2xl font-serif uppercase tracking-widest mb-2">Mein Konto</h1>
+    <p class="text-xs text-stone-500 mb-6">Terminbuchung & Beratungsexperte</p>
+
+    <div class="bg-beige-light p-4 rounded border border-beige space-y-4 text-xs mb-6">
+      <h3 class="font-semibold uppercase tracking-wider">Sehtest & VIP-Beratung buchen</h3>
+      <input type="text" placeholder="Name" class="w-full p-2 bg-white border border-beige rounded">
+      <input type="date" class="w-full p-2 bg-white border border-beige rounded">
+      <select class="w-full p-2 bg-white border border-beige rounded">
+        <option>Fielmann Luxury Lounge Flensburg</option>
+        <option>Optiker Bode Flensburg</option>
+        <option>Optik Hallmann Hamburg</option>
+      </select>
+      <button onclick="alert('Termin erfolgreich angefragt! Wir melden uns in Kürze bei Ihnen.')" class="w-full py-3 bg-stone-900 text-white uppercase tracking-widest font-medium">Termin Bestätigen</button>
+    </div>
+  </div>
+
+  <!-- DETAIL MODAL -->
+  <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#fbf9f6] w-full max-w-lg rounded-lg p-6 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+      <button onclick="closeDetail()" class="absolute top-4 right-4 text-2xl text-stone-600">&times;</button>
+      <div class="bg-[#f4f0eb] p-2 rounded mb-4">
+        <img id="modalImg" src="" class="w-full h-64 object-cover rounded">
+      </div>
+      <h2 id="modalBrand" class="text-xl font-serif tracking-widest uppercase mb-1"></h2>
+      <p id="modalPrice" class="text-xs uppercase tracking-wider text-amber-800 font-bold mb-3"></p>
       <p id="modalDesc" class="text-xs text-stone-600 leading-relaxed mb-6"></p>
-
-      <div class="space-y-3">
-        <button onclick="alert('Produkt wurde zum Warenkorb hinzugefügt!')" class="w-full py-3.5 bg-beige text-xs uppercase tracking-widest font-semibold hover:bg-[#dcd3c7] transition">
-          ADD TO BAG
-        </button>
-        <button onclick="closeDetail()" class="w-full py-3 btn-outline text-xs uppercase tracking-widest bg-transparent">
-          SCHLIESSEN
-        </button>
-      </div>
+      <button id="modalAddBtn" class="w-full py-3.5 bg-beige text-xs uppercase tracking-widest font-semibold">ADD TO BAG</button>
     </div>
   </div>
 
   <!-- Bottom Navigation -->
   <nav class="fixed bottom-0 left-0 right-0 bg-[#fbf9f6] border-t border-beige py-3 px-8 flex justify-between items-center text-xs text-stone-600 z-40">
-    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center font-medium text-black">
-      <i class="fa-solid fa-house mb-1"></i>
-      <span class="text-[10px] tracking-widest uppercase">Home</span>
+    <button onclick="showPage('home')" class="nav-btn flex flex-col items-center text-black font-semibold">
+      <i class="fa-solid fa-house text-base mb-0.5"></i>
+      <span class="text-[9px] tracking-widest uppercase">Kollektion</span>
     </button>
-    <button onclick="alert('Suche aktiviert')" class="flex flex-col items-center">
-      <i class="fa-solid fa-magnifying-glass mb-1"></i>
-      <span class="text-[10px] tracking-widest uppercase">Suche</span>
+    <button onclick="showPage('wishlist')" class="nav-btn flex flex-col items-center">
+      <i class="fa-solid fa-heart text-base mb-0.5"></i>
+      <span class="text-[9px] tracking-widest uppercase">Favoriten</span>
     </button>
-    <button onclick="alert('Profil geöffnet')" class="flex flex-col items-center">
-      <i class="fa-solid fa-user mb-1"></i>
-      <span class="text-[10px] tracking-widest uppercase">Konto</span>
+    <button onclick="showPage('cart')" class="nav-btn flex flex-col items-center">
+      <i class="fa-solid fa-bag-shopping text-base mb-0.5"></i>
+      <span class="text-[9px] tracking-widest uppercase">Tasche</span>
+    </button>
+    <button onclick="showPage('account')" class="nav-btn flex flex-col items-center">
+      <i class="fa-solid fa-user text-base mb-0.5"></i>
+      <span class="text-[9px] tracking-widest uppercase">Konto</span>
     </button>
   </nav>
 
-  <!-- JavaScript -->
+  <!-- JavaScript Logik -->
   <script>
+    let wishlist = [];
+    let cart = [];
+
+    function showPage(pageId) {
+      document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById('page-' + pageId).classList.remove('hidden');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
     function toggleStores(id) {
-      const el = document.getElementById(id);
-      el.classList.toggle('hidden');
+      document.getElementById(id).classList.toggle('hidden');
     }
 
     function filterBrand(brand) {
@@ -206,11 +238,106 @@
       });
     }
 
-    function openDetail(brand, title, desc, imgSrc, storeId) {
-      document.getElementById('modalBrand').innerText = brand;
-      document.getElementById('modalTitle').innerText = title;
+    function filterProducts() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        const searchText = card.getAttribute('data-search').toLowerCase();
+        if (searchText.includes(query)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function toggleWishlist(btn, name) {
+      const icon = btn.querySelector('i');
+      if (wishlist.includes(name)) {
+        wishlist = wishlist.filter(item => item !== name);
+        icon.classList.remove('fa-solid', 'text-rose-600');
+        icon.classList.add('fa-regular');
+      } else {
+        wishlist.push(name);
+        icon.classList.remove('fa-regular');
+        icon.classList.add('fa-solid', 'text-rose-600');
+      }
+      updateWishlistUI();
+    }
+
+    function updateWishlistUI() {
+      const badge = document.getElementById('wishlist-count');
+      const container = document.getElementById('wishlist-container');
+      badge.innerText = wishlist.length;
+      badge.classList.toggle('hidden', wishlist.length === 0);
+
+      if (wishlist.length === 0) {
+        container.innerHTML = '<p class="text-stone-500">Deine Wunschliste ist derzeit leer.</p>';
+      } else {
+        container.innerHTML = wishlist.map(item => `
+          <div class="flex justify-between items-center p-3 bg-beige-light rounded border border-beige">
+            <span class="font-serif font-medium text-stone-900">${item}</span>
+            <span class="text-xs text-amber-800 uppercase font-semibold">Gespeichert</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    function addToCart(name, price, img) {
+      cart.push({ name, price, img });
+      updateCartUI();
+      alert(name + ' wurde zum Warenkorb hinzugefügt.');
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cart-count');
+      const container = document.getElementById('cart-container');
+      const summary = document.getElementById('cart-summary');
+      const totalEl = document.getElementById('cart-total');
+
+      badge.innerText = cart.length;
+      badge.classList.toggle('hidden', cart.length === 0);
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-stone-500">Dein Warenkorb ist noch leer.</p>';
+        summary.classList.add('hidden');
+      } else {
+        let total = 0;
+        container.innerHTML = cart.map((item, index) => {
+          const numPrice = parseInt(item.price.replace(/[^0-9]/g, ''));
+          total += numPrice;
+          return `
+            <div class="flex justify-between items-center p-3 bg-beige-light rounded border border-beige">
+              <div class="flex items-center space-x-3">
+                <img src="${item.img}" class="w-10 h-10 object-cover rounded">
+                <div>
+                  <p class="font-serif font-medium text-stone-900">${item.name}</p>
+                  <p class="text-stone-500 text-[10px]">${item.price}</p>
+                </div>
+              </div>
+              <button onclick="removeFromCart(${index})" class="text-stone-400 hover:text-black">&times;</button>
+            </div>
+          `;
+        }).join('');
+        totalEl.innerText = total + ' €';
+        summary.classList.remove('hidden');
+      }
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function openDetail(brand, name, price, img, desc, storeId) {
+      document.getElementById('modalBrand').innerText = brand + ' - ' + name;
+      document.getElementById('modalPrice').innerText = price;
       document.getElementById('modalDesc').innerText = desc;
-      document.getElementById('modalImg').src = imgSrc;
+      document.getElementById('modalImg').src = img;
+      document.getElementById('modalAddBtn').onclick = function() {
+        addToCart(name, price, img);
+        closeDetail();
+      };
       document.getElementById('detailModal').classList.remove('hidden');
     }
 
