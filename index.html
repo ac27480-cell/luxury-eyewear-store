@@ -24,7 +24,7 @@
     .scrollbar-none::-webkit-scrollbar { display: none; }
     .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Intro-Overlay */
+    /* Intro-Overlay ohne Label */
     #intro {
       position: fixed;
       top: 0;
@@ -32,7 +32,7 @@
       width: 100%;
       height: 100%;
       z-index: 9999;
-      pointer-events: none;
+      cursor: pointer; /* Zeigt an, dass geklickt werden kann */
     }
     .panel {
       position: absolute;
@@ -44,38 +44,24 @@
     }
     .panel.left { left: 0; transform: translateX(0); }
     .panel.right { right: 0; transform: translateX(0); }
-    .intro-label {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #e6dfd5;
-      color: #2c2a29;
-      padding: 1.2rem 2.5rem;
-      font-size: 1.2rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 2px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      pointer-events: auto;
-      z-index: 10000;
-      transition: opacity 0.5s;
-      font-weight: 500;
-    }
     #intro.open .panel.left { transform: translateX(-100%); }
     #intro.open .panel.right { transform: translateX(100%); }
-    #intro.open .intro-label { opacity: 0; pointer-events: none; }
   </style>
 </head>
 <body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
 
-  <!-- INTRO OVERLAY -->
+  <!-- INTRO OVERLAY (ohne Label) -->
   <div id="intro">
     <div class="panel left"></div>
     <div class="panel right"></div>
-    <div class="intro-label" id="introLabel">Enter Luxevue</div>
   </div>
+
+  <!-- Hintergrundmusik – Bitte src anpassen: eigene Datei oder URL -->
+  <audio id="bg-music" preload="auto" loop>
+    <!-- Beispiel: <source src="thin_air.mp3" type="audio/mpeg"> -->
+    <source src="thin_air.mp3" type="audio/mpeg">
+    Dein Browser unterstützt das Audio-Element nicht.
+  </audio>
 
   <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 bg-stone-900 text-white text-xs px-4 py-2.5 rounded-full shadow-lg z-50 transition-opacity duration-300 opacity-0 pointer-events-none">
     <span id="toast-msg">Hinweis</span>
@@ -98,7 +84,7 @@
       </div>
 
       <div class="relative">
-        <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suche: Stadt, Optiker, Marke (z.B. Andy Wolf, Florence, Hartberg)..." class="w-full bg-[#f4f0eb] border border-beige rounded-full py-2 pl-9 pr-4 text-xs focus:outline-none focus:border-stone-800 text-[#2c2a29]">
+        <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suche: Stadt, Optiker, Marke (z.B. Cartier, Andy Wolf, Florence, Hartberg)..." class="w-full bg-[#f4f0eb] border border-beige rounded-full py-2 pl-9 pr-4 text-xs focus:outline-none focus:border-stone-800 text-[#2c2a29]">
         <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-stone-400 text-xs"></i>
       </div>
     </div>
@@ -120,6 +106,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="product-list">
       
+      <!-- Andy Wolf Produkte -->
       <div class="product-card" data-brand="Andy Wolf" data-search="andy wolf 5086 achensee hartberg wien berlin hamburg muenchen fielmann ehler optik mr spex mrz optik">
         <div onclick="openDetail('Andy Wolf', '5086 Col. A', '380 €', 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', 'Handgefertigt in Österreich. Nachhaltiges Acetat mit moderner geometrischer Linsenform.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
           <img src="https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80" alt="Andy Wolf 5086" class="w-full h-56 object-cover rounded">
@@ -171,6 +158,7 @@
         <div id="aw-stores-3" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
       </div>
 
+      <!-- Lindberg Produkt -->
       <div class="product-card" data-brand="Lindberg" data-search="lindberg titan daenemark kopenhagen fein randlos hamburg berlin muenchen fielmann edel optics">
         <div onclick="openDetail('Lindberg', 'Air Titanium Rim', '620 €', 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', 'Dänisches Minimal-Design. Patentierter Titandraht ohne Schrauben und Nieten.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
           <img src="https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80" alt="Lindberg Brille" class="w-full h-56 object-cover rounded">
@@ -186,6 +174,75 @@
           <button onclick="addToCart('Lindberg Air Titanium', '620 €', 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
         </div>
         <div id="lindberg-stores" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
+      </div>
+
+      <!-- CARTIER PRODUKTE -->
+      <div class="product-card" data-brand="Cartier" data-search="cartier santos de cartier metall klassisch luxus paris berlin muenchen hamburg">
+        <div onclick="openDetail('Cartier', 'Santos de Cartier', '890 €', 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', 'Ikonische Metallbrille mit klaren Linien und Doppelbrücke. Ein zeitloser Klassiker aus dem Hause Cartier.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
+          <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80" alt="Cartier Santos" class="w-full h-56 object-cover rounded">
+        </div>
+        <div class="flex justify-between items-baseline mb-1">
+          <h2 class="text-lg font-serif tracking-widest uppercase">CARTIER</h2>
+          <button onclick="toggleWishlist(this, 'Cartier Santos de Cartier')" class="text-stone-400 hover:text-rose-600 text-base cursor-pointer"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">SANTOS DE CARTIER | 890 €</p>
+        <p class="text-xs text-stone-600 leading-relaxed mb-4">Herrenbrille aus poliertem Metall, inspiriert von der legendären Santos-Uhr. Eleganz für jeden Anlass.</p>
+        <div class="space-y-2">
+          <button onclick="toggleStores('Cartier', 'cartier-stores-1')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent text-[#2c2a29] cursor-pointer">Verfügbare Stores & E-Shops</button>
+          <button onclick="addToCart('Cartier Santos de Cartier', '890 €', 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
+        </div>
+        <div id="cartier-stores-1" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
+      </div>
+
+      <div class="product-card" data-brand="Cartier" data-search="cartier panthere de cartier cat eye damen luxus acetate gold">
+        <div onclick="openDetail('Cartier', 'Panthère de Cartier', '980 €', 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', 'Verführerische Cat-Eye-Form mit goldenen Akzenten. Die Panthère-Kollektion steht für Weiblichkeit und Luxus.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
+          <img src="https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80" alt="Cartier Panthère" class="w-full h-56 object-cover rounded">
+        </div>
+        <div class="flex justify-between items-baseline mb-1">
+          <h2 class="text-lg font-serif tracking-widest uppercase">CARTIER</h2>
+          <button onclick="toggleWishlist(this, 'Cartier Panthère de Cartier')" class="text-stone-400 hover:text-rose-600 text-base cursor-pointer"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">PANTHÈRE DE CARTIER | 980 €</p>
+        <p class="text-xs text-stone-600 leading-relaxed mb-4">Damenbrille mit raffinierter Cat-Eye-Silhouette, verziert mit feinen Golddetails und hochwertigem Acetat.</p>
+        <div class="space-y-2">
+          <button onclick="toggleStores('Cartier', 'cartier-stores-2')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent text-[#2c2a29] cursor-pointer">Verfügbare Stores & E-Shops</button>
+          <button onclick="addToCart('Cartier Panthère de Cartier', '980 €', 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
+        </div>
+        <div id="cartier-stores-2" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
+      </div>
+
+      <div class="product-card" data-brand="Cartier" data-search="cartier c decor acetat brillen statement luxus">
+        <div onclick="openDetail('Cartier', 'C Décor', '760 €', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', 'Auffällige Acetatfassung mit dem ikonischen C-Décor-Element an den Bügeln. Ein Statement für Individualisten.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
+          <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80" alt="Cartier C Décor" class="w-full h-56 object-cover rounded">
+        </div>
+        <div class="flex justify-between items-baseline mb-1">
+          <h2 class="text-lg font-serif tracking-widest uppercase">CARTIER</h2>
+          <button onclick="toggleWishlist(this, 'Cartier C Décor')" class="text-stone-400 hover:text-rose-600 text-base cursor-pointer"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">C DÉCOR | 760 €</p>
+        <p class="text-xs text-stone-600 leading-relaxed mb-4">Moderne Acetatbrille mit markantem Design. Die C-Décor-Serie verbindet Tradition mit aktuellem Trend.</p>
+        <div class="space-y-2">
+          <button onclick="toggleStores('Cartier', 'cartier-stores-3')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent text-[#2c2a29] cursor-pointer">Verfügbare Stores & E-Shops</button>
+          <button onclick="addToCart('Cartier C Décor', '760 €', 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
+        </div>
+        <div id="cartier-stores-3" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
+      </div>
+
+      <div class="product-card" data-brand="Cartier" data-search="cartier trinity metall fein elegant unisex">
+        <div onclick="openDetail('Cartier', 'Trinity', '720 €', 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', 'Feine Metallfassung, inspiriert vom Trinity-Ring. Drei miteinander verschlungene Elemente symbolisieren Liebe, Freundschaft und Treue.')" class="cursor-pointer bg-[#f4f0eb] p-4 rounded-lg mb-3">
+          <img src="https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80" alt="Cartier Trinity" class="w-full h-56 object-cover rounded">
+        </div>
+        <div class="flex justify-between items-baseline mb-1">
+          <h2 class="text-lg font-serif tracking-widest uppercase">CARTIER</h2>
+          <button onclick="toggleWishlist(this, 'Cartier Trinity')" class="text-stone-400 hover:text-rose-600 text-base cursor-pointer"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">TRINITY | 720 €</p>
+        <p class="text-xs text-stone-600 leading-relaxed mb-4">Zeitlose Unisex-Brille aus leichtem Metall. Die verspielten Details machen sie zum Lieblingsstück.</p>
+        <div class="space-y-2">
+          <button onclick="toggleStores('Cartier', 'cartier-stores-4')" class="w-full py-2.5 btn-outline text-xs uppercase tracking-widest bg-transparent text-[#2c2a29] cursor-pointer">Verfügbare Stores & E-Shops</button>
+          <button onclick="addToCart('Cartier Trinity', '720 €', 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80')" class="w-full py-2.5 bg-beige text-xs uppercase tracking-widest font-medium text-[#2c2a29] cursor-pointer">In den Warenkorb</button>
+        </div>
+        <div id="cartier-stores-4" class="hidden mt-3 p-3 bg-beige-light rounded border border-beige text-xs space-y-3 max-h-80 overflow-y-auto mb-4"></div>
       </div>
 
     </div>
@@ -233,6 +290,7 @@
         <option>Noble Optic House (Berlin)</option>
         <option>Optik Steininger (München, Bayern)</option>
         <option>Mykita Shop (Berlin / Zürich)</option>
+        <option>Cartier Boutique (Berlin)</option>
       </select>
       <button onclick="showToast('Termin erfolgreich angefragt!')" class="w-full py-3 bg-stone-900 text-white uppercase tracking-widest font-medium cursor-pointer">Termin verbindlich reservieren</button>
     </div>
@@ -274,26 +332,48 @@
     let wishlist = [];
     let cart = [];
 
-    // Intro-Logik
-    document.getElementById('introLabel').addEventListener('click', function() {
-      document.getElementById('intro').classList.add('open');
+    // Intro-Klick: Panels öffnen und Musik starten
+    document.getElementById('intro').addEventListener('click', function() {
+      if (this.classList.contains('open')) return; // bereits geöffnet
+      this.classList.add('open');
+      
+      // Musik starten
+      const music = document.getElementById('bg-music');
+      if (music) {
+        music.play().catch(err => console.log('Musik konnte nicht automatisch gestartet werden:', err));
+      }
+      
+      // Nach der Animation Intro ausblenden
       setTimeout(() => {
-        document.getElementById('intro').style.display = 'none';
-      }, 1000); // Dauer passend zur CSS-Transition (1s)
+        this.style.display = 'none';
+      }, 1000);
     });
 
-    // Erweiterte Datenbank für Andy Wolf Bezugsquellen
+    // Erweiterte Store-Datenbank inkl. Cartier
     const STORE_DATABASE = [
-      { name: "Brillenlaboratorium", type: "online", state: "Online E-Shop", desc: "Expressversand & Andy Wolf Partner", url: "https://brillenlaboratorium.shop", status: "Sofort lieferbar", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Lindberg"] },
+      // Online-Shops
+      { name: "Brillenlaboratorium", type: "online", state: "Online E-Shop", desc: "Expressversand & Premium-Partner", url: "https://brillenlaboratorium.shop", status: "Sofort lieferbar", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Lindberg"] },
       { name: "Andy Wolf Official Store", type: "online", state: "Online E-Shop", desc: "Offizieller Markenshop", url: "https://www.andy-wolf.com", status: "Direkt ab Werk", brands: ["Andy Wolf"] },
-      { name: "Mister Spex Luxury", type: "online", state: "Online E-Shop", desc: "Versandkostenfrei & Anprobe", url: "https://www.misterspex.de", status: "Auf Lager", brands: ["Andy Wolf", "DITA", "Tom Ford", "Oliver Peoples"] },
+      { name: "Mister Spex Luxury", type: "online", state: "Online E-Shop", desc: "Versandkostenfrei & Anprobe", url: "https://www.misterspex.de", status: "Auf Lager", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Oliver Peoples"] },
       { name: "Edel-Optics Boutique", type: "online", state: "Online E-Shop", desc: "Global Luxury Store", url: "https://www.edel-optics.de", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg"] },
-      { name: "Andy Wolf Flagship Store", type: "store", state: "Wien (AT)", desc: "Tuchlauben 11, 1010 Wien", url: "#", status: "Alle Kollektionen", brands: ["Andy Wolf"] },
-      { name: "Ehler Optik & Akustik", type: "store", state: "Schleswig-Holstein", desc: "Große Straße 12, Flensburg", url: "#", status: "Vorort vorrätig", brands: ["Andy Wolf", "Tom Ford", "DITA"] },
+      { name: "Cartier Official Eyewear", type: "online", state: "Online E-Shop", desc: "Offizieller Cartier Online-Store", url: "https://www.cartier.com", status: "Exklusiv", brands: ["Cartier"] },
+      { name: "Fielmann Online", type: "online", state: "Online E-Shop", desc: "Große Auswahl & Filialservice", url: "https://www.fielmann.de", status: "Lieferbar", brands: ["Cartier", "Andy Wolf", "Tom Ford", "Lindberg"] },
+      { name: "Apollo-Optik", type: "online", state: "Online E-Shop", desc: "Premium-Marken im Sortiment", url: "https://www.apollo.de", status: "Verfügbar", brands: ["Cartier", "DITA", "Ray-Ban"] },
+      { name: "Brillen.de", type: "online", state: "Online E-Shop", desc: "Luxusbrillen & Fachberatung", url: "https://www.brillen.de", status: "Auf Lager", brands: ["Cartier", "Tom Ford", "Oliver Peoples"] },
+
+      // Physische Stores
+      { name: "Cartier Boutique Berlin", type: "store", state: "Berlin", desc: "Kurfürstendamm 186, 10707 Berlin", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
+      { name: "Cartier Boutique München", type: "store", state: "Bayern", desc: "Maximilianstraße 20, 80539 München", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
+      { name: "Cartier Boutique Wien", type: "store", state: "Wien (AT)", desc: "Kohlmarkt 1, 1010 Wien", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
+      { name: "Ehler Optik & Akustik", type: "store", state: "Schleswig-Holstein", desc: "Große Straße 12, Flensburg", url: "#", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "DITA"] },
       { name: "Fielmann Luxury Lounge", type: "store", state: "Schleswig-Holstein", desc: "Holm 48, Flensburg", url: "#", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg"] },
-      { name: "Brille 54", type: "store", state: "Berlin", desc: "Kurfürstendamm 54, Berlin", url: "#", status: "Exklusive Modelle", brands: ["Andy Wolf", "DITA"] },
+      { name: "Fielmann Flagship Hamburg", type: "store", state: "Hamburg", desc: "Jungfernstieg 40, 20354 Hamburg", url: "#", status: "Große Auswahl", brands: ["Cartier", "Andy Wolf", "Lindberg"] },
+      { name: "Optik Habel", type: "store", state: "Berlin", desc: "Schloßstraße 90, 12163 Berlin", url: "#", status: "Cartier exklusiv", brands: ["Cartier"] },
+      { name: "Brillenwerk Stuttgart", type: "store", state: "Baden-Württemberg", desc: "Königstraße 45, 70173 Stuttgart", url: "#", status: "Verfügbar", brands: ["Cartier", "DITA", "Tom Ford"] },
+      { name: "Sehwerk Karlsruhe", type: "store", state: "Baden-Württemberg", desc: "Kaiserstraße 140, Karlsruhe", url: "#", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford"] },
       { name: "Blickfang Optik", type: "store", state: "Baden-Württemberg", desc: "Königstraße 22, Stuttgart", url: "#", status: "1 Stück", brands: ["Andy Wolf", "Cartier", "DITA"] },
-      { name: "Sehwerk Karlsruhe", type: "store", state: "Baden-Württemberg", desc: "Kaiserstraße 140, Karlsruhe", url: "#", status: "Verfügbar", brands: ["Andy Wolf", "Tom Ford"] }
+      { name: "Optik Steininger", type: "store", state: "Bayern", desc: "Sendlinger Straße 25, 80331 München", url: "#", status: "Cartier Partner", brands: ["Cartier"] },
+      { name: "Noble Optic House", type: "store", state: "Berlin", desc: "Friedrichstraße 150, 10117 Berlin", url: "#", status: "Exklusive Modelle", brands: ["Cartier", "DITA", "Tom Ford"] }
     ];
 
     function showToast(msg) {
