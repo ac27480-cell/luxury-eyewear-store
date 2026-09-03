@@ -50,8 +50,30 @@
     }
     #checkout-form.visible { max-height: 1200px; opacity: 1; }
 
-    /* Vergleichsmodal */
-    #compareModal .compare-table th, #compareModal .compare-table td { padding: 0.5rem; border-bottom: 1px solid #e2dbd1; }
+    /* Dropdown Menü */
+    #brandDropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      border: 1px solid #e2dbd1;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 50;
+      min-width: 200px;
+    }
+    #brandDropdown.visible { display: block; }
+    #brandDropdown a {
+      display: block;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #2c2a29;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: background 0.2s;
+    }
+    #brandDropdown a:hover { background: #f4f0eb; }
 
     /* Live-Chat Button */
     #liveChatBtn {
@@ -60,9 +82,6 @@
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer;
     }
-
-    /* Footer */
-    footer { background: #f4f0eb; border-top: 1px solid #e2dbd1; }
   </style>
 </head>
 <body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
@@ -91,9 +110,18 @@
 
   <!-- Header -->
   <header class="sticky top-0 z-40 bg-[#fbf9f6]/95 backdrop-blur-md border-b border-beige px-4 py-3">
-    <div class="max-w-5xl mx-auto flex justify-between items-center">
-      <span onclick="navigateTo('home')" class="text-xl font-serif tracking-[0.25em] font-light uppercase cursor-pointer">LUXEVUE</span>
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <!-- Linker Bereich: Hamburger + Logo -->
+      <div class="flex items-center gap-4">
+        <button id="menuToggle" class="text-2xl focus:outline-none" aria-label="Menü öffnen">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <span onclick="navigateTo('home')" class="text-xl font-serif tracking-[0.25em] font-light uppercase cursor-pointer">LUXEVUE</span>
+      </div>
+
+      <!-- Rechter Bereich: Icons -->
       <div class="flex items-center space-x-4 text-sm">
+        <button onclick="toggleCompareBar()" class="hidden md:block text-xs underline">Vergleichen (<span id="compare-count">0</span>)</button>
         <button onclick="navigateTo('wishlist')" class="relative p-1 cursor-pointer">
           <i class="fa-regular fa-heart text-lg"></i>
           <span id="wishlist-count" class="absolute -top-1 -right-1 bg-stone-900 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
@@ -102,9 +130,23 @@
           <i class="fa-solid fa-bag-shopping text-lg"></i>
           <span id="cart-count" class="absolute -top-1 -right-1 bg-amber-800 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
         </button>
-        <button onclick="toggleCompareBar()" class="hidden md:block text-xs underline">Vergleichen (<span id="compare-count">0</span>)</button>
       </div>
     </div>
+
+    <!-- Dropdown-Menü für Marken -->
+    <div id="brandDropdown" class="mt-2">
+      <a href="#" onclick="selectBrand('all', this); return false;">Alle</a>
+      <a href="#" onclick="selectBrand('Andy Wolf', this); return false;">Andy Wolf</a>
+      <a href="#" onclick="selectBrand('Lindberg', this); return false;">Lindberg</a>
+      <a href="#" onclick="selectBrand('Cartier', this); return false;">Cartier</a>
+      <a href="#" onclick="selectBrand('DITA', this); return false;">DITA</a>
+      <a href="#" onclick="selectBrand('Tom Ford', this); return false;">Tom Ford</a>
+      <a href="#" onclick="selectBrand('Oliver Peoples', this); return false;">Oliver Peoples</a>
+      <a href="#" onclick="selectBrand('Mykita', this); return false;">Mykita</a>
+      <a href="#" onclick="selectBrand('Ray-Ban', this); return false;">Ray-Ban</a>
+    </div>
+
+    <!-- Suchleiste -->
     <div class="max-w-5xl mx-auto mt-3 relative">
       <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suche: Stadt, Optiker, Marke..." class="w-full bg-[#f4f0eb] border border-beige rounded-full py-2 pl-9 pr-4 text-xs focus:outline-none">
       <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-stone-400 text-xs"></i>
@@ -114,30 +156,15 @@
   <!-- Hauptbereich -->
   <main id="page-home" class="page-content max-w-5xl mx-auto px-4 py-6">
     
-    <!-- Markenfilter -->
-    <div class="flex space-x-2 overflow-x-auto pb-4 mb-6 text-xs tracking-widest uppercase scrollbar-none" id="brand-filters">
-      <button onclick="filterBrand('all', this)" class="brand-btn px-4 py-2 bg-stone-900 text-white rounded-full whitespace-nowrap cursor-pointer">Alle</button>
-      <button onclick="filterBrand('Andy Wolf', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Andy Wolf</button>
-      <button onclick="filterBrand('Lindberg', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Lindberg</button>
-      <button onclick="filterBrand('Cartier', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Cartier</button>
-      <button onclick="filterBrand('DITA', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">DITA</button>
-      <button onclick="filterBrand('Tom Ford', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Tom Ford</button>
-      <button onclick="filterBrand('Oliver Peoples', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Oliver Peoples</button>
-      <button onclick="filterBrand('Mykita', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Mykita</button>
-      <button onclick="filterBrand('Ray-Ban', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Ray-Ban</button>
-    </div>
-
-    <!-- Produktliste -->
+    <!-- Keine horizontale Filterleiste mehr, Produktliste direkt -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="product-list">
-      <!-- Produktkarten werden hier dynamisch per JS generiert (siehe Daten unten) -->
+      <!-- Produktkarten werden hier dynamisch per JS generiert -->
     </div>
 
     <!-- Empfehlungen -->
     <section class="mt-12">
       <h2 class="text-2xl font-serif tracking-widest uppercase mb-4">Für Sie empfohlen</h2>
-      <div id="recommendations" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Wird per JS gefüllt -->
-      </div>
+      <div id="recommendations" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
     </section>
 
     <!-- Markenwelten / Storytelling -->
@@ -316,62 +343,14 @@
   <script>
     // ---------- Daten ----------
     const PRODUCTS = [
-      {
-        id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €',
-        img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80',
-        desc: 'Handgefertigt in Österreich. Nachhaltiges Acetat mit moderner geometrischer Linsenform.',
-        rating: 4.5, reviews: 32,
-        search: 'andy wolf 5086 achensee hartberg wien berlin'
-      },
-      {
-        id: 2, brand: 'Andy Wolf', name: 'Florence Cat-Eye', price: '420 €',
-        img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80',
-        desc: 'Elegante Cat-Eye Sonnenbrille aus nachhaltigem Bio-Acetat.',
-        rating: 4.8, reviews: 18,
-        search: 'andy wolf florence cat eye acetat'
-      },
-      {
-        id: 3, brand: 'Andy Wolf', name: 'Hume Titanium', price: '395 €',
-        img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80',
-        desc: 'Filigranes Metall-Design mit Acetat-Innenring.',
-        rating: 4.2, reviews: 9,
-        search: 'andy wolf hume titan korrekturbrille'
-      },
-      {
-        id: 4, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €',
-        img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80',
-        desc: 'Dänisches Minimal-Design. Patentierter Titandraht.',
-        rating: 4.7, reviews: 24,
-        search: 'lindberg titan daenemark randlos'
-      },
-      {
-        id: 5, brand: 'Cartier', name: 'Santos de Cartier', price: '890 €',
-        img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80',
-        desc: 'Ikonische Metallbrille mit klaren Linien und Doppelbrücke.',
-        rating: 5.0, reviews: 41,
-        search: 'cartier santos metall klassisch'
-      },
-      {
-        id: 6, brand: 'Cartier', name: 'Panthère de Cartier', price: '980 €',
-        img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80',
-        desc: 'Verführerische Cat-Eye-Form mit goldenen Akzenten.',
-        rating: 4.9, reviews: 27,
-        search: 'cartier panthere cat eye'
-      },
-      {
-        id: 7, brand: 'Cartier', name: 'C Décor', price: '760 €',
-        img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80',
-        desc: 'Auffällige Acetatfassung mit dem ikonischen C-Décor-Element.',
-        rating: 4.6, reviews: 15,
-        search: 'cartier c decor acetat'
-      },
-      {
-        id: 8, brand: 'Cartier', name: 'Trinity', price: '720 €',
-        img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80',
-        desc: 'Feine Metallfassung, inspiriert vom Trinity-Ring.',
-        rating: 4.4, reviews: 20,
-        search: 'cartier trinity metall'
-      }
+      { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Handgefertigt in Österreich. Nachhaltiges Acetat mit moderner geometrischer Linsenform.', rating: 4.5, reviews: 32, search: 'andy wolf 5086 achensee hartberg wien berlin' },
+      { id: 2, brand: 'Andy Wolf', name: 'Florence Cat-Eye', price: '420 €', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Elegante Cat-Eye Sonnenbrille aus nachhaltigem Bio-Acetat.', rating: 4.8, reviews: 18, search: 'andy wolf florence cat eye acetat' },
+      { id: 3, brand: 'Andy Wolf', name: 'Hume Titanium', price: '395 €', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Filigranes Metall-Design mit Acetat-Innenring.', rating: 4.2, reviews: 9, search: 'andy wolf hume titan korrekturbrille' },
+      { id: 4, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Dänisches Minimal-Design. Patentierter Titandraht.', rating: 4.7, reviews: 24, search: 'lindberg titan daenemark randlos' },
+      { id: 5, brand: 'Cartier', name: 'Santos de Cartier', price: '890 €', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', desc: 'Ikonische Metallbrille mit klaren Linien und Doppelbrücke.', rating: 5.0, reviews: 41, search: 'cartier santos metall klassisch' },
+      { id: 6, brand: 'Cartier', name: 'Panthère de Cartier', price: '980 €', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Verführerische Cat-Eye-Form mit goldenen Akzenten.', rating: 4.9, reviews: 27, search: 'cartier panthere cat eye' },
+      { id: 7, brand: 'Cartier', name: 'C Décor', price: '760 €', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Auffällige Acetatfassung mit dem ikonischen C-Décor-Element.', rating: 4.6, reviews: 15, search: 'cartier c decor acetat' },
+      { id: 8, brand: 'Cartier', name: 'Trinity', price: '720 €', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Feine Metallfassung, inspiriert vom Trinity-Ring.', rating: 4.4, reviews: 20, search: 'cartier trinity metall' }
     ];
 
     const STORE_DATABASE = [
@@ -402,6 +381,7 @@
     let cart = [];
     let compareList = [];
     let lastViewedBrand = null;
+    let activeBrand = 'all';
 
     // ---------- Init ----------
     function init() {
@@ -412,6 +392,19 @@
       updateRecommendations();
       document.getElementById('intro').addEventListener('click', openIntro);
       setTimeout(openIntro, 5000);
+      
+      // Menü-Toggle
+      const menuToggle = document.getElementById('menuToggle');
+      const brandDropdown = document.getElementById('brandDropdown');
+      menuToggle.addEventListener('click', () => {
+        brandDropdown.classList.toggle('visible');
+      });
+      // Dropdown schließen, wenn außerhalb geklickt wird
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#menuToggle') && !e.target.closest('#brandDropdown')) {
+          brandDropdown.classList.remove('visible');
+        }
+      });
     }
 
     function openIntro() {
@@ -457,24 +450,23 @@
       });
     }
 
-    function filterBrand(brand, btn) {
-      document.querySelectorAll('.brand-btn').forEach(b => {
-        b.classList.remove('bg-stone-900','text-white');
-        b.classList.add('bg-beige-light','border','border-beige');
-      });
-      if (btn) {
-        btn.classList.add('bg-stone-900','text-white');
-        btn.classList.remove('bg-beige-light','border','border-beige');
-      }
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      renderProducts(brand, query);
+    // Filterfunktion für Dropdown-Menü
+    function selectBrand(brand, link) {
+      activeBrand = brand;
+      // Dropdown schließen
+      document.getElementById('brandDropdown').classList.remove('visible');
+      // Suche leeren? Optional: Suchfeld zurücksetzen
+      document.getElementById('searchInput').value = '';
+      // Produkte rendern
+      renderProducts(brand, '');
+      // Empfehlungen aktualisieren
+      lastViewedBrand = brand === 'all' ? null : brand;
       updateRecommendations();
     }
 
     function filterProducts() {
       const query = document.getElementById('searchInput').value.toLowerCase();
-      const activeBrand = document.querySelector('.brand-btn.bg-stone-900')?.textContent.trim() || 'all';
-      renderProducts(activeBrand === 'Alle' ? 'all' : activeBrand, query);
+      renderProducts(activeBrand, query);
     }
 
     // ---------- Produkt-Details ----------
@@ -531,9 +523,10 @@
         compareList = compareList.filter(x => x !== id);
       }
       document.getElementById('compare-count').innerText = compareList.length;
-      const bar = document.getElementById('compareBar');
-      if (compareList.length > 0) bar.classList.remove('hidden');
-      else bar.classList.add('hidden');
+    }
+    function toggleCompareBar() {
+      // Platzhalter – wird später verwendet, um Vergleichsmodal zu öffnen
+      showCompareModal();
     }
     function showCompareModal() {
       const modal = document.getElementById('compareModal');
