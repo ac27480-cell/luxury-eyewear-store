@@ -23,19 +23,18 @@
     .scrollbar-none::-webkit-scrollbar { display: none; }
     .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Intro – angepasst für eigenes Foto (Porträtaufnahme) */
+    /* Intro – angepasst für dein Foto */
     #intro {
       position: fixed; inset: 0; z-index: 9999; cursor: pointer; pointer-events: auto;
-      /* Ersetze DEIN_FOTO.jpg durch den Dateipfad oder die URL deines hochgeladenen Bildes */
-      background-image: url('DEIN_FOTO.jpg');
+      background-image: url('image_4.png');
       background-size: cover;
-      background-position: center 25%; /* Fokus auf Modell & Brille – leicht nach oben verschoben */
+      background-position: center 25%;
       background-repeat: no-repeat;
     }
     .panel {
       position: absolute; top: 0; width: 50%; height: 100%;
       transition: transform 1s ease-in-out;
-      background-color: rgba(251, 249, 246, 0.45); /* Halbtransparent, Foto durchscheinend */
+      background-color: rgba(251, 249, 246, 0.30);
     }
     .panel.left { left: 0; transform: translateX(0); }
     .panel.right { right: 0; transform: translateX(0); }
@@ -65,10 +64,10 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer;
     }
 
-    /* Verstecktes Spotify-Embed */
-    #spotify-player {
+    /* Container für Spotify-Iframe (versteckt) */
+    #spotify-container {
       position: fixed;
-      bottom: -150px; /* außerhalb des sichtbaren Bereichs */
+      bottom: -150px;
       left: 0;
       width: 100%;
       height: 80px;
@@ -80,22 +79,15 @@
 </head>
 <body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
 
-  <!-- Intro mit eigenem Fashion-Motiv -->
+  <!-- Intro mit deinem Foto -->
   <div id="intro">
     <div class="panel left"></div>
     <div class="panel right"></div>
     <div class="intro-text">Enter Luxevue</div>
   </div>
 
-  <!-- Versteckter Spotify-Player (wird erst nach Klick geladen) -->
-  <div id="spotify-player">
-    <iframe id="spotify-iframe" 
-            src="https://open.spotify.com/embed/track/6c2ZcdXHkEFdsNArdJXrHX?si=UcPfYCevSkKPc66I_54uVQ&utm_source=copy-link" 
-            width="100%" height="80" frameborder="0" 
-            allow="autoplay; encrypted-media" 
-            allowfullscreen>
-    </iframe>
-  </div>
+  <!-- Container für dynamisch erstelltes Spotify-Iframe -->
+  <div id="spotify-container"></div>
 
   <!-- Toast Benachrichtigung -->
   <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 bg-stone-900 text-white text-xs px-4 py-2.5 rounded-full shadow-lg z-50 transition-opacity duration-300 opacity-0 pointer-events-none">
@@ -338,7 +330,7 @@
       { id: 11, brand: 'Andy Wolf', name: 'Sunrise Col. C', price: '410 €', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Moderne Sonnenbrille mit UV-Schutz und farbigen Gläsern.', rating: 4.4, reviews: 10, search: 'andy wolf sunrise sonnenbrille' }
     ];
 
-    // Store-Datenbank – E-Commerce & Luxus-Fachgeschäfte
+    // Store-Datenbank
     const STORE_DATABASE = [
       { name: "Brillenlaboratorium", type: "online", state: "Online E-Shop", desc: "Expressversand & Premium-Partner", url: "https://brillenlaboratorium.shop", status: "Sofort lieferbar", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Lindberg", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury"] },
       { name: "Andy Wolf Official Store", type: "online", state: "Online E-Shop", desc: "Offizieller Markenshop", url: "https://www.andy-wolf.com", status: "Direkt ab Werk", brands: ["Andy Wolf"] },
@@ -347,7 +339,6 @@
       { name: "Cartier Official Eyewear", type: "online", state: "Online E-Shop", desc: "Offizieller Cartier Online-Store", url: "https://www.cartier.com", status: "Exklusiv", brands: ["Cartier"] },
       { name: "Fielmann Online", type: "online", state: "Online E-Shop", desc: "Große Auswahl & Filialservice", url: "https://www.fielmann.de", status: "Lieferbar", brands: ["Cartier", "Andy Wolf", "Tom Ford", "Lindberg", "DITA"] },
       
-      // Unabhängige Luxus-Optiker
       { name: "Leidmann München", type: "store", state: "München", desc: "Benchmark für Independent Luxury Eyewear – Cartier-Vertragspartner, JMM, DITA, Matsuda", url: "#", status: "Exklusiv", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury"] },
       { name: "specs.berlin", type: "store", state: "Berlin", desc: "Crème de la Crème der Independent-Szene – Jacques Marie Mage, Cutler and Gross, Oscar Magnuson", url: "#", status: "Limitierte Serien", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "Peter and May"] },
       { name: "Noble Optic House Berlin", type: "store", state: "Berlin", desc: "Luxus- und Couture-Segment – Cartier, Maybach Icons of Luxury, Linda Farrow", url: "#", status: "VIP-Betreuung", brands: ["Cartier", "Maybach Icons of Luxury", "DITA", "Jacques Marie Mage"] },
@@ -365,6 +356,7 @@
     let lastViewedBrand = null;
     let musicPlaying = false;
     let spotifyLoaded = false;
+    let spotifyIframe = null;
 
     // ---------- Init ----------
     function init() {
@@ -381,47 +373,63 @@
       const intro = document.getElementById('intro');
       if (intro.classList.contains('open')) return;
       intro.classList.add('open');
-      // Spotify erst nach dem ersten Klick laden
+      // Spotify-Player erstellen und abspielen
       if (!spotifyLoaded) {
-        loadSpotifyPlayer();
+        createSpotifyPlayer();
         spotifyLoaded = true;
       } else {
-        playSpotify();
+        sendSpotifyCommand('play');
       }
       setTimeout(() => { intro.style.display = 'none'; }, 1000);
     }
 
-    // Spotify-Player laden und abspielen
-    function loadSpotifyPlayer() {
-      const iframe = document.getElementById('spotify-iframe');
-      iframe.src = iframe.src; // Reload, um Playback zu starten
-      musicPlaying = true;
+    // Erstellt das Spotify-Iframe dynamisch und spielt ab
+    function createSpotifyPlayer() {
+      const container = document.getElementById('spotify-container');
+      if (spotifyIframe) return;
+      
+      spotifyIframe = document.createElement('iframe');
+      spotifyIframe.id = 'spotify-iframe';
+      spotifyIframe.src = 'https://open.spotify.com/embed/track/6c2ZcdXHkEFdsNArdJXrHX?si=UcPfYCevSkKPc66I_54uVQ&utm_source=copy-link';
+      spotifyIframe.width = '100%';
+      spotifyIframe.height = '80';
+      spotifyIframe.frameBorder = '0';
+      spotifyIframe.allow = 'autoplay; encrypted-media';
+      spotifyIframe.allowFullscreen = true;
+      
+      spotifyIframe.addEventListener('load', () => {
+        // Nach dem Laden play-Kommando senden
+        sendSpotifyCommand('play');
+        musicPlaying = true;
+        updateMusicButton();
+      });
+      
+      container.appendChild(spotifyIframe);
+      musicPlaying = false; // Wird erst nach load auf true gesetzt
       updateMusicButton();
     }
 
-    function playSpotify() {
-      const iframe = document.getElementById('spotify-iframe');
-      iframe.contentWindow.postMessage({ command: 'play' }, '*');
-      musicPlaying = true;
-      updateMusicButton();
+    // Sendet Kommandos an das Spotify-Iframe
+    function sendSpotifyCommand(command) {
+      if (spotifyIframe && spotifyIframe.contentWindow) {
+        spotifyIframe.contentWindow.postMessage({ command: command }, '*');
+      }
     }
 
     function toggleMusic() {
       if (!spotifyLoaded) {
-        loadSpotifyPlayer();
+        createSpotifyPlayer();
         spotifyLoaded = true;
-        musicPlaying = true;
       } else {
-        const iframe = document.getElementById('spotify-iframe');
         if (musicPlaying) {
-          iframe.contentWindow.postMessage({ command: 'pause' }, '*');
+          sendSpotifyCommand('pause');
           musicPlaying = false;
         } else {
-          iframe.contentWindow.postMessage({ command: 'play' }, '*');
+          sendSpotifyCommand('play');
           musicPlaying = true;
         }
+        updateMusicButton();
       }
-      updateMusicButton();
     }
 
     function updateMusicButton() {
@@ -463,7 +471,6 @@
       });
     }
 
-    // Filterfunktion
     function filterBrand(brand, btn) {
       document.querySelectorAll('.brand-btn').forEach(b => {
         b.classList.remove('bg-stone-900', 'text-white');
