@@ -28,7 +28,7 @@
       position: fixed; inset: 0; z-index: 9999; cursor: pointer; pointer-events: auto;
       background-image: url('https://images.unsplash.com/photo-1485875437342-9b39470b3d95?auto=format&fit=crop&w=1600&q=80');
       background-size: cover;
-      background-position: center 30%; /* Fokus auf Modell & Brille */
+      background-position: center 30%;
     }
     .panel {
       position: absolute; top: 0; width: 50%; height: 100%;
@@ -62,6 +62,18 @@
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer;
     }
+
+    /* Verstecktes Spotify-Embed */
+    #spotify-player {
+      position: fixed;
+      bottom: -150px; /* außerhalb des sichtbaren Bereichs */
+      left: 0;
+      width: 100%;
+      height: 80px;
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
@@ -73,12 +85,15 @@
     <div class="intro-text">Enter Luxevue</div>
   </div>
 
-  <!-- Hintergrundmusik: "Mi Chico" von DJ Goja -->
-  <audio id="bg-music" preload="auto" loop>
-    <!-- BITTE ANPASSEN: Ersetze "mi-chico.mp3" durch deine eigene Datei oder URL -->
-    <source src="mi-chico.mp3" type="audio/mpeg">
-    Dein Browser unterstützt das Audio-Element nicht.
-  </audio>
+  <!-- Versteckter Spotify-Player (wird erst nach Klick geladen) -->
+  <div id="spotify-player">
+    <iframe id="spotify-iframe" 
+            src="https://open.spotify.com/embed/track/6c2ZcdXHkEFdsNArdJXrHX?si=UcPfYCevSkKPc66I_54uVQ&utm_source=copy-link" 
+            width="100%" height="80" frameborder="0" 
+            allow="autoplay; encrypted-media" 
+            allowfullscreen>
+    </iframe>
+  </div>
 
   <!-- Toast Benachrichtigung -->
   <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 bg-stone-900 text-white text-xs px-4 py-2.5 rounded-full shadow-lg z-50 transition-opacity duration-300 opacity-0 pointer-events-none">
@@ -347,6 +362,7 @@
     let cart = [];
     let lastViewedBrand = null;
     let musicPlaying = false;
+    let spotifyLoaded = false;
 
     // ---------- Init ----------
     function init() {
@@ -363,37 +379,45 @@
       const intro = document.getElementById('intro');
       if (intro.classList.contains('open')) return;
       intro.classList.add('open');
-      startMusic();
+      // Spotify erst nach dem ersten Klick laden
+      if (!spotifyLoaded) {
+        loadSpotifyPlayer();
+        spotifyLoaded = true;
+      } else {
+        playSpotify();
+      }
       setTimeout(() => { intro.style.display = 'none'; }, 1000);
     }
 
-    // Musiksteuerung
-    function startMusic() {
-      const music = document.getElementById('bg-music');
-      if (music) {
-        music.play().then(() => {
-          musicPlaying = true;
-          updateMusicButton();
-        }).catch(err => {
-          console.log('Musik-Autoplay durch Browser-Policy unterbunden:', err);
-          musicPlaying = false;
-          updateMusicButton();
-        });
-      }
+    // Spotify-Player laden und abspielen
+    function loadSpotifyPlayer() {
+      const iframe = document.getElementById('spotify-iframe');
+      iframe.src = iframe.src; // Reload, um Playback zu starten
+      musicPlaying = true;
+      updateMusicButton();
+    }
+
+    function playSpotify() {
+      const iframe = document.getElementById('spotify-iframe');
+      iframe.contentWindow.postMessage({ command: 'play' }, '*');
+      musicPlaying = true;
+      updateMusicButton();
     }
 
     function toggleMusic() {
-      const music = document.getElementById('bg-music');
-      if (!music) return;
-      if (musicPlaying) {
-        music.pause();
-        musicPlaying = false;
+      if (!spotifyLoaded) {
+        loadSpotifyPlayer();
+        spotifyLoaded = true;
+        musicPlaying = true;
       } else {
-        music.play().then(() => {
+        const iframe = document.getElementById('spotify-iframe');
+        if (musicPlaying) {
+          iframe.contentWindow.postMessage({ command: 'pause' }, '*');
+          musicPlaying = false;
+        } else {
+          iframe.contentWindow.postMessage({ command: 'play' }, '*');
           musicPlaying = true;
-        }).catch(err => {
-          console.log('Fehler beim Abspielen:', err);
-        });
+        }
       }
       updateMusicButton();
     }
