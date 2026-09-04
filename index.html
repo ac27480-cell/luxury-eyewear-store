@@ -23,17 +23,17 @@
     .scrollbar-none::-webkit-scrollbar { display: none; }
     .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Intro – mit Fashion-Foto */
+    /* Intro – mit funktionierendem Fashion-Kampagnenbild */
     #intro {
       position: fixed; inset: 0; z-index: 9999; cursor: pointer; pointer-events: auto;
       background-image: url('https://images.unsplash.com/photo-1485875437342-9b39470b3d95?auto=format&fit=crop&w=1600&q=80');
       background-size: cover;
-      background-position: center;
+      background-position: center 30%; /* Fokus auf Modell & Brille */
     }
     .panel {
       position: absolute; top: 0; width: 50%; height: 100%;
       transition: transform 1s ease-in-out;
-      background-color: rgba(251, 249, 246, 0.5); /* halbtransparent, Foto sichtbar */
+      background-color: rgba(251, 249, 246, 0.45);
     }
     .panel.left { left: 0; transform: translateX(0); }
     .panel.right { right: 0; transform: translateX(0); }
@@ -42,13 +42,13 @@
       z-index: 10000; font-size: 2rem; letter-spacing: 0.4em; text-transform: uppercase;
       color: #2c2a29; font-weight: 300; transition: opacity 0.5s; pointer-events: none;
       text-align: center;
-      text-shadow: 0 2px 10px rgba(255,255,255,0.8); /* für bessere Lesbarkeit */
+      text-shadow: 0 2px 10px rgba(255,255,255,0.8);
     }
     #intro.open .panel.left { transform: translateX(-100%); }
     #intro.open .panel.right { transform: translateX(100%); }
     #intro.open .intro-text { opacity: 0; }
 
-    /* Checkout */
+    /* Checkout Formular Animation */
     #checkout-form {
       transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
       max-height: 0; opacity: 0; overflow: hidden;
@@ -66,7 +66,7 @@
 </head>
 <body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
 
-  <!-- Intro mit Fashion-Foto -->
+  <!-- Intro mit integriertem Fashion-Motiv -->
   <div id="intro">
     <div class="panel left"></div>
     <div class="panel right"></div>
@@ -80,7 +80,7 @@
     Dein Browser unterstützt das Audio-Element nicht.
   </audio>
 
-  <!-- Toast -->
+  <!-- Toast Benachrichtigung -->
   <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 bg-stone-900 text-white text-xs px-4 py-2.5 rounded-full shadow-lg z-50 transition-opacity duration-300 opacity-0 pointer-events-none">
     <span id="toast-msg">Hinweis</span>
   </div>
@@ -95,7 +95,6 @@
     <div class="max-w-5xl mx-auto flex justify-between items-center">
       <span onclick="navigateTo('home')" class="text-xl font-serif tracking-[0.25em] font-light uppercase cursor-pointer">LUXEVUE</span>
       <div class="flex items-center space-x-4 text-sm">
-        <!-- Musik-Button (Play/Pause) -->
         <button id="music-toggle" onclick="toggleMusic()" class="relative p-1 cursor-pointer" title="Musik an/aus">
           <i id="music-icon" class="fa-solid fa-play text-lg"></i>
         </button>
@@ -120,7 +119,7 @@
   <!-- Hauptbereich -->
   <main id="page-home" class="page-content max-w-5xl mx-auto px-4 py-6">
     
-    <!-- Horizontale Markenfilterleiste -->
+    <!-- Markenfilterleiste -->
     <div class="flex space-x-2 overflow-x-auto pb-4 mb-6 text-xs tracking-widest uppercase scrollbar-none" id="brand-filters">
       <button onclick="filterBrand('all', this)" class="brand-btn px-4 py-2 bg-stone-900 text-white rounded-full whitespace-nowrap cursor-pointer">Alle</button>
       <button onclick="filterBrand('Andy Wolf', this)" class="brand-btn px-4 py-2 bg-beige-light border border-beige rounded-full whitespace-nowrap cursor-pointer">Andy Wolf</button>
@@ -139,7 +138,7 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="product-list">
-      <!-- Produktkarten werden hier dynamisch per JS generiert -->
+      <!-- Dynamisch per JS -->
     </div>
 
     <section class="mt-12">
@@ -236,8 +235,8 @@
       <select class="w-full p-2.5 bg-white border border-beige rounded focus:outline-none">
         <option>Brillenlaboratorium</option>
         <option>Andy Wolf Flagship Store (Wien)</option>
-        <option>Ehler Optik & Akustik (Flensburg)</option>
-        <option>Fielmann Luxury Lounge (Flensburg)</option>
+        <option>Leidmann (München)</option>
+        <option>specs.berlin (Berlin)</option>
         <option>Noble Optic House (Berlin)</option>
         <option>Cartier Boutique (Berlin)</option>
       </select>
@@ -245,7 +244,7 @@
     </div>
   </section>
 
-  <!-- Produkt-Detail Modal -->
+  <!-- Detail-Modal -->
   <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
     <div class="bg-[#fbf9f6] w-full max-w-lg rounded-lg p-6 relative shadow-2xl max-h-[90vh] overflow-y-auto">
       <button onclick="closeDetail()" class="absolute top-4 right-4 text-2xl text-stone-600 cursor-pointer">&times;</button>
@@ -290,7 +289,7 @@
     </div>
   </footer>
 
-  <!-- Untere Navigation -->
+  <!-- Navigationsleiste unten -->
   <nav class="fixed bottom-0 left-0 right-0 bg-[#fbf9f6] border-t border-beige py-3 px-6 flex justify-between items-center text-xs text-stone-600 z-40 max-w-5xl mx-auto">
     <button onclick="navigateTo('home')" class="nav-btn flex flex-col items-center text-black font-semibold cursor-pointer">
       <i class="fa-solid fa-house text-base mb-0.5"></i><span class="text-[9px]">Kollektion</span>
@@ -322,40 +321,25 @@
       { id: 11, brand: 'Andy Wolf', name: 'Sunrise Col. C', price: '410 €', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Moderne Sonnenbrille mit UV-Schutz und farbigen Gläsern.', rating: 4.4, reviews: 10, search: 'andy wolf sunrise sonnenbrille' }
     ];
 
-    // Erweiterte Store-Datenbank – unabhängige Luxus-Optiker
+    // Store-Datenbank – E-Commerce & Luxus-Fachgeschäfte
     const STORE_DATABASE = [
-      // Online-Shops (bestehend)
       { name: "Brillenlaboratorium", type: "online", state: "Online E-Shop", desc: "Expressversand & Premium-Partner", url: "https://brillenlaboratorium.shop", status: "Sofort lieferbar", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Lindberg", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury"] },
       { name: "Andy Wolf Official Store", type: "online", state: "Online E-Shop", desc: "Offizieller Markenshop", url: "https://www.andy-wolf.com", status: "Direkt ab Werk", brands: ["Andy Wolf"] },
       { name: "Mister Spex Luxury", type: "online", state: "Online E-Shop", desc: "Versandkostenfrei & Anprobe", url: "https://www.misterspex.de", status: "Auf Lager", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Oliver Peoples", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May"] },
       { name: "Edel-Optics Boutique", type: "online", state: "Online E-Shop", desc: "Global Luxury Store", url: "https://www.edel-optics.de", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury"] },
       { name: "Cartier Official Eyewear", type: "online", state: "Online E-Shop", desc: "Offizieller Cartier Online-Store", url: "https://www.cartier.com", status: "Exklusiv", brands: ["Cartier"] },
       { name: "Fielmann Online", type: "online", state: "Online E-Shop", desc: "Große Auswahl & Filialservice", url: "https://www.fielmann.de", status: "Lieferbar", brands: ["Cartier", "Andy Wolf", "Tom Ford", "Lindberg", "DITA"] },
-      { name: "Apollo-Optik", type: "online", state: "Online E-Shop", desc: "Premium-Marken im Sortiment", url: "https://www.apollo.de", status: "Verfügbar", brands: ["Cartier", "DITA", "Ray-Ban"] },
-      { name: "Brillen.de", type: "online", state: "Online E-Shop", desc: "Luxusbrillen & Fachberatung", url: "https://www.brillen.de", status: "Auf Lager", brands: ["Cartier", "Tom Ford", "Oliver Peoples", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May"] },
-
-      // Neue unabhängige Luxus-Optiker (Fachgeschäfte)
-      { name: "Leidmann München", type: "store", state: "München", desc: "Benchmark für Independent Luxury Eyewear – Cartier-Vertragspartner, Jacques Marie Mage, DITA, Matsuda, Linda Farrow", url: "#", status: "Exklusiv", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury"] },
-      { name: "specs.berlin", type: "store", state: "Berlin", desc: "Crème de la Crème der Independent-Szene – Jacques Marie Mage, Cutler and Gross, Oscar Magnuson, Leisure Society", url: "#", status: "Limitierte Serien", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "Peter and May"] },
-      { name: "Noble Optic House Berlin", type: "store", state: "Berlin", desc: "Luxus- und Couture-Segment – Cartier, Maybach Icons of Luxury, Linda Farrow, Maßanfertigung", url: "#", status: "VIP-Betreuung", brands: ["Cartier", "Maybach Icons of Luxury", "DITA", "Jacques Marie Mage"] },
-      { name: "Söhnges / Rheingold-Optik", type: "store", state: "Düsseldorf", desc: "Königsallee-Umfeld – japanische Titan-Manufakturen (Eyevan, DITA) sowie edle Acetat-Kollektionen", url: "#", status: "Diskrete Beratung", brands: ["DITA", "Matsuda", "Cutler and Gross", "Jacques Marie Mage", "Peter and May"] },
-      { name: "Bellevue Optical Hamburg", type: "store", state: "Hamburg", desc: "Renommiertester Independent-Optiker im Norden für avantgardistische Designs, handgefertigte Acetat-Klassiker", url: "#", status: "Seltene Nischenmarken", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "DITA", "Peter and May"] },
-      { name: "Hanse-Viertel Optik", type: "store", state: "Hamburg", desc: "Offizielle Lizenzen für Cartier, DITA und Jacques Marie Mage, diskrete Einzelberatung", url: "#", status: "Exklusive Modelle", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Maybach Icons of Luxury"] },
-      { name: "Sehwerk / Optik Kollektiv Köln", type: "store", state: "Köln", desc: "Inhabergeführte Boutiquen mit Fokus auf Handwerkskunst, limitierte Serien (T-Henri, Peter and May), Kering-Luxuslizenzen", url: "#", status: "Limitierte Serien", brands: ["Cartier", "Peter and May", "Jacques Marie Mage", "Matsuda", "Cutler and Gross"] },
-
-      // Bestehende Fachgeschäfte (gekürzt, aber noch vorhanden)
+      
+      // Unabhängige Luxus-Optiker
+      { name: "Leidmann München", type: "store", state: "München", desc: "Benchmark für Independent Luxury Eyewear – Cartier-Vertragspartner, JMM, DITA, Matsuda", url: "#", status: "Exklusiv", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury"] },
+      { name: "specs.berlin", type: "store", state: "Berlin", desc: "Crème de la Crème der Independent-Szene – Jacques Marie Mage, Cutler and Gross, Oscar Magnuson", url: "#", status: "Limitierte Serien", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "Peter and May"] },
+      { name: "Noble Optic House Berlin", type: "store", state: "Berlin", desc: "Luxus- und Couture-Segment – Cartier, Maybach Icons of Luxury, Linda Farrow", url: "#", status: "VIP-Betreuung", brands: ["Cartier", "Maybach Icons of Luxury", "DITA", "Jacques Marie Mage"] },
+      { name: "Söhnges / Rheingold-Optik", type: "store", state: "Düsseldorf", desc: "Königsallee-Umfeld – japanische Titan-Manufakturen (Eyevan, DITA) & Acetat-Kollektionen", url: "#", status: "Diskrete Beratung", brands: ["DITA", "Matsuda", "Cutler and Gross", "Jacques Marie Mage", "Peter and May"] },
+      { name: "Bellevue Optical Hamburg", type: "store", state: "Hamburg", desc: "Renommiertester Independent-Optiker im Norden für avantgardistische Designs", url: "#", status: "Seltene Nischenmarken", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "DITA", "Peter and May"] },
+      { name: "Hanse-Viertel Optik", type: "store", state: "Hamburg", desc: "Offizielle Lizenzen für Cartier, DITA und Jacques Marie Mage", url: "#", status: "Exklusive Modelle", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Maybach Icons of Luxury"] },
+      { name: "Sehwerk / Optik Kollektiv Köln", type: "store", state: "Köln", desc: "Boutiquen mit Fokus auf Handwerkskunst, limitierte Serien (Peter and May), Kering-Lizenzen", url: "#", status: "Limitierte Serien", brands: ["Cartier", "Peter and May", "Jacques Marie Mage", "Matsuda", "Cutler and Gross"] },
       { name: "Cartier Boutique Berlin", type: "store", state: "Berlin", desc: "Kurfürstendamm 186, 10707 Berlin", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
-      { name: "Cartier Boutique München", type: "store", state: "Bayern", desc: "Maximilianstraße 20, 80539 München", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
-      { name: "Cartier Boutique Wien", type: "store", state: "Wien (AT)", desc: "Kohlmarkt 1, 1010 Wien", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
-      { name: "Ehler Optik & Akustik", type: "store", state: "Schleswig-Holstein", desc: "Große Straße 12, Flensburg", url: "#", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "DITA"] },
-      { name: "Fielmann Luxury Lounge", type: "store", state: "Schleswig-Holstein", desc: "Holm 48, Flensburg", url: "#", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg"] },
-      { name: "Fielmann Flagship Hamburg", type: "store", state: "Hamburg", desc: "Jungfernstieg 40, 20354 Hamburg", url: "#", status: "Große Auswahl", brands: ["Cartier", "Andy Wolf", "Lindberg"] },
-      { name: "Optik Habel", type: "store", state: "Berlin", desc: "Schloßstraße 90, 12163 Berlin", url: "#", status: "Cartier exklusiv", brands: ["Cartier"] },
-      { name: "Brillenwerk Stuttgart", type: "store", state: "Baden-Württemberg", desc: "Königstraße 45, 70173 Stuttgart", url: "#", status: "Verfügbar", brands: ["Cartier", "DITA", "Tom Ford"] },
-      { name: "Sehwerk Karlsruhe", type: "store", state: "Baden-Württemberg", desc: "Kaiserstraße 140, Karlsruhe", url: "#", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford"] },
-      { name: "Blickfang Optik", type: "store", state: "Baden-Württemberg", desc: "Königstraße 22, Stuttgart", url: "#", status: "1 Stück", brands: ["Andy Wolf", "Cartier", "DITA"] },
-      { name: "Optik Steininger", type: "store", state: "Bayern", desc: "Sendlinger Straße 25, 80331 München", url: "#", status: "Cartier Partner", brands: ["Cartier"] },
-      { name: "Noble Optic House", type: "store", state: "Berlin", desc: "Friedrichstraße 150, 10117 Berlin", url: "#", status: "Exklusive Modelle", brands: ["Cartier", "DITA", "Tom Ford"] }
+      { name: "Fielmann Flagship Hamburg", type: "store", state: "Hamburg", desc: "Jungfernstieg 40, 20354 Hamburg", url: "#", status: "Große Auswahl", brands: ["Cartier", "Andy Wolf", "Lindberg"] }
     ];
 
     // ---------- State ----------
@@ -391,7 +375,7 @@
           musicPlaying = true;
           updateMusicButton();
         }).catch(err => {
-          console.log('Musik konnte nicht gestartet werden:', err);
+          console.log('Musik-Autoplay durch Browser-Policy unterbunden:', err);
           musicPlaying = false;
           updateMusicButton();
         });
@@ -444,8 +428,8 @@
           <div class="text-yellow-500 text-sm">${'★'.repeat(Math.round(product.rating))}${'☆'.repeat(5-Math.round(product.rating))} <span class="text-stone-400">(${product.reviews})</span></div>
           <p class="text-xs text-stone-600 mt-2 line-clamp-2">${product.desc}</p>
           <div class="mt-3 space-y-2">
-            <button onclick="toggleStores('${product.brand}', 'stores-${product.id}')" class="w-full py-2 border border-stone-800 text-xs uppercase">Stores & Shops</button>
-            <button onclick="addToCart('${product.name}', '${product.price}', '${product.img}')" class="w-full py-2 bg-beige text-xs uppercase">In den Warenkorb</button>
+            <button onclick="toggleStores('${product.brand}', 'stores-${product.id}')" class="w-full py-2 border border-stone-800 text-xs uppercase cursor-pointer">Stores & Shops</button>
+            <button onclick="addToCart('${product.name}', '${product.price}', '${product.img}')" class="w-full py-2 bg-beige text-xs uppercase cursor-pointer">In den Warenkorb</button>
           </div>
           <div id="stores-${product.id}" class="hidden mt-3 p-2 bg-beige-light rounded text-xs"></div>
         `;
@@ -453,7 +437,7 @@
       });
     }
 
-    // Filterfunktion für Marken-Buttons
+    // Filterfunktion
     function filterBrand(brand, btn) {
       document.querySelectorAll('.brand-btn').forEach(b => {
         b.classList.remove('bg-stone-900', 'text-white');
