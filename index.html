@@ -23,10 +23,9 @@
     .scrollbar-none::-webkit-scrollbar { display: none; }
     .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Intro – angepasst für dein Foto */
+    /* Intro – Hintergrundbild wird per JS gesetzt */
     #intro {
       position: fixed; inset: 0; z-index: 9999; cursor: pointer; pointer-events: auto;
-      background-image: url('image_4.png');
       background-size: cover;
       background-position: center 25%;
       background-repeat: no-repeat;
@@ -34,7 +33,7 @@
     .panel {
       position: absolute; top: 0; width: 50%; height: 100%;
       transition: transform 1s ease-in-out;
-      background-color: rgba(251, 249, 246, 0.30);
+      background-color: rgba(251, 249, 246, 0.20); /* Sehr transparent – Foto deutlich sichtbar */
     }
     .panel.left { left: 0; transform: translateX(0); }
     .panel.right { right: 0; transform: translateX(0); }
@@ -43,7 +42,7 @@
       z-index: 10000; font-size: 2rem; letter-spacing: 0.4em; text-transform: uppercase;
       color: #2c2a29; font-weight: 300; transition: opacity 0.5s; pointer-events: none;
       text-align: center;
-      text-shadow: 0 2px 10px rgba(255,255,255,0.8);
+      text-shadow: 0 2px 10px rgba(255,255,255,0.9);
     }
     #intro.open .panel.left { transform: translateX(-100%); }
     #intro.open .panel.right { transform: translateX(100%); }
@@ -79,7 +78,7 @@
 </head>
 <body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
 
-  <!-- Intro mit deinem Foto -->
+  <!-- Intro mit deinem Foto (Fallback auf Unsplash, falls Datei fehlt) -->
   <div id="intro">
     <div class="panel left"></div>
     <div class="panel right"></div>
@@ -358,8 +357,22 @@
     let spotifyLoaded = false;
     let spotifyIframe = null;
 
+    // ---------- Hintergrundbild setzen mit Fallback ----------
+    function setIntroBackground() {
+      const intro = document.getElementById('intro');
+      const localImage = new Image();
+      localImage.src = 'image_4.png';
+      localImage.onload = function() {
+        intro.style.backgroundImage = "url('image_4.png')";
+      };
+      localImage.onerror = function() {
+        intro.style.backgroundImage = "url('https://images.unsplash.com/photo-1485875437342-9b39470b3d95?auto=format&fit=crop&w=1600&q=80')";
+      };
+    }
+
     // ---------- Init ----------
     function init() {
+      setIntroBackground();
       renderProducts();
       updateWishlistUI();
       updateCartUI();
@@ -373,7 +386,6 @@
       const intro = document.getElementById('intro');
       if (intro.classList.contains('open')) return;
       intro.classList.add('open');
-      // Spotify-Player erstellen und abspielen
       if (!spotifyLoaded) {
         createSpotifyPlayer();
         spotifyLoaded = true;
@@ -383,7 +395,6 @@
       setTimeout(() => { intro.style.display = 'none'; }, 1000);
     }
 
-    // Erstellt das Spotify-Iframe dynamisch und spielt ab
     function createSpotifyPlayer() {
       const container = document.getElementById('spotify-container');
       if (spotifyIframe) return;
@@ -398,18 +409,16 @@
       spotifyIframe.allowFullscreen = true;
       
       spotifyIframe.addEventListener('load', () => {
-        // Nach dem Laden play-Kommando senden
         sendSpotifyCommand('play');
         musicPlaying = true;
         updateMusicButton();
       });
       
       container.appendChild(spotifyIframe);
-      musicPlaying = false; // Wird erst nach load auf true gesetzt
+      musicPlaying = false;
       updateMusicButton();
     }
 
-    // Sendet Kommandos an das Spotify-Iframe
     function sendSpotifyCommand(command) {
       if (spotifyIframe && spotifyIframe.contentWindow) {
         spotifyIframe.contentWindow.postMessage({ command: command }, '*');
