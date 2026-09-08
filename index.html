@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LUXEVUE | Independent Eyewear & Store Locator</title>
+  <title>LUXEVUE — Independent Eyewear & Curated Stores</title>
 
-  <!-- Google Fonts für edle Typografie -->
+  <!-- High-End Webfonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,795 +16,461 @@
   <style>
     :root {
       --font-serif: 'Cormorant Garamond', Georgia, serif;
-      --font-sans: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --bg-editorial: #fcfbf9;
+      --surface-editorial: #f4f2ed;
+      --border-editorial: #e8e4dc;
+      --text-main: #1a1918;
+      --text-muted: #73706b;
     }
-    html, body {
-      background-color: #fbf9f6 !important;
-      color: #2c2a29 !important;
+
+    body {
+      background-color: var(--bg-editorial);
+      color: var(--text-main);
       font-family: var(--font-sans);
-      margin: 0; padding: 0;
-      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
     }
-    h1, h2, h3, h4, .font-serif { font-family: var(--font-serif); }
-    .bg-beige { background-color: #e6dfd5 !important; }
-    .bg-beige-light { background-color: #f4f0eb !important; }
-    .border-beige { border-color: #e2dbd1 !important; }
-    .scrollbar-none::-webkit-scrollbar { display: none; }
-    .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Intro */
-    #intro {
-      position: fixed; inset: 0; z-index: 9999; cursor: pointer; pointer-events: auto;
-      background-color: #000;
+    h1, h2, h3, .font-serif {
+      font-family: var(--font-serif);
     }
-    .panel {
-      position: absolute; top: 0; width: 50%; height: 100%;
-      transition: transform 1s ease-in-out;
-      background-color: #000;
-    }
-    .panel.left { left: 0; transform: translateX(0); }
-    .panel.right { right: 0; transform: translateX(0); }
-    .intro-text {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      z-index: 10000; font-size: 2.5rem; letter-spacing: 0.5em; text-transform: uppercase;
-      color: #fff; font-weight: 300; transition: opacity 0.5s; pointer-events: none;
-      text-align: center; font-family: var(--font-serif);
-      text-shadow: 0 2px 20px rgba(0,0,0,0.5);
-    }
-    #intro.open .panel.left { transform: translateX(-100%); }
-    #intro.open .panel.right { transform: translateX(100%); }
-    #intro.open .intro-text { opacity: 0; }
 
-    /* Hero mit Bild-Slider */
-    #hero {
-      position: relative;
-      height: 500px;
+    /* Subtile Custom-Scrollbar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Visual Transitions */
+    .img-zoom-container {
       overflow: hidden;
     }
-    #hero-slides img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: opacity 1s ease;
+    .img-zoom-container img {
+      transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
     }
-    #hero-overlay {
-      position: absolute;
-      inset: 0;
-      background-color: rgba(0,0,0,0.4);
-      z-index: 1;
-    }
-    #hero-content {
-      position: relative;
-      z-index: 10;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: #fff;
-      padding: 0 20px;
-    }
-    #hero-slide-label {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      z-index: 10;
-      color: #fff;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      background: rgba(0,0,0,0.5);
-      padding: 6px 12px;
-      border-radius: 2px;
+    .product-card:hover .img-zoom-container img {
+      transform: scale(1.04);
     }
 
-    .dark-section { background-color: #1c1917; color: #fbf9f6; }
-
-    /* Produktkarten */
-    .product-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Clean Tag Styling */
+    .filter-btn {
+      transition: all 0.25s ease;
+      letter-spacing: 0.12em;
     }
-    .product-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-    }
-    .product-card img { transition: transform 0.5s ease; }
-    .product-card:hover img { transform: scale(1.03); }
-
-    /* Checkout */
-    #checkout-form {
-      transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
-      max-height: 0; opacity: 0; overflow: hidden;
-    }
-    #checkout-form.visible { max-height: 1200px; opacity: 1; }
-
-    /* Live-Chat Button */
-    #liveChatBtn {
-      position: fixed; bottom: 20px; right: 20px; z-index: 40;
-      background: #25D366; color: white; width: 50px; height: 50px;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer;
-    }
-
-    #spotify-container {
-      position: fixed; bottom: -150px; left: 0; width: 100%; height: 80px;
-      z-index: 1; opacity: 0; pointer-events: none;
-    }
-
-    /* Länderfilter */
-    .country-btn {
-      padding: 10px 20px;
-      background-color: transparent;
-      border: 1px solid #e2dbd1;
-      border-radius: 0;
-      white-space: nowrap;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      font-size: 0.7rem;
-      font-weight: 400;
-      transition: all 0.3s ease;
-      font-family: var(--font-sans);
-    }
-    .country-btn.active {
-      background-color: #1c1917;
-      color: #fff;
-      border-color: #1c1917;
-    }
-    .country-btn:hover {
-      border-color: #1c1917;
-      background-color: rgba(28,25,23,0.05);
-    }
-
-    .label-tag {
-      background-color: #fff;
-      border: 1px solid #e2dbd1;
-      padding: 8px 16px;
-      border-radius: 0;
-      font-size: 0.75rem;
-      font-weight: 300;
-      letter-spacing: 0.05em;
-      transition: all 0.2s ease;
-    }
-    .label-tag:hover {
-      border-color: #1c1917;
-      background-color: #f4f0eb;
+    .filter-btn.active {
+      background-color: var(--text-main);
+      color: #ffffff;
+      border-color: var(--text-main);
     }
 
     .fade-in {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(16px);
       transition: opacity 0.8s ease, transform 0.8s ease;
     }
     .fade-in.visible {
       opacity: 1;
       transform: translateY(0);
     }
-
-    footer a { transition: color 0.2s ease; }
-    footer a:hover { color: #a16207; }
   </style>
 </head>
-<body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
+<body class="min-h-screen text-[15px] leading-relaxed">
 
-  <!-- Intro -->
-  <div id="intro">
-    <div class="panel left"></div>
-    <div class="panel right"></div>
-    <div class="intro-text">Luxevue</div>
-  </div>
-
-  <div id="spotify-container"></div>
-
-  <!-- Toast -->
-  <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 bg-stone-900 text-white text-xs px-4 py-2.5 rounded-full shadow-lg z-50 transition-opacity duration-300 opacity-0 pointer-events-none">
+  <!-- Toast Announcement -->
+  <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 bg-[#1a1918] text-white text-xs tracking-wider uppercase px-5 py-3 rounded-none shadow-2xl z-50 transition-all duration-300 opacity-0 pointer-events-none">
     <span id="toast-msg">Hinweis</span>
   </div>
 
-  <!-- Live-Chat -->
-  <a id="liveChatBtn" href="https://wa.me/491234567890" target="_blank" title="Live-Chat via WhatsApp">
-    <i class="fa-brands fa-whatsapp text-2xl"></i>
-  </a>
+  <!-- Header / Navigation -->
+  <header class="sticky top-0 z-40 bg-[#fcfbf9]/90 backdrop-blur-md border-b border-[var(--border-editorial)] px-6 lg:px-12 py-5 transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a onclick="navigateTo('home')" class="cursor-pointer">
+        <span class="text-2xl md:text-3xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
+      </a>
 
-  <!-- Header -->
-  <header class="sticky top-0 z-40 bg-[#fbf9f6]/95 backdrop-blur-md border-b border-beige px-4 py-3">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <span onclick="navigateTo('home')" class="text-2xl font-serif tracking-[0.3em] font-light uppercase cursor-pointer">LUXEVUE</span>
-      <div class="flex items-center space-x-6 text-sm">
-        <button id="music-toggle" onclick="toggleMusic()" class="relative p-1 cursor-pointer" title="Musik an/aus">
-          <i id="music-icon" class="fa-solid fa-play text-base"></i>
-        </button>
-        <button onclick="navigateTo('wishlist')" class="relative p-1 cursor-pointer">
-          <i class="fa-regular fa-heart text-base"></i>
-          <span id="wishlist-count" class="absolute -top-1 -right-1 bg-stone-900 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
-        </button>
-        <button onclick="navigateTo('cart')" class="relative p-1 cursor-pointer">
-          <i class="fa-solid fa-bag-shopping text-base"></i>
-          <span id="cart-count" class="absolute -top-1 -right-1 bg-amber-800 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
-        </button>
+      <!-- Desktop Links & Icons -->
+      <div class="flex items-center space-x-8 text-xs tracking-widest uppercase font-medium">
+        <nav class="hidden md:flex space-x-8 text-[11px] tracking-[0.2em] text-[var(--text-muted)]">
+          <button onclick="navigateTo('home')" class="hover:text-black transition-colors">Kollektion</button>
+          <button onclick="navigateTo('account')" class="hover:text-black transition-colors">Stores & Optiker</button>
+        </nav>
+
+        <div class="flex items-center space-x-5 border-l border-[var(--border-editorial)] pl-6">
+          <button onclick="navigateTo('wishlist')" class="relative p-1 hover:opacity-70 transition-opacity">
+            <i class="fa-regular fa-heart text-lg"></i>
+            <span id="wishlist-count" class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
+          </button>
+          <button onclick="navigateTo('cart')" class="relative p-1 hover:opacity-70 transition-opacity">
+            <i class="fa-solid fa-bag-shopping text-lg"></i>
+            <span id="cart-count" class="absolute -top-1.5 -right-2 bg-stone-800 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
+          </button>
+        </div>
       </div>
     </div>
 
-    <div class="max-w-6xl mx-auto mt-3 relative">
-      <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suche: Stadt, Optiker, Marke..." class="w-full bg-transparent border-b border-beige py-2 pl-2 pr-4 text-xs focus:outline-none focus:border-stone-800">
-      <i class="fa-solid fa-magnifying-glass absolute right-2 top-2.5 text-stone-400 text-xs"></i>
+    <!-- Minimalistische Suchleiste -->
+    <div class="max-w-7xl mx-auto mt-4 pt-3 border-t border-[var(--border-editorial)]/40 flex items-center">
+      <i class="fa-solid fa-magnifying-glass text-xs text-[var(--text-muted)] mr-3"></i>
+      <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suchen nach Marke, Manufaktur, Stadt oder Stil..." class="w-full bg-transparent text-xs tracking-wide focus:outline-none placeholder:text-[var(--text-muted)]/60">
     </div>
   </header>
 
-  <!-- Hero mit Bild-Slider -->
-  <section id="hero" class="fade-in">
-    <div id="hero-slides"></div>
-    <div id="hero-overlay"></div>
-    <div id="hero-slide-label">Jacques Marie Mage</div>
-    <div id="hero-content">
-      <p class="tracking-[0.3em] uppercase text-xs md:text-sm opacity-80">Independent Eyewear</p>
-      <h1 class="text-4xl md:text-6xl font-serif font-light mt-4">Weltweit kuratiert.<br>Zeitlos getragen.</h1>
-      <p class="mt-6 text-sm md:text-base tracking-widest uppercase opacity-70">Entdecken Sie die feinsten unabhängigen Brillenmanufakturen</p>
+  <!-- Editorial Hero Section -->
+  <section id="hero" class="relative h-[70vh] min-h-[480px] bg-stone-900 text-white overflow-hidden fade-in">
+    <div id="hero-slides" class="absolute inset-0"></div>
+    <div class="absolute inset-0 bg-black/35 z-10"></div>
+    
+    <div class="relative z-20 max-w-7xl mx-auto h-full flex flex-col justify-end px-6 lg:px-12 pb-16">
+      <p class="text-[11px] uppercase tracking-[0.35em] text-stone-300 mb-3">Independent Eyewear Directory</p>
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-light leading-[1.1] max-w-3xl">
+        Weltweit kuratiert.<br><span class="italic">Zeitlos getragen.</span>
+      </h1>
+      <div class="mt-8 flex justify-between items-end border-t border-white/20 pt-6">
+        <p class="text-xs tracking-widest uppercase text-stone-300 max-w-md">Die feinsten unabhängigen Brillenmanufakturen im Überblick</p>
+        <span id="hero-slide-label" class="text-[10px] uppercase tracking-[0.25em] text-stone-400">Jacques Marie Mage</span>
+      </div>
     </div>
   </section>
 
-  <!-- Hauptbereich -->
-  <main id="page-home" class="page-content max-w-6xl mx-auto px-4 py-12">
+  <!-- Hauptinhalt -->
+  <main id="page-home" class="page-content max-w-7xl mx-auto px-6 lg:px-12 py-16">
 
-    <!-- Länderfilter-Leiste -->
-    <div class="flex space-x-3 overflow-x-auto pb-6 mb-8 scrollbar-none" id="country-filter-bar"></div>
+    <!-- Herkunftsland Filter -->
+    <section class="mb-14">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-xs uppercase tracking-[0.25em] text-[var(--text-muted)]">Manufakturen nach Herkunft</h3>
+      </div>
+      <div class="flex space-x-2 overflow-x-auto pb-3 no-scrollbar" id="country-filter-bar"></div>
+      <div id="selected-country-labels" class="flex flex-wrap gap-2 mt-4"></div>
+    </section>
 
-    <!-- Labels des gewählten Landes -->
-    <div id="selected-country-labels" class="flex flex-wrap gap-3 mb-8"></div>
+    <!-- Produkt-Kollektion Grid -->
+    <section class="mb-24">
+      <div class="flex justify-between items-baseline mb-10 pb-4 border-b border-[var(--border-editorial)]">
+        <h2 class="text-3xl font-serif font-light tracking-wide">Kuratierte Auswahl</h2>
+        <span class="text-xs tracking-widest uppercase text-[var(--text-muted)]">Kollektion 2026</span>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16" id="product-list"></div>
+    </section>
 
-    <!-- Produktliste -->
-    <h2 class="text-3xl font-serif tracking-widest uppercase mb-8 fade-in">Aktuelle Kollektion</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="product-list"></div>
-
-    <!-- Dunkle Sektion -->
-    <section class="dark-section mt-20 -mx-4 px-4 py-20 fade-in">
+    <!-- Editorial Feature Sektion (Dunkel) -->
+    <section class="bg-[#1a1918] text-[#fcfbf9] -mx-6 lg:-mx-12 px-6 lg:px-20 py-24 my-20 fade-in">
       <div class="max-w-4xl mx-auto text-center">
-        <p class="text-xs tracking-[0.3em] uppercase opacity-60 mb-4">Handwerkskunst</p>
-        <h2 class="text-4xl font-serif font-light mb-6">Manufakturen weltweit</h2>
-        <p class="text-sm font-light leading-relaxed opacity-80 max-w-2xl mx-auto">
-          Von den Titan-Schmieden Japans über die Acetat-Ateliers Frankreichs bis zu den
-          Glasbläsern Dänemarks – wir arbeiten ausschließlich mit unabhängigen
-          Brillenmanufakturen zusammen, die für Präzision und Leidenschaft stehen.
+        <p class="text-[10px] uppercase tracking-[0.4em] opacity-50 mb-4">Exzellenz & Präzision</p>
+        <h2 class="text-4xl md:text-5xl font-serif font-light mb-8 leading-tight">Meisterwerke unabhängiger Optikkunst</h2>
+        <p class="text-sm md:text-base font-light text-stone-300 leading-relaxed max-w-2xl mx-auto">
+          Von den Titan-Schmieden Japans über die traditionellen Acetat-Ateliers der französischen Alpen bis zu minimalistischen Dänischen Konstruktionen – LUXEVUE vereint Pioniere des Brillendesigns.
         </p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
-          <div><p class="text-3xl font-serif">40+</p><p class="text-xs uppercase tracking-wider opacity-60">Labels</p></div>
-          <div><p class="text-3xl font-serif">12</p><p class="text-xs uppercase tracking-wider opacity-60">Länder</p></div>
-          <div><p class="text-3xl font-serif">100%</p><p class="text-xs uppercase tracking-wider opacity-60">Independent</p></div>
-          <div><p class="text-3xl font-serif">∞</p><p class="text-xs uppercase tracking-wider opacity-60">Stil</p></div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mt-16 pt-12 border-t border-white/10">
+          <div><p class="text-4xl font-serif font-light">40+</p><p class="text-[10px] uppercase tracking-widest text-stone-400 mt-2">Ateliers</p></div>
+          <div><p class="text-4xl font-serif font-light">12</p><p class="text-[10px] uppercase tracking-widest text-stone-400 mt-2">Länder</p></div>
+          <div><p class="text-4xl font-serif font-light">100%</p><p class="text-[10px] uppercase tracking-widest text-stone-400 mt-2">Unabhängig</p></div>
+          <div><p class="text-4xl font-serif font-light">Limitiert</p><p class="text-[10px] uppercase tracking-widest text-stone-400 mt-2">Editionen</p></div>
         </div>
       </div>
     </section>
 
-    <!-- Empfehlungen -->
+    <!-- Editorial Empfehlungen -->
     <section class="mt-20 fade-in">
-      <h2 class="text-3xl font-serif tracking-widest uppercase mb-8">Für Sie empfohlen</h2>
-      <div id="recommendations" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+      <div class="mb-10 pb-4 border-b border-[var(--border-editorial)]">
+        <h2 class="text-3xl font-serif font-light tracking-wide">Für Sie ausgewählt</h2>
+      </div>
+      <div id="recommendations" class="grid grid-cols-1 md:grid-cols-3 gap-10"></div>
     </section>
 
-    <!-- Markenwelten -->
-    <section class="mt-20 fade-in">
-      <h2 class="text-3xl font-serif tracking-widest uppercase mb-8">Markenwelten</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white p-6 rounded-sm border border-beige hover:shadow-lg transition-shadow">
-          <img src="https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=600&q=80" alt="Andy Wolf" class="w-full h-48 object-cover rounded-sm mb-4" loading="lazy">
-          <h3 class="font-serif text-2xl mb-2">ANDY WOLF</h3>
-          <p class="text-xs text-stone-600 leading-relaxed">Handgefertigt in Österreich – seit 2006 verbindet Andy Wolf traditionelles Handwerk mit modernem Design.</p>
-        </div>
-        <div class="bg-white p-6 rounded-sm border border-beige hover:shadow-lg transition-shadow">
-          <img src="https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=600&q=80" alt="Lindberg" class="w-full h-48 object-cover rounded-sm mb-4" loading="lazy">
-          <h3 class="font-serif text-2xl mb-2">LINDBERG</h3>
-          <p class="text-xs text-stone-600 leading-relaxed">Dänische Ingenieurskunst – ultraleichte Titanfassungen ohne Schrauben, getragen von Architekten und Kreativen.</p>
-        </div>
-        <div class="bg-white p-6 rounded-sm border border-beige hover:shadow-lg transition-shadow">
-          <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=600&q=80" alt="Cartier" class="w-full h-48 object-cover rounded-sm mb-4" loading="lazy">
-          <h3 class="font-serif text-2xl mb-2">CARTIER</h3>
-          <p class="text-xs text-stone-600 leading-relaxed">Französischer Luxus – Brillen als Schmuckstücke, gefertigt aus edelsten Materialien mit unverwechselbarer Eleganz.</p>
-        </div>
-      </div>
-    </section>
   </main>
 
   <!-- Wunschliste -->
-  <section id="page-wishlist" class="page-content hidden max-w-6xl mx-auto px-4 py-12">
-    <h1 class="text-3xl font-serif tracking-widest uppercase mb-8">Deine Wunschliste</h1>
-    <div id="wishlist-container" class="space-y-4 text-sm"></div>
-    <button onclick="shareWishlist()" class="mt-6 px-6 py-3 bg-stone-900 text-white text-xs uppercase tracking-widest rounded-sm">Wunschliste teilen</button>
+  <section id="page-wishlist" class="page-content hidden max-w-4xl mx-auto px-6 py-16">
+    <h1 class="text-4xl font-serif font-light tracking-wide mb-8">Ihre Favoriten</h1>
+    <div id="wishlist-container" class="space-y-4"></div>
+    <button onclick="shareWishlist()" class="mt-8 px-8 py-4 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors">Favoriten teilen</button>
   </section>
 
   <!-- Warenkorb -->
-  <section id="page-cart" class="page-content hidden max-w-6xl mx-auto px-4 py-12">
-    <h1 class="text-3xl font-serif tracking-widest uppercase mb-8">Warenkorb</h1>
-    <div id="cart-container" class="space-y-4 text-sm"></div>
-    <div id="cart-summary" class="hidden mt-10 pt-6 border-t border-beige">
-      <div class="flex justify-between font-serif text-xl mb-6">
-        <span>Gesamtsumme:</span>
+  <section id="page-cart" class="page-content hidden max-w-4xl mx-auto px-6 py-16">
+    <h1 class="text-4xl font-serif font-light tracking-wide mb-8">Auswahl & Warenkorb</h1>
+    <div id="cart-container" class="space-y-4"></div>
+    
+    <div id="cart-summary" class="hidden mt-12 pt-8 border-t border-[var(--border-editorial)]">
+      <div class="flex justify-between font-serif text-2xl mb-8">
+        <span>Gesamtsumme</span>
         <span id="cart-total">0 €</span>
       </div>
-      <div class="flex gap-3 mb-6">
-        <button onclick="showToast('PayPal Express – in Entwicklung')" class="flex-1 py-3 bg-blue-600 text-white text-xs rounded-sm">PayPal</button>
-        <button onclick="showToast('Apple Pay – in Entwicklung')" class="flex-1 py-3 bg-black text-white text-xs rounded-sm">Apple Pay</button>
-        <button onclick="showToast('Google Pay – in Entwicklung')" class="flex-1 py-3 bg-gray-100 text-black text-xs rounded-sm">G Pay</button>
-      </div>
-      <button onclick="showCheckoutForm()" class="w-full py-4 bg-stone-900 text-white text-xs uppercase tracking-widest rounded-sm">Zur Kasse / Reservieren</button>
+      <button onclick="showCheckoutForm()" class="w-full py-5 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">Zur Reservierung / Kasse</button>
     </div>
 
-    <div id="checkout-form" class="mt-8 p-6 bg-beige-light rounded-sm border border-beige">
-      <h2 class="text-2xl font-serif mb-6">Bestellung abschließen</h2>
-      <div class="mb-4">
-        <label class="block text-xs font-medium text-stone-700 mb-1">Gewünschter Store / E-Shop</label>
-        <select id="checkout-store" class="w-full p-3 bg-white border border-beige rounded-sm focus:outline-none text-sm">
-          <option value="">Bitte wählen...</option>
-        </select>
+    <!-- Checkout Modal/Form -->
+    <div id="checkout-form" class="hidden mt-12 p-8 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]">
+      <h2 class="text-2xl font-serif font-light mb-6">Anfrage / Bestellanforderung</h2>
+      <div class="space-y-5">
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2">Partner-Optiker oder E-Shop wählen</label>
+          <select id="checkout-store" class="w-full p-4 bg-white border border-[var(--border-editorial)] text-sm focus:outline-none">
+            <option value="">Bitte wählen...</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2">Vollständiger Name</label>
+          <input type="text" id="checkout-name" class="w-full p-4 bg-white border border-[var(--border-editorial)] text-sm focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2">E-Mail-Adresse</label>
+          <input type="email" id="checkout-email" class="w-full p-4 bg-white border border-[var(--border-editorial)] text-sm focus:outline-none">
+        </div>
+        <button onclick="submitCheckout()" class="w-full py-4 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors mt-4">Anfrage übermitteln</button>
       </div>
-      <div class="mb-4">
-        <label class="block text-xs font-medium text-stone-700 mb-2">Zahlungsmethode</label>
-        <div class="space-y-2">
-          <label class="flex items-center space-x-2 text-sm"><input type="radio" name="payment" value="Kreditkarte"> Kreditkarte</label>
-          <label class="flex items-center space-x-2 text-sm"><input type="radio" name="payment" value="PayPal"> PayPal</label>
-          <label class="flex items-center space-x-2 text-sm"><input type="radio" name="payment" value="Rechnung" checked> Rechnung</label>
+    </div>
+  </section>
+
+  <!-- Partner & Optiker -->
+  <section id="page-account" class="page-content hidden max-w-5xl mx-auto px-6 py-16">
+    <h1 class="text-4xl font-serif font-light tracking-wide mb-3">Partneroptiker & Boutiquen</h1>
+    <p class="text-xs uppercase tracking-widest text-[var(--text-muted)] mb-12">Exklusive Anlaufstellen für Anprobe und Fachberatung</p>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="bg-[var(--surface-editorial)] p-8 border border-[var(--border-editorial)] space-y-4">
+        <h3 class="font-serif text-2xl font-light">VIP-Sehtest & Anprobe</h3>
+        <p class="text-xs text-[var(--text-muted)] leading-relaxed">Vereinbaren Sie eine persönliche Beratung bei unseren zertifizierten Partneroptikern direkt vor Ort.</p>
+        <div class="space-y-3 pt-4">
+          <input type="text" placeholder="Name" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs">
+          <input type="date" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs">
+          <button onclick="showToast('Terminanfrage übermittelt.')" class="w-full py-3 bg-[#1a1918] text-white text-xs uppercase tracking-widest">Termin anfragen</button>
         </div>
       </div>
-      <div class="mb-4">
-        <label class="block text-xs font-medium text-stone-700 mb-1">Vollständiger Name</label>
-        <input type="text" id="checkout-name" class="w-full p-3 bg-white border border-beige rounded-sm focus:outline-none text-sm">
+
+      <div class="bg-white p-8 border border-[var(--border-editorial)]">
+        <h3 class="font-serif text-2xl font-light mb-4">Partnernetzwerk</h3>
+        <p class="text-xs text-[var(--text-muted)] leading-relaxed mb-6">Unsere Partner zeichnen sich durch höchste handwerkliche Standards und individuelle Fassungsberatung aus.</p>
+        <ul class="text-xs space-y-3 text-[var(--text-main)]">
+          <li class="pb-2 border-b border-[var(--border-editorial)]"><strong>Leidmann</strong> — München</li>
+          <li class="pb-2 border-b border-[var(--border-editorial)]"><strong>specs.berlin</strong> — Berlin</li>
+          <li class="pb-2 border-b border-[var(--border-editorial)]"><strong>Bellevue Optical</strong> — Hamburg</li>
+          <li class="pb-2 border-b border-[var(--border-editorial)]"><strong>Brillenlaboratorium</strong> — Online Partner</li>
+        </ul>
       </div>
-      <div class="mb-4">
-        <label class="block text-xs font-medium text-stone-700 mb-1">E-Mail-Adresse</label>
-        <input type="email" id="checkout-email" class="w-full p-3 bg-white border border-beige rounded-sm focus:outline-none text-sm">
-      </div>
-      <button onclick="submitCheckout()" class="w-full py-4 bg-stone-900 text-white text-xs uppercase tracking-widest rounded-sm">Bestellung übermitteln</button>
     </div>
   </section>
 
-  <!-- Konto -->
-  <section id="page-account" class="page-content hidden max-w-6xl mx-auto px-4 py-12">
-    <h1 class="text-3xl font-serif tracking-widest uppercase mb-4">Mein Konto & Stores</h1>
-    <p class="text-sm text-stone-500 mb-8">VIP-Sehtest, Partneroptiker & E-Shops weltweit</p>
-    <div class="mb-8 bg-white p-6 rounded-sm border border-beige space-y-4 text-sm">
-      <h3 class="font-serif text-lg">Netzwerk & Partneroptiker</h3>
-      <p class="text-stone-600">Entdecke angebundene E-Commerce Shops und lokale Premium-Optiker.</p>
-    </div>
-    <div class="bg-beige-light p-6 rounded-sm border border-beige space-y-4 text-sm">
-      <h3 class="font-serif text-lg">Sehtest & VIP-Beratung buchen</h3>
-      <input type="text" placeholder="Vollständiger Name" class="w-full p-3 bg-white border border-beige rounded-sm focus:outline-none">
-      <input type="date" class="w-full p-3 bg-white border border-beige rounded-sm focus:outline-none">
-      <select class="w-full p-3 bg-white border border-beige rounded-sm focus:outline-none">
-        <option>Brillenlaboratorium</option>
-        <option>Andy Wolf Flagship Store (Wien)</option>
-        <option>Leidmann (München)</option>
-        <option>specs.berlin (Berlin)</option>
-        <option>Noble Optic House (Berlin)</option>
-        <option>Cartier Boutique (Berlin)</option>
-      </select>
-      <button onclick="showToast('Termin erfolgreich angefragt!')" class="w-full py-3 bg-stone-900 text-white uppercase tracking-widest rounded-sm">Termin reservieren</button>
-    </div>
-  </section>
-
-  <!-- Detail-Modal -->
-  <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-    <div class="bg-[#fbf9f6] w-full max-w-lg rounded-sm p-6 relative shadow-2xl max-h-[90vh] overflow-y-auto">
-      <button onclick="closeDetail()" class="absolute top-4 right-4 text-2xl text-stone-600 cursor-pointer">&times;</button>
-      <div class="bg-[#f4f0eb] p-2 rounded-sm mb-4">
-        <img id="modalImg" src="" class="w-full h-64 object-cover rounded-sm">
+  <!-- Modal Produkt Details -->
+  <div id="detailModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-[var(--bg-editorial)] w-full max-w-2xl p-8 relative shadow-2xl border border-[var(--border-editorial)] max-h-[90vh] overflow-y-auto">
+      <button onclick="closeDetail()" class="absolute top-6 right-6 text-xl text-[var(--text-muted)] hover:text-black">&times;</button>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-white p-4 border border-[var(--border-editorial)] flex items-center justify-center">
+          <img id="modalImg" src="" class="w-full h-64 object-cover">
+        </div>
+        <div class="flex flex-col justify-between">
+          <div>
+            <span id="modalBrand" class="text-xs uppercase tracking-[0.25em] text-[var(--text-muted)] font-semibold"></span>
+            <h2 id="modalName" class="text-3xl font-serif font-light my-2"></h2>
+            <p id="modalPrice" class="text-sm font-medium text-stone-800 mb-4"></p>
+            <p id="modalDesc" class="text-xs text-[var(--text-muted)] leading-relaxed mb-6"></p>
+          </div>
+          <button id="modalAddBtn" class="w-full py-4 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">IN DEN WARENKORB</button>
+        </div>
       </div>
-      <h2 id="modalBrand" class="text-2xl font-serif tracking-widest uppercase mb-1"></h2>
-      <p id="modalPrice" class="text-xs uppercase tracking-wider text-amber-800 font-bold mb-3"></p>
-      <p id="modalDesc" class="text-sm text-stone-600 leading-relaxed mb-4"></p>
-      <div id="modalRating" class="text-sm text-yellow-500 mb-4"></div>
-      <button id="modalAddBtn" class="w-full py-4 bg-beige text-xs uppercase tracking-widest font-semibold text-[#2c2a29] rounded-sm mb-2">IN DEN WARENKORB</button>
-      <button onclick="showToast('Express-Kauf wird vorbereitet')" class="w-full py-3 bg-blue-600 text-white text-xs rounded-sm">Express-Kauf (PayPal)</button>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="mt-24 px-4 py-12 border-t border-beige">
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-sm">
+  <!-- Editorial Footer -->
+  <footer class="mt-32 border-t border-[var(--border-editorial)] bg-[var(--surface-editorial)] px-6 lg:px-12 py-16">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-xs">
       <div>
-        <h4 class="font-serif text-lg tracking-widest mb-4">LUXEVUE</h4>
-        <p class="text-stone-500 text-xs leading-relaxed">Independent Eyewear.<br>Weltweit kuratiert.</p>
+        <span class="text-2xl font-serif tracking-[0.2em] uppercase font-light block mb-4">LUXEVUE</span>
+        <p class="text-[var(--text-muted)] leading-relaxed">Independent Eyewear Directory.<br>Kuratierte Manufakturen & Fachgeschäfte weltweit.</p>
       </div>
       <div>
-        <h4 class="font-serif text-base tracking-widest mb-4">Rechtliches</h4>
-        <ul class="space-y-2 text-stone-600 text-xs">
-          <li><a href="#" class="hover:underline">Impressum</a></li>
-          <li><a href="#" class="hover:underline">Datenschutz</a></li>
-          <li><a href="#" class="hover:underline">AGB</a></li>
-          <li><a href="#" class="hover:underline">Widerrufsbelehrung</a></li>
+        <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Rechtliches</h4>
+        <ul class="space-y-2.5 text-[var(--text-muted)]">
+          <li><a href="#" class="hover:text-black">Impressum</a></li>
+          <li><a href="#" class="hover:text-black">Datenschutz</a></li>
+          <li><a href="#" class="hover:text-black">AGB</a></li>
         </ul>
       </div>
       <div>
-        <h4 class="font-serif text-base tracking-widest mb-4">Newsletter</h4>
-        <p class="text-stone-500 text-xs mb-3">5% Rabatt auf Ihre erste Bestellung.</p>
-        <div class="flex">
-          <input type="email" id="newsletter-email" placeholder="Ihre E-Mail" class="flex-1 p-3 border border-beige rounded-l-sm text-xs bg-transparent focus:outline-none">
-          <button onclick="subscribeNewsletter()" class="bg-stone-900 text-white px-5 rounded-r-sm text-xs">Anmelden</button>
+        <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Newsletter</h4>
+        <p class="text-[var(--text-muted)] mb-4">Exklusive Einblicke in neue Kollektionen und Releases.</p>
+        <div class="flex border-b border-black/20 pb-1">
+          <input type="email" id="newsletter-email" placeholder="E-Mail Adresse" class="bg-transparent flex-1 text-xs focus:outline-none">
+          <button onclick="subscribeNewsletter()" class="uppercase tracking-widest text-[10px] font-semibold">Anmelden</button>
         </div>
       </div>
     </div>
-    <div class="max-w-6xl mx-auto mt-10 pt-6 border-t border-beige text-center text-xs text-stone-400">
-      © 2024 LUXEVUE. Alle Rechte vorbehalten. SSL-verschlüsselt · Trusted Shops zertifiziert
+    <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-[var(--border-editorial)]/60 text-center text-[10px] text-[var(--text-muted)] tracking-widest uppercase">
+      © 2026 LUXEVUE. Alle Rechte vorbehalten.
     </div>
   </footer>
 
-  <!-- Navigation unten -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-[#fbf9f6]/95 border-t border-beige py-3 px-6 flex justify-between items-center text-xs text-stone-600 z-40 max-w-6xl mx-auto">
-    <button onclick="navigateTo('home')" class="nav-btn flex flex-col items-center text-black font-semibold cursor-pointer">
-      <i class="fa-solid fa-house text-base mb-0.5"></i><span class="text-[9px] tracking-widest uppercase">Kollektion</span>
-    </button>
-    <button onclick="navigateTo('wishlist')" class="nav-btn flex flex-col items-center cursor-pointer">
-      <i class="fa-solid fa-heart text-base mb-0.5"></i><span class="text-[9px] tracking-widest uppercase">Favoriten</span>
-    </button>
-    <button onclick="navigateTo('cart')" class="nav-btn flex flex-col items-center cursor-pointer">
-      <i class="fa-solid fa-bag-shopping text-base mb-0.5"></i><span class="text-[9px] tracking-widest uppercase">Tasche</span>
-    </button>
-    <button onclick="navigateTo('account')" class="nav-btn flex flex-col items-center cursor-pointer">
-      <i class="fa-solid fa-user text-base mb-0.5"></i><span class="text-[9px] tracking-widest uppercase">Konto</span>
-    </button>
-  </nav>
-
+  <!-- Inline Script Logik -->
   <script>
-    // ---------- Daten ----------
     const PRODUCTS = [
-      { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Handgefertigt in Österreich. Nachhaltiges Acetat mit moderner geometrischer Linsenform.', rating: 4.5, reviews: 32, search: 'andy wolf 5086 achensee hartberg wien berlin' },
-      { id: 2, brand: 'Andy Wolf', name: 'Florence Cat-Eye', price: '420 €', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Elegante Cat-Eye Sonnenbrille aus nachhaltigem Bio-Acetat.', rating: 4.8, reviews: 18, search: 'andy wolf florence cat eye acetat' },
-      { id: 3, brand: 'Andy Wolf', name: 'Hume Titanium', price: '395 €', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Filigranes Metall-Design mit Acetat-Innenring.', rating: 4.2, reviews: 9, search: 'andy wolf hume titan korrekturbrille' },
-      { id: 4, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Dänisches Minimal-Design. Patentierter Titandraht.', rating: 4.7, reviews: 24, search: 'lindberg titan daenemark randlos' },
-      { id: 5, brand: 'Cartier', name: 'Santos de Cartier', price: '890 €', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', desc: 'Ikonische Metallbrille mit klaren Linien und Doppelbrücke.', rating: 5.0, reviews: 41, search: 'cartier santos metall klassisch' },
-      { id: 6, brand: 'Cartier', name: 'Panthère de Cartier', price: '980 €', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Verführerische Cat-Eye-Form mit goldenen Akzenten.', rating: 4.9, reviews: 27, search: 'cartier panthere cat eye' },
-      { id: 7, brand: 'Cartier', name: 'C Décor', price: '760 €', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Auffällige Acetatfassung mit dem ikonischen C-Décor-Element.', rating: 4.6, reviews: 15, search: 'cartier c decor acetat' },
-      { id: 8, brand: 'Cartier', name: 'Trinity', price: '720 €', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Feine Metallfassung, inspiriert vom Trinity-Ring.', rating: 4.4, reviews: 20, search: 'cartier trinity metall' },
-      { id: 9, brand: 'Andy Wolf', name: 'Grace Col. B', price: '340 €', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Runde Acetatfassung mit feinem Schliff – ein zeitloser Klassiker.', rating: 4.3, reviews: 12, search: 'andy wolf grace rund acetat' },
-      { id: 10, brand: 'Andy Wolf', name: 'Rimless Titan', price: '450 €', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Randlose Titanfassung – ultraleicht und puristisch.', rating: 4.6, reviews: 15, search: 'andy wolf rimless titan randlos' },
-      { id: 11, brand: 'Andy Wolf', name: 'Sunrise Col. C', price: '410 €', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Moderne Sonnenbrille mit UV-Schutz und farbigen Gläsern.', rating: 4.4, reviews: 10, search: 'andy wolf sunrise sonnenbrille' }
+      { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien' },
+      { id: 2, brand: 'Andy Wolf', name: 'Florence Cat-Eye', price: '420 €', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Ausdrucksstarke Silhouette mit fließenden Übergängen.', search: 'andy wolf florence cat eye' },
+      { id: 3, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Dänischer Minimalismus. Schraubenloses Titandraht-Design.', search: 'lindberg titan daenemark' },
+      { id: 4, brand: 'Cartier', name: 'Santos de Cartier', price: '890 €', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', desc: 'Klassische Aviator-Silhouette mit feinen Schraubendetails.', search: 'cartier santos metall' },
+      { id: 5, brand: 'Jacques Marie Mage', name: 'Dealan Noir', price: '790 €', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Limitierte Auflage aus Japan. 10mm Acetat mit charakteristischem Schliff.', search: 'jmm jacques marie mage dealan' }
     ];
 
     const STORE_DATABASE = [
-      { name: "Brillenlaboratorium", type: "online", state: "Online E-Shop", desc: "Expressversand & Premium-Partner", url: "https://brillenlaboratorium.shop", status: "Sofort lieferbar", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Lindberg", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury", "Anne et Valentin", "RIGARDS", "Jean-François Rey", "Lafont Paris", "Alain Mikli", "Kuboraum", "Retrosuperfuture", "Théodore", "Etnia Barcelona", "Theo Eyewear", "Garrett Leight", "Barton Perreira", "Morgenthal Frederics", "Salt. Optics", "Blake Kuwahara", "Ahlem", "Oliver Goldsmith", "Linda Farrow", "Kirk Originals", "Ørgreen Optics", "Fleye Copenhagen", "Dutz Eyewear", "Monoqool", "Dawson Eyewear", "Vue DC", "Lool Eyewear", "Nina Mûr", "Palens", "Gentle Monster", "Komono", "WaKaze", "Coterie", "Mieu Eyewear", "Pared Eyewear", "Krewe", "Moa"] },
-      { name: "Andy Wolf Official Store", type: "online", state: "Online E-Shop", desc: "Offizieller Markenshop", url: "https://www.andy-wolf.com", status: "Direkt ab Werk", brands: ["Andy Wolf"] },
-      { name: "Mister Spex Luxury", type: "online", state: "Online E-Shop", desc: "Versandkostenfrei & Anprobe", url: "https://www.misterspex.de", status: "Auf Lager", brands: ["Andy Wolf", "Cartier", "DITA", "Tom Ford", "Oliver Peoples", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Garrett Leight", "Barton Perreira", "Salt. Optics"] },
-      { name: "Edel-Optics Boutique", type: "online", state: "Online E-Shop", desc: "Global Luxury Store", url: "https://www.edel-optics.de", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury", "Garrett Leight", "Barton Perreira", "Morgenthal Frederics"] },
-      { name: "Cartier Official Eyewear", type: "online", state: "Online E-Shop", desc: "Offizieller Cartier Online-Store", url: "https://www.cartier.com", status: "Exklusiv", brands: ["Cartier"] },
-      { name: "Fielmann Online", type: "online", state: "Online E-Shop", desc: "Große Auswahl & Filialservice", url: "https://www.fielmann.de", status: "Lieferbar", brands: ["Cartier", "Andy Wolf", "Tom Ford", "Lindberg", "DITA", "Ray-Ban"] },
-      { name: "Apollo-Optik", type: "online", state: "Online E-Shop", desc: "Premium-Marken im Sortiment", url: "https://www.apollo.de", status: "Verfügbar", brands: ["Cartier", "DITA", "Ray-Ban"] },
-      { name: "Brillen.de", type: "online", state: "Online E-Shop", desc: "Luxusbrillen & Fachberatung", url: "https://www.brillen.de", status: "Auf Lager", brands: ["Cartier", "Tom Ford", "Oliver Peoples", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "DITA", "Lindberg"] },
-      { name: "Eyewearlabs.com", type: "online", state: "Online E-Shop", desc: "Europaweiter Versand für Independent-Labels", url: "https://www.eyewearlabs.com", status: "Verfügbar", brands: ["DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Anne et Valentin", "RIGARDS", "Kuboraum", "Retrosuperfuture", "Théodore"] },
-      { name: "The Optic Shop", type: "online", state: "Online E-Shop (UK)", desc: "Britische Independent-Spezialisten", url: "https://www.theopticshop.co.uk", status: "Auf Lager", brands: ["Cutler and Gross", "Oliver Goldsmith", "Jacques Marie Mage", "Linda Farrow", "Kirk Originals", "Barton Perreira"] },
-      { name: "Glassify.de", type: "online", state: "Online E-Shop", desc: "Klein aber fein – Independent-Labels", url: "https://www.glassify.de", status: "Verfügbar", brands: ["DITA", "Matsuda", "Cutler and Gross", "Peter and May", "Jacques Marie Mage"] },
-      { name: "Optik24.de", type: "online", state: "Online E-Shop", desc: "Schneller Versand, Premium-Marken", url: "https://www.optik24.de", status: "Verfügbar", brands: ["DITA", "Matsuda", "Cutler and Gross", "Tom Ford", "Lindberg"] },
-      { name: "Ace & Tate", type: "online", state: "Online E-Shop (NL)", desc: "Eigenmarke, minimalistisch", url: "https://www.aceandtate.com", status: "Eigenmarke", brands: ["Ace & Tate"] },
-      { name: "Viu Eyewear", type: "online", state: "Online E-Shop (CH)", desc: "Nachhaltig, Online-first", url: "https://www.viu.ch", status: "Eigenmarke", brands: ["Viu"] },
-      { name: "Lunor.de", type: "online", state: "Online E-Shop", desc: "Manufaktur-Online-Shop", url: "https://www.lunor.de", status: "Eigenmarke + Auswahl", brands: ["Lunor", "DITA", "Matsuda"] },
-      { name: "Leidmann München", type: "store", state: "München", desc: "Benchmark für Independent Luxury Eyewear", url: "https://www.leidmann.de", status: "Exklusiv", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury", "Anne et Valentin", "RIGARDS", "Jean-François Rey", "Lafont Paris", "Alain Mikli", "Kuboraum", "Retrosuperfuture", "Théodore", "Etnia Barcelona", "Theo Eyewear", "Garrett Leight", "Barton Perreira", "Morgenthal Frederics", "Salt. Optics", "Blake Kuwahara", "Ahlem", "Oliver Goldsmith", "Linda Farrow", "Kirk Originals", "Ørgreen Optics", "Fleye Copenhagen", "Dutz Eyewear", "Monoqool", "Dawson Eyewear", "Vue DC", "Lool Eyewear", "Nina Mûr", "Palens", "Gentle Monster", "Komono", "WaKaze", "Coterie", "Mieu Eyewear", "Pared Eyewear", "Krewe", "Moa"] },
-      { name: "specs.berlin", type: "store", state: "Berlin", desc: "Crème de la Crème der Independent-Szene", url: "https://specs.berlin", status: "Limitierte Serien", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "Peter and May", "Anne et Valentin", "RIGARDS", "Kuboraum", "Retrosuperfuture", "Theo Eyewear", "Garrett Leight", "Barton Perreira", "Morgenthal Frederics", "Salt. Optics", "Blake Kuwahara", "Ahlem", "Oliver Goldsmith", "Linda Farrow", "Kirk Originals", "Ørgreen Optics", "Fleye Copenhagen", "Dutz Eyewear", "Monoqool", "Dawson Eyewear", "Vue DC", "Lool Eyewear", "Nina Mûr", "Palens", "Gentle Monster", "Komono", "WaKaze", "Coterie", "Mieu Eyewear", "Pared Eyewear", "Krewe", "Moa"] },
-      { name: "Noble Optic House Berlin", type: "store", state: "Berlin", desc: "Luxus- und Couture-Segment", url: "https://www.nobleoptichouse.de", status: "VIP-Betreuung", brands: ["Cartier", "Maybach Icons of Luxury", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Linda Farrow"] },
-      { name: "Söhnges / Rheingold-Optik", type: "store", state: "Düsseldorf", desc: "Königsallee-Umfeld – japanische Titan-Manufakturen", url: "https://www.soehnges.de", status: "Diskrete Beratung", brands: ["DITA", "Matsuda", "Cutler and Gross", "Jacques Marie Mage", "Peter and May", "Kuboraum", "Retrosuperfuture", "Théodore", "Etnia Barcelona", "Theo Eyewear"] },
-      { name: "Bellevue Optical Hamburg", type: "store", state: "Hamburg", desc: "Renommiertester Independent-Optiker im Norden", url: "https://www.bellevue-optical.de", status: "Seltene Nischenmarken", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "DITA", "Peter and May", "Anne et Valentin", "RIGARDS", "Kuboraum", "Retrosuperfuture", "Theo Eyewear", "Garrett Leight", "Barton Perreira", "Morgenthal Frederics", "Salt. Optics", "Blake Kuwahara", "Ahlem", "Oliver Goldsmith", "Linda Farrow", "Kirk Originals", "Ørgreen Optics", "Fleye Copenhagen", "Dutz Eyewear", "Monoqool", "Dawson Eyewear", "Vue DC", "Lool Eyewear", "Nina Mûr", "Palens", "Gentle Monster", "Komono", "WaKaze", "Coterie", "Mieu Eyewear", "Pared Eyewear", "Krewe", "Moa"] },
-      { name: "Hanse-Viertel Optik", type: "store", state: "Hamburg", desc: "Offizielle Lizenzen für Cartier, DITA und JMM", url: "https://www.hanseviertel-optik.de", status: "Exklusive Modelle", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Maybach Icons of Luxury", "Matsuda", "Cutler and Gross", "Peter and May"] },
-      { name: "Sehwerk / Optik Kollektiv Köln", type: "store", state: "Köln", desc: "Boutiquen mit Fokus auf Handwerkskunst", url: "https://www.sehwerk-koeln.de", status: "Limitierte Serien", brands: ["Cartier", "Peter and May", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Kuboraum", "Retrosuperfuture", "Théodore"] },
-      { name: "Ehler Optik & Akustik", type: "store", state: "Schleswig-Holstein", desc: "Große Straße 12, Flensburg", url: "https://www.ehler-optik.de", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "DITA"] },
-      { name: "Fielmann Luxury Lounge", type: "store", state: "Schleswig-Holstein", desc: "Holm 48, Flensburg", url: "https://www.fielmann.de", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg"] },
-      { name: "Fielmann Flagship Hamburg", type: "store", state: "Hamburg", desc: "Jungfernstieg 40, 20354 Hamburg", url: "https://www.fielmann.de", status: "Große Auswahl", brands: ["Cartier", "Andy Wolf", "Lindberg"] },
-      { name: "Optik Habel", type: "store", state: "Berlin", desc: "Schloßstraße 90, 12163 Berlin", url: "https://www.optik-habel.de", status: "Cartier exklusiv", brands: ["Cartier", "DITA", "Jacques Marie Mage"] },
-      { name: "Brillenwerk Stuttgart", type: "store", state: "Baden-Württemberg", desc: "Königstraße 45, 70173 Stuttgart", url: "https://www.brillenwerk-stuttgart.de", status: "Verfügbar", brands: ["Cartier", "DITA", "Tom Ford"] },
-      { name: "Sehwerk Karlsruhe", type: "store", state: "Baden-Württemberg", desc: "Kaiserstraße 140, Karlsruhe", url: "https://www.sehwerk-karlsruhe.de", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford"] },
-      { name: "Blickfang Optik", type: "store", state: "Baden-Württemberg", desc: "Königstraße 22, Stuttgart", url: "https://www.blickfang-optik.de", status: "1 Stück", brands: ["Andy Wolf", "Cartier", "DITA"] },
-      { name: "Optik Steininger", type: "store", state: "Bayern", desc: "Sendlinger Straße 25, 80331 München", url: "https://www.optik-steininger.de", status: "Cartier Partner", brands: ["Cartier"] },
-      { name: "Andy Wolf Flagship Store", type: "store", state: "Wien (AT)", desc: "Tuchlauben 11, 1010 Wien", url: "https://www.andy-wolf.com", status: "Alle Kollektionen", brands: ["Andy Wolf"] },
-      { name: "Cartier Boutique Berlin", type: "store", state: "Berlin", desc: "Kurfürstendamm 186, 10707 Berlin", url: "https://www.cartier.com", status: "Komplette Kollektion", brands: ["Cartier"] },
-      { name: "Cartier Boutique München", type: "store", state: "Bayern", desc: "Maximilianstraße 20, 80539 München", url: "https://www.cartier.com", status: "Komplette Kollektion", brands: ["Cartier"] },
-      { name: "Cartier Boutique Wien", type: "store", state: "Wien (AT)", desc: "Kohlmarkt 1, 1010 Wien", url: "https://www.cartier.com", status: "Komplette Kollektion", brands: ["Cartier"] },
-      { name: "Götti Store Zürich", type: "store", state: "Zürich (CH)", desc: "Götti Switzerland – Flagship Store", url: "https://www.gotti.swiss", status: "Eigenmarke", brands: ["Götti Switzerland"] },
-      { name: "Viu Store Zürich", type: "store", state: "Zürich (CH)", desc: "Viu Eyewear – Store & Optiker", url: "https://www.viu.ch", status: "Eigenmarke", brands: ["Viu"] },
-      { name: "Cutler and Gross Flagship London", type: "store", state: "London (UK)", desc: "Cutler and Gross – Flagship Store", url: "https://www.cutlerandgross.com", status: "Eigenmarke", brands: ["Cutler and Gross"] },
-      { name: "Oliver Goldsmith Gallery London", type: "store", state: "London (UK)", desc: "Oliver Goldsmith – Gallery & Store", url: "https://www.olivergoldsmith.com", status: "Eigenmarke", brands: ["Oliver Goldsmith"] },
-      { name: "Kuboraum Store Mailand", type: "store", state: "Mailand (IT)", desc: "Kuboraum – Flagship Store", url: "https://www.kuboraum.com", status: "Eigenmarke", brands: ["Kuboraum"] },
-      { name: "Mondelliani Rom", type: "store", state: "Rom (IT)", desc: "Mondelliani – Römische Manufaktur", url: "https://www.mondelliani.com", status: "Eigenmarke", brands: ["Mondelliani"] },
-      { name: "Theo Eyewear Store Antwerpen", type: "store", state: "Antwerpen (BE)", desc: "Theo Eyewear – Store", url: "https://www.theo.be", status: "Eigenmarke", brands: ["Theo Eyewear"] },
-      { name: "Leidmann Dependance", type: "store", state: "München", desc: "Zweite Filiale für Independent-Labels", url: "https://www.leidmann.de", status: "Verfügbar", brands: ["Jacques Marie Mage", "DITA", "Matsuda", "Cutler and Gross", "Peter and May", "Kuboraum", "Retrosuperfuture"] }
+      { name: "Brillenlaboratorium", type: "online", url: "https://brillenlaboratorium.shop" },
+      { name: "Leidmann München", type: "store", url: "https://www.leidmann.de" },
+      { name: "specs.berlin", type: "store", url: "https://specs.berlin" },
+      { name: "Bellevue Optical Hamburg", type: "store", url: "https://www.bellevue-optical.de" }
     ];
 
     const INDEPENDENT_LABELS = {
-      "Frankreich": ["Jacques Marie Mage", "Anne et Valentin", "RIGARDS", "Jean-François Rey", "Lafont Paris", "Raphaëlle Bess", "Alain Mikli", "KameManNen", "Edwardson", "Coblens", "Henry Jullien"],
-      "Deutschland / Österreich / Schweiz": ["Andy Wolf", "MYKITA", "Frost", "Götti Switzerland", "Rolf Spectacles", "Pfeiffer", "Jünemann", "Hoffmann Natural Eyewear", "Vinylize", "Gotti", "Markus T"],
-      "Italien": ["Kuboraum", "Retrosuperfuture", "Théodore", "Italia Independent", "Spektre", "Mondelliani", "L.G.R", "Portromano"],
-      "Japan": ["Matsuda", "DITA", "Eyevan 7285", "Masunaga", "Kaneko Optical", "Factory900", "Native Sons", "O.J.", "Japonism", "Tailor & Co.", "BOSTON CLUB", "Less than Human", "Groover"],
-      "USA / Kanada": ["Barton Perreira", "Garrett Leight", "Morgenthal Frederics", "Ahlem", "Blake Kuwahara", "Theo Eyewear", "Mott & Bayard", "State Optical Co.", "Salt. Optics", "Thierry Lasry", "Sama Eyewear", "Chrome Hearts"],
-      "Großbritannien / Irland": ["Cutler and Gross", "Oliver Goldsmith", "Linda Farrow", "Kirk Originals", "Cubbitts", "Taylor Morris", "Finlay & Co.", "Banton Frameworks"],
-      "Dänemark / Skandinavien": ["Lindberg", "Ørgreen Optics", "Fleye Copenhagen", "Dutz Eyewear", "Monoqool", "Ace & Tate", "Dawson Eyewear", "Vue DC"],
-      "Spanien / Portugal": ["Etnia Barcelona", "Lool Eyewear", "Nina Mûr", "Palens"],
-      "Niederlande / Belgien": ["Theo Eyewear", "Morgenthal Frederics", "Hoffmann", "Vue DC"],
-      "Australien / Neuseeland": ["Jacques Marie Mage", "Pared Eyewear", "Krewe", "Moa"],
-      "Südkorea": ["Gentle Monster", "Komono", "Fakoshima"],
-      "China / Hongkong": ["WaKaze", "Coterie", "Mieu Eyewear"]
+      "Österreich / D / CH": ["Andy Wolf", "MYKITA", "Götti Switzerland"],
+      "Frankreich": ["Jacques Marie Mage", "Anne et Valentin", "Lafont Paris"],
+      "Japan": ["Matsuda", "DITA", "Eyevan 7285"],
+      "Dänemark": ["Lindberg", "Ørgreen Optics"]
     };
 
-    const COUNTRY_BRAND_MAP = {
-      "Deutschland / Österreich / Schweiz": ["Andy Wolf"],
-      "Dänemark / Skandinavien": ["Lindberg"],
-      "Frankreich": ["Cartier"]
-    };
-
-    // Hero-Slider: ausgewählte Independent Labels mit repräsentativen Bildern
     const HERO_SLIDES = [
-      { img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1600&q=80', label: 'Andy Wolf' },
-      { img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1600&q=80', label: 'Jacques Marie Mage' },
-      { img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1600&q=80', label: 'DITA' },
-      { img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1600&q=80', label: 'Matsuda' },
-      { img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1600&q=80', label: 'Cutler and Gross' },
-      { img: 'https://images.unsplash.com/photo-1485875437342-9b39470b3d95?auto=format&fit=crop&w=1600&q=80', label: 'Kuboraum' },
-      { img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1600&q=80', label: 'Etnia Barcelona' },
-      { img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1600&q=80', label: 'MYKITA' }
+      { img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1600&q=80', label: 'Andy Wolf — Handgefertigt in Österreich' },
+      { img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1600&q=80', label: 'Jacques Marie Mage — Limited Editions' },
+      { img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1600&q=80', label: 'Lindberg — Dänische Ingenieurskunst' }
     ];
 
-    // ---------- State ----------
     let wishlist = [];
     let cart = [];
-    let lastViewedBrand = null;
-    let musicPlaying = false;
-    let spotifyLoaded = false;
-    let spotifyIframe = null;
-    let currentAllowedBrands = null;
     let heroSlideIndex = 0;
 
-    // ---------- Init ----------
     function init() {
-      renderCountryFilterBar();
+      renderCountryFilters();
       setupHeroSlider();
-      renderProducts(currentAllowedBrands);
-      updateWishlistUI();
-      updateCartUI();
+      renderProducts();
       populateStoreSelect();
-      updateRecommendations();
       setupScrollAnimations();
-      document.getElementById('intro').addEventListener('click', openIntro);
-      setTimeout(openIntro, 5000);
     }
 
     function setupScrollAnimations() {
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
       }, { threshold: 0.1 });
       document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     }
 
     function setupHeroSlider() {
       const container = document.getElementById('hero-slides');
-      const labelEl = document.getElementById('hero-slide-label');
+      const label = document.getElementById('hero-slide-label');
       if (!container) return;
 
       HERO_SLIDES.forEach((slide, i) => {
         const img = document.createElement('img');
         img.src = slide.img;
-        img.alt = slide.label;
-        img.style.opacity = i === 0 ? '1' : '0';
+        img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
         container.appendChild(img);
       });
-
-      if (labelEl && HERO_SLIDES.length > 0) {
-        labelEl.textContent = HERO_SLIDES[0].label;
-      }
 
       setInterval(() => {
         const imgs = container.querySelectorAll('img');
         if (!imgs.length) return;
-        imgs[heroSlideIndex].style.opacity = '0';
+        imgs[heroSlideIndex].classList.remove('opacity-100');
+        imgs[heroSlideIndex].classList.add('opacity-0');
         heroSlideIndex = (heroSlideIndex + 1) % imgs.length;
-        imgs[heroSlideIndex].style.opacity = '1';
-        if (labelEl) labelEl.textContent = HERO_SLIDES[heroSlideIndex].label;
-      }, 4000);
+        imgs[heroSlideIndex].classList.remove('opacity-0');
+        imgs[heroSlideIndex].classList.add('opacity-100');
+        if (label) label.textContent = HERO_SLIDES[heroSlideIndex].label;
+      }, 5000);
     }
 
-    function renderCountryFilterBar() {
+    function renderCountryFilters() {
       const bar = document.getElementById('country-filter-bar');
       bar.innerHTML = '';
       Object.keys(INDEPENDENT_LABELS).forEach(country => {
         const btn = document.createElement('button');
-        btn.className = 'country-btn';
+        btn.className = 'filter-btn text-[10px] uppercase border border-[var(--border-editorial)] px-4 py-2 hover:border-black transition-colors whitespace-nowrap';
         btn.textContent = country;
-        btn.onclick = () => selectCountry(country, btn);
+        btn.onclick = () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderLabelTags(country);
+        };
         bar.appendChild(btn);
       });
     }
 
-    function selectCountry(country, btn) {
-      document.querySelectorAll('.country-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+    function renderLabelTags(country) {
       const container = document.getElementById('selected-country-labels');
       container.innerHTML = '';
       INDEPENDENT_LABELS[country].forEach(label => {
         const tag = document.createElement('span');
-        tag.className = 'label-tag';
+        tag.className = 'text-[10px] bg-[var(--surface-editorial)] border border-[var(--border-editorial)] px-3 py-1 tracking-wider text-[var(--text-muted)]';
         tag.textContent = label;
         container.appendChild(tag);
       });
-      currentAllowedBrands = COUNTRY_BRAND_MAP[country] || [];
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      renderProducts(currentAllowedBrands, query);
     }
 
-    function openIntro() {
-      const intro = document.getElementById('intro');
-      if (intro.classList.contains('open')) return;
-      intro.classList.add('open');
-      if (!spotifyLoaded) {
-        createSpotifyPlayer();
-        spotifyLoaded = true;
-      } else {
-        sendSpotifyCommand('play');
-      }
-      setTimeout(() => { intro.style.display = 'none'; }, 1000);
-    }
-
-    function createSpotifyPlayer() {
-      const container = document.getElementById('spotify-container');
-      if (spotifyIframe) return;
-      spotifyIframe = document.createElement('iframe');
-      spotifyIframe.src = 'https://open.spotify.com/embed/track/6c2ZcdXHkEFdsNArdJXrHX?si=UcPfYCevSkKPc66I_54uVQ&utm_source=copy-link';
-      spotifyIframe.width = '100%';
-      spotifyIframe.height = '80';
-      spotifyIframe.frameBorder = '0';
-      spotifyIframe.allow = 'autoplay; encrypted-media';
-      spotifyIframe.allowFullscreen = true;
-      spotifyIframe.addEventListener('load', () => {
-        sendSpotifyCommand('play');
-        musicPlaying = true;
-        updateMusicButton();
-      });
-      container.appendChild(spotifyIframe);
-      musicPlaying = false;
-      updateMusicButton();
-    }
-
-    function sendSpotifyCommand(command) {
-      if (spotifyIframe && spotifyIframe.contentWindow) {
-        spotifyIframe.contentWindow.postMessage({ command: command }, '*');
-      }
-    }
-
-    function toggleMusic() {
-      if (!spotifyLoaded) {
-        createSpotifyPlayer();
-        spotifyLoaded = true;
-      } else {
-        if (musicPlaying) {
-          sendSpotifyCommand('pause');
-          musicPlaying = false;
-        } else {
-          sendSpotifyCommand('play');
-          musicPlaying = true;
-        }
-        updateMusicButton();
-      }
-    }
-
-    function updateMusicButton() {
-      const icon = document.getElementById('music-icon');
-      icon.className = musicPlaying ? 'fa-solid fa-pause text-base' : 'fa-solid fa-play text-base';
-    }
-
-    function renderProducts(allowedBrands = null, query = '') {
+    function renderProducts(query = '') {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
-      let filteredProducts = PRODUCTS;
-      if (allowedBrands && allowedBrands.length > 0) {
-        filteredProducts = PRODUCTS.filter(p => allowedBrands.includes(p.brand));
-      }
+      
+      let items = PRODUCTS;
       if (query) {
-        filteredProducts = filteredProducts.filter(p => 
-          (p.name + ' ' + p.brand + ' ' + p.search).toLowerCase().includes(query)
-        );
+        items = items.filter(p => (p.brand + ' ' + p.name + ' ' + p.search).toLowerCase().includes(query));
       }
-      if (filteredProducts.length === 0) {
-        container.innerHTML = '<p class="text-stone-500 text-sm">Keine Brillen für diese Auswahl gefunden. Entdecken Sie unsere Stores.</p>';
-        return;
-      }
-      filteredProducts.forEach(product => {
+
+      items.forEach(p => {
         const card = document.createElement('div');
-        card.className = 'product-card bg-white rounded-sm border border-beige overflow-hidden';
+        card.className = 'product-card group cursor-pointer';
         card.innerHTML = `
-          <div class="relative overflow-hidden">
-            <img src="${product.img}" alt="${product.name}" class="w-full h-64 object-cover cursor-pointer" onclick="openDetail(${product.id})" loading="lazy">
+          <div class="img-zoom-container bg-[var(--surface-editorial)] mb-5 border border-[var(--border-editorial)]" onclick="openDetail(${p.id})">
+            <img src="${p.img}" alt="${p.name}" class="w-full h-80 object-cover">
           </div>
-          <div class="p-5">
-            <div class="flex justify-between items-baseline mb-2">
-              <h2 class="text-lg font-serif tracking-widest uppercase">${product.brand}</h2>
-              <button onclick="toggleWishlist(this, '${product.name}')" class="text-stone-400 hover:text-rose-600 text-base"><i class="fa-regular fa-heart"></i></button>
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)] mb-1">${p.brand}</p>
+              <h3 class="font-serif text-xl font-light">${p.name}</h3>
             </div>
-            <p class="text-xs uppercase tracking-wider text-stone-500 mb-2">${product.name} | ${product.price}</p>
-            <div class="text-yellow-500 text-sm mb-3">${'★'.repeat(Math.round(product.rating))}${'☆'.repeat(5-Math.round(product.rating))} <span class="text-stone-400">(${product.reviews})</span></div>
-            <p class="text-xs text-stone-600 leading-relaxed mb-4">${product.desc}</p>
-            <div class="space-y-2">
-              <button onclick="toggleStores('${product.brand}', 'stores-${product.id}')" class="w-full py-2.5 border border-stone-300 text-xs uppercase tracking-widest hover:bg-stone-100 transition-colors">Stores & Shops</button>
-              <button onclick="addToCart('${product.name}', '${product.price}', '${product.img}')" class="w-full py-2.5 bg-stone-900 text-white text-xs uppercase tracking-widest hover:bg-stone-700 transition-colors">In den Warenkorb</button>
-            </div>
-            <div id="stores-${product.id}" class="hidden mt-3 p-3 bg-beige-light rounded-sm text-xs"></div>
+            <p class="text-xs font-medium">${p.price}</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[var(--border-editorial)]/50 flex space-x-3">
+            <button onclick="addToCart('${p.name}', '${p.price}', '${p.img}')" class="flex-1 py-2.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest hover:bg-stone-800 transition-colors">In den Warenkorb</button>
+            <button onclick="toggleWishlist(this, '${p.name}')" class="px-3 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors"><i class="fa-regular fa-heart"></i></button>
           </div>
         `;
         container.appendChild(card);
       });
+      renderRecommendations();
     }
 
     function filterProducts() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      renderProducts(currentAllowedBrands, query);
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      renderProducts(q);
     }
 
     function openDetail(id) {
       const p = PRODUCTS.find(x => x.id === id);
       if (!p) return;
-      lastViewedBrand = p.brand;
-      document.getElementById('modalBrand').innerText = `${p.brand} - ${p.name}`;
+      document.getElementById('modalBrand').innerText = p.brand;
+      document.getElementById('modalName').innerText = p.name;
       document.getElementById('modalPrice').innerText = p.price;
       document.getElementById('modalDesc').innerText = p.desc;
       document.getElementById('modalImg').src = p.img;
-      document.getElementById('modalRating').innerHTML = `${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5-Math.round(p.rating))} (${p.reviews} Bewertungen)`;
       document.getElementById('modalAddBtn').onclick = () => { addToCart(p.name, p.price, p.img); closeDetail(); };
-      const modal = document.getElementById('detailModal');
-      modal.classList.remove('hidden'); modal.classList.add('flex');
-      updateRecommendations();
+      document.getElementById('detailModal').classList.remove('hidden');
+      document.getElementById('detailModal').classList.add('flex');
     }
 
     function closeDetail() {
-      const modal = document.getElementById('detailModal');
-      modal.classList.add('hidden'); modal.classList.remove('flex');
+      document.getElementById('detailModal').classList.add('hidden');
+      document.getElementById('detailModal').classList.remove('flex');
     }
 
-    function updateRecommendations() {
+    function renderRecommendations() {
       const container = document.getElementById('recommendations');
-      container.innerHTML = '';
-      let recommended = PRODUCTS;
-      if (lastViewedBrand) {
-        recommended = PRODUCTS.filter(p => p.brand === lastViewedBrand);
-        if (recommended.length < 3) {
-          const others = PRODUCTS.filter(p => p.brand !== lastViewedBrand);
-          recommended = recommended.concat(others).slice(0,3);
-        }
-      } else {
-        recommended = PRODUCTS.slice(0,3);
-      }
-      recommended.forEach(p => {
-        const div = document.createElement('div');
-        div.className = 'bg-white rounded-sm border border-beige overflow-hidden cursor-pointer product-card';
-        div.innerHTML = `<img src="${p.img}" class="w-full h-40 object-cover" loading="lazy">
-                         <div class="p-4">
-                           <p class="font-serif text-lg">${p.brand}</p>
-                           <p class="text-xs text-stone-600">${p.name}</p>
-                           <p class="text-xs font-bold mt-1">${p.price}</p>
-                         </div>`;
-        div.onclick = () => openDetail(p.id);
-        container.appendChild(div);
-      });
-    }
-
-    function toggleStores(brand, containerId) {
-      const container = document.getElementById(containerId);
       if (!container) return;
-      if (!container.classList.contains('hidden')) {
-        container.classList.add('hidden');
-        return;
-      }
-      const matchingStores = STORE_DATABASE.filter(store => store.brands.includes(brand));
-      let html = '<div class="font-semibold text-stone-900 border-b border-beige pb-1 mb-2">Online E-Commerce Shops</div>';
-      matchingStores.filter(s => s.type === 'online').forEach(store => {
-        html += `<a href="${store.url}" target="_blank" class="flex justify-between border-b border-beige/60 pb-1.5 hover:bg-stone-200/50 p-1 rounded transition">
-          <div><p class="font-medium text-stone-900">${store.name} <i class="fa-solid fa-cart-shopping text-[10px] ml-1 text-amber-800"></i></p>
-          <p class="text-stone-500 text-[10px]">${store.desc}</p></div>
-          <span class="text-emerald-700 font-medium text-[11px]">${store.status}</span></a>`;
-      });
-      html += '<div class="font-semibold text-stone-900 border-b border-beige pb-1 mt-3 mb-2">Optiker Fachgeschäfte & Partner</div>';
-      matchingStores.filter(s => s.type === 'store').forEach(store => {
-        html += `<a href="${store.url}" target="_blank" class="flex justify-between border-b border-beige/60 pb-1.5 hover:bg-stone-200/50 p-1 rounded transition">
-          <div><p class="font-medium text-stone-900">${store.name} <span class="text-[9px] bg-stone-200 text-stone-700 px-1 py-0.5 rounded ml-1">${store.state}</span></p>
-          <p class="text-stone-500 text-[10px]">${store.desc}</p></div>
-          <span class="text-emerald-700 font-medium text-[11px]">${store.status}</span></a>`;
-      });
-      container.innerHTML = html;
-      container.classList.remove('hidden');
+      container.innerHTML = PRODUCTS.slice(0, 3).map(p => `
+        <div class="bg-white p-5 border border-[var(--border-editorial)] cursor-pointer" onclick="openDetail(${p.id})">
+          <img src="${p.img}" class="w-full h-44 object-cover mb-4">
+          <p class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">${p.brand}</p>
+          <h4 class="font-serif text-lg font-light my-1">${p.name}</h4>
+          <p class="text-xs font-medium">${p.price}</p>
+        </div>
+      `).join('');
     }
 
     function addToCart(name, price, img) {
@@ -818,41 +484,44 @@
       const container = document.getElementById('cart-container');
       const summary = document.getElementById('cart-summary');
       const totalEl = document.getElementById('cart-total');
+      
       badge.innerText = cart.length;
       badge.classList.toggle('hidden', cart.length === 0);
+
       if (cart.length === 0) {
-        container.innerHTML = '<p class="text-stone-500">Warenkorb ist leer.</p>';
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihr Warenkorb ist derzeit leer.</p>';
         summary.classList.add('hidden');
       } else {
         let total = 0;
         container.innerHTML = cart.map((item, index) => {
-          const price = parseInt(item.price.replace(/\D/g,'')) || 0;
-          total += price;
-          return `<div class="flex justify-between items-center p-3 bg-beige-light rounded-sm">
-            <div class="flex items-center gap-3">
-              <img src="${item.img}" class="w-12 h-12 object-cover rounded-sm">
-              <div><p class="font-medium">${item.name}</p><p class="text-[10px]">${item.price}</p></div>
+          total += parseInt(item.price.replace(/\D/g,'')) || 0;
+          return `
+            <div class="flex justify-between items-center p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]">
+              <div class="flex items-center space-x-4">
+                <img src="${item.img}" class="w-12 h-12 object-cover">
+                <div><p class="text-xs font-medium">${item.name}</p><p class="text-[10px] text-[var(--text-muted)]">${item.price}</p></div>
+              </div>
+              <button onclick="removeFromCart(${index})" class="text-lg text-[var(--text-muted)] hover:text-black">&times;</button>
             </div>
-            <button onclick="removeFromCart(${index})" class="text-xl">&times;</button>
-          </div>`;
+          `;
         }).join('');
         totalEl.innerText = total + ' €';
         summary.classList.remove('hidden');
       }
     }
 
-    function removeFromCart(index) { cart.splice(index,1); updateCartUI(); }
+    function removeFromCart(i) { cart.splice(i, 1); updateCartUI(); }
 
     function toggleWishlist(btn, name) {
       const icon = btn.querySelector('i');
       if (wishlist.includes(name)) {
         wishlist = wishlist.filter(x => x !== name);
-        icon.classList.remove('fa-solid','text-rose-600'); icon.classList.add('fa-regular');
-        showToast('Aus Wunschliste entfernt');
+        icon.className = 'fa-regular fa-heart';
+        showToast('Entfernt');
       } else {
         wishlist.push(name);
-        icon.classList.remove('fa-regular'); icon.classList.add('fa-solid','text-rose-600');
-        showToast('Zur Wunschliste hinzugefügt');
+        icon.className = 'fa-solid fa-heart text-rose-600';
+        showToast('Gespeichert');
       }
       updateWishlistUI();
     }
@@ -862,66 +531,66 @@
       const container = document.getElementById('wishlist-container');
       badge.innerText = wishlist.length;
       badge.classList.toggle('hidden', wishlist.length === 0);
+
       if (wishlist.length === 0) {
-        container.innerHTML = '<p class="text-stone-500">Wunschliste ist leer.</p>';
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihre Wunschliste ist leer.</p>';
       } else {
         container.innerHTML = wishlist.map(item => `
-          <div class="flex justify-between items-center p-3 bg-beige-light rounded-sm">
-            <span>${item}</span>
-            <span class="text-xs text-amber-800">Gespeichert</span>
-          </div>`).join('');
+          <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex justify-between items-center">
+            <span class="text-xs font-medium">${item}</span>
+            <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">Gespeichert</span>
+          </div>
+        `).join('');
       }
     }
 
     function shareWishlist() {
       if (wishlist.length === 0) { showToast('Wunschliste ist leer'); return; }
-      const text = 'Meine Luxevue-Wunschliste: ' + wishlist.join(', ');
+      const text = 'Meine LUXEVUE Auswahl: ' + wishlist.join(', ');
       window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
 
     function populateStoreSelect() {
       const select = document.getElementById('checkout-store');
+      if (!select) return;
       select.innerHTML = '<option value="">Bitte wählen...</option>';
       STORE_DATABASE.forEach(s => {
-        select.innerHTML += `<option value="${s.name}">${s.name} (${s.type === 'online' ? 'Online' : 'Fachgeschäft'})</option>`;
+        select.innerHTML += `<option value="${s.name}">${s.name} (${s.type === 'online' ? 'E-Shop' : 'Fachgeschäft'})</option>`;
       });
     }
 
     function showCheckoutForm() {
-      document.getElementById('checkout-form').classList.toggle('visible');
+      document.getElementById('checkout-form').classList.remove('hidden');
     }
 
     function submitCheckout() {
       const store = document.getElementById('checkout-store').value;
-      const name = document.getElementById('checkout-name').value.trim();
-      const email = document.getElementById('checkout-email').value.trim();
-      const payment = document.querySelector('input[name="payment"]:checked')?.value;
+      const name = document.getElementById('checkout-name').value;
+      const email = document.getElementById('checkout-email').value;
+
       if (!store || !name || !email) { showToast('Bitte alle Felder ausfüllen'); return; }
-      showToast(`Bestellung an ${store} übermittelt. Zahlung per ${payment}.`);
+      showToast('Anfrage erfolgreich übermittelt.');
       cart = [];
       updateCartUI();
-      document.getElementById('checkout-form').classList.remove('visible');
-      document.getElementById('checkout-name').value = '';
-      document.getElementById('checkout-email').value = '';
-      document.getElementById('checkout-store').value = '';
+      document.getElementById('checkout-form').classList.add('hidden');
     }
 
     function subscribeNewsletter() {
       const email = document.getElementById('newsletter-email').value;
-      if (!email.includes('@')) { showToast('Bitte gültige E-Mail eingeben'); return; }
-      showToast('Vielen Dank! 5% Rabattcode wurde gesendet.');
+      if (!email.includes('@')) { showToast('Gültige E-Mail erforderlich'); return; }
+      showToast('Vielen Dank für Ihre Anmeldung.');
       document.getElementById('newsletter-email').value = '';
     }
 
     function showToast(msg) {
       const toast = document.getElementById('toast');
       document.getElementById('toast-msg').innerText = msg;
-      toast.classList.remove('opacity-0','pointer-events-none');
+      toast.classList.remove('opacity-0', 'pointer-events-none');
       toast.classList.add('opacity-100');
       setTimeout(() => {
         toast.classList.remove('opacity-100');
-        toast.classList.add('opacity-0','pointer-events-none');
-      }, 3000);
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2500);
     }
 
     function navigateTo(pageId) {
@@ -929,17 +598,11 @@
       const page = document.getElementById('page-' + pageId);
       if (page) {
         page.classList.remove('hidden');
-        window.location.hash = pageId;
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      init();
-      const hash = window.location.hash.replace('#', '') || 'home';
-      navigateTo(hash);
-      updateMusicButton();
-    });
+    window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
