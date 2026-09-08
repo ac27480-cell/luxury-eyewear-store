@@ -211,7 +211,6 @@
                   letter-spacing 1.6s ease;
       transform: scale(1);
       opacity: 1;
-      letter-spacing: 0.15em;
     }
     .intro-title.dissolve {
       transform: scale(0.85) translateY(-30px);
@@ -353,11 +352,9 @@
       <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-light leading-[1.1] max-w-3xl">
         Weltweit kuratiert.<br /><span class="italic">Direkt vom Fachhändler.</span>
       </h1>
-      <!-- Beschreibungstext – klickbar öffnet Marken-Portrait -->
       <div id="hero-description" class="hero-description text-stone-200 mt-4 max-w-2xl"></div>
       <div class="mt-8 flex justify-between items-end border-t border-white/20 pt-6">
         <p class="text-xs tracking-widest uppercase text-stone-300 max-w-md">Die führenden unabhängigen Brillenmarken & Partner-Optiker</p>
-        <!-- Klickbares Label öffnet ebenfalls das Marken-Portrait -->
         <span id="hero-slide-label" class="text-[10px] uppercase tracking-[0.25em] text-stone-400 hero-label-click">Andy Wolf</span>
       </div>
     </div>
@@ -371,7 +368,6 @@
       </div>
       <div class="p-6 md:p-8">
         <div class="grid md:grid-cols-2 gap-8">
-          <!-- Platz für Marken-Skizze oder Logo -->
           <div class="bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-4 flex items-center justify-center">
             <img id="brand-modal-img" src="" alt="Marke" class="w-full h-auto object-contain max-h-[300px]" />
           </div>
@@ -425,6 +421,47 @@
         <span class="text-xs tracking-widest uppercase text-[var(--text-muted)]">Direkte Bezugsquellen</span>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16" id="product-list"></div>
+    </section>
+
+    <!-- ===== NEU: INSPIRATION & EDITORIAL SEKTION ===== -->
+    <section class="mb-24 py-16 px-6 lg:px-12 bg-white border border-[var(--border-editorial)] fade-in">
+      <div class="max-w-4xl mx-auto text-center mb-16">
+        <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-3">Inspiration & Perspektiven</p>
+        <h2 class="text-3xl md:text-4xl font-serif font-light tracking-wide">Handwerk trifft Haltung</h2>
+        <div class="w-10 h-[1px] bg-stone-300 mx-auto mt-4"></div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="p-6 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex flex-col justify-between">
+          <div>
+            <span class="text-[9px] uppercase tracking-widest text-[var(--text-muted)] block mb-2">Atelier Insights</span>
+            <h3 class="font-serif text-2xl font-light mb-3">Die Seele des Acetats</h3>
+            <p class="text-xs text-[var(--text-muted)] leading-relaxed font-light mb-6">
+              Bio-Acetat aus pflanzlicher Cellulose: Warum Manufakturen in Hartberg, Sabae und Oyonnax auf natürliche Rohstoffe und wochenlange Handpolituren setzen.
+            </p>
+          </div>
+          <button onclick="showToast('Editorial wird geladen...')" class="text-[10px] uppercase tracking-widest font-semibold text-left underline decoration-stone-400 hover:text-black">Artikel lesen</button>
+        </div>
+        <div class="p-6 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex flex-col justify-between">
+          <div>
+            <span class="text-[9px] uppercase tracking-widest text-[var(--text-muted)] block mb-2">Design Philosophie</span>
+            <h3 class="font-serif text-2xl font-light mb-3">Schraubenlose Präzision</h3>
+            <p class="text-xs text-[var(--text-muted)] leading-relaxed font-light mb-6">
+              Von Berliner Edelstahl-Innovationen bis zu dänischem Titandraht: Wie Verzicht auf mechanische Bauteile maximale Leichtigkeit und Langlebigkeit erzeugt.
+            </p>
+          </div>
+          <button onclick="showToast('Editorial wird geladen...')" class="text-[10px] uppercase tracking-widest font-semibold text-left underline decoration-stone-400 hover:text-black">Artikel lesen</button>
+        </div>
+        <div class="p-6 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex flex-col justify-between">
+          <div>
+            <span class="text-[9px] uppercase tracking-widest text-[var(--text-muted)] block mb-2">Fachhandel & Beratung</span>
+            <h3 class="font-serif text-2xl font-light mb-3">Der geschulte Blick</h3>
+            <p class="text-xs text-[var(--text-muted)] leading-relaxed font-light mb-6">
+              Warum die perfekte Passform und der individuelle Sehtest beim spezialisierten Optiker durch keinen Algorithmus der Welt ersetzt werden können.
+            </p>
+          </div>
+          <button onclick="showToast('Editorial wird geladen...')" class="text-[10px] uppercase tracking-widest font-semibold text-left underline decoration-stone-400 hover:text-black">Artikel lesen</button>
+        </div>
+      </div>
     </section>
 
     <section class="bg-[#1a1918] text-[#fcfbf9] -mx-6 lg:-mx-12 px-6 lg:px-20 py-24 my-20 fade-in">
@@ -718,10 +755,8 @@
   <!-- JAVASCRIPT -->
   <!-- ============================================================ -->
   <script>
-    // -------- DATA --------
     const IMAGE_PLACEHOLDER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><rect width='100%' height='100%' fill='%23f4f2ed'/><g stroke='%2373706b' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z' stroke-dasharray='6,4'/><path d='M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z' stroke-dasharray='6,4'/><path d='M 340,285 C 380,270 420,270 460,285'/><path d='M 220,285 L 140,270'/><path d='M 580,285 L 660,270'/><circle cx='280' cy='300' r='45' stroke='%231a1918' stroke-width='3'/><circle cx='520' cy='300' r='45' stroke='%231a1918' stroke-width='3'/><path d='M 325,280 Q 400,265 475,280' stroke='%231a1918' stroke-width='3'/><path d='M 235,280 L 150,260' stroke='%231a1918' stroke-width='3'/><path d='M 565,280 L 650,260' stroke='%231a1918' stroke-width='3'/></g><text x='50%' y='440' font-family='Georgia, serif' font-size='14' font-style='italic' fill='%2373706b' text-anchor='middle' letter-spacing='2'>[ MANUFAKTUR SKIZZE ]</text></svg>";
 
-    // Marken-Portrait-Daten
     const BRAND_DATA = {
       'Andy Wolf': {
         story: 'Andy Wolf steht für exklusive Brillenmanufaktur aus Österreich. Jede Fassung wird mit höchster Präzision und nachhaltigem Bio-Acetat in Hartberg gefertigt. Die geometrische Linienführung und die Liebe zum Detail machen jede Brille zu einem Unikat.',
@@ -891,15 +926,12 @@
         desc: 'Traditionelles Brillenhandwerk aus King’s Cross, London.', search: 'cubitts london brillenlaboratorium' }
     ];
 
-    // -------- STATE --------
     let wishlist = [];
     let cart = [];
     let heroSlideIndex = 0;
     let currentBrand = 'Andy Wolf';
     let touchStartX = 0;
     let touchEndX = 0;
-
-    // -------- INTRO --------
     let introDone = false;
 
     function dismissIntro() {
@@ -926,7 +958,6 @@
     document.getElementById('intro-overlay').addEventListener('click', dismissIntro);
     document.getElementById('intro-overlay').addEventListener('touchstart', dismissIntro);
 
-    // -------- HELPER --------
     function getStoreInfo(storeId) {
       return STORE_DATABASE.find(s => s.id === storeId) || { name: 'Zertifizierter Optiker', url: '#', city: 'Fachhandel',
         type: 'Fachgeschäft' };
@@ -943,7 +974,6 @@
       }, 2500);
     }
 
-    // -------- NAVIGATION --------
     function navigateTo(pageId) {
       document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
       const page = document.getElementById('page-' + pageId);
@@ -955,7 +985,6 @@
       if (pageId === 'checkout') renderCheckout();
     }
 
-    // -------- PRODUKT-MODAL --------
     function openProductModal(productId) {
       const p = PRODUCTS.find(x => x.id === parseInt(productId));
       if (!p) { showToast('Produkt nicht gefunden'); return; }
@@ -1009,7 +1038,6 @@
       document.body.style.overflow = '';
     }
 
-    // -------- MARKEN-PORTRAIT MODAL --------
     function openBrandModal(brandName) {
       const data = BRAND_DATA[brandName];
       if (!data) {
@@ -1019,7 +1047,6 @@
       document.getElementById('brand-modal-name').innerText = brandName;
       document.getElementById('brand-modal-story').innerText = data.story;
       document.getElementById('brand-modal-img').src = data.img;
-      // Speichere die aktuelle Marke für den "Zur Kollektion"-Button
       document.getElementById('brand-modal-name').dataset.brand = brandName;
       document.getElementById('brandModal').classList.remove('hidden');
       document.getElementById('brandModal').classList.add('flex');
@@ -1032,23 +1059,19 @@
       document.body.style.overflow = '';
     }
 
-    // Filter nach Marke (für Kollektion-Button)
     function filterByBrand() {
       const brand = document.getElementById('brand-modal-name').dataset.brand;
       if (brand) {
         closeBrandModal();
-        // Zur Homepage navigieren und Suchfeld mit Markennamen befüllen
         navigateTo('home');
         document.getElementById('searchInput').value = brand;
         filterProducts();
-        // Sanft zur Produktliste scrollen
         setTimeout(() => {
           document.getElementById('product-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 300);
       }
     }
 
-    // -------- PRODUKT-GRID --------
     function renderProducts(query = '') {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
@@ -1126,13 +1149,11 @@
       });
     }
 
-    // -------- FILTER --------
     function filterProducts() {
       const q = document.getElementById('searchInput').value.toLowerCase();
       renderProducts(q);
     }
 
-    // -------- LÄNDERFILTER --------
     function renderCountryFilters() {
       const bar = document.getElementById('country-filter-bar');
       bar.innerHTML = '';
@@ -1168,7 +1189,6 @@
       });
     }
 
-    // -------- WARENKORB --------
     function addToCart(name, price, img, storeName) {
       const existing = cart.find(item => item.name === name);
       if (existing) {
@@ -1245,7 +1265,6 @@
       }
     }
 
-    // -------- WUNSCHLISTE --------
     function updateWishlistUI() {
       const badge = document.getElementById('wishlist-count');
       const container = document.getElementById('wishlist-container');
@@ -1270,7 +1289,6 @@
       window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
 
-    // -------- CHECKOUT --------
     function renderCheckout() {
       const container = document.getElementById('checkout-items');
       const totalEl = document.getElementById('checkout-total');
@@ -1305,7 +1323,6 @@
       navigateTo('home');
     }
 
-    // -------- STORE LOCATOR --------
     function renderStoreLocatorGrid(filteredStores) {
       const container = document.getElementById('locator-grid');
       const stores = filteredStores || STORE_DATABASE;
@@ -1352,7 +1369,6 @@
       renderStoreLocatorGrid();
     }
 
-    // -------- STORE DIRECTORY --------
     function renderStoreDirectory() {
       const list = document.getElementById('store-directory-list');
       list.innerHTML = STORE_DATABASE.map(s => `
@@ -1369,7 +1385,6 @@
         `).join('');
     }
 
-    // -------- KONFIGURATOR --------
     function setConfigFrame(colorClass) {
       const frame = document.getElementById('config-frame-preview');
       frame.className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
@@ -1380,7 +1395,6 @@
       document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
     }
 
-    // -------- HERO SLIDER mit Swipe- & Klick-Interaktion --------
     function setupHeroSlider() {
       const container = document.getElementById('hero-slides');
       const label = document.getElementById('hero-slide-label');
@@ -1405,15 +1419,12 @@
         if (label) label.textContent = HERO_SLIDES[index].label;
         if (desc) desc.textContent = HERO_SLIDES[index].description;
         currentBrand = HERO_SLIDES[index].label;
-        // Klick-Event für Label und Beschreibung setzen
-        label.onclick = () => openBrandModal(currentBrand);
-        desc.onclick = () => openBrandModal(currentBrand);
+        if (label) label.onclick = () => openBrandModal(currentBrand);
+        if (desc) desc.onclick = () => openBrandModal(currentBrand);
       }
 
-      // Initial setzen
       updateSlide(0);
 
-      // Swipe-Erkennung
       const hero = document.getElementById('hero');
       hero.addEventListener('touchstart', function(e) {
         touchStartX = e.changedTouches[0].screenX;
@@ -1424,7 +1435,6 @@
         handleSwipe();
       }, { passive: true });
 
-      // Auch Maus-Drag (für Desktop) – optional
       let mouseDown = false;
       let mouseStartX = 0;
       hero.addEventListener('mousedown', function(e) {
@@ -1445,12 +1455,9 @@
 
       function handleSwipe() {
         const diff = touchStartX - touchEndX;
-        if (Math.abs(diff) > 50) { // Schwellwert für Swipe
-          if (diff > 0) {
-            nextSlide();
-          } else {
-            prevSlide();
-          }
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) nextSlide();
+          else prevSlide();
         }
       }
 
@@ -1464,10 +1471,8 @@
         updateSlide(heroSlideIndex);
       }
 
-      // Automatischer Wechsel (deaktivieren, wenn User interagiert)
       let autoInterval = setInterval(nextSlide, 6000);
 
-      // Auto-Play zurücksetzen bei Interaktion
       hero.addEventListener('touchstart', function() {
         clearInterval(autoInterval);
         autoInterval = setInterval(nextSlide, 6000);
@@ -1477,12 +1482,10 @@
         autoInterval = setInterval(nextSlide, 6000);
       });
 
-      // Initial Klick-Events setzen
       if (label) label.onclick = () => openBrandModal(currentBrand);
       if (desc) desc.onclick = () => openBrandModal(currentBrand);
     }
 
-    // -------- NEWSLETTER --------
     function subscribeNewsletter() {
       const email = document.getElementById('newsletter-email').value;
       if (!email.includes('@')) { showToast('Gültige E-Mail erforderlich'); return; }
@@ -1490,7 +1493,6 @@
       document.getElementById('newsletter-email').value = '';
     }
 
-    // -------- SCROLL ANIMATION --------
     function setupScrollAnimations() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
@@ -1498,7 +1500,6 @@
       document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     }
 
-    // -------- INIT --------
     window.addEventListener('DOMContentLoaded', function() {
       document.body.classList.add('intro-active');
       document.body.style.overflow = 'hidden';
