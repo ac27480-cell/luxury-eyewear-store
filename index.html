@@ -85,6 +85,16 @@
       transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
+    /* iPad-Querformat: Touch-Optimierung für Nav-Buttons */
+    .nav-btn {
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-btn:active {
+      opacity: 0.6;
+    }
+
     /* Bezahl-Optionen (sanft) */
     .payment-option {
       display: flex;
@@ -259,6 +269,21 @@
     body.intro-active {
       overflow: hidden;
     }
+
+    /* Hero-Beschreibungstext */
+    .hero-description {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      font-weight: 300;
+      opacity: 0.9;
+      transition: opacity 0.8s ease;
+    }
+    @media (min-width: 768px) {
+      .hero-description {
+        font-size: 1.1rem;
+        max-width: 60%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -282,18 +307,19 @@
         <span class="text-2xl md:text-3xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
       </a>
       <div class="flex items-center space-x-8 text-xs tracking-widest uppercase font-medium">
+        <!-- Navigation – für iPad im Querformat optimiert (touch-action, cursor) -->
         <nav class="hidden md:flex space-x-8 text-[11px] tracking-[0.2em] text-[var(--text-muted)]">
-          <button onclick="navigateTo('home')" class="hover:text-black transition-colors">Kollektion</button>
-          <button onclick="navigateTo('locator')" class="hover:text-black transition-colors">Store-Finder</button>
-          <button onclick="navigateTo('configurator')" class="hover:text-black transition-colors">Konfigurator</button>
-          <button onclick="navigateTo('account')" class="hover:text-black transition-colors">Stores & Optiker</button>
+          <button onclick="navigateTo('home')" class="nav-btn hover:text-black transition-colors">Kollektion</button>
+          <button onclick="navigateTo('locator')" class="nav-btn hover:text-black transition-colors">Store-Finder</button>
+          <button onclick="navigateTo('configurator')" class="nav-btn hover:text-black transition-colors">Konfigurator</button>
+          <button onclick="navigateTo('account')" class="nav-btn hover:text-black transition-colors">Stores & Optiker</button>
         </nav>
         <div class="flex items-center space-x-5 border-l border-[var(--border-editorial)] pl-6">
-          <button onclick="navigateTo('wishlist')" class="relative p-1 hover:opacity-70 transition-opacity">
+          <button onclick="navigateTo('wishlist')" class="relative p-1 hover:opacity-70 transition-opacity nav-btn">
             <i class="fa-regular fa-heart text-lg"></i>
             <span id="wishlist-count" class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
           </button>
-          <button onclick="navigateTo('cart')" class="relative p-1 hover:opacity-70 transition-opacity">
+          <button onclick="navigateTo('cart')" class="relative p-1 hover:opacity-70 transition-opacity nav-btn">
             <i class="fa-solid fa-bag-shopping text-lg"></i>
             <span id="cart-count" class="absolute -top-1.5 -right-2 bg-stone-800 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
           </button>
@@ -306,15 +332,17 @@
     </div>
   </header>
 
-  <!-- ===== HERO – FLIESSENDE MARKEN-SLIDESHOW ===== -->
-  <section id="hero" class="relative h-[65vh] min-h-[450px] bg-stone-900 text-white overflow-hidden fade-in">
+  <!-- ===== HERO – FLIESSENDE MANUFAKTUREN-SLIDESHOW mit Beschreibung ===== -->
+  <section id="hero" class="relative h-[75vh] min-h-[500px] bg-stone-900 text-white overflow-hidden fade-in">
     <div id="hero-slides" class="absolute inset-0"></div>
-    <div class="absolute inset-0 bg-black/40 z-10"></div>
+    <div class="absolute inset-0 bg-black/50 z-10"></div>
     <div class="relative z-20 max-w-7xl mx-auto h-full flex flex-col justify-end px-6 lg:px-12 pb-16">
       <p class="text-[11px] uppercase tracking-[0.35em] text-stone-300 mb-3">Independent Eyewear & Curated Retailers</p>
       <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-light leading-[1.1] max-w-3xl">
         Weltweit kuratiert.<br /><span class="italic">Direkt vom Fachhändler.</span>
       </h1>
+      <!-- Beschreibungstext für die aktuelle Marke -->
+      <div id="hero-description" class="hero-description text-stone-200 mt-4 max-w-2xl"></div>
       <div class="mt-8 flex justify-between items-end border-t border-white/20 pt-6">
         <p class="text-xs tracking-widest uppercase text-stone-300 max-w-md">Die führenden unabhängigen Brillenmarken & Partner-Optiker</p>
         <span id="hero-slide-label" class="text-[10px] uppercase tracking-[0.25em] text-stone-400">Andy Wolf</span>
@@ -511,7 +539,6 @@
           </label>
           <label class="payment-option">
             <input type="radio" name="payment" value="vorkasse" />
-            <!-- Vorkasse Icon: fa-regular fa-building-columns (stilistisch passend) -->
             <i class="fa-regular fa-building-columns payment-icon"></i>
             <span class="payment-label">Vorkasse</span>
           </label>
@@ -602,15 +629,13 @@
     </div>
   </div>
 
-  <!-- ===== FOOTER – mit Zahlungsarten-Symbolen (Vorkasse aktualisiert) ===== -->
+  <!-- ===== FOOTER – mit Zahlungsarten-Symbolen ===== -->
   <footer class="mt-32 border-t border-[var(--border-editorial)] bg-[var(--surface-editorial)] px-6 lg:px-12 py-16">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-xs">
-      <!-- Spalte 1: Marke -->
       <div>
         <span class="text-2xl font-serif tracking-[0.2em] uppercase font-light block mb-4">LUXEVUE</span>
         <p class="text-[var(--text-muted)] leading-relaxed">Independent Eyewear Directory.<br />Kuratierte Manufakturen & Fachgeschäfte weltweit.</p>
       </div>
-      <!-- Spalte 2: Rechtliches -->
       <div>
         <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Rechtliches</h4>
         <ul class="space-y-2.5 text-[var(--text-muted)]">
@@ -619,7 +644,6 @@
           <li><a href="#" class="hover:text-black">AGB</a></li>
         </ul>
       </div>
-      <!-- Spalte 3: Newsletter -->
       <div>
         <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Newsletter</h4>
         <p class="text-[var(--text-muted)] mb-4">Exklusive Einblicke in neue Kollektionen.</p>
@@ -628,7 +652,6 @@
           <button onclick="subscribeNewsletter()" class="uppercase tracking-widest text-[10px] font-semibold">Anmelden</button>
         </div>
       </div>
-      <!-- Spalte 4: Zahlungsarten (Vorkasse mit fa-regular fa-building-columns) -->
       <div>
         <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Zahlungsarten</h4>
         <div class="flex flex-wrap gap-4 text-3xl text-[var(--text-muted)]">
@@ -776,11 +799,47 @@
         desc: 'Traditionelles Brillenhandwerk aus King’s Cross, London.', search: 'cubitts london brillenlaboratorium' }
     ];
 
-    const HERO_SLIDES = [
-      { img: IMAGE_PLACEHOLDER, label: 'Andy Wolf — Handgefertigt in Österreich' },
-      { img: IMAGE_PLACEHOLDER, label: 'Jacques Marie Mage — Limited Editions' },
-      { img: IMAGE_PLACEHOLDER, label: 'Lindberg — Dänische Ingenieurskunst' }
-    ];
+    // -------- HERO SLIDES mit individuellen Marken und Beschreibungen --------
+    function generateHeroSVG(markenname, akzentFarbe, hintergrundFarbe) {
+      return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='600' viewBox='0 0 1200 600'>
+        <rect width='100%' height='100%' fill='${hintergrundFarbe}'/>
+        <g stroke='${akzentFarbe}' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'>
+          <path d='M 350,300 C 350,220 500,220 500,300 C 500,380 350,380 350,300 Z' stroke-dasharray='8,6'/>
+          <path d='M 700,300 C 700,220 850,220 850,300 C 850,380 700,380 700,300 Z' stroke-dasharray='8,6'/>
+          <path d='M 500,280 C 560,260 640,260 700,280'/>
+          <path d='M 350,280 L 250,260'/>
+          <path d='M 850,280 L 950,260'/>
+          <circle cx='425' cy='300' r='60' stroke='${akzentFarbe}' stroke-width='4'/>
+          <circle cx='775' cy='300' r='60' stroke='${akzentFarbe}' stroke-width='4'/>
+          <path d='M 490,270 Q 600,250 710,270' stroke='${akzentFarbe}' stroke-width='4'/>
+          <path d='M 370,270 L 270,240' stroke='${akzentFarbe}' stroke-width='4'/>
+          <path d='M 830,270 L 930,240' stroke='${akzentFarbe}' stroke-width='4'/>
+        </g>
+        <text x='50%' y='480' font-family='Georgia, serif' font-size='28' font-style='italic' fill='${akzentFarbe}' text-anchor='middle' letter-spacing='4'>${markenname}</text>
+      </svg>`;
+    }
+
+    const HERO_SLIDES = [{
+      label: 'Andy Wolf',
+      description: 'Handgefertigt in Österreich – nachhaltiges Bio-Acetat und geometrische Linienführung für zeitlose Eleganz.',
+      img: generateHeroSVG('ANDY WOLF', '#c9a87c', '#2a2826')
+    }, {
+      label: 'MYKITA',
+      description: 'Berliner Ingenieurskunst – das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl.',
+      img: generateHeroSVG('MYKITA', '#b8860b', '#1a1918')
+    }, {
+      label: 'Lindberg',
+      description: 'Dänischer Minimalismus – schraubenloses Titandraht-Design für maximalen Tragekomfort.',
+      img: generateHeroSVG('LINDBERG', '#8a7a6a', '#2f2b27')
+    }, {
+      label: 'Jacques Marie Mage',
+      description: 'Limitierte Auflagen – 10mm Acetat mit charakteristischem Skulpturenschliff aus Frankreich.',
+      img: generateHeroSVG('JACQUES MARIE MAGE', '#a68b66', '#1e1c1a')
+    }, {
+      label: 'DITA Eyewear',
+      description: 'Japanische Präzision – Acetat-Titan-Hybridkonstruktion auf höchstem handwerklichem Niveau.',
+      img: generateHeroSVG('DITA', '#6b5d4e', '#242220')
+    }];
 
     // -------- STATE --------
     let wishlist = [];
@@ -1229,11 +1288,13 @@
       document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
     }
 
-    // -------- HERO SLIDER --------
+    // -------- HERO SLIDER (fließende Manufakturen mit Beschreibung) --------
     function setupHeroSlider() {
       const container = document.getElementById('hero-slides');
       const label = document.getElementById('hero-slide-label');
+      const desc = document.getElementById('hero-description');
       container.innerHTML = '';
+
       HERO_SLIDES.forEach((slide, i) => {
         const img = document.createElement('img');
         img.src = slide.img;
@@ -1242,7 +1303,9 @@
         img.alt = slide.label;
         container.appendChild(img);
       });
+
       if (label) label.textContent = HERO_SLIDES[0].label;
+      if (desc) desc.textContent = HERO_SLIDES[0].description;
 
       setInterval(() => {
         const imgs = container.querySelectorAll('img');
@@ -1253,7 +1316,8 @@
         imgs[heroSlideIndex].classList.remove('opacity-0');
         imgs[heroSlideIndex].classList.add('opacity-100');
         if (label) label.textContent = HERO_SLIDES[heroSlideIndex].label;
-      }, 5000);
+        if (desc) desc.textContent = HERO_SLIDES[heroSlideIndex].description;
+      }, 6000); // 6 Sekunden für besseren Lesefluss
     }
 
     // -------- NEWSLETTER --------
