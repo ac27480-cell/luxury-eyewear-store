@@ -23,6 +23,7 @@
       --border-editorial: #e8e4dc;
       --text-main: #1a1918;
       --text-muted: #73706b;
+      --gold-accent: #c9a87c;
     }
 
     body {
@@ -152,12 +153,13 @@
       background-color: var(--border-editorial);
     }
 
-    /* ===== INTRO OVERLAY — TINTENZERLAUF-VARIANTE ===== */
+    /* ===== INTRO OVERLAY — ELEGANTER TINTENZERLAUF MIT FARBAKZENT ===== */
     #intro-overlay {
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: var(--bg-editorial);
+      /* Sanfter, warmer Farbverlauf für den Hintergrund – hebt sich elegant ab */
+      background: radial-gradient(circle at 50% 40%, #fcfbf9 0%, #f0ebe3 70%, #e8e1d9 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -175,35 +177,46 @@
       pointer-events: none;
     }
 
-    /* Titel – mit Blur- und Skalierungs-Transition */
+    /* Titel mit edlem Farbverlauf (Vorderfarbe) – hebt sich elegant ab */
     .intro-title {
       font-family: var(--font-serif);
       font-weight: 300;
       font-size: clamp(3rem, 12vw, 7rem);
       letter-spacing: 0.15em;
-      color: var(--text-main);
+      /* Abhebender Farbverlauf: von tiefem Schwarzbraun zu warmem Gold */
+      background: linear-gradient(135deg, #1a1918 30%, #6b5d4e 70%, var(--gold-accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 4px 20px rgba(201, 168, 124, 0.15));
       transition: transform 1.6s cubic-bezier(0.25, 1, 0.5, 1),
                   opacity 1.6s ease,
                   filter 1.6s ease,
                   letter-spacing 1.6s ease;
       transform: scale(1);
       opacity: 1;
-      filter: blur(0px);
+      filter: drop-shadow(0 4px 30px rgba(201, 168, 124, 0.25));
       letter-spacing: 0.15em;
     }
-    /* Zustand beim "Tintenzerlauf" */
+    /* Zustand beim "Tintenzerlauf" – Farbverlauf wandert ins Helle/Goldene */
     .intro-title.dissolve {
       transform: scale(0.85) translateY(-30px);
       opacity: 0;
-      filter: blur(12px);
+      filter: blur(12px) drop-shadow(0 8px 40px rgba(201, 168, 124, 0.4));
       letter-spacing: 0.45em;
+      /* Farbverlauf beim Zerfließen: Gold und helles Taupe dominieren */
+      background: linear-gradient(135deg, #c9a87c 20%, #8a7a6a 60%, #f0ebe3 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .intro-sub {
       font-size: clamp(0.7rem, 1.5vw, 1rem);
       letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      /* Farbe des Untertitels an den Goldakzent angepasst */
+      color: #8a7a6a;
       margin-top: 1rem;
       transition: opacity 1.2s ease 0.3s,
                   transform 1.2s ease 0.3s,
@@ -218,9 +231,9 @@
       filter: blur(6px);
     }
 
-    /* Sanfter Hintergrund-Farbwechsel während des Auflösens (optional) */
+    /* Sanfter Hintergrund-Farbwechsel während des Auflösens */
     #intro-overlay.dissolve-bg {
-      background: #f0ece6;
+      background: radial-gradient(circle at 50% 40%, #fcfbf9 0%, #f0ebe3 70%, #e8e1d9 100%);
     }
 
     /* Klick-Hinweis (sanft pulsierend) */
@@ -232,7 +245,7 @@
       font-size: 0.6rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: #8a7a6a;
       animation: pulse-hint 2.4s ease-in-out infinite;
       opacity: 0.6;
       transition: opacity 1s ease 0.6s;
@@ -260,9 +273,9 @@
 </head>
 <body>
 
-  <!-- ===== INTRO OVERLAY (Tintenzerlauf) ===== -->
+  <!-- ===== INTRO OVERLAY (Tintenzerlauf mit Farbakzent) ===== -->
   <div id="intro-overlay">
-    <!-- Haupttext -->
+    <!-- Haupttext mit edlem Farbverlauf -->
     <div class="intro-title" id="intro-title">LUXEVUE</div>
     <div class="intro-sub" id="intro-sub">Independent Eyewear</div>
     <div class="intro-hint" id="intro-hint">⟡ Berühren zum Entdecken ⟡</div>
@@ -766,7 +779,7 @@
     let cart = [];
     let heroSlideIndex = 0;
 
-    // -------- INTRO (Tintenzerlauf) --------
+    // -------- INTRO (Tintenzerlauf mit Farbakzent) --------
     let introDone = false;
 
     function dismissIntro() {
@@ -778,15 +791,13 @@
       const sub = document.getElementById('intro-sub');
       const hint = document.getElementById('intro-hint');
 
-      // 1. Auflösung: Titel zerfließt (Skalierung + Blur + erweiterte Buchstaben)
+      // Auflösung: Titel zerfließt (Skalierung + Blur + erweiterte Buchstaben)
       title.classList.add('dissolve');
       sub.classList.add('dissolve');
       hint.classList.add('dissolve');
-
-      // 2. Hintergrund sanft aufhellen (optional)
       overlay.classList.add('dissolve-bg');
 
-      // 3. Nach der Animation ausblenden
+      // Nach der Animation ausblenden
       setTimeout(() => {
         overlay.classList.add('hidden');
         document.body.classList.remove('intro-active');
