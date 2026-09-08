@@ -153,12 +153,11 @@
       background-color: var(--border-editorial);
     }
 
-    /* ===== INTRO OVERLAY — DUNKLER HINTERGRUND FÜR BESSEREN TINTENEFFEKT ===== */
+    /* ===== INTRO OVERLAY — DUNKLER HINTERGRUND + GOLDENER TINTENVERLAUF ===== */
     #intro-overlay {
       position: fixed;
       inset: 0;
       z-index: 9999;
-      /* Dunkler, eleganter Hintergrund – lässt den goldenen Farbverlauf des Titels leuchten */
       background: radial-gradient(circle at 50% 40%, #2a2826 0%, #1a1918 60%, #0f0e0d 100%);
       display: flex;
       flex-direction: column;
@@ -177,13 +176,11 @@
       pointer-events: none;
     }
 
-    /* Titel mit edlem Farbverlauf – hebt sich auf dunklem Grund besonders ab */
     .intro-title {
       font-family: var(--font-serif);
       font-weight: 300;
       font-size: clamp(3rem, 12vw, 7rem);
       letter-spacing: 0.15em;
-      /* Leuchtender Farbverlauf: von warmem Gold zu hellem Champagner */
       background: linear-gradient(135deg, #e8d5b5 0%, #c9a87c 40%, #a68b66 80%, #f0ebe3 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -197,7 +194,6 @@
       opacity: 1;
       letter-spacing: 0.15em;
     }
-    /* Zustand beim "Tintenzerlauf" – Gold fließt auseinander, wird weicher */
     .intro-title.dissolve {
       transform: scale(0.85) translateY(-30px);
       opacity: 0;
@@ -228,12 +224,10 @@
       filter: blur(6px);
     }
 
-    /* Hintergrund während des Auflösens bleibt dunkel, aber mit leichtem Glanz */
     #intro-overlay.dissolve-bg {
       background: radial-gradient(circle at 50% 40%, #3a3430 0%, #1a1918 60%, #0f0e0d 100%);
     }
 
-    /* Klick-Hinweis (sanft pulsierend, in hellem Gold) */
     .intro-hint {
       position: absolute;
       bottom: 3rem;
@@ -262,7 +256,6 @@
       }
     }
 
-    /* Verhindert Scrollen während Intro */
     body.intro-active {
       overflow: hidden;
     }
@@ -270,7 +263,7 @@
 </head>
 <body>
 
-  <!-- ===== INTRO OVERLAY (dunkler Hintergrund + goldener Tintenverlauf) ===== -->
+  <!-- ===== INTRO OVERLAY ===== -->
   <div id="intro-overlay">
     <div class="intro-title" id="intro-title">LUXEVUE</div>
     <div class="intro-sub" id="intro-sub">Independent Eyewear</div>
@@ -285,6 +278,7 @@
   <!-- ===== HEADER ===== -->
   <header class="sticky top-0 z-40 bg-[#fcfbf9]/90 backdrop-blur-md border-b border-[var(--border-editorial)] px-6 lg:px-12 py-5 transition-all">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Logo – Klick führt zur Homepage -->
       <a onclick="navigateTo('home')" class="cursor-pointer">
         <span class="text-2xl md:text-3xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
       </a>
@@ -313,7 +307,7 @@
     </div>
   </header>
 
-  <!-- ===== HERO ===== -->
+  <!-- ===== HERO – FLIESSENDE MARKEN-SLIDESHOW ===== -->
   <section id="hero" class="relative h-[65vh] min-h-[450px] bg-stone-900 text-white overflow-hidden fade-in">
     <div id="hero-slides" class="absolute inset-0"></div>
     <div class="absolute inset-0 bg-black/40 z-10"></div>
@@ -324,7 +318,7 @@
       </h1>
       <div class="mt-8 flex justify-between items-end border-t border-white/20 pt-6">
         <p class="text-xs tracking-widest uppercase text-stone-300 max-w-md">Die führenden unabhängigen Brillenmarken & Partner-Optiker</p>
-        <span id="hero-slide-label" class="text-[10px] uppercase tracking-[0.25em] text-stone-400">Jacques Marie Mage</span>
+        <span id="hero-slide-label" class="text-[10px] uppercase tracking-[0.25em] text-stone-400">Andy Wolf</span>
       </div>
     </div>
   </section>
@@ -642,132 +636,18 @@
   <!-- ============================================================ -->
   <script>
     // -------- DATA --------
-    const IMAGE_PLACEHOLDER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><rect width='100%' height='100%' fill='%23f4f2ed'/><g stroke='%2373706b' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z' stroke-dasharray='6,4'/><path d='M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z' stroke-dasharray='6,4'/><path d='M 340,285 C 380,270 420,270 460,285'/><path d='M 220,285 L 140,270'/><path d='M 580,285 L 660,270'/><circle cx='280' cy='300' r='45' stroke='%231a1918' stroke-width='3'/><circle cx='520' cy='300' r='45' stroke='%231a1918' stroke-width='3'/><path d='M 325,280 Q 400,265 475,280' stroke='%231a1918' stroke-width='3'/><path d='M 235,280 L 150,260' stroke='%231a1918' stroke-width='3'/><path d='M 565,280 L 650,260' stroke='%231a1918' stroke-width='3'/></g><text x='50%' y='440' font-family='Georgia, serif' font-size='14' font-style='italic' fill='%2373706b' text-anchor='middle' letter-spacing='2'>[ MANUFAKTUR SKIZZE ]</text></svg>";
-
-    const STORE_DATABASE = [
-      { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
-      { id: 'leidmann', name: "Leidmann", type: "Boutique / Fachgeschäft", city: "München", url: "https://www.leidmann.de" },
-      { id: 'specsberlin', name: "specs.berlin", type: "Boutique / Fachgeschäft", city: "Berlin", url: "https://specs.berlin" },
-      { id: 'bellevue', name: "Bellevue Optical", type: "Boutique / Fachgeschäft", city: "Hamburg", url: "https://www.bellevue-optical.de" },
-      { id: 'ehler', name: "Ehler Optik", type: "Fachgeschäft", city: "Flensburg", url: "https://www.ehler-optik.de" },
-      { id: 'optikerbode', name: "Optiker Bode", type: "Fachgeschäft-Netzwerk", city: "Deutschlandweit", url: "https://www.optikerbode.de" },
-      { id: 'edeloptics', name: "Edel-Optics", type: "Online-Shop", city: "Hamburg / Online", url: "https://www.edel-optics.de" },
-      { id: 'misterspex', name: "Mister Spex", type: "Omnichannel / Online", city: "Berlin / Online", url: "https://www.misterspex.de" }
-    ];
-
-    const INDEPENDENT_LABELS = {
-      "Deutschland / Ö / CH": [
-        "MYKITA (Berlin)", "ic! berlin", "Lunor (Schwarzwald)", "CAZAL", "Andy Wolf (Österreich)",
-        "Götti Switzerland", "Klenze & Baum", "Rolf Spectacles", "Reiz Germany", "Funk Eyewear", "Hoffmann Natural Eyewear"
-      ],
-      "Japan": [
-        "Matsuda", "DITA Eyewear", "Eyevan 7285", "Masunaga 1905", "Yuichi Toyama",
-        "Takahiro Miyashita", "Nackymade", "Factory900", "KameManNen", "Boston Club"
-      ],
-      "Frankreich": [
-        "Jacques Marie Mage (Atelier/Design)", "Anne et Valentin", "Lafont Paris", "Thierry Lasry",
-        "Ahlem Eyewear", "Morel France", "J.F. Rey", "Sabine Be", "Lucas de Staël"
-      ],
-      "Italien": [
-        "Res/Rei", "L.G.R", "Tavat Eyewear", "Movitra", "Kubeora", "Haffmans & Neumeister (Collab)", "NATIVE SONS"
-      ],
-      "USA / Nordamerika": [
-        "Oliver Peoples", "Garrett Leight (GLCO)", "Salt Optics", "Barton Perreira",
-        "Moscot (NYC)", "Robert Marc NYC", "Talla Eyewear"
-      ],
-      "Dänemark & Skandinavien": [
-        "Lindberg", "Ørgreen Optics", "ProDesign Denmark", "Fleye Copenhagen", "Kaibosh (Norwegen)"
-      ],
-      "Großbritannien": [
-        "Cutler and Gross", "Oliver Goldsmith", "Tom Davies", "Cubitts"
-      ]
+    // Basis-SVG für Hero-Slides – wir variieren die Akzentfarbe pro Marke
+    const HERO_SVG_TEMPLATE = (accentColor, label) => {
+      return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><rect width='100%' height='100%' fill='%23f4f2ed'/><g stroke='${accentColor}' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z' stroke-dasharray='6,4'/><path d='M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z' stroke-dasharray='6,4'/><path d='M 340,285 C 380,270 420,270 460,285'/><path d='M 220,285 L 140,270'/><path d='M 580,285 L 660,270'/><circle cx='280' cy='300' r='45' stroke='${accentColor}' stroke-width='3'/><circle cx='520' cy='300' r='45' stroke='${accentColor}' stroke-width='3'/><path d='M 325,280 Q 400,265 475,280' stroke='${accentColor}' stroke-width='3'/><path d='M 235,280 L 150,260' stroke='${accentColor}' stroke-width='3'/><path d='M 565,280 L 650,260' stroke='${accentColor}' stroke-width='3'/></g><text x='50%' y='440' font-family='Georgia, serif' font-size='16' font-style='italic' fill='%23${accentColor.replace('#','')}' text-anchor='middle' letter-spacing='2'>${label}</text></svg>`;
     };
 
-    const PRODUCTS = [
-      { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER,
-        desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium' },
-      { id: 2, brand: 'MYKITA', name: 'Lite Tuva', price: '490 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER,
-        desc: 'Patentiertes schraubenloses Gelenk aus ultraleichtem Edelstahl, gefertigt in Berlin.', search: 'mykita lite tuva berlin specsberlin' },
-      { id: 3, brand: 'ic! berlin', name: 'Silk East', price: '450 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER,
-        desc: 'Federleichte Federedelstahl-Fassung ohne Schrauben und Lötstellen.', search: 'ic berlin silk ehler optik flensburg' },
-      { id: 4, brand: 'Lunor', name: 'Classic Round', price: '520 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER,
-        desc: 'Traditionelles Schwarzwälder Handwerk. Zeitlose Eleganz in Reinform.', search: 'lunor classic round schwarzwald bellevue hamburg' },
-      { id: 5, brand: 'CAZAL', name: 'Legends 607', price: '460 €', storeId: 'edeloptics', img: IMAGE_PLACEHOLDER,
-        desc: 'Ikone des Eyewear-Designs von Cari Zalloni. Unverkennbarer Vintage-Charakter.', search: 'cazal legends 607 edel optics' },
-      { id: 6, brand: 'Götti Switzerland', name: 'Perspective ORIS', price: '510 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER,
-        desc: 'Schweizer Präzision aus dem 3D-Drucker. Minimalistisch und hochentwickelt.', search: 'gotti switzerland oris leidmann muenchen' },
-      { id: 7, brand: 'Klenze & Baum', name: 'Vespera 01', price: '480 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER,
-        desc: 'Münchner Designschmiede mit innovativem Tilting-Hinge Gelenksystem.', search: 'klenze und baum vespera specsberlin' },
-      { id: 8, brand: 'Rolf Spectacles', name: 'Eucalyptus 102', price: '720 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER,
-        desc: 'Echte Holzbrille aus den Tiroler Alpen. 100% naturbelassen ohne Metallschrauben.', search: 'rolf spectacles tirol holzbrille bellevue' },
-      { id: 9, brand: 'Reiz Germany', name: 'Mangan Series', price: '410 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER,
-        desc: 'Klassisches Acetat-Handwerk gefertigt in deutschen Manufakturen.', search: 'reiz germany mangan ehler optik flensburg' },
-      { id: 10, brand: 'Funk Eyewear', name: 'Dieter B.', price: '390 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER,
-        desc: 'Unkonventionelles Brillendesign aus der Kinzigtaler Manufaktur.', search: 'funk eyewear dieter brillenlaboratorium' },
-      { id: 11, brand: 'Hoffmann Natural Eyewear', name: 'Bespoke Horn 22', price: '850 €', storeId: 'leidmann',
-        img: IMAGE_PLACEHOLDER, desc: 'Meisterhafte Handarbeit aus echtem Büffelhorn. Jedes Stück ein Unikat.',
-        search: 'hoffmann natural eyewear horn leidmann' },
-      { id: 12, brand: 'Matsuda', name: 'M3086 Titanium', price: '920 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER,
-        desc: 'Graveurskunst aus Sabae, Japan. Detaillierte Ziselierungen auf reinstem Titan.', search: 'matsuda japan sabae leidmann' },
-      { id: 13, brand: 'DITA Eyewear', name: 'Statesman Six', price: '890 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER,
-        desc: 'Japanische Präzision. Acetat-Titan-Hybridkonstruktion auf höchstem Niveau.', search: 'dita statesman japan leidmann muenchen' },
-      { id: 14, brand: 'Eyevan 7285', name: 'Model 338', price: '580 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER,
-        desc: 'Japanischer Eyewear-Kult seit 1972. Ästhetische Perfektion und Tragekomfort.', search: 'eyevan 7285 specsberlin japan' },
-      { id: 15, brand: 'Masunaga 1905', name: 'GMS-805', price: '640 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER,
-        desc: 'Hoflieferant des japanischen Kaiserhauses. Über 100 Jahre Manufaktur-Tradition.', search: 'masunaga 1905 gms bellevue hamburg' },
-      { id: 16, brand: 'Yuichi Toyama', name: 'U-129 Double Dutch', price: '530 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER,
-        desc: 'Moderne japanische Ästhetik inspiriert von traditioneller Fadenkunst.', search: 'yuichi toyama double dutch specsberlin' },
-      { id: 17, brand: 'Factory900', name: 'FA-240 Sculpted', price: '560 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER,
-        desc: 'Dreidimensionale Acetat-Skulpturen mit futuristischer Formensprache.', search: 'factory900 sabae brillenlaboratorium' },
-      { id: 18, brand: 'KameManNen', name: 'KMN-113', price: '490 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER,
-        desc: 'Eines der ältesten Brillenlabels Japans. Schildkröten-Symbolik für Ewigkeit.', search: 'kamemannen japan bellevue' },
-      { id: 19, brand: 'Jacques Marie Mage', name: 'Dealan Noir', price: '790 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER,
-        desc: 'Limitierte Auflage. 10mm Acetat mit charakteristischem Skulpturenschliff.', search: 'jmm jacques marie mage dealan leidmann' },
-      { id: 20, brand: 'Anne et Valentin', name: 'FANZINE Atelier', price: '430 €', storeId: 'specsberlin',
-        img: IMAGE_PLACEHOLDER, desc: 'Farbenfroher Avantgarde-Stil aus Toulouse. Individueller Geometrie-Mix.',
-        search: 'anne et valentin toulouse specsberlin' },
-      { id: 21, brand: 'Lafont Paris', name: 'Réédition Parisian', price: '360 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER,
-        desc: 'Pariser Chic und französisches Savoir-faire seit 1923.', search: 'lafont paris ehler optik flensburg' },
-      { id: 22, brand: 'Thierry Lasry', name: 'Sexxxy Cat-Eye', price: '440 €', storeId: 'edeloptics', img: IMAGE_PLACEHOLDER,
-        desc: 'Futuristischer Vintage-Look, beliebt bei internationalen Celebrities.', search: 'thierry lasry paris edel optics' },
-      { id: 23, brand: 'Ahlem Eyewear', name: 'Place de la Concorde', price: '495 €', storeId: 'leidmann',
-        img: IMAGE_PLACEHOLDER, desc: 'Inspiration der Pariser Architektur, handgefertigt in Oyonnax, Frankreich.',
-        search: 'ahlem paris oyonnax leidmann' },
-      { id: 24, brand: 'Lucas de Staël', name: 'Monsieur Leather', price: '880 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER,
-        desc: 'Pariser Atelierfassung überzogen mit edlem Rindsleder und Granitstein.', search: 'lucas de stael paris leder stein bellevue' },
-      { id: 25, brand: 'Res/Rei', name: 'Philosophia', price: '370 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER,
-        desc: 'Handmade in Italy. Fokus auf nachhaltiges Acetat und lebendige Farben.', search: 'res rei italy brillenlaboratorium' },
-      { id: 26, brand: 'L.G.R', name: 'Reunion Explorer', price: '420 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER,
-        desc: 'Afrikanische Abenteuer-Inspiration vereint mit italienischer Handwerkskunst.', search: 'lgr reunion leidmann' },
-      { id: 27, brand: 'Tavat Eyewear', name: 'SoupCan Round', price: '495 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER,
-        desc: 'Sandgestrahltes Uhrengehäuse-Konzept, gefertigt in den italienischen Alpen.', search: 'tavat soupcan specsberlin' },
-      { id: 28, brand: 'Movitra', name: 'Bruno Rotating', price: '540 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER,
-        desc: 'Patentierter Drehmechanismus aus Mailand zum Schutz der Gläser.', search: 'movitra bruno mailand bellevue' },
-      { id: 29, brand: 'Oliver Peoples', name: 'Gregory Peck', price: '360 €', storeId: 'misterspex', img: IMAGE_PLACEHOLDER,
-        desc: 'Klassischer Hollywood-Intellektuellen-Look aus Sunset Boulevard, L.A.', search: 'oliver peoples gregory peck misterspex' },
-      { id: 30, brand: 'Garrett Leight (GLCO)', name: 'Hampton Sun', price: '330 €', storeId: 'specsberlin',
-        img: IMAGE_PLACEHOLDER, desc: 'Entspannter Venice Beach Lifestyle mit kalifornischem Spirit.',
-        search: 'garrett leight glco hampton specsberlin' },
-      { id: 31, brand: 'Moscot (NYC)', name: 'Lemtosh Original', price: '320 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER,
-        desc: 'Die Legende aus der Lower East Side in New York City seit 1915.', search: 'moscot lemtosh new york specsberlin' },
-      { id: 32, brand: 'Barton Perreira', name: 'Roxbury Aviator', price: '510 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER,
-        desc: 'Luxuriöse Ästhetik entworfen von Patty Perreira in Kalifornien.', search: 'barton perreira leidmann' },
-      { id: 33, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER,
-        desc: 'Dänischer Minimalismus. Schraubenloses Titandraht-Design mit maximalem Tragekomfort.', search: 'lindberg titan daenemark bellevue hamburg' },
-      { id: 34, brand: 'Ørgreen Optics', name: 'Quantum High-Tech', price: '480 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER,
-        desc: 'Kopenhagener Design aus Reintitan mit unverwechselbaren Farbkombinationen.', search: 'orgreen optics kopenhagen ehler optik' },
-      { id: 35, brand: 'ProDesign Denmark', name: 'Essential 12', price: '290 €', storeId: 'optikerbode', img: IMAGE_PLACEHOLDER,
-        desc: 'Funktionales skandinavisches Brillendesign mit klaren Strukturen.', search: 'prodesign denmark optiker bode' },
-      { id: 36, brand: 'Cutler and Gross', name: '1386 Bold King', price: '470 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER,
-        desc: 'Britischer Statement-Style aus Knightsbridge, London.', search: 'cutler and gross london specsberlin' },
-      { id: 37, brand: 'Cubitts', name: 'Judd Round', price: '240 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER,
-        desc: 'Traditionelles Brillenhandwerk aus King’s Cross, London.', search: 'cubitts london brillenlaboratorium' }
-    ];
-
+    // Hero-Slides mit verschiedenen Marken und Akzentfarben
     const HERO_SLIDES = [
-      { img: IMAGE_PLACEHOLDER, label: 'Andy Wolf — Handgefertigt in Österreich' },
-      { img: IMAGE_PLACEHOLDER, label: 'Jacques Marie Mage — Limited Editions' },
-      { img: IMAGE_PLACEHOLDER, label: 'Lindberg — Dänische Ingenieurskunst' }
+      { img: HERO_SVG_TEMPLATE('#c9a87c', 'Andy Wolf'), label: 'Andy Wolf — Handgefertigt in Österreich' },
+      { img: HERO_SVG_TEMPLATE('#b8860b', 'MYKITA'), label: 'MYKITA — Berliner Ingenieurskunst' },
+      { img: HERO_SVG_TEMPLATE('#8a7a6a', 'Lindberg'), label: 'Lindberg — Dänisches Design' },
+      { img: HERO_SVG_TEMPLATE('#a68b66', 'Jacques Marie Mage'), label: 'Jacques Marie Mage — Limitierte Editionen' },
+      { img: HERO_SVG_TEMPLATE('#6b5d4e', 'DITA Eyewear'), label: 'DITA — Japanische Präzision' }
     ];
 
     // -------- STATE --------
@@ -775,7 +655,7 @@
     let cart = [];
     let heroSlideIndex = 0;
 
-    // -------- INTRO (dunkler Hintergrund + goldener Tintenverlauf) --------
+    // -------- INTRO --------
     let introDone = false;
 
     function dismissIntro() {
@@ -819,7 +699,7 @@
       }, 2500);
     }
 
-    // -------- NAVIGATION --------
+    // -------- NAVIGATION (Logo führt zu Home) --------
     function navigateTo(pageId) {
       document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
       const page = document.getElementById('page-' + pageId);
@@ -846,7 +726,6 @@
       document.getElementById('modal-product-store-city').innerText = store.type + ' — ' + store.city;
       document.getElementById('modal-product-store-url').href = store.url;
 
-      // Warenkorb-Button im Modal
       document.getElementById('modal-product-addcart').onclick = function() {
         addToCart(p.name, p.price, p.img, store.name);
         closeProductModal();
@@ -974,9 +853,8 @@
       });
     }
 
-    // -------- WARENKORB (KORRIGIERT & FUNKTIONAL) --------
+    // -------- WARENKORB (voll funktionsfähig) --------
     function addToCart(name, price, img, storeName) {
-      // Prüfen, ob Artikel bereits im Warenkorb ist
       const existing = cart.find(item => item.name === name);
       if (existing) {
         existing.quantity = (existing.quantity || 1) + 1;
@@ -1044,7 +922,6 @@
       if (cart[index]) {
         const newQty = (cart[index].quantity || 1) + delta;
         if (newQty < 1) {
-          // Bei 0 entfernen
           removeFromCart(index);
           return;
         }
@@ -1202,17 +1079,23 @@
       document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
     }
 
-    // -------- HERO SLIDER --------
+    // -------- HERO SLIDER (fließende Marken-Slideshow) --------
     function setupHeroSlider() {
       const container = document.getElementById('hero-slides');
       const label = document.getElementById('hero-slide-label');
+      // Container leeren
+      container.innerHTML = '';
       HERO_SLIDES.forEach((slide, i) => {
         const img = document.createElement('img');
         img.src = slide.img;
         img.className =
           `absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
+        img.alt = slide.label;
         container.appendChild(img);
       });
+      // Label für ersten Slide setzen
+      if (label) label.textContent = HERO_SLIDES[0].label;
+
       setInterval(() => {
         const imgs = container.querySelectorAll('img');
         if (!imgs.length) return;
