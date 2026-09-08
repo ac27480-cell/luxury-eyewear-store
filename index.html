@@ -278,7 +278,6 @@
   <!-- ===== HEADER ===== -->
   <header class="sticky top-0 z-40 bg-[#fcfbf9]/90 backdrop-blur-md border-b border-[var(--border-editorial)] px-6 lg:px-12 py-5 transition-all">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <!-- Logo – Klick führt zur Homepage -->
       <a onclick="navigateTo('home')" class="cursor-pointer">
         <span class="text-2xl md:text-3xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
       </a>
@@ -602,13 +601,15 @@
     </div>
   </div>
 
-  <!-- ===== FOOTER ===== -->
+  <!-- ===== FOOTER – mit Zahlungsarten-Symbolen ===== -->
   <footer class="mt-32 border-t border-[var(--border-editorial)] bg-[var(--surface-editorial)] px-6 lg:px-12 py-16">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-xs">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-xs">
+      <!-- Spalte 1: Marke -->
       <div>
         <span class="text-2xl font-serif tracking-[0.2em] uppercase font-light block mb-4">LUXEVUE</span>
         <p class="text-[var(--text-muted)] leading-relaxed">Independent Eyewear Directory.<br />Kuratierte Manufakturen & Fachgeschäfte weltweit.</p>
       </div>
+      <!-- Spalte 2: Rechtliches -->
       <div>
         <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Rechtliches</h4>
         <ul class="space-y-2.5 text-[var(--text-muted)]">
@@ -617,6 +618,7 @@
           <li><a href="#" class="hover:text-black">AGB</a></li>
         </ul>
       </div>
+      <!-- Spalte 3: Newsletter -->
       <div>
         <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Newsletter</h4>
         <p class="text-[var(--text-muted)] mb-4">Exklusive Einblicke in neue Kollektionen.</p>
@@ -624,6 +626,21 @@
           <input type="email" id="newsletter-email" placeholder="E-Mail Adresse" class="bg-transparent flex-1 text-xs focus:outline-none" />
           <button onclick="subscribeNewsletter()" class="uppercase tracking-widest text-[10px] font-semibold">Anmelden</button>
         </div>
+      </div>
+      <!-- Spalte 4: Zahlungsarten (NEU) -->
+      <div>
+        <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Zahlungsarten</h4>
+        <div class="flex flex-wrap gap-4 text-3xl text-[var(--text-muted)]">
+          <i class="fa-regular fa-credit-card" title="Kreditkarte"></i>
+          <i class="fa-brands fa-paypal" title="PayPal"></i>
+          <i class="fa-regular fa-clock" title="Klarna"></i>
+          <i class="fa-brands fa-apple" title="Apple Pay"></i>
+          <i class="fa-brands fa-google-pay" title="Google Pay"></i>
+          <i class="fa-regular fa-building-columns" title="Vorkasse"></i>
+        </div>
+        <p class="text-[10px] text-[var(--text-muted)] mt-3 leading-relaxed">
+          Sichere Zahlung mit Ihren bevorzugten Methoden.
+        </p>
       </div>
     </div>
     <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-[var(--border-editorial)]/60 text-center text-[10px] text-[var(--text-muted)] tracking-widest uppercase">
@@ -840,7 +857,9 @@
       document.getElementById('modal-product-store-city').innerText = store.type + ' — ' + store.city;
       document.getElementById('modal-product-store-url').href = store.url;
 
-      document.getElementById('modal-product-addcart').onclick = function() {
+      const addBtn = document.getElementById('modal-product-addcart');
+      addBtn.onclick = function(e) {
+        e.stopPropagation();
         addToCart(p.name, p.price, p.img, store.name);
         closeProductModal();
       };
@@ -852,7 +871,8 @@
       } else {
         icon.className = 'fa-regular fa-heart';
       }
-      wishBtn.onclick = function() {
+      wishBtn.onclick = function(e) {
+        e.stopPropagation();
         if (wishlist.includes(p.name)) {
           wishlist = wishlist.filter(x => x !== p.name);
           icon.className = 'fa-regular fa-heart';
@@ -917,11 +937,40 @@
               </a>
             </div>
             <div class="mt-4 pt-3 border-t border-[var(--border-editorial)]/50 flex space-x-3">
-              <button onclick="addToCart('${p.name}', '${p.price}', '${p.img}', '${store.name}')" class="flex-1 py-2.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest hover:bg-stone-800 transition-colors">In den Warenkorb</button>
-              <button onclick="toggleWishlist(this, '${p.name}')" class="px-3 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors"><i class="fa-regular fa-heart"></i></button>
+              <button data-name="${p.name}" data-price="${p.price}" data-img="${p.img}" data-store="${store.name}" class="add-to-cart-btn flex-1 py-2.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest hover:bg-stone-800 transition-colors">In den Warenkorb</button>
+              <button data-name="${p.name}" class="wishlist-btn px-3 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors"><i class="fa-regular fa-heart"></i></button>
             </div>
           `;
         container.appendChild(card);
+      });
+
+      document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const name = this.dataset.name;
+          const price = this.dataset.price;
+          const img = this.dataset.img;
+          const store = this.dataset.store;
+          addToCart(name, price, img, store);
+        });
+      });
+
+      document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const name = this.dataset.name;
+          const icon = this.querySelector('i');
+          if (wishlist.includes(name)) {
+            wishlist = wishlist.filter(x => x !== name);
+            icon.className = 'fa-regular fa-heart';
+            showToast('Entfernt');
+          } else {
+            wishlist.push(name);
+            icon.className = 'fa-solid fa-heart text-rose-600';
+            showToast('Gespeichert');
+          }
+          updateWishlistUI();
+        });
       });
     }
 
@@ -967,7 +1016,7 @@
       });
     }
 
-    // -------- WARENKORB (voll funktionsfähig) --------
+    // -------- WARENKORB --------
     function addToCart(name, price, img, storeName) {
       const existing = cart.find(item => item.name === name);
       if (existing) {
@@ -1045,20 +1094,6 @@
     }
 
     // -------- WUNSCHLISTE --------
-    function toggleWishlist(btn, name) {
-      const icon = btn.querySelector('i');
-      if (wishlist.includes(name)) {
-        wishlist = wishlist.filter(x => x !== name);
-        icon.className = 'fa-regular fa-heart';
-        showToast('Entfernt');
-      } else {
-        wishlist.push(name);
-        icon.className = 'fa-solid fa-heart text-rose-600';
-        showToast('Gespeichert');
-      }
-      updateWishlistUI();
-    }
-
     function updateWishlistUI() {
       const badge = document.getElementById('wishlist-count');
       const container = document.getElementById('wishlist-container');
@@ -1193,7 +1228,7 @@
       document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
     }
 
-    // -------- HERO SLIDER (fließende Marken-Slideshow) --------
+    // -------- HERO SLIDER --------
     function setupHeroSlider() {
       const container = document.getElementById('hero-slides');
       const label = document.getElementById('hero-slide-label');
@@ -1238,11 +1273,9 @@
 
     // -------- INIT --------
     window.addEventListener('DOMContentLoaded', function() {
-      // Intro sperren
       document.body.classList.add('intro-active');
       document.body.style.overflow = 'hidden';
 
-      // Alle Funktionen aufrufen
       renderCountryFilters();
       setupHeroSlider();
       renderProducts();
@@ -1251,8 +1284,6 @@
       updateCartUI();
       updateWishlistUI();
       setupScrollAnimations();
-
-      // Startseite anzeigen
       navigateTo('home');
     });
   </script>
