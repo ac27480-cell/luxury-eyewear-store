@@ -25,6 +25,10 @@
       --gold-accent: #c9a87c;
     }
 
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
     body {
       background-color: var(--bg-editorial);
       color: var(--text-main);
@@ -83,7 +87,6 @@
     .nav-btn {
       cursor: pointer;
       touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
     }
     .nav-btn:active {
       opacity: 0.6;
@@ -246,7 +249,7 @@
       min-width: 200px;
     }
 
-    /* Styling für die Marken-Skizzen Grid Sektion */
+    /* Styling für die Marken-Skizzen Sektion */
     .brand-sketch-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -284,7 +287,7 @@
     }
   </style>
 </head>
-<body class="intro-active">
+<body>
 
   <!-- ===== INTRO OVERLAY ===== -->
   <div id="intro-overlay">
@@ -329,19 +332,19 @@
     </div>
   </header>
 
-  <!-- ===== HERO – nur auf der Startseite sichtbar ===== -->
+  <!-- ===== HERO ===== -->
   <section id="hero" class="relative h-[75vh] min-h-[500px] bg-stone-900 text-white overflow-hidden fade-in touch-manipulation">
-    <div id="hero-slides" class="absolute inset-0 transition-all duration-700 bg-cover bg-center"></div>
+    <div id="hero-slides" class="absolute inset-0"></div>
     <div class="absolute inset-0 bg-black/50 z-10"></div>
     <div class="relative z-20 max-w-7xl mx-auto h-full flex flex-col justify-end px-6 lg:px-12 pb-16">
       <p class="text-[11px] uppercase tracking-[0.35em] text-stone-300 mb-3">Independent Eyewear & Curated Retailers</p>
       <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-light leading-[1.1] max-w-3xl">
         Weltweit kuratiert.<br /><span class="italic">Direkt vom Fachhändler.</span>
       </h1>
-      <div id="hero-description" class="hero-description text-stone-200 mt-4 max-w-2xl" onclick="openBrandModal(currentBrand)"></div>
+      <div id="hero-description" class="hero-description text-stone-200 mt-4 max-w-2xl"></div>
       <div class="mt-8 flex justify-between items-end border-t border-white/20 pt-6">
         <p class="text-xs tracking-widest uppercase text-stone-300 max-w-md">Die führenden unabhängigen Brillenmarken & Partner-Optiker</p>
-        <span id="hero-slide-label" onclick="nextHeroSlide()" class="text-[10px] uppercase tracking-[0.25em] text-stone-400 hero-label-click">Andy Wolf</span>
+        <span id="hero-slide-label" class="text-[10px] uppercase tracking-[0.25em] text-stone-400 hero-label-click">Andy Wolf</span>
       </div>
     </div>
   </section>
@@ -404,32 +407,33 @@
       </div>
 
       <div class="brand-sketch-container">
-        <div class="brand-item" onclick="openBrandModalFromSketch('Andy Wolf')">
-          <img src="./assets/brands/tom-ford-sketch.png" alt="Tom Ford Skizze" onerror="this.onerror=null; this.src=IMAGE_PLACEHOLDER;">
+        <!-- Fallback auf IMAGE_PLACEHOLDER wird im onerror verwendet -->
+        <div class="brand-item" onclick="openBrandModal('Andy Wolf')">
+          <img src="./assets/brands/tom-ford-sketch.png" alt="Tom Ford Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>Tom Ford</span>
         </div>
-        <div class="brand-item" onclick="openBrandModalFromSketch('DITA Eyewear')">
-          <img src="./assets/brands/dita-sketch.png" alt="DITA Skizze" onerror="this.onerror=null; this.src=IMAGE_PLACEHOLDER;">
+        <div class="brand-item" onclick="openBrandModal('DITA Eyewear')">
+          <img src="./assets/brands/dita-sketch.png" alt="DITA Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>DITA</span>
         </div>
-        <div class="brand-item" onclick="openBrandModalFromSketch('Jacques Marie Mage')">
-          <img src="./assets/brands/cartier-sketch.png" alt="Cartier Skizze" onerror="this.onerror=null; this.src=IMAGE_PLACEHOLDER;">
+        <div class="brand-item" onclick="openBrandModal('Jacques Marie Mage')">
+          <img src="./assets/brands/cartier-sketch.png" alt="Cartier Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>Cartier</span>
         </div>
-        <div class="brand-item" onclick="openBrandModalFromSketch('MYKITA')">
-          <img src="./assets/brands/ysl-sketch.png" alt="YSL Skizze" onerror="this.onerror=null; this.src=IMAGE_PLACEHOLDER;">
+        <div class="brand-item" onclick="openBrandModal('MYKITA')">
+          <img src="./assets/brands/ysl-sketch.png" alt="YSL Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>Yves Saint Laurent</span>
         </div>
-        <div class="brand-item" onclick="openBrandModalFromSketch('Lindberg')">
-          <img src="./assets/brands/gucci-sketch.png" alt="Gucci Skizze" onerror="this.onerror=null; this.src=IMAGE_PLACEHOLDER;">
+        <div class="brand-item" onclick="openBrandModal('Lindberg')">
+          <img src="./assets/brands/gucci-sketch.png" alt="Gucci Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>Gucci</span>
         </div>
-        <div class="brand-item" onclick="openBrandModalFromSketch('Cutler and Gross')">
-          <img src="./assets/brands/cutler-gross-sketch.png" alt="Cutler and Gross Skizze" onerror="this.onerror=null; this.src=IMAGE_PLACEHOLDER;">
+        <div class="brand-item" onclick="openBrandModal('Cutler and Gross')">
+          <img src="./assets/brands/cutler-gross-sketch.png" alt="Cutler and Gross Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>Cutler and Gross</span>
         </div>
-        <div class="brand-item" onclick="openBrandModalFromSketch('Peter and May')">
-          <img src="./assets/brands/peter-may-sketch.png" alt="Peter and May Skizze" onerror="this.onerror=null; this.src=IMAGE_PLACEHOLDER;">
+        <div class="brand-item" onclick="openBrandModal('Peter and May')">
+          <img src="./assets/brands/peter-may-sketch.png" alt="Peter and May Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>Peter and May</span>
         </div>
       </div>
@@ -455,12 +459,7 @@
         <span class="text-xs tracking-widest uppercase text-[var(--text-muted)]">Direkte Bezugsquellen</span>
       </div>
 
-      <!-- Preis-Filter -->
-      <div class="mb-8 flex items-center gap-4">
-        <label for="price-range" class="text-[10px] uppercase tracking-widest text-[var(--text-muted)] whitespace-nowrap">Preis bis: <span id="price-output">1000 €</span></label>
-        <input type="range" id="price-range" min="100" max="1000" value="1000" step="50" class="w-full h-1 bg-stone-300 appearance-none cursor-pointer" oninput="filterProducts()">
-      </div>
-
+      <!-- KEIN PREIS-FILTER -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16" id="product-list"></div>
     </section>
 
@@ -523,7 +522,7 @@
           <div class="flex space-x-3">
             <button onclick="setConfigLens('bg-transparent')" class="px-4 py-2 border border-black text-xs uppercase tracking-wider">Klarglas</button>
             <button onclick="setConfigLens('bg-stone-900/60')" class="px-4 py-2 bg-stone-900 text-white text-xs uppercase tracking-wider">Dunkelgrau</button>
-            <button onclick="setConfigLens('bg-amber-900/60')" class="px-4 py-2 bg-amber-900/60 text-white text-xs uppercase tracking-wider">Braun</button>
+            <button onclick="setConfigLens('bg-amber-900/40')" class="px-4 py-2 bg-amber-900/60 text-white text-xs uppercase tracking-wider">Braun</button>
           </div>
         </div>
         <div class="pt-6 border-t border-[var(--border-editorial)]">
@@ -736,8 +735,27 @@
   </footer>
 
   <script>
-    const IMAGE_PLACEHOLDER = "data:image/svg+xml;utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgODAwIDYwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y0ZjJlZCIvPjxnIHN0cm9rZT0iIzczNzA2YiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0gMjIwLDMwMCBDIDIyMCwyNDAgMzQwLDI0MCAzNDAsMzAwIEMgMzQwLDM2MCAyMjAsMzYwIDIyMCwzMDAgWiIgc3Ryb2tlLWRhc2hhcnJheT0iNiw0Ii8+PHBhdGggZD0iTSA0NjAsMzAwIEMgNDYwLDI0MCA1ODAsMjQwIDU4MCwzMDAgQyA1ODAsMzYwIDQ2MCwzNjAgNDYwLDMwMCBaIiBzdHJva2UtZGFzaGFycmF5PSI2LDQiLz48cGF0aCBkPSJNIDM0MCwyODUgQyAzODAsMjcwIDQyMCwyNzAgNDYwLDI4NSIvPjxwYXRoIGQ9Ik0gMjIwLDI4NSBMIDE0MCwyNzAiLz48cGF0aCBkPSJNIDU4MCwyODUgTCA2NjAsMjcwIi8+PHBhdGggZD0iTSAzMjUsMjgwIEMgNDAwLDI2NSA0NzUsMjgwIiBzdHJva2U9IiMxYTE5MTgiIHN0cm9rZS13aWR0aD0iMyIvPjwvZz48dGV4dCB4PSI1MCUifSB5PSI0NDAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC1zdHlsZT0iaXRhbGljIiBmaWxsPSIjNzM3MDZiIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMiI+WyBNQU5VRkFLVFVSIFNLSVpaRSBdPC90ZXh0Pjwvc3ZnPg==";
+    // ==================== KORRIGIERTES PLATZHALTERBILD ====================
+    const IMAGE_PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+        <rect width="100%" height="100%" fill="#f4f2ed"/>
+        <g stroke="#73706b" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z" stroke-dasharray="6,4"/>
+          <path d="M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z" stroke-dasharray="6,4"/>
+          <path d="M 340,285 C 380,270 420,270 460,285"/>
+          <path d="M 220,285 L 140,270"/>
+          <path d="M 580,285 L 660,270"/>
+          <circle cx="280" cy="300" r="45" stroke="#1a1918" stroke-width="3"/>
+          <circle cx="520" cy="300" r="45" stroke="#1a1918" stroke-width="3"/>
+          <path d="M 325,280 Q 400,265 475,280" stroke="#1a1918" stroke-width="3"/>
+          <path d="M 235,280 L 150,260" stroke="#1a1918" stroke-width="3"/>
+          <path d="M 565,280 L 650,260" stroke="#1a1918" stroke-width="3"/>
+        </g>
+        <text x="50%" y="440" font-family="Georgia, serif" font-size="16" font-style="italic" fill="#73706b" text-anchor="middle" letter-spacing="2">[ MANUFAKTUR SKIZZE ]</text>
+      </svg>
+    `);
 
+    // ==================== BRAND_DATA ====================
     const BRAND_DATA = {
       'Andy Wolf': { story: 'Andy Wolf steht für exklusive Brillenmanufaktur aus Österreich. Jede Fassung wird mit höchster Präzision und nachhaltigem Bio-Acetat in Hartberg gefertigt. Die geometrische Linienführung und die Liebe zum Detail machen jede Brille zu einem Unikat.', img: IMAGE_PLACEHOLDER },
       'MYKITA': { story: 'MYKITA vereint Berliner Ingenieurskunst mit avantgardistischem Design. Das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl ist ein Meilenstein der Eyewear-Entwicklung. Gefertigt im Herzen der Hauptstadt.', img: IMAGE_PLACEHOLDER },
@@ -748,6 +766,7 @@
       'Peter and May': { story: 'Peter and May – Pariser Eleganz trifft auf zeitgenössisches Design. Klare Linien und ausgewogene Proportionen zeichnen diese unabhängige Brand aus.', img: IMAGE_PLACEHOLDER }
     };
 
+    // ==================== HERO SLIDES ====================
     function createHeroSVG(accentColor, bgColor, label) {
       const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'>
         <rect width='100%' height='100%' fill='${bgColor}'/>
@@ -776,6 +795,7 @@
       { label: 'DITA Eyewear', description: 'Japanische Präzision – Acetat-Titan-Hybridkonstruktion auf höchstem handwerklichem Niveau.', img: createHeroSVG('#6b5d4e', '#242220', 'DITA') }
     ];
 
+    // ==================== STORE DATABASE ====================
     const STORE_DATABASE = [
       { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
       { id: 'leidmann', name: "Leidmann", type: "Boutique / Fachgeschäft", city: "München", url: "https://www.leidmann.de" },
@@ -787,6 +807,7 @@
       { id: 'misterspex', name: "Mister Spex", type: "Omnichannel / Online", city: "Berlin / Online", url: "https://www.misterspex.de" }
     ];
 
+    // ==================== INDEPENDENT LABELS ====================
     const INDEPENDENT_LABELS = {
       "Deutschland / Ö / CH": [
         "MYKITA (Berlin)", "ic! berlin", "Lunor (Schwarzwald)", "CAZAL", "Andy Wolf (Österreich)",
@@ -825,6 +846,7 @@
       "Großbritannien": 'bg-purple-100',
     };
 
+    // ==================== PRODUKTE ====================
     const PRODUCTS = [
       { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium' },
       { id: 2, brand: 'MYKITA', name: 'Lite Tuva', price: '490 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Patentiertes schraubenloses Gelenk aus ultraleichtem Edelstahl, gefertigt in Berlin.', search: 'mykita lite tuva berlin specsberlin' },
@@ -865,6 +887,7 @@
       { id: 37, brand: 'Cubitts', name: 'Judd Round', price: '240 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Traditionelles Brillenhandwerk aus King\'s Cross, London.', search: 'cubitts london brillenlaboratorium' }
     ];
 
+    // ==================== STATE ====================
     let wishlist = JSON.parse(localStorage.getItem('luxevue_wishlist') || '[]');
     let cart = JSON.parse(localStorage.getItem('luxevue_cart') || '[]');
     let recentlyViewed = JSON.parse(localStorage.getItem('luxevue_recent') || '[]');
@@ -874,6 +897,16 @@
     let touchEndX = 0;
     let introDone = false;
     let searchTimeout;
+    let currentProductForModal = null;
+
+    // ==================== HILFSFUNKTIONEN ====================
+    function getStoreInfo(storeId) {
+      return STORE_DATABASE.find(s => s.id === storeId) || { name: 'Zertifizierter Optiker', url: '#', city: 'Fachhandel', type: 'Fachgeschäft' };
+    }
+
+    function getPriceNumber(priceStr) {
+      return parseInt(priceStr.replace(/\D/g, '')) || 0;
+    }
 
     function persistCart() {
       localStorage.setItem('luxevue_cart', JSON.stringify(cart));
@@ -887,6 +920,33 @@
       localStorage.setItem('luxevue_recent', JSON.stringify(recentlyViewed));
     }
 
+    // ==================== TOAST ====================
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+
+    // ==================== NAVIGATION ====================
+    function navigateTo(pageId) {
+      document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+      const page = document.getElementById('page-' + pageId);
+      if (page) {
+        page.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      const hero = document.getElementById('hero');
+      if (hero) hero.classList.toggle('hidden', pageId !== 'home');
+      if (pageId === 'cart') updateCartUI();
+      if (pageId === 'checkout') renderCheckout();
+    }
+
+    // ==================== INTRO ====================
     function dismissIntro() {
       if (introDone) return;
       introDone = true;
@@ -908,146 +968,73 @@
     document.getElementById('intro-overlay').addEventListener('click', dismissIntro);
     document.getElementById('intro-overlay').addEventListener('touchstart', dismissIntro);
 
-    function getStoreInfo(storeId) {
-      return STORE_DATABASE.find(s => s.id === storeId) || { name: 'Zertifizierter Optiker', url: '#', city: 'Fachhandel', type: 'Fachgeschäft' };
-    }
+    // ==================== HERO SLIDER ====================
+    function setupHeroSlider() {
+      const container = document.getElementById('hero-slides');
+      const label = document.getElementById('hero-slide-label');
+      const desc = document.getElementById('hero-description');
+      container.innerHTML = '';
 
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toast-msg').innerText = msg;
-      toast.classList.remove('opacity-0', 'pointer-events-none');
-      toast.classList.add('opacity-100');
-      setTimeout(() => {
-        toast.classList.remove('opacity-100');
-        toast.classList.add('opacity-0', 'pointer-events-none');
-      }, 2500);
-    }
+      HERO_SLIDES.forEach((slide, i) => {
+        const img = document.createElement('img');
+        img.src = slide.img;
+        img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
+        img.alt = slide.label;
+        container.appendChild(img);
+      });
 
-    function navigateTo(pageId) {
-      document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
-      const page = document.getElementById('page-' + pageId);
-      if (page) {
-        page.classList.remove('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      function updateSlide(index) {
+        const imgs = container.querySelectorAll('img');
+        imgs.forEach((img, i) => {
+          img.classList.toggle('opacity-100', i === index);
+          img.classList.toggle('opacity-0', i !== index);
+        });
+        if (label) label.textContent = HERO_SLIDES[index].label;
+        if (desc) desc.textContent = HERO_SLIDES[index].description;
+        currentBrand = HERO_SLIDES[index].label;
+        if (label) label.onclick = () => openBrandModal(currentBrand);
+        if (desc) desc.onclick = () => openBrandModal(currentBrand);
       }
+
+      updateSlide(0);
+
       const hero = document.getElementById('hero');
-      if (hero) hero.classList.toggle('hidden', pageId !== 'home');
-      if (pageId === 'cart') updateCartUI();
-      if (pageId === 'wishlist') updateWishlistUI();
-      if (pageId === 'checkout') renderCheckout();
-      if (pageId === 'locator') renderStoreLocator();
-      if (pageId === 'account') renderStoreDirectory();
-    }
+      let autoInterval = setInterval(() => {
+        heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
+        updateSlide(heroSlideIndex);
+      }, 6000);
 
-    function openProductModal(productId) {
-      const p = PRODUCTS.find(x => x.id === parseInt(productId));
-      if (!p) { showToast('Produkt nicht gefunden'); return; }
-      const store = getStoreInfo(p.storeId);
+      hero.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+        clearInterval(autoInterval);
+        autoInterval = setInterval(() => {
+          heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
+          updateSlide(heroSlideIndex);
+        }, 6000);
+      }, { passive: true });
 
-      document.getElementById('modal-product-img').src = p.img;
-      document.getElementById('modal-product-brand').innerText = p.brand;
-      document.getElementById('modal-product-name').innerText = p.name;
-      document.getElementById('modal-product-price').innerText = p.price;
-      document.getElementById('modal-product-desc').innerText = p.desc;
-      document.getElementById('modal-product-store-name').innerText = store.name;
-      document.getElementById('modal-product-store-city').innerText = store.type + ' — ' + store.city;
-      document.getElementById('modal-product-store-url').href = store.url;
-
-      const addBtn = document.getElementById('modal-product-addcart');
-      addBtn.onclick = function(e) {
-        e.stopPropagation();
-        addToCart(p.name, p.price, p.img, store.name);
-        closeProductModal();
-      };
-
-      const wishBtn = document.getElementById('modal-product-wishlist');
-      const icon = wishBtn.querySelector('i');
-      if (wishlist.includes(p.name)) {
-        icon.className = 'fa-solid fa-heart text-rose-600';
-      } else {
-        icon.className = 'fa-regular fa-heart';
-      }
-      wishBtn.onclick = function(e) {
-        e.stopPropagation();
-        if (wishlist.includes(p.name)) {
-          wishlist = wishlist.filter(x => x !== p.name);
-          icon.className = 'fa-regular fa-heart';
-          showToast('Von Favoriten entfernt');
-        } else {
-          wishlist.push(p.name);
-          icon.className = 'fa-solid fa-heart text-rose-600';
-          showToast('Zu Favoriten hinzugefügt');
+      hero.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) {
+            heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
+          } else {
+            heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
+          }
+          updateSlide(heroSlideIndex);
         }
-        persistWishlist();
-      };
-
-      if (!recentlyViewed.includes(p.id)) {
-        recentlyViewed.unshift(p.id);
-        recentlyViewed = recentlyViewed.slice(0, 6);
-        persistRecent();
-        renderRecentlyViewed();
-      }
-
-      document.getElementById('productModal').classList.remove('hidden');
-      document.getElementById('productModal').classList.add('flex');
-      document.body.style.overflow = 'hidden';
+      }, { passive: true });
     }
 
-    function closeProductModal() {
-      document.getElementById('productModal').classList.add('hidden');
-      document.getElementById('productModal').classList.remove('flex');
-      document.body.style.overflow = '';
-    }
-
-    function openBrandModal(brandName) {
-      const data = BRAND_DATA[brandName];
-      if (!data) {
-        showToast('Informationen zu dieser Marke folgen in Kürze.');
-        return;
-      }
-      document.getElementById('brand-modal-name').innerText = brandName;
-      document.getElementById('brand-modal-story').innerText = data.story;
-      document.getElementById('brand-modal-img').src = data.img;
-      document.getElementById('brand-modal-name').dataset.brand = brandName;
-      document.getElementById('brandModal').classList.remove('hidden');
-      document.getElementById('brandModal').classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function openBrandModalFromSketch(brandName) {
-      openBrandModal(brandName);
-    }
-
-    function closeBrandModal() {
-      document.getElementById('brandModal').classList.add('hidden');
-      document.getElementById('brandModal').classList.remove('flex');
-      document.body.style.overflow = '';
-    }
-
-    function filterByBrand() {
-      const brand = document.getElementById('brand-modal-name').dataset.brand;
-      if (brand) {
-        closeBrandModal();
-        navigateTo('home');
-        document.getElementById('searchInput').value = brand;
-        filterProducts();
-        setTimeout(() => {
-          document.getElementById('product-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300);
-      }
-    }
-
-    function renderProducts(query = '', maxPrice = 1000) {
+    // ==================== PRODUKTE RENDERN (OHNE PREISFILTER) ====================
+    function renderProducts(query = '') {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
       let items = PRODUCTS;
       if (query) {
         items = items.filter(p => (p.brand + ' ' + p.name + ' ' + p.search).toLowerCase().includes(query));
       }
-      items = items.filter(p => {
-        const priceNum = parseInt(p.price.replace(/\D/g, '')) || 0;
-        return priceNum <= maxPrice;
-      });
 
       if (items.length === 0) {
         container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-12 text-center">Keine passenden Brillenmodelle gefunden.</p>';
@@ -1058,10 +1045,9 @@
         const store = getStoreInfo(p.storeId);
         const card = document.createElement('div');
         card.className = 'product-card group cursor-pointer';
-        const isWished = wishlist.includes(p.name);
         card.innerHTML = `
           <div class="img-zoom-container bg-[var(--surface-editorial)] mb-5 border border-[var(--border-editorial)] relative" onclick="openProductModal(${p.id})">
-            <img src="${p.img}" alt="${p.name}" class="w-full h-80 object-cover" loading="lazy">
+            <img src="${p.img}" alt="${p.name}" class="w-full h-80 object-cover" loading="lazy" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           </div>
           <div class="flex justify-between items-start mb-2">
             <div>
@@ -1081,46 +1067,17 @@
             </a>
           </div>
           <div class="mt-4 pt-3 border-t border-[var(--border-editorial)]/50 flex space-x-3">
-            <button data-name="${p.name}" data-price="${p.price}" data-img="${p.img}" data-store="${store.name}" class="add-to-cart-btn flex-1 py-2.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest hover:bg-stone-800 transition-colors">In den Warenkorb</button>
-            <button data-name="${p.name}" class="wishlist-btn px-3 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors">
-              <i class="${isWished ? 'fa-solid fa-heart text-rose-600' : 'fa-regular fa-heart'}"></i>
-            </button>
+            <button data-id="${p.id}" class="add-to-cart-btn flex-1 py-2.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest hover:bg-stone-800 transition-colors">In den Warenkorb</button>
+            <button data-id="${p.id}" class="wishlist-btn px-3 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors"><i class="fa-regular fa-heart"></i></button>
           </div>
         `;
         container.appendChild(card);
-      });
-
-      document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          addToCart(this.dataset.name, this.dataset.price, this.dataset.img, this.dataset.store);
-        });
-      });
-
-      document.querySelectorAll('.wishlist-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const name = this.dataset.name;
-          const icon = this.querySelector('i');
-          if (wishlist.includes(name)) {
-            wishlist = wishlist.filter(x => x !== name);
-            icon.className = 'fa-regular fa-heart';
-            showToast('Entfernt');
-          } else {
-            wishlist.push(name);
-            icon.className = 'fa-solid fa-heart text-rose-600';
-            showToast('Gespeichert');
-          }
-          persistWishlist();
-        });
       });
     }
 
     function filterProducts() {
       const q = document.getElementById('searchInput').value.toLowerCase();
-      const maxPrice = parseInt(document.getElementById('price-range').value);
-      document.getElementById('price-output').innerText = maxPrice + ' €';
-      renderProducts(q, maxPrice);
+      renderProducts(q);
     }
 
     function debouncedSearch() {
@@ -1130,6 +1087,42 @@
       }, 300);
     }
 
+    // Event-Delegation für Warenkorb & Wunschliste in Produktliste
+    document.getElementById('product-list').addEventListener('click', function(e) {
+      const addBtn = e.target.closest('.add-to-cart-btn');
+      const wishBtn = e.target.closest('.wishlist-btn');
+
+      if (addBtn) {
+        e.stopPropagation();
+        const productId = parseInt(addBtn.dataset.id);
+        const p = PRODUCTS.find(x => x.id === productId);
+        if (p) {
+          const store = getStoreInfo(p.storeId);
+          addToCart(p.name, p.price, p.img, store.name);
+        }
+      }
+
+      if (wishBtn) {
+        e.stopPropagation();
+        const productId = parseInt(wishBtn.dataset.id);
+        const p = PRODUCTS.find(x => x.id === productId);
+        if (p) {
+          const icon = wishBtn.querySelector('i');
+          if (wishlist.includes(p.name)) {
+            wishlist = wishlist.filter(x => x !== p.name);
+            icon.className = 'fa-regular fa-heart';
+            showToast('Entfernt');
+          } else {
+            wishlist.push(p.name);
+            icon.className = 'fa-solid fa-heart text-rose-600';
+            showToast('Gespeichert');
+          }
+          persistWishlist();
+        }
+      }
+    });
+
+    // ==================== LÄNDER-FILTER ====================
     function renderCountryFilters() {
       const bar = document.getElementById('country-filter-bar');
       bar.innerHTML = '';
@@ -1165,6 +1158,7 @@
       });
     }
 
+    // ==================== WARENKORB ====================
     function addToCart(name, price, img, storeName) {
       const existing = cart.find(item => item.name === name);
       if (existing) {
@@ -1204,7 +1198,7 @@
       badge.classList.toggle('hidden', totalItems === 0);
 
       if (cart.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider py-8">Ihr Warenkorb ist derzeit leer.</p>';
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihr Warenkorb ist derzeit leer.</p>';
         summary.classList.add('hidden');
         totalEl.innerText = '0 €';
         return;
@@ -1212,35 +1206,36 @@
 
       let total = 0;
       container.innerHTML = cart.map((item, index) => {
-        const priceNum = parseInt(item.price.replace(/\D/g, '')) || 0;
+        const priceNum = getPriceNumber(item.price);
         const subtotal = priceNum * (item.quantity || 1);
         total += subtotal;
         return `
           <div class="flex justify-between items-center p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]">
             <div class="flex items-center space-x-4">
-              <img src="${item.img}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]" alt="${item.name}">
+              <img src="${item.img}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]" alt="${item.name}" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
               <div>
                 <p class="text-xs font-medium">${item.name}</p>
                 <p class="text-[10px] text-[var(--text-muted)]">${item.price} — ${item.storeName || 'Optiker'}</p>
-                <div class="flex items-center gap-2 mt-2">
-                  <button onclick="changeQuantity(${index}, -1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 bg-white hover:bg-stone-100">-</button>
-                  <span class="text-xs font-semibold px-1">${item.quantity || 1}</span>
-                  <button onclick="changeQuantity(${index}, 1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 bg-white hover:bg-stone-100">+</button>
+                <div class="flex items-center gap-2 mt-1">
+                  <button onclick="changeQuantity(${index}, -1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">-</button>
+                  <span class="text-xs">${item.quantity || 1}</span>
+                  <button onclick="changeQuantity(${index}, 1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">+</button>
                 </div>
               </div>
             </div>
-            <div class="text-right">
-              <p class="text-xs font-semibold">${subtotal} €</p>
-              <button onclick="removeFromCart(${index})" class="text-[10px] text-rose-600 hover:underline mt-2 block">Entfernen</button>
+            <div class="flex items-center gap-4">
+              <span class="text-xs font-medium">${subtotal} €</span>
+              <button onclick="removeFromCart(${index})" class="text-lg text-[var(--text-muted)] hover:text-black">&times;</button>
             </div>
           </div>
         `;
       }).join('');
 
-      summary.classList.remove('hidden');
       totalEl.innerText = total + ' €';
+      summary.classList.remove('hidden');
     }
 
+    // ==================== WUNSCHLISTE ====================
     function updateWishlistUI() {
       const badge = document.getElementById('wishlist-count');
       const container = document.getElementById('wishlist-container');
@@ -1248,242 +1243,293 @@
       badge.classList.toggle('hidden', wishlist.length === 0);
 
       if (wishlist.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider py-8">Sie haben noch keine Favoriten gespeichert.</p>';
-        return;
-      }
-
-      const wishedProducts = PRODUCTS.filter(p => wishlist.includes(p.name));
-      container.innerHTML = wishedProducts.map(p => `
-        <div class="flex justify-between items-center p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]">
-          <div class="flex items-center space-x-4">
-            <img src="${p.img}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]" alt="${p.name}">
-            <div>
-              <p class="text-xs uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p>
-              <p class="text-sm font-medium">${p.name}</p>
-              <p class="text-xs text-stone-700">${p.price}</p>
-            </div>
-          </div>
-          <div class="flex gap-2">
-            <button onclick="openProductModal(${p.id})" class="px-4 py-2 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest">Details</button>
-            <button onclick="toggleWishlist('${p.name}')" class="px-3 py-2 border border-[var(--border-editorial)] text-rose-600 text-xs"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function toggleWishlist(name) {
-      if (wishlist.includes(name)) {
-        wishlist = wishlist.filter(x => x !== name);
-        showToast('Entfernt');
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihre Wunschliste ist leer.</p>';
       } else {
-        wishlist.push(name);
-        showToast('Gespeichert');
+        container.innerHTML = wishlist.map(item => `
+          <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex justify-between items-center">
+            <span class="text-xs font-medium">${item}</span>
+            <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">Gespeichert</span>
+          </div>
+        `).join('');
       }
-      persistWishlist();
-      renderProducts(document.getElementById('searchInput').value.toLowerCase());
-    }
-
-    function renderRecentlyViewed() {
-      const section = document.getElementById('recently-viewed-section');
-      const container = document.getElementById('recently-viewed-container');
-      if (recentlyViewed.length === 0) {
-        section.classList.add('hidden');
-        return;
-      }
-
-      section.classList.remove('hidden');
-      const items = recentlyViewed.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
-      container.innerHTML = items.map(p => `
-        <div class="recent-card bg-white p-3 border border-[var(--border-editorial)] cursor-pointer flex-shrink-0" onclick="openProductModal(${p.id})">
-          <img src="${p.img}" class="w-full h-24 object-cover mb-2" alt="${p.name}">
-          <p class="text-[9px] uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p>
-          <p class="text-xs font-serif font-medium truncate">${p.name}</p>
-          <p class="text-[10px] text-stone-800">${p.price}</p>
-        </div>
-      `).join('');
-    }
-
-    function setHeroSlide(index) {
-      heroSlideIndex = index;
-      const slide = HERO_SLIDES[heroSlideIndex];
-      currentBrand = slide.label;
-      const bg = document.getElementById('hero-slides');
-      bg.style.backgroundImage = `url("${slide.img}")`;
-      document.getElementById('hero-description').innerText = slide.description;
-      document.getElementById('hero-slide-label').innerText = slide.label + ' → Next';
-    }
-
-    function nextHeroSlide() {
-      heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
-      setHeroSlide(heroSlideIndex);
-    }
-
-    function setConfigFrame(className) {
-      const preview = document.getElementById('config-frame-preview');
-      preview.className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${className}`;
-    }
-
-    function setConfigLens(className) {
-      const left = document.getElementById('config-lens-left');
-      const right = document.getElementById('config-lens-right');
-      left.className = `w-16 h-16 rounded-full transition-all duration-300 ${className}`;
-      right.className = `w-16 h-16 rounded-full transition-all duration-300 ${className}`;
     }
 
     function shareWishlist() {
-      if (wishlist.length === 0) {
-        showToast('Wunschliste ist leer');
-        return;
-      }
-      if (navigator.share) {
-        navigator.share({
-          title: 'Meine LUXEVUE Favoriten',
-          text: 'Entdecke meine Brillen-Favoriten auf LUXEVUE: ' + wishlist.join(', ')
-        }).catch(() => {});
-      } else {
-        navigator.clipboard.writeText('LUXEVUE Favoriten: ' + wishlist.join(', '));
-        showToast('Link in Zwischenablage kopiert');
-      }
+      if (wishlist.length === 0) { showToast('Wunschliste ist leer'); return; }
+      const text = 'Meine LUXEVUE Auswahl: ' + wishlist.join(', ');
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
 
+    // ==================== CHECKOUT ====================
     function renderCheckout() {
-      const itemsContainer = document.getElementById('checkout-items');
+      const container = document.getElementById('checkout-items');
       const totalEl = document.getElementById('checkout-total');
+      let total = 0;
       if (cart.length === 0) {
-        itemsContainer.innerHTML = '<p class="text-xs text-[var(--text-muted)]">Keine Artikel im Warenkorb.</p>';
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)]">Ihr Warenkorb ist leer.</p>';
         totalEl.innerText = '0 €';
         return;
       }
-      let total = 0;
-      itemsContainer.innerHTML = cart.map(item => {
-        const priceNum = parseInt(item.price.replace(/\D/g, '')) || 0;
+      container.innerHTML = cart.map(item => {
+        const priceNum = getPriceNumber(item.price);
         const subtotal = priceNum * (item.quantity || 1);
         total += subtotal;
-        return `
-          <div class="flex justify-between py-1 border-b border-[var(--border-editorial)] text-xs">
-            <span>${item.name} (${item.quantity || 1}x)</span>
-            <span>${subtotal} €</span>
-          </div>
-        `;
+        return `<div class="flex justify-between text-sm"><span>${item.name} (${item.quantity || 1}x)</span><span>${subtotal} €</span></div>`;
       }).join('');
       totalEl.innerText = total + ' €';
     }
 
     function placeOrder() {
-      if (cart.length === 0) {
-        showToast('Ihr Warenkorb ist leer');
-        return;
-      }
+      const agb = document.getElementById('checkout-agb');
+      if (!agb.checked) { showToast('Bitte akzeptieren Sie die AGB.'); return; }
       const firstname = document.getElementById('checkout-firstname').value.trim();
       const lastname = document.getElementById('checkout-lastname').value.trim();
-      const agb = document.getElementById('checkout-agb').checked;
-
-      if (!firstname || !lastname) {
-        showToast('Bitte geben Sie Ihren Namen an');
-        return;
-      }
-      if (!agb) {
-        showToast('Bitte stimmen Sie den AGB zu');
-        return;
-      }
-
+      const email = document.getElementById('checkout-email').value.trim();
+      const address = document.getElementById('checkout-address').value.trim();
+      if (!firstname || !lastname || !email || !address) { showToast('Bitte füllen Sie alle Felder aus.'); return; }
+      const payment = document.querySelector('input[name="payment"]:checked');
+      if (!payment) { showToast('Bitte wählen Sie eine Zahlungsart.'); return; }
+      showToast('Vielen Dank für Ihre Bestellung! Sie erhalten eine Bestätigung per E-Mail.');
       cart = [];
       persistCart();
-      showToast('Vielen Dank für Ihre Bestellung!');
-      setTimeout(() => {
-        navigateTo('home');
-      }, 1500);
+      navigateTo('home');
     }
 
-    function renderStoreLocator() {
-      const grid = document.getElementById('locator-grid');
-      grid.innerHTML = STORE_DATABASE.map(store => `
-        <div class="p-6 bg-white border border-[var(--border-editorial)] space-y-3">
-          <p class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">${store.type}</p>
-          <h3 class="font-serif text-2xl font-light">${store.name}</h3>
-          <p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${store.city}</p>
-          <a href="${store.url}" target="_blank" rel="noopener" class="inline-block pt-2 text-xs uppercase tracking-wider font-semibold text-stone-900 hover:underline">
-            Website besuchen <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-          </a>
-        </div>
-      `).join('');
+    // ==================== STORE LOCATOR ====================
+    function renderStoreLocatorGrid(filteredStores) {
+      const container = document.getElementById('locator-grid');
+      const stores = filteredStores || STORE_DATABASE;
+      container.innerHTML = '';
+      if (stores.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-8 text-center">Keine passenden Partneroptiker gefunden.</p>';
+        return;
+      }
+      stores.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'p-6 bg-white border border-[var(--border-editorial)] flex flex-col justify-between space-y-4 hover:border-black transition-colors';
+        card.innerHTML = `
+          <div>
+            <span class="text-[9px] uppercase tracking-widest bg-[var(--surface-editorial)] px-2.5 py-1 text-[var(--text-muted)] border border-[var(--border-editorial)] font-semibold">${s.type}</span>
+            <h3 class="font-serif text-2xl font-light mt-3 mb-1">${s.name}</h3>
+            <p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${s.city}</p>
+          </div>
+          <div class="pt-4 border-t border-[var(--border-editorial)]/60 flex justify-between items-center">
+            <a href="${s.url}" target="_blank" rel="noopener" class="text-xs font-semibold underline hover:text-stone-600 flex items-center space-x-1">
+              <span>Website besuchen</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </a>
+            <button onclick="navigateTo('account')" class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-[#1a1918] text-white hover:bg-stone-800 transition-colors">Termin</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
     }
 
     function filterStoreLocator() {
-      const q = document.getElementById('locatorSearchInput').value.toLowerCase();
+      const search = document.getElementById('locatorSearchInput').value.toLowerCase();
       const cat = document.getElementById('locatorCategorySelect').value;
-      const grid = document.getElementById('locator-grid');
-
-      const filtered = STORE_DATABASE.filter(store => {
-        const matchesQuery = store.name.toLowerCase().includes(q) || store.city.toLowerCase().includes(q);
-        const matchesCat = cat === '' || store.type === cat;
-        return matchesQuery && matchesCat;
+      const filtered = STORE_DATABASE.filter(s => {
+        const matchesSearch = s.name.toLowerCase().includes(search) || s.city.toLowerCase().includes(search);
+        const matchesCat = cat === '' || s.type === cat;
+        return matchesSearch && matchesCat;
       });
-
-      if (filtered.length === 0) {
-        grid.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-8">Keine Partneroptiker gefunden.</p>';
-        return;
-      }
-
-      grid.innerHTML = filtered.map(store => `
-        <div class="p-6 bg-white border border-[var(--border-editorial)] space-y-3">
-          <p class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">${store.type}</p>
-          <h3 class="font-serif text-2xl font-light">${store.name}</h3>
-          <p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${store.city}</p>
-          <a href="${store.url}" target="_blank" rel="noopener" class="inline-block pt-2 text-xs uppercase tracking-wider font-semibold text-stone-900 hover:underline">
-            Website besuchen <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-          </a>
-        </div>
-      `).join('');
+      renderStoreLocatorGrid(filtered);
     }
 
     function resetStoreLocatorFilters() {
       document.getElementById('locatorSearchInput').value = '';
       document.getElementById('locatorCategorySelect').value = '';
-      renderStoreLocator();
+      renderStoreLocatorGrid();
     }
 
     function renderStoreDirectory() {
-      const dir = document.getElementById('store-directory-list');
-      dir.innerHTML = STORE_DATABASE.map(store => `
-        <div class="flex justify-between items-center py-2 border-b border-[var(--border-editorial)]">
+      const list = document.getElementById('store-directory-list');
+      list.innerHTML = STORE_DATABASE.map(s => `
+        <div class="pb-3 border-b border-[var(--border-editorial)] flex justify-between items-center">
           <div>
-            <strong class="font-medium text-stone-900">${store.name}</strong>
-            <span class="text-[var(--text-muted)] ml-2">(${store.city})</span>
+            <strong class="font-medium">${s.name}</strong>
+            <span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span>
           </div>
-          <a href="${store.url}" target="_blank" rel="noopener" class="text-stone-800 hover:text-black font-semibold underline">Store</a>
+          <a href="${s.url}" target="_blank" rel="noopener" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
+            <span>Website</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
+          </a>
         </div>
       `).join('');
     }
 
-    function subscribeNewsletter() {
-      const input = document.getElementById('newsletter-email');
-      if (input && input.value.includes('@')) {
-        showToast('Vielen Dank für Ihre Anmeldung!');
-        input.value = '';
+    // ==================== KONFIGURATOR ====================
+    function setConfigFrame(colorClass) {
+      const frame = document.getElementById('config-frame-preview');
+      frame.className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
+    }
+
+    function setConfigLens(lensClass) {
+      document.getElementById('config-lens-left').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
+      document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
+    }
+
+    // ==================== MODALS ====================
+    function openProductModal(productId) {
+      const p = PRODUCTS.find(x => x.id === parseInt(productId));
+      if (!p) { showToast('Produkt nicht gefunden'); return; }
+      currentProductForModal = p;
+      const store = getStoreInfo(p.storeId);
+
+      document.getElementById('modal-product-img').src = p.img;
+      document.getElementById('modal-product-brand').innerText = p.brand;
+      document.getElementById('modal-product-name').innerText = p.name;
+      document.getElementById('modal-product-price').innerText = p.price;
+      document.getElementById('modal-product-desc').innerText = p.desc;
+      document.getElementById('modal-product-store-name').innerText = store.name;
+      document.getElementById('modal-product-store-city').innerText = store.type + ' — ' + store.city;
+      document.getElementById('modal-product-store-url').href = store.url;
+
+      const wishBtn = document.getElementById('modal-product-wishlist');
+      const icon = wishBtn.querySelector('i');
+      if (wishlist.includes(p.name)) {
+        icon.className = 'fa-solid fa-heart text-rose-600';
       } else {
-        showToast('Bitte geben Sie eine gültige E-Mail ein.');
+        icon.className = 'fa-regular fa-heart';
+      }
+
+      if (!recentlyViewed.includes(productId)) {
+        recentlyViewed.unshift(productId);
+        recentlyViewed = recentlyViewed.slice(0, 6);
+        persistRecent();
+        renderRecentlyViewed();
+      }
+
+      document.getElementById('productModal').classList.remove('hidden');
+      document.getElementById('productModal').classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.add('hidden');
+      document.getElementById('productModal').classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    function openBrandModal(brandName) {
+      const data = BRAND_DATA[brandName];
+      if (!data) {
+        showToast('Informationen zu dieser Marke folgen in Kürze.');
+        return;
+      }
+      document.getElementById('brand-modal-name').innerText = brandName;
+      document.getElementById('brand-modal-story').innerText = data.story;
+      document.getElementById('brand-modal-img').src = data.img;
+      document.getElementById('brand-modal-name').dataset.brand = brandName;
+      document.getElementById('brandModal').classList.remove('hidden');
+      document.getElementById('brandModal').classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBrandModal() {
+      document.getElementById('brandModal').classList.add('hidden');
+      document.getElementById('brandModal').classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    function filterByBrand() {
+      const brand = document.getElementById('brand-modal-name').dataset.brand;
+      if (brand) {
+        closeBrandModal();
+        navigateTo('home');
+        document.getElementById('searchInput').value = brand;
+        filterProducts();
+        setTimeout(() => {
+          document.getElementById('product-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
       }
     }
 
-    // Touch Swipe handling for Hero
-    const heroEl = document.getElementById('hero');
-    heroEl.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
-    heroEl.addEventListener('touchend', e => {
-      touchEndX = e.changedTouches[0].screenX;
-      if (touchStartX - touchEndX > 40) nextHeroSlide();
+    // Event-Listener für Modal-Buttons (einmalig)
+    document.getElementById('modal-product-addcart').addEventListener('click', function() {
+      if (currentProductForModal) {
+        const store = getStoreInfo(currentProductForModal.storeId);
+        addToCart(currentProductForModal.name, currentProductForModal.price, currentProductForModal.img, store.name);
+        closeProductModal();
+      }
     });
 
-    // Initialize App
-    document.addEventListener('DOMContentLoaded', () => {
-      setHeroSlide(0);
+    document.getElementById('modal-product-wishlist').addEventListener('click', function() {
+      if (currentProductForModal) {
+        const p = currentProductForModal;
+        const icon = this.querySelector('i');
+        if (wishlist.includes(p.name)) {
+          wishlist = wishlist.filter(x => x !== p.name);
+          icon.className = 'fa-regular fa-heart';
+          showToast('Von Favoriten entfernt');
+        } else {
+          wishlist.push(p.name);
+          icon.className = 'fa-solid fa-heart text-rose-600';
+          showToast('Zu Favoriten hinzugefügt');
+        }
+        persistWishlist();
+      }
+    });
+
+    // ==================== NEWSLETTER ====================
+    function subscribeNewsletter() {
+      const email = document.getElementById('newsletter-email').value;
+      if (!email.includes('@')) { showToast('Gültige E-Mail erforderlich'); return; }
+      showToast('Vielen Dank für Ihre Anmeldung.');
+      document.getElementById('newsletter-email').value = '';
+    }
+
+    // ==================== SCROLL ANIMATIONEN ====================
+    function setupScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    // ==================== ZULETZT ANGESEHEN ====================
+    function renderRecentlyViewed() {
+      const section = document.getElementById('recently-viewed-section');
+      const container = document.getElementById('recently-viewed-container');
+      if (!section || !container) return;
+      if (recentlyViewed.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+      section.classList.remove('hidden');
+      container.innerHTML = '';
+      recentlyViewed.forEach(pid => {
+        const p = PRODUCTS.find(x => x.id === pid);
+        if (!p) return;
+        const card = document.createElement('div');
+        card.className = 'recent-card product-card group cursor-pointer bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-3';
+        card.innerHTML = `
+          <div class="img-zoom-container mb-2" onclick="openProductModal(${p.id})">
+            <img src="${p.img}" alt="${p.name}" class="w-full h-32 object-cover" loading="lazy" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
+          </div>
+          <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p>
+          <h4 class="font-serif text-sm font-light truncate">${p.name}</h4>
+          <p class="text-xs font-medium mt-1">${p.price}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // ==================== INITIALISIERUNG ====================
+    window.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('intro-active');
+      document.body.style.overflow = 'hidden';
+
       renderCountryFilters();
+      setupHeroSlider();
       filterProducts();
+      renderStoreLocatorGrid();
+      renderStoreDirectory();
       updateCartUI();
       updateWishlistUI();
       renderRecentlyViewed();
-
-      setInterval(nextHeroSlide, 6000);
+      setupScrollAnimations();
+      navigateTo('home');
     });
   </script>
 </body>
