@@ -1,383 +1,878 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eyewear & Marken | Startseite</title>
-    <style>
-        /* Grundlegendes Layout & Reset */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUXEVUE — Independent Eyewear & Curated Stores</title>
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #fcfcfc;
-            color: #222;
-            line-height: 1.5;
-        }
+  <!-- High-End Webfonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        /* Marken & Eyewear Sektion */
-        .brands-section {
-            padding: 60px 0;
-        }
+  <style>
+    :root {
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --bg-editorial: #fcfbf9;
+      --surface-editorial: #f4f2ed;
+      --border-editorial: #e8e4dc;
+      --text-main: #1a1918;
+      --text-muted: #73706b;
+    }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+    body {
+      background-color: var(--bg-editorial);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
 
-        .section-header h2 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #111;
-            margin-bottom: 10px;
-        }
+    h1, h2, h3, .font-serif {
+      font-family: var(--font-serif);
+    }
 
-        .section-header p {
-            color: #666;
-            font-size: 1rem;
-        }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Marken Grid */
-        .brand-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 24px;
-        }
+    .img-zoom-container {
+      overflow: hidden;
+    }
+    .img-zoom-container img {
+      transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .product-card:hover .img-zoom-container img {
+      transform: scale(1.04);
+    }
 
-        .brand-card {
-            background: #ffffff;
-            border: 1px solid #eaeaea;
-            border-radius: 12px;
-            padding: 30px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
+    .filter-btn {
+      transition: all 0.25s ease;
+      letter-spacing: 0.12em;
+    }
+    .filter-btn.active {
+      background-color: var(--text-main);
+      color: #ffffff;
+      border-color: var(--text-main);
+    }
 
-        .brand-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-            border-color: #d0d0d0;
-        }
-
-        .brand-logo-placeholder {
-            font-weight: 800;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            color: #333;
-            margin-bottom: 15px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .brand-card h3 {
-            font-size: 1.2rem;
-            color: #222;
-            margin-bottom: 8px;
-        }
-
-        .click-hint {
-            font-size: 0.85rem;
-            color: #0066cc;
-            font-weight: 500;
-        }
-
-        /* Modal Overlay (Die Detailkarte) */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(4px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            animation: fadeIn 0.2s ease-out;
-        }
-
-        .modal-content {
-            background: #ffffff;
-            padding: 35px;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 480px;
-            position: relative;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            animation: scaleUp 0.25s ease-out;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #f1f1f1;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #333;
-            transition: background 0.2s;
-        }
-
-        .close-btn:hover {
-            background: #e2e2e2;
-        }
-
-        .modal-header-info {
-            margin-bottom: 20px;
-        }
-
-        .modal-tag {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #666;
-            font-weight: 700;
-        }
-
-        .modal-header-info h2 {
-            font-size: 1.8rem;
-            color: #111;
-            margin-top: 4px;
-        }
-
-        .product-preview-card {
-            background: #f8f9fa;
-            border: 1px solid #eee;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .model-title {
-            font-size: 1.1rem;
-            color: #222;
-            margin-bottom: 8px;
-        }
-
-        .product-price {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #111;
-            margin-bottom: 15px;
-        }
-
-        .store-availability {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            color: #555;
-            border-top: 1px solid #eaeaea;
-            padding-top: 12px;
-        }
-
-        .store-availability svg {
-            color: #e63946;
-            flex-shrink: 0;
-        }
-
-        .modal-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .btn-cart {
-            background: #111;
-            color: #fff;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: background 0.2s;
-        }
-
-        .btn-cart:hover {
-            background: #333;
-        }
-
-        .btn-store-route {
-            background: #f1f3f5;
-            color: #333;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-store-route:hover {
-            background: #e5e8eb;
-        }
-
-        /* Animationen */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes scaleUp {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-    </style>
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
-<body>
+<body class="min-h-screen text-[15px] leading-relaxed">
 
-    <!-- Hauptinhalt der Homepage -->
-    <main>
-        <section id="eyewear-brands" class="brands-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Unsere Luxus-Marken</h2>
-                    <p>Klicke auf eine Marke, um das Highlight-Modell, die Verfügbarkeit im Laden und den Warenkorb aufzurufen.</p>
-                </div>
+  <!-- Toast Announcement -->
+  <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 bg-[#1a1918] text-white text-xs tracking-wider uppercase px-5 py-3 rounded-none shadow-2xl z-50 transition-all duration-300 opacity-0 pointer-events-none">
+    <span id="toast-msg">Hinweis</span>
+  </div>
 
-                <!-- Marken-Grid -->
-                <div class="brand-grid">
-                    
-                    <!-- Marke 1: Tom Ford -->
-                    <div class="brand-card" onclick="openBrandModal('Tom Ford', 'TF5862-B Optical', '340,00 €', 'Fielmann Flensburg, Große Straße')">
-                        <div class="brand-logo-placeholder">TOM FORD</div>
-                        <h3>Tom Ford</h3>
-                        <span class="click-hint">Modell ansehen</span>
-                    </div>
+  <!-- Header / Navigation -->
+  <header class="sticky top-0 z-40 bg-[#fcfbf9]/90 backdrop-blur-md border-b border-[var(--border-editorial)] px-6 lg:px-12 py-5 transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a onclick="navigateTo('home')" class="cursor-pointer">
+        <span class="text-2xl md:text-3xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
+      </a>
 
-                    <!-- Marke 2: DITA -->
-                    <div class="brand-card" onclick="openBrandModal('DITA', 'Grandmaster Seven', '750,00 €', 'Flagship Store Flensburg, Holm')">
-                        <div class="brand-logo-placeholder">DITA</div>
-                        <h3>DITA</h3>
-                        <span class="click-hint">Modell ansehen</span>
-                    </div>
+      <!-- Desktop Links & Icons -->
+      <div class="flex items-center space-x-8 text-xs tracking-widest uppercase font-medium">
+        <nav class="hidden md:flex space-x-8 text-[11px] tracking-[0.2em] text-[var(--text-muted)]">
+          <button onclick="navigateTo('home')" class="hover:text-black transition-colors">Kollektion</button>
+          <button onclick="navigateTo('locator')" class="hover:text-black transition-colors">Store-Finder</button>
+          <button onclick="navigateTo('configurator')" class="hover:text-black transition-colors">Konfigurator</button>
+          <button onclick="navigateTo('account')" class="hover:text-black transition-colors">Stores & Optiker</button>
+        </nav>
 
-                    <!-- Marke 3: Cartier -->
-                    <div class="brand-card" onclick="openBrandModal('Cartier', 'Panthère de Cartier', '890,00 €', 'Optik Spezialist Flensburg')">
-                        <div class="brand-logo-placeholder">CARTIER</div>
-                        <h3>Cartier</h3>
-                        <span class="click-hint">Modell ansehen</span>
-                    </div>
+        <div class="flex items-center space-x-5 border-l border-[var(--border-editorial)] pl-6">
+          <button onclick="navigateTo('wishlist')" class="relative p-1 hover:opacity-70 transition-opacity">
+            <i class="fa-regular fa-heart text-lg"></i>
+            <span id="wishlist-count" class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
+          </button>
+          <button onclick="navigateTo('cart')" class="relative p-1 hover:opacity-70 transition-opacity">
+            <i class="fa-solid fa-bag-shopping text-lg"></i>
+            <span id="cart-count" class="absolute -top-1.5 -right-2 bg-stone-800 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
 
-                    <!-- Marke 4: Cutler and Gross -->
-                    <div class="brand-card" onclick="openBrandModal('Cutler and Gross', '9328 Vintage Frame', '420,00 €', 'Fielmann Flensburg, Große Straße')">
-                        <div class="brand-logo-placeholder">CUTLER & GROSS</div>
-                        <h3>Cutler and Gross</h3>
-                        <span class="click-hint">Modell ansehen</span>
-                    </div>
+    <!-- Suchleiste -->
+    <div class="max-w-7xl mx-auto mt-4 pt-3 border-t border-[var(--border-editorial)]/40 flex items-center">
+      <i class="fa-solid fa-magnifying-glass text-xs text-[var(--text-muted)] mr-3"></i>
+      <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suchen nach Marke, Optiker, Stadt oder Stil..." class="w-full bg-transparent text-xs tracking-wide focus:outline-none placeholder:text-[var(--text-muted)]/60">
+    </div>
+  </header>
 
-                </div>
-            </div>
+  <!-- Hero Section -->
+  <section id="hero" class="relative h-[65vh] min-h-[450px] bg-stone-900 text-white overflow-hidden fade-in">
+    <div id="hero-slides" class="absolute inset-0"></div>
+    <div class="absolute inset-0 bg-black/40 z-10"></div>
+    
+    <div class="relative z-20 max-w-7xl mx-auto h-full flex flex-col justify-end px-6 lg:px-12 pb-16">
+      <p class="text-[11px] uppercase tracking-[0.35em] text-stone-300 mb-3">Independent Eyewear & Curated Retailers</p>
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-light leading-[1.1] max-w-3xl">
+        Weltweit kuratiert.<br><span class="italic">Direkt vom Fachhändler.</span>
+      </h1>
+      <div class="mt-8 flex justify-between items-end border-t border-white/20 pt-6">
+        <p class="text-xs tracking-widest uppercase text-stone-300 max-w-md">Die führenden unabhängigen Brillenmarken & Partner-Optiker</p>
+        <span id="hero-slide-label" class="text-[10px] uppercase tracking-[0.25em] text-stone-400">Jacques Marie Mage</span>
+      </div>
+    </div>
+  </section>
 
-            <!-- Das Popup / Die Detailkarte (Modal) - standardmäßig versteckt -->
-            <div id="brandModal" class="modal-overlay" style="display: none;">
-                <div class="modal-content">
-                    <button class="close-btn" onclick="closeBrandModal()" aria-label="Schließen">&times;</button>
-                    
-                    <div class="modal-header-info">
-                        <span class="modal-tag">Ausgewählte Marke</span>
-                        <h2 id="modalBrandName">-</h2>
-                    </div>
+  <!-- Hauptinhalt (Home / Kollektion) -->
+  <main id="page-home" class="page-content max-w-7xl mx-auto px-6 lg:px-12 py-16">
 
-                    <div class="product-preview-card">
-                        <div class="product-details">
-                            <p class="model-title"><strong id="modalModelName">-</strong></p>
-                            <p class="product-price" id="modalPrice">-</p>
-                            <div class="store-availability">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                <span id="modalStore">-</span>
-                            </div>
-                        </div>
-                    </div>
+    <!-- INTRO-SEKTION (BUCH-AUFTAKT / MANIFEST) -->
+    <section class="mb-20 py-12 px-8 lg:px-16 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-center fade-in">
+      <div class="max-w-3xl mx-auto">
+        <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-4">Das Auftakt-Manifest</p>
+        <h2 class="text-3xl md:text-4xl font-serif font-light italic mb-6 leading-tight text-stone-900">
+          „Zwischen Präzision, Handwerk und der Leidenschaft für das Besondere.“
+        </h2>
+        <div class="w-12 h-[1px] bg-stone-400 mx-auto mb-6"></div>
+        <p class="text-base font-light text-stone-800 leading-relaxed mb-6">
+          Vom Spielfeld bis ins optische Handwerk: Wahre Qualität entsteht dort, wo der Blick geschult ist, Perfektion auf Leidenschaft trifft und Details den Unterschied machen.
+        </p>
+        <p class="text-xs md:text-sm text-[var(--text-muted)] leading-relaxed font-light">
+          <strong class="font-semibold text-stone-900">LUXEVUE</strong> ist der kuratierte Treffpunkt für unabhängige Brillenmanufakturen, exzellente Handwerkskunst und erstklassige Fachgeschäfte weltweit. Entdecken Sie außergewöhnliche Kollektionen, zeitloses Design und die feinsten Adressen für Ihre persönliche Anprobe.
+        </p>
+      </div>
+    </section>
 
-                    <div class="modal-actions">
-                        <button class="btn-cart" onclick="addToCart()">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                            In den Warenkorb
-                        </button>
-                        <button class="btn-store-route" onclick="showStoreDetails()">
-                            Laden-Details & Route anzeigen
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+    <!-- Herkunftsland Filter & World's Best Independent Labels -->
+    <section class="mb-14">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-xs uppercase tracking-[0.25em] text-[var(--text-muted)]">Independent Manufakturen weltweit</h3>
+      </div>
+      <div class="flex space-x-2 overflow-x-auto pb-3 no-scrollbar" id="country-filter-bar"></div>
+      <div id="selected-country-labels" class="flex flex-wrap gap-2 mt-4"></div>
+    </section>
 
-    <!-- JavaScript für die Steuerung -->
-    <script>
-        function openBrandModal(brandName, modelName, price, storeLocation) {
-            document.getElementById('modalBrandName').innerText = brandName;
-            document.getElementById('modalModelName').innerText = modelName;
-            document.getElementById('modalPrice').innerText = price;
-            document.getElementById('modalStore').innerText = storeLocation;
+    <!-- Produkt-Kollektion Grid -->
+    <section class="mb-24">
+      <div class="flex justify-between items-baseline mb-10 pb-4 border-b border-[var(--border-editorial)]">
+        <h2 class="text-3xl font-serif font-light tracking-wide">Kuratierte Auswahl</h2>
+        <span class="text-xs tracking-widest uppercase text-[var(--text-muted)]">Direkte Bezugsquellen</span>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16" id="product-list"></div>
+    </section>
 
-            const modal = document.getElementById('brandModal');
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
+    <!-- Feature Sektion -->
+    <section class="bg-[#1a1918] text-[#fcfbf9] -mx-6 lg:-mx-12 px-6 lg:px-20 py-24 my-20 fade-in">
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="text-[10px] uppercase tracking-[0.4em] opacity-50 mb-4">Exzellenz & Handwerk</p>
+        <h2 class="text-4xl md:text-5xl font-serif font-light mb-8 leading-tight">Authentische Brillenkunst & Premium-Stores</h2>
+        <p class="text-sm md:text-base font-light text-stone-300 leading-relaxed max-w-2xl mx-auto">
+          LUXEVUE verbindet Liebhaber erstklassigen Brillendesigns mit den feinsten unabhängigen Ateliers und spezialisierten Optikern vor Ort sowie zertifizierten E-Commerce-Stores.
+        </p>
 
-        function closeBrandModal() {
-            const modal = document.getElementById('brandModal');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mt-16 pt-12 border-t border-white/10">
+          <div><p class="text-4xl font-serif font-light">60+</p><p class="text-[10px] uppercase tracking-widest text-stone-400 mt-2">Top Labels</p></div>
+          <div><p class="text-4xl font-serif font-light">Global</p><p class="text-[10px] uppercase tracking-widest text-stone-400 mt-2">Manufakturen</p></div>
+          <div><p class="text-4xl font-serif font-light">100%</p><p class="text-[10px] uppercase tracking-widest text-stone-400 mt-2">Independent</p></div>
+          <div><p class="text-4xl font-serif font-light">Direkt</p><p class="text-[10px] uppercase tracking-widest text-stone-400 mt-2">Store Links</p></div>
+        </div>
+      </div>
+    </section>
 
-        function addToCart() {
-            const model = document.getElementById('modalModelName').innerText;
-            const brand = document.getElementById('modalBrandName').innerText;
+  </main>
+
+  <!-- STORE LOCATOR SEKTION -->
+  <section id="page-locator" class="page-content hidden max-w-7xl mx-auto px-6 lg:px-12 py-16">
+    <div class="mb-10 pb-4 border-b border-[var(--border-editorial)]">
+      <h1 class="text-4xl font-serif font-light tracking-wide mb-2">Store-Finder & Partneroptiker</h1>
+      <p class="text-xs uppercase tracking-widest text-[var(--text-muted)]">Finden Sie zertifizierte Fachgeschäfte und exklusive Boutiquen in Ihrer Nähe</p>
+    </div>
+
+    <!-- Filter & Suche für Stores -->
+    <div class="bg-[var(--surface-editorial)] p-6 border border-[var(--border-editorial)] mb-10 grid md:grid-cols-3 gap-4">
+      <div>
+        <label class="block text-[10px] uppercase tracking-widest text-[var(--text-muted)] mb-2">Stadt / Region</label>
+        <input type="text" id="locatorSearchInput" onkeyup="filterStoreLocator()" placeholder="z. B. München, Berlin, Flensburg..." class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs focus:outline-none">
+      </div>
+      <div>
+        <label class="block text-[10px] uppercase tracking-widest text-[var(--text-muted)] mb-2">Kategorie / Typ</label>
+        <select id="locatorCategorySelect" onchange="filterStoreLocator()" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs focus:outline-none">
+          <option value="">Alle Kategorien</option>
+          <option value="Boutique / Fachgeschäft">Boutique / Fachgeschäft</option>
+          <option value="Online-Shop">Online-Shop</option>
+          <option value="Fachgeschäft-Netzwerk">Fachgeschäft-Netzwerk</option>
+        </select>
+      </div>
+      <div class="flex items-end">
+        <button onclick="resetStoreLocatorFilters()" class="w-full py-3 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors">Filter zurücksetzen</button>
+      </div>
+    </div>
+
+    <!-- Store-Locator Grid -->
+    <div id="locator-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
+  <!-- BRILLEN-KONFIGURATOR SEKTION -->
+  <section id="page-configurator" class="page-content hidden max-w-5xl mx-auto px-6 lg:px-12 py-16">
+    <div class="mb-10 pb-4 border-b border-[var(--border-editorial)] text-center">
+      <h1 class="text-4xl font-serif font-light tracking-wide mb-2">Atelier Konfigurator</h1>
+      <p class="text-xs uppercase tracking-widest text-[var(--text-muted)]">Simulieren Sie Material, Verglasung & Farbtöne im Voraus</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 items-center bg-[var(--surface-editorial)] p-8 border border-[var(--border-editorial)]">
+      <!-- Visuelle Vorschau -->
+      <div class="text-center">
+        <div class="relative w-full h-64 bg-white border border-[var(--border-editorial)] flex items-center justify-center p-6 shadow-inner">
+          <div id="config-frame-preview" class="w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around border-stone-900">
+            <div id="config-lens-left" class="w-16 h-16 rounded-full transition-all duration-300 bg-transparent"></div>
+            <div id="config-lens-right" class="w-16 h-16 rounded-full transition-all duration-300 bg-transparent"></div>
+          </div>
+        </div>
+        <p class="text-[10px] uppercase tracking-widest text-[var(--text-muted)] mt-4">Interaktive Material- & Tönungsvorschau</p>
+      </div>
+
+      <!-- Controls -->
+      <div class="space-y-6">
+        <div>
+          <label class="block text-xs uppercase tracking-wider font-semibold mb-3">1. Fassungsmaterial / Farbe</label>
+          <div class="flex space-x-3">
+            <button onclick="setConfigFrame('border-stone-900')" class="px-4 py-2 bg-stone-900 text-white text-xs uppercase tracking-wider">Noir (Schwarz)</button>
+            <button onclick="setConfigFrame('border-amber-800')" class="px-4 py-2 bg-amber-800 text-white text-xs uppercase tracking-wider">Havana (Acetat)</button>
+            <button onclick="setConfigFrame('border-yellow-600')" class="px-4 py-2 bg-yellow-600 text-white text-xs uppercase tracking-wider">Gold (Titan)</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs uppercase tracking-wider font-semibold mb-3">2. Glasstönung</label>
+          <div class="flex space-x-3">
+            <button onclick="setConfigLens('bg-transparent')" class="px-4 py-2 border border-black text-xs uppercase tracking-wider">Klarglas</button>
+            <button onclick="setConfigLens('bg-stone-900/60')" class="px-4 py-2 bg-stone-900 text-white text-xs uppercase tracking-wider">Dunkelgrau 85%</button>
+            <button onclick="setConfigLens('bg-amber-900/40')" class="px-4 py-2 bg-amber-900/60 text-white text-xs uppercase tracking-wider">Braun Verlaufsglas</button>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-[var(--border-editorial)]">
+          <button onclick="showToast('Konfiguration für Anprobe gespeichert.')" class="w-full py-4 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">
+            Konfiguration beim Optiker anfragen
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wunschliste -->
+  <section id="page-wishlist" class="page-content hidden max-w-4xl mx-auto px-6 py-16">
+    <h1 class="text-4xl font-serif font-light tracking-wide mb-8">Ihre Favoriten</h1>
+    <div id="wishlist-container" class="space-y-4"></div>
+    <button onclick="shareWishlist()" class="mt-8 px-8 py-4 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors">Favoriten teilen</button>
+  </section>
+
+  <!-- Warenkorb & Checkout -->
+  <section id="page-cart" class="page-content hidden max-w-4xl mx-auto px-6 py-16">
+    <h1 class="text-4xl font-serif font-light tracking-wide mb-8">Auswahl & Reservierung</h1>
+    <div id="cart-container" class="space-y-4"></div>
+    
+    <div id="cart-summary" class="hidden mt-12 pt-8 border-t border-[var(--border-editorial)]">
+      <div class="flex justify-between font-serif text-2xl mb-8">
+        <span>Gesamtsumme</span>
+        <span id="cart-total">0 €</span>
+      </div>
+      <button onclick="showCheckoutForm()" class="w-full py-5 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">Zur Reservierung / Händler-Anfrage</button>
+    </div>
+
+    <!-- Checkout Form -->
+    <div id="checkout-form" class="hidden mt-12 p-8 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]">
+      <h2 class="text-2xl font-serif font-light mb-6">Partner-Optiker oder Store wählen</h2>
+      <div class="space-y-5">
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2">Bezugsquelle für Anprobe / Kauf</label>
+          <select id="checkout-store" class="w-full p-4 bg-white border border-[var(--border-editorial)] text-sm focus:outline-none">
+            <option value="">Bitte wählen...</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2">Vollständiger Name</label>
+          <input type="text" id="checkout-name" class="w-full p-4 bg-white border border-[var(--border-editorial)] text-sm focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2">E-Mail-Adresse</label>
+          <input type="email" id="checkout-email" class="w-full p-4 bg-white border border-[var(--border-editorial)] text-sm focus:outline-none">
+        </div>
+        <button onclick="submitCheckout()" class="w-full py-4 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors mt-4">Anfrage übermitteln</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partner & Optiker Übersicht -->
+  <section id="page-account" class="page-content hidden max-w-5xl mx-auto px-6 py-16">
+    <h1 class="text-4xl font-serif font-light tracking-wide mb-3">Stores, Partner-Optiker & Onlineshops</h1>
+    <p class="text-xs uppercase tracking-widest text-[var(--text-muted)] mb-12">Direktverlinkung zu zertifizierten Händlern und Fachgeschäften</p>
+    
+    <div class="grid md:grid-cols-2 gap-8 mb-12">
+      <div class="bg-[var(--surface-editorial)] p-8 border border-[var(--border-editorial)] space-y-4">
+        <h3 class="font-serif text-2xl font-light">VIP-Sehtest & Anprobe</h3>
+        <p class="text-xs text-[var(--text-muted)] leading-relaxed">Vereinbaren Sie eine persönliche Beratung bei unseren Partneroptikern direkt vor Ort.</p>
+        <div class="space-y-3 pt-4">
+          <input type="text" placeholder="Name" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs">
+          <input type="date" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs">
+          <button onclick="showToast('Terminanfrage übermittelt.')" class="w-full py-3 bg-[#1a1918] text-white text-xs uppercase tracking-widest">Termin anfragen</button>
+        </div>
+      </div>
+
+      <div class="bg-white p-8 border border-[var(--border-editorial)]">
+        <h3 class="font-serif text-2xl font-light mb-4">Partnernetzwerk & Online-Shops</h3>
+        <p class="text-xs text-[var(--text-muted)] leading-relaxed mb-6">Klicken Sie auf den Partner, um direkt zur jeweiligen Website zu gelangen:</p>
+        <div id="store-directory-list" class="space-y-3 text-xs"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal Produkt Details (Detailkarte) -->
+  <div id="detailModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-[var(--bg-editorial)] w-full max-w-2xl p-8 relative shadow-2xl border border-[var(--border-editorial)] max-h-[90vh] overflow-y-auto">
+      <button onclick="closeDetail()" class="absolute top-6 right-6 text-xl text-[var(--text-muted)] hover:text-black">&times;</button>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-white p-4 border border-[var(--border-editorial)] flex items-center justify-center">
+          <img id="modalImg" src="" class="w-full h-64 object-cover">
+        </div>
+        <div class="flex flex-col justify-between">
+          <div>
+            <span id="modalBrand" class="text-xs uppercase tracking-[0.25em] text-[var(--text-muted)] font-semibold"></span>
+            <h2 id="modalName" class="text-3xl font-serif font-light my-2"></h2>
+            <p id="modalPrice" class="text-sm font-medium text-stone-800 mb-2"></p>
             
-            console.log(`${brand} - ${model} wurde zum Warenkorb hinzugefügt.`);
-            alert(`Erfolg! "${brand} (${model})" wurde in den Warenkorb gelegt.`);
-            closeBrandModal();
-        }
+            <div id="modalStoreBox" class="mb-4 p-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-xs"></div>
 
-        function showStoreDetails() {
-            const store = document.getElementById('modalStore').innerText;
-            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(store)}`;
-            window.open(mapsUrl, '_blank');
-        }
+            <p id="modalDesc" class="text-xs text-[var(--text-muted)] leading-relaxed mb-6"></p>
+          </div>
+          <div class="space-y-2">
+            <button id="modalAddBtn" class="w-full py-3.5 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">IN DEN WARENKORB</button>
+            <button id="modalStoreRouteBtn" class="w-full py-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-xs uppercase tracking-wider text-stone-800 hover:bg-stone-200 transition-colors">Laden-Details & Route anzeigen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        window.addEventListener('click', function(event) {
-            const modal = document.getElementById('brandModal');
-            if (event.target === modal) {
-                closeBrandModal();
-            }
-        });
+  <!-- Editorial Footer -->
+  <footer class="mt-32 border-t border-[var(--border-editorial)] bg-[var(--surface-editorial)] px-6 lg:px-12 py-16">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-xs">
+      <div>
+        <span class="text-2xl font-serif tracking-[0.2em] uppercase font-light block mb-4">LUXEVUE</span>
+        <p class="text-[var(--text-muted)] leading-relaxed">Independent Eyewear Directory.<br>Kuratierte Manufakturen & Fachgeschäfte weltweit.</p>
+      </div>
+      <div>
+        <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Rechtliches</h4>
+        <ul class="space-y-2.5 text-[var(--text-muted)]">
+          <li><a href="#" class="hover:text-black">Impressum</a></li>
+          <li><a href="#" class="hover:text-black">Datenschutz</a></li>
+          <li><a href="#" class="hover:text-black">AGB</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Newsletter</h4>
+        <p class="text-[var(--text-muted)] mb-4">Exklusive Einblicke in neue Kollektionen und Releases.</p>
+        <div class="flex border-b border-black/20 pb-1">
+          <input type="email" id="newsletter-email" placeholder="E-Mail Adresse" class="bg-transparent flex-1 text-xs focus:outline-none">
+          <button onclick="subscribeNewsletter()" class="uppercase tracking-widest text-[10px] font-semibold">Anmelden</button>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-[var(--border-editorial)]/60 text-center text-[10px] text-[var(--text-muted)] tracking-widest uppercase">
+      © 2026 LUXEVUE. Alle Rechte vorbehalten.
+    </div>
+  </footer>
 
-        window.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeBrandModal();
-            }
-        });
-    </script>
+  <!-- Script Logik -->
+  <script>
+    const IMAGE_PLACEHOLDER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><rect width='100%' height='100%' fill='%23f4f2ed'/><g stroke='%2373706b' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z' stroke-dasharray='6,4'/><path d='M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z' stroke-dasharray='6,4'/><path d='M 340,285 C 380,270 420,270 460,285'/><path d='M 220,285 L 140,270'/><path d='M 580,285 L 660,270'/><circle cx='280' cy='300' r='45' stroke='%231a1918' stroke-width='3'/><circle cx='520' cy='300' r='45' stroke='%231a1918' stroke-width='3'/><path d='M 325,280 Q 400,265 475,280' stroke='%231a1918' stroke-width='3'/><path d='M 235,280 L 150,260' stroke='%231a1918' stroke-width='3'/><path d='M 565,280 L 650,260' stroke='%231a1918' stroke-width='3'/></g><text x='50%' y='440' font-family='Georgia, serif' font-size='14' font-style='italic' fill='%2373706b' text-anchor='middle' letter-spacing='2'>[ MANUFAKTUR SKIZZE ]</text></svg>";
+
+    const STORE_DATABASE = [
+      { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
+      { id: 'leidmann', name: "Leidmann", type: "Boutique / Fachgeschäft", city: "München", url: "https://www.leidmann.de" },
+      { id: 'specsberlin', name: "specs.berlin", type: "Boutique / Fachgeschäft", city: "Berlin", url: "https://specs.berlin" },
+      { id: 'bellevue', name: "Bellevue Optical", type: "Boutique / Fachgeschäft", city: "Hamburg", url: "https://www.bellevue-optical.de" },
+      { id: 'ehler', name: "Ehler Optik", type: "Fachgeschäft", city: "Flensburg", url: "https://www.ehler-optik.de" },
+      { id: 'optikerbode', name: "Optiker Bode", type: "Fachgeschäft-Netzwerk", city: "Deutschlandweit", url: "https://www.optikerbode.de" },
+      { id: 'edeloptics', name: "Edel-Optics", type: "Online-Shop", city: "Hamburg / Online", url: "https://www.edel-optics.de" },
+      { id: 'misterspex', name: "Mister Spex", type: "Omnichannel / Online", city: "Berlin / Online", url: "https://www.misterspex.de" }
+    ];
+
+    const INDEPENDENT_LABELS = {
+      "Deutschland / Ö / CH": [
+        "MYKITA (Berlin)", "ic! berlin", "Lunor (Schwarzwald)", "CAZAL", "Andy Wolf (Österreich)", 
+        "Götti Switzerland", "Klenze & Baum", "Rolf Spectacles", "Reiz Germany", "Funk Eyewear", "Hoffmann Natural Eyewear"
+      ],
+      "Japan": [
+        "Matsuda", "DITA Eyewear", "Eyevan 7285", "Masunaga 1905", "Yuichi Toyama", 
+        "Takahiro Miyashita", "Nackymade", "Factory900", "KameManNen", "Boston Club"
+      ],
+      "Frankreich": [
+        "Jacques Marie Mage (Atelier/Design)", "Anne et Valentin", "Lafont Paris", "Thierry Lasry", 
+        "Ahlem Eyewear", "Morel France", "J.F. Rey", "Sabine Be", "Lucas de Staël"
+      ],
+      "Italien": [
+        "Res/Rei", "L.G.R", "Tavat Eyewear", "Movitra", "Kubeora", "Haffmans & Neumeister (Collab)", "NATIVE SONS"
+      ],
+      "USA / Nordamerika": [
+        "Oliver Peoples", "Garrett Leight (GLCO)", "Salt Optics", "Barton Perreira", 
+        "Moscot (NYC)", "Robert Marc NYC", "Talla Eyewear"
+      ],
+      "Dänemark & Skandinavien": [
+        "Lindberg", "Ørgreen Optics", "ProDesign Denmark", "Fleye Copenhagen", "Kaibosh (Norwegen)"
+      ],
+      "Großbritannien": [
+        "Cutler and Gross", "Oliver Goldsmith", "Tom Davies", "Cubitts"
+      ]
+    };
+
+    const PRODUCTS = [
+      { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium' },
+      { id: 2, brand: 'MYKITA', name: 'Lite Tuva', price: '490 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Patentiertes schraubenloses Gelenk aus ultraleichtem Edelstahl, gefertigt in Berlin.', search: 'mykita lite tuva berlin specsberlin' },
+      { id: 3, brand: 'ic! berlin', name: 'Silk East', price: '450 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Federleichte Federedelstahl-Fassung ohne Schrauben und Lötstellen.', search: 'ic berlin silk ehler optik flensburg' },
+      { id: 4, brand: 'Lunor', name: 'Classic Round', price: '520 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Traditionelles Schwarzwälder Handwerk. Zeitlose Eleganz in Reinform.', search: 'lunor classic round schwarzwald bellevue hamburg' },
+      { id: 5, brand: 'CAZAL', name: 'Legends 607', price: '460 €', storeId: 'edeloptics', img: IMAGE_PLACEHOLDER, desc: 'Ikone des Eyewear-Designs von Cari Zalloni. Unverkennbarer Vintage-Charakter.', search: 'cazal legends 607 edel optics' },
+      { id: 6, brand: 'Götti Switzerland', name: 'Perspective ORIS', price: '510 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Schweizer Präzision aus dem 3D-Drucker. Minimalistisch und hochentwickelt.', search: 'gotti switzerland oris leidmann muenchen' },
+      { id: 7, brand: 'Klenze & Baum', name: 'Vespera 01', price: '480 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Münchner Designschmiede mit innovativem Tilting-Hinge Gelenksystem.', search: 'klenze und baum vespera specsberlin' },
+      { id: 8, brand: 'Rolf Spectacles', name: 'Eucalyptus 102', price: '720 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Echte Holzbrille aus den Tiroler Alpen. 100% naturbelassen ohne Metallschrauben.', search: 'rolf spectacles tirol holzbrille bellevue' },
+      { id: 9, brand: 'Reiz Germany', name: 'Mangan Series', price: '410 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Klassisches Acetat-Handwerk gefertigt in deutschen Manufakturen.', search: 'reiz germany mangan ehler optik flensburg' },
+      { id: 10, brand: 'Funk Eyewear', name: 'Dieter B.', price: '390 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Unkonventionelles Brillendesign aus der Kinzigtaler Manufaktur.', search: 'funk eyewear dieter brillenlaboratorium' },
+      { id: 11, brand: 'Hoffmann Natural Eyewear', name: 'Bespoke Horn 22', price: '850 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Meisterhafte Handarbeit aus echtem Büffelhorn. Jedes Stück ein Unikat.', search: 'hoffmann natural eyewear horn leidmann' },
+      { id: 12, brand: 'Matsuda', name: 'M3086 Titanium', price: '920 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Graveurskunst aus Sabae, Japan. Detaillierte Ziselierungen auf reinstem Titan.', search: 'matsuda japan sabae leidmann' },
+      { id: 13, brand: 'DITA Eyewear', name: 'Statesman Six', price: '890 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Japanische Präzision. Acetat-Titan-Hybridkonstruktion auf höchstem Niveau.', search: 'dita statesman japan leidmann muenchen' },
+      { id: 14, brand: 'Eyevan 7285', name: 'Model 338', price: '580 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Japanischer Eyewear-Kult seit 1972. Ästhetische Perfektion und Tragekomfort.', search: 'eyevan 7285 specsberlin japan' },
+      { id: 15, brand: 'Masunaga 1905', name: 'GMS-805', price: '640 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Hoflieferant des japanischen Kaiserhauses. Über 100 Jahre Manufaktur-Tradition.', search: 'masunaga 1905 gms bellevue hamburg' },
+      { id: 16, brand: 'Yuichi Toyama', name: 'U-129 Double Dutch', price: '530 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Moderne japanische Ästhetik inspiriert von traditioneller Fadenkunst.', search: 'yuichi toyama double dutch specsberlin' },
+      { id: 17, brand: 'Factory900', name: 'FA-240 Sculpted', price: '560 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Dreidimensionale Acetat-Skulpturen mit futuristischer Formensprache.', search: 'factory900 sabae brillenlaboratorium' },
+      { id: 18, brand: 'KameManNen', name: 'KMN-113', price: '490 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Eines der ältesten Brillenlabels Japans. Schildkröten-Symbolik für Ewigkeit.', search: 'kamemannen japan bellevue' },
+      { id: 19, brand: 'Jacques Marie Mage', name: 'Dealan Noir', price: '790 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Limitierte Auflage. 10mm Acetat mit charakteristischem Skulpturenschliff.', search: 'jmm jacques marie mage dealan leidmann' },
+      { id: 20, brand: 'Anne et Valentin', name: 'FANZINE Atelier', price: '430 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Farbenfroher Avantgarde-Stil aus Toulouse. Individueller Geometrie-Mix.', search: 'anne et valentin toulouse specsberlin' },
+      { id: 21, brand: 'Lafont Paris', name: 'Réédition Parisian', price: '360 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Pariser Chic und französisches Savoir-faire seit 1923.', search: 'lafont paris ehler optik flensburg' },
+      { id: 22, brand: 'Thierry Lasry', name: 'Sexxxy Cat-Eye', price: '440 €', storeId: 'edeloptics', img: IMAGE_PLACEHOLDER, desc: 'Futuristischer Vintage-Look, beliebt bei internationalen Celebrities.', search: 'thierry lasry paris edel optics' },
+      { id: 23, brand: 'Ahlem Eyewear', name: 'Place de la Concorde', price: '495 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Inspiration der Pariser Architektur, handgefertigt in Oyonnax, Frankreich.', search: 'ahlem paris oyonnax leidmann' },
+      { id: 24, brand: 'Lucas de Staël', name: 'Monsieur Leather', price: '880 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Pariser Atelierfassung überzogen mit edlem Rindsleder und Granitstein.', search: 'lucas de stael paris leder stein bellevue' },
+      { id: 25, brand: 'Res/Rei', name: 'Philosophia', price: '370 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Handmade in Italy. Fokus auf nachhaltiges Acetat und lebendige Farben.', search: 'res rei italy brillenlaboratorium' },
+      { id: 26, brand: 'L.G.R', name: 'Reunion Explorer', price: '420 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Afrikanische Abenteuer-Inspiration vereint mit italienischer Handwerkskunst.', search: 'lgr reunion leidmann' },
+      { id: 27, brand: 'Tavat Eyewear', name: 'SoupCan Round', price: '495 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Sandgestrahltes Uhrengehäuse-Konzept, gefertigt in den italienischen Alpen.', search: 'tavat soupcan specsberlin' },
+      { id: 28, brand: 'Movitra', name: 'Bruno Rotating', price: '540 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Patentierter Drehmechanismus aus Mailand zum Schutz der Gläser.', search: 'movitra bruno mailand bellevue' },
+      { id: 29, brand: 'Oliver Peoples', name: 'Gregory Peck', price: '360 €', storeId: 'misterspex', img: IMAGE_PLACEHOLDER, desc: 'Klassischer Hollywood-Intellektuellen-Look aus Sunset Boulevard, L.A.', search: 'oliver peoples gregory peck misterspex' },
+      { id: 30, brand: 'Garrett Leight (GLCO)', name: 'Hampton Sun', price: '330 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Entspannter Venice Beach Lifestyle mit kalifornischem Spirit.', search: 'garrett leight glco hampton specsberlin' },
+      { id: 31, brand: 'Moscot (NYC)', name: 'Lemtosh Original', price: '320 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Die Legende aus der Lower East Side in New York City seit 1915.', search: 'moscot lemtosh new york specsberlin' },
+      { id: 32, brand: 'Barton Perreira', name: 'Roxbury Aviator', price: '510 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Luxuriöse Ästhetik entworfen von Patty Perreira in Kalifornien.', search: 'barton perreira leidmann' },
+      { id: 33, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Dänischer Minimalismus. Schraubenloses Titandraht-Design mit maximalem Tragekomfort.', search: 'lindberg titan daenemark bellevue hamburg' },
+      { id: 34, brand: 'Ørgreen Optics', name: 'Quantum High-Tech', price: '480 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Kopenhagener Design aus Reintitan mit unverwechselbaren Farbkombinationen.', search: 'orgreen optics kopenhagen ehler optik' },
+      { id: 35, brand: 'ProDesign Denmark', name: 'Essential 12', price: '290 €', storeId: 'optikerbode', img: IMAGE_PLACEHOLDER, desc: 'Funktionales skandinavisches Brillendesign mit klaren Strukturen.', search: 'prodesign denmark optiker bode' },
+      { id: 36, brand: 'Cutler and Gross', name: '1386 Bold King', price: '470 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Britischer Statement-Style aus Knightsbridge, London.', search: 'cutler and gross london specsberlin' },
+      { id: 37, brand: 'Cubitts', name: 'Judd Round', price: '240 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Traditionelles Brillenhandwerk aus King’s Cross, London.', search: 'cubitts london brillenlaboratorium' }
+    ];
+
+    const HERO_SLIDES = [
+      { img: IMAGE_PLACEHOLDER, label: 'Andy Wolf — Handgefertigt in Österreich' },
+      { img: IMAGE_PLACEHOLDER, label: 'Jacques Marie Mage — Limited Editions' },
+      { img: IMAGE_PLACEHOLDER, label: 'Lindberg — Dänische Ingenieurskunst' }
+    ];
+
+    let wishlist = [];
+    let cart = [];
+    let heroSlideIndex = 0;
+
+    function init() {
+      renderCountryFilters();
+      setupHeroSlider();
+      renderProducts();
+      populateStoreSelect();
+      renderStoreDirectory();
+      renderStoreLocatorGrid();
+      setupScrollAnimations();
+    }
+
+    function setupScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    function setupHeroSlider() {
+      const container = document.getElementById('hero-slides');
+      const label = document.getElementById('hero-slide-label');
+      if (!container) return;
+
+      HERO_SLIDES.forEach((slide, i) => {
+        const img = document.createElement('img');
+        img.src = slide.img;
+        img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
+        container.appendChild(img);
+      });
+
+      setInterval(() => {
+        const imgs = container.querySelectorAll('img');
+        if (!imgs.length) return;
+        imgs[heroSlideIndex].classList.remove('opacity-100');
+        imgs[heroSlideIndex].classList.add('opacity-0');
+        heroSlideIndex = (heroSlideIndex + 1) % imgs.length;
+        imgs[heroSlideIndex].classList.remove('opacity-0');
+        imgs[heroSlideIndex].classList.add('opacity-100');
+        if (label) label.textContent = HERO_SLIDES[heroSlideIndex].label;
+      }, 5000);
+    }
+
+    function renderCountryFilters() {
+      const bar = document.getElementById('country-filter-bar');
+      bar.innerHTML = '';
+      Object.keys(INDEPENDENT_LABELS).forEach((country, index) => {
+        const btn = document.createElement('button');
+        btn.className = `filter-btn text-[10px] uppercase border border-[var(--border-editorial)] px-4 py-2 hover:border-black transition-colors whitespace-nowrap ${index === 0 ? 'active' : ''}`;
+        btn.textContent = country;
+        btn.onclick = () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderLabelTags(country);
+        };
+        bar.appendChild(btn);
+      });
+      renderLabelTags(Object.keys(INDEPENDENT_LABELS)[0]);
+    }
+
+    function renderLabelTags(country) {
+      const container = document.getElementById('selected-country-labels');
+      container.innerHTML = '';
+      INDEPENDENT_LABELS[country].forEach(label => {
+        const tag = document.createElement('span');
+        tag.className = 'text-[10px] bg-[var(--surface-editorial)] border border-[var(--border-editorial)] px-3 py-1.5 tracking-wider text-[var(--text-main)] font-medium cursor-pointer hover:border-black transition-colors';
+        tag.textContent = label;
+        tag.onclick = () => {
+          const brandClean = label.split(' ')[0];
+          document.getElementById('searchInput').value = brandClean;
+          filterProducts();
+        };
+        container.appendChild(tag);
+      });
+    }
+
+    function getStoreInfo(storeId) {
+      return STORE_DATABASE.find(s => s.id === storeId) || { name: 'Zertifizierter Optiker', url: '#', city: 'Fachhandel', type: 'Fachgeschäft' };
+    }
+
+    function renderProducts(query = '') {
+      const container = document.getElementById('product-list');
+      container.innerHTML = '';
+      
+      let items = PRODUCTS;
+      if (query) {
+        items = items.filter(p => (p.brand + ' ' + p.name + ' ' + p.search).toLowerCase().includes(query));
+      }
+
+      if (items.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-12 text-center">Keine passenden Brillenmodelle oder Manufakturen gefunden.</p>';
+        return;
+      }
+
+      items.forEach(p => {
+        const store = getStoreInfo(p.storeId);
+        const card = document.createElement('div');
+        card.className = 'product-card group cursor-pointer';
+        card.innerHTML = `
+          <div class="img-zoom-container bg-[var(--surface-editorial)] mb-5 border border-[var(--border-editorial)] relative" onclick="openDetail(${p.id})">
+            <img src="${p.img}" alt="${p.name}" class="w-full h-80 object-cover">
+          </div>
+          
+          <div class="flex justify-between items-start mb-2">
+            <div>
+              <p class="text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">${p.brand}</p>
+              <h3 class="font-serif text-xl font-light">${p.name}</h3>
+            </div>
+            <p class="text-xs font-medium">${p.price}</p>
+          </div>
+
+          <div class="my-3 py-2 px-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]/70 flex justify-between items-center text-[11px]">
+            <div>
+              <span class="text-[var(--text-muted)] block text-[9px] uppercase tracking-wider">Erhältlich bei:</span>
+              <span class="font-medium text-stone-900">${store.name}</span> <span class="text-[var(--text-muted)]">(${store.city})</span>
+            </div>
+            <a href="${store.url}" target="_blank" rel="noopener" onclick="event.stopPropagation();" class="text-xs text-stone-800 hover:text-black font-semibold flex items-center space-x-1 underline decoration-stone-400">
+              <span>Store</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </a>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-[var(--border-editorial)]/50 flex space-x-3">
+            <button onclick="addToCart('${p.name}', '${p.price}', '${p.img}', '${store.name}')" class="flex-1 py-2.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest hover:bg-stone-800 transition-colors">In den Warenkorb</button>
+            <button onclick="toggleWishlist(this, '${p.name}')" class="px-3 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors"><i class="fa-regular fa-heart"></i></button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderStoreLocatorGrid(filteredStores = null) {
+      const container = document.getElementById('locator-grid');
+      if (!container) return;
+      
+      const stores = filteredStores || STORE_DATABASE;
+      container.innerHTML = '';
+
+      if (stores.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-8 text-center">Keine passenden Partneroptiker gefunden.</p>';
+        return;
+      }
+
+      stores.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'p-6 bg-white border border-[var(--border-editorial)] flex flex-col justify-between space-y-4 hover:border-black transition-colors';
+        card.innerHTML = `
+          <div>
+            <span class="text-[9px] uppercase tracking-widest bg-[var(--surface-editorial)] px-2.5 py-1 text-[var(--text-muted)] border border-[var(--border-editorial)] font-semibold">${s.type}</span>
+            <h3 class="font-serif text-2xl font-light mt-3 mb-1">${s.name}</h3>
+            <p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${s.city}</p>
+          </div>
+          <div class="pt-4 border-t border-[var(--border-editorial)]/60 flex justify-between items-center">
+            <a href="${s.url}" target="_blank" class="text-xs font-semibold underline hover:text-stone-600 flex items-center space-x-1">
+              <span>Website besuchen</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </a>
+            <button onclick="navigateTo('account')" class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-[#1a1918] text-white hover:bg-stone-800 transition-colors">Termin</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterStoreLocator() {
+      const search = document.getElementById('locatorSearchInput').value.toLowerCase();
+      const cat = document.getElementById('locatorCategorySelect').value;
+
+      const filtered = STORE_DATABASE.filter(s => {
+        const matchesSearch = s.name.toLowerCase().includes(search) || s.city.toLowerCase().includes(search);
+        const matchesCat = cat === '' || s.type === cat;
+        return matchesSearch && matchesCat;
+      });
+
+      renderStoreLocatorGrid(filtered);
+    }
+
+    function resetStoreLocatorFilters() {
+      document.getElementById('locatorSearchInput').value = '';
+      document.getElementById('locatorCategorySelect').value = '';
+      renderStoreLocatorGrid();
+    }
+
+    function setConfigFrame(colorClass) {
+      const frame = document.getElementById('config-frame-preview');
+      frame.className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
+    }
+
+    function setConfigLens(lensClass) {
+      const left = document.getElementById('config-lens-left');
+      const right = document.getElementById('config-lens-right');
+      left.className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
+      right.className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
+    }
+
+    function filterProducts() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      renderProducts(q);
+    }
+
+    function openDetail(id) {
+      const p = PRODUCTS.find(x => x.id === id);
+      if (!p) return;
+      const store = getStoreInfo(p.storeId);
+
+      document.getElementById('modalBrand').innerText = p.brand;
+      document.getElementById('modalName').innerText = p.name;
+      document.getElementById('modalPrice').innerText = p.price;
+      document.getElementById('modalDesc').innerText = p.desc;
+      document.getElementById('modalImg').src = p.img;
+      
+      document.getElementById('modalStoreBox').innerHTML = `
+        <span class="text-[var(--text-muted)] block text-[9px] uppercase tracking-wider mb-1">Bezugsquelle / Fachhändler</span>
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="font-medium text-stone-900">${store.name}</p>
+            <p class="text-[10px] text-[var(--text-muted)]">${store.type} — ${store.city}</p>
+          </div>
+          <a href="${store.url}" target="_blank" class="px-3 py-1.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-wider flex items-center space-x-1">
+            <span>Website</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
+          </a>
+        </div>
+      `;
+
+      document.getElementById('modalAddBtn').onclick = () => { addToCart(p.name, p.price, p.img, store.name); closeDetail(); };
+      document.getElementById('modalStoreRouteBtn').onclick = () => {
+        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(store.name + ' ' + store.city)}`;
+        window.open(mapsUrl, '_blank');
+      };
+
+      document.getElementById('detailModal').classList.remove('hidden');
+      document.getElementById('detailModal').classList.add('flex');
+    }
+
+    function closeDetail() {
+      document.getElementById('detailModal').classList.add('hidden');
+      document.getElementById('detailModal').classList.remove('flex');
+    }
+
+    function addToCart(name, price, img, storeName) {
+      cart.push({ name, price, img, storeName });
+      updateCartUI();
+      showToast(name + ' hinzugefügt');
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cart-count');
+      const container = document.getElementById('cart-container');
+      const summary = document.getElementById('cart-summary');
+      const totalEl = document.getElementById('cart-total');
+      
+      badge.innerText = cart.length;
+      badge.classList.toggle('hidden', cart.length === 0);
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihr Warenkorb ist derzeit leer.</p>';
+        summary.classList.add('hidden');
+      } else {
+        let total = 0;
+        container.innerHTML = cart.map((item, index) => {
+          total += parseInt(item.price.replace(/\D/g,'')) || 0;
+          return `
+            <div class="flex justify-between items-center p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]">
+              <div class="flex items-center space-x-4">
+                <img src="${item.img}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]">
+                <div>
+                  <p class="text-xs font-medium">${item.name}</p>
+                  <p class="text-[10px] text-[var(--text-muted)]">${item.price} — Partner: ${item.storeName || 'Optiker'}</p>
+                </div>
+              </div>
+              <button onclick="removeFromCart(${index})" class="text-lg text-[var(--text-muted)] hover:text-black">&times;</button>
+            </div>
+          `;
+        }).join('');
+        totalEl.innerText = total + ' €';
+        summary.classList.remove('hidden');
+      }
+    }
+
+    function removeFromCart(i) { cart.splice(i, 1); updateCartUI(); }
+
+    function toggleWishlist(btn, name) {
+      const icon = btn.querySelector('i');
+      if (wishlist.includes(name)) {
+        wishlist = wishlist.filter(x => x !== name);
+        icon.className = 'fa-regular fa-heart';
+        showToast('Entfernt');
+      } else {
+        wishlist.push(name);
+        icon.className = 'fa-solid fa-heart text-rose-600';
+        showToast('Gespeichert');
+      }
+      updateWishlistUI();
+    }
+
+    function updateWishlistUI() {
+      const badge = document.getElementById('wishlist-count');
+      const container = document.getElementById('wishlist-container');
+      badge.innerText = wishlist.length;
+      badge.classList.toggle('hidden', wishlist.length === 0);
+
+      if (wishlist.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihre Wunschliste ist leer.</p>';
+      } else {
+        container.innerHTML = wishlist.map(item => `
+          <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex justify-between items-center">
+            <span class="text-xs font-medium">${item}</span>
+            <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">Gespeichert</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    function shareWishlist() {
+      if (wishlist.length === 0) { showToast('Wunschliste ist leer'); return; }
+      const text = 'Meine LUXEVUE Auswahl: ' + wishlist.join(', ');
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    function populateStoreSelect() {
+      const select = document.getElementById('checkout-store');
+      if (!select) return;
+      select.innerHTML = '<option value="">Bitte wählen...</option>';
+      STORE_DATABASE.forEach(s => {
+        select.innerHTML += `<option value="${s.name}">${s.name} (${s.type} — ${s.city})</option>`;
+      });
+    }
+
+    function renderStoreDirectory() {
+      const list = document.getElementById('store-directory-list');
+      if (!list) return;
+      list.innerHTML = STORE_DATABASE.map(s => `
+        <div class="pb-3 border-b border-[var(--border-editorial)] flex justify-between items-center">
+          <div>
+            <strong class="font-medium">${s.name}</strong>
+            <span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span>
+          </div>
+          <a href="${s.url}" target="_blank" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
+            <span>Website</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
+          </a>
+        </div>
+      `).join('');
+    }
+
+    function showCheckoutForm() {
+      document.getElementById('checkout-form').classList.remove('hidden');
+    }
+
+    function submitCheckout() {
+      const store = document.getElementById('checkout-store').value;
+      const name = document.getElementById('checkout-name').value;
+      const email = document.getElementById('checkout-email').value;
+
+      if (!store || !name || !email) { showToast('Bitte alle Felder ausfüllen'); return; }
+      showToast('Anfrage erfolgreich übermittelt.');
+      cart = [];
+      updateCartUI();
+      document.getElementById('checkout-form').classList.add('hidden');
+    }
+
+    function subscribeNewsletter() {
+      const email = document.getElementById('newsletter-email').value;
+      if (!email.includes('@')) { showToast('Gültige E-Mail erforderlich'); return; }
+      showToast('Vielen Dank für Ihre Anmeldung.');
+      document.getElementById('newsletter-email').value = '';
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+
+    function navigateTo(pageId) {
+      document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+      const page = document.getElementById('page-' + pageId);
+      if (page) {
+        page.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
 </body>
 </html>
