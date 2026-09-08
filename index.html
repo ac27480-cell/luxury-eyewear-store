@@ -755,7 +755,7 @@
   <!-- JAVASCRIPT -->
   <!-- ============================================================ -->
   <script>
-    const IMAGE_PLACEHOLDER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><rect width='100%' height='100%' fill='%23f4f2ed'/><g stroke='%2373706b' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z' stroke-dasharray='6,4'/><path d='M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z' stroke-dasharray='6,4'/><path d='M 340,285 C 380,270 420,270 460,285'/><path d='M 220,285 L 140,270'/><path d='M 580,285 L 660,270'/><circle cx='280' cy='300' r='45' stroke='%231a1918' stroke-width='3'/><circle cx='520' cy='300' r='45' stroke='%231a1918' stroke-width='3'/><path d='M 325,280 Q 400,265 475,280' stroke='%231a1918' stroke-width='3'/><path d='M 235,280 L 150,260' stroke='%231a1918' stroke-width='3'/><path d='M 565,280 L 650,260' stroke='%231a1918' stroke-width='3'/></g><text x='50%' y='440' font-family='Georgia, serif' font-size='14' font-style='italic' fill='%2373706b' text-anchor='middle' letter-spacing='2'>[ MANUFAKTUR SKIZZE ]</text></svg>";
+    const IMAGE_PLACEHOLDER = "data:image/svg+xml;utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgODAwIDYwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y0ZjJlZCIvPjxnIHN0cm9rZT0iIzczNzA2YiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0gMjIwLDMwMCBDIDIyMCwyNDAgMzQwLDI0MCAzNDAsMzAwIEMgMzQwLDM2MCAyMjAsMzYwIDIyMCwzMDAgWiIgc3Ryb2tlLWRhc2hhcnJheT0iNiw0Ii8+PHBhdGggZD0iTSA0NjAsMzAwIEMgNDYwLDI0MCA1ODAsMjQwIDU4MCwzMDAgQyA1ODAsMzYwIDQ2MCwzNjAgNDYwLDMwMCBaIiBzdHJva2UtZGFzaGFycmF5PSI2LDQiLz48cGF0aCBkPSJNIDM0MCwyODUgQyAzODAsMjcwIDQyMCwyNzAgNDYwLDI4NSIvPjxwYXRoIGQ9Ik0gMjIwLDI4NSBMIDE0MCwyNzAiLz48cGF0aCBkPSJNIDU4MCwyODUgTCA2NjAsMjcwIi8+PGNpcmNsZSBjeD0iMjgwIiBjeT0iMzAwIiByPSI0NSIgc3Ryb2tlPSIjMWExOTE4IiBzdHJva2Utd2lkdGg9IjMiLz48Y2lyY2xlIGN4PSI1MjAiIGN5PSIzMDAiIHI9IjQ1IiBzdHJva2U9IiMxYTE5MTgiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik0gMzI1LDI4MCBRIDQwMCwyNjUgNDc1LDI4MCIgc3Ryb2tlPSIjMWExOTE4IiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNIDIzNSwyODAgTCAxNTAsMjYwIiBzdHJva2U9IiMxYTE5MTgiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik0gNTY1LDI4MCBMIDY1MCwyNjAiIHN0cm9rZT0iIzFhMTkxOCIgc3Ryb2tlLXdpZHRoPSIzIi8+PC9nPjx0ZXh0IHg9IjUwJSIgeT0iNDQwIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZmlsbD0iIzczNzA2YiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiPlsgTUFOVUZBS1RVUiBTS0laWkUgXTwvdGV4dD48L3N2Zz4=";
 
     const BRAND_DATA = {
       'Andy Wolf': {
@@ -780,8 +780,25 @@
       }
     };
 
+    // KORRIGIERTE createHeroSVG-Funktion
     function createHeroSVG(accentColor, bgColor, label) {
-      return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><rect width='100%' height='100%' fill='${bgColor}'/><g stroke='${accentColor}' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z' stroke-dasharray='6,4'/><path d='M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z' stroke-dasharray='6,4'/><path d='M 340,285 C 380,270 420,270 460,285'/><path d='M 220,285 L 140,270'/><path d='M 580,285 L 660,270'/><circle cx='280' cy='300' r='45' stroke='${accentColor}' stroke-width='3'/><circle cx='520' cy='300' r='45' stroke='${accentColor}' stroke-width='3'/><path d='M 325,280 Q 400,265 475,280' stroke='${accentColor}' stroke-width='3'/><path d='M 235,280 L 150,260' stroke='${accentColor}' stroke-width='3'/><path d='M 565,280 L 650,260' stroke='${accentColor}' stroke-width='3'/></g><text x='50%' y='440' font-family='Georgia, serif' font-size='16' font-style='italic' fill='${accentColor}' text-anchor='middle' letter-spacing='2'>${label}</text></svg>`;
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'>
+        <rect width='100%' height='100%' fill='${bgColor}'/>
+        <g stroke='${accentColor}' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'>
+          <path d='M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z' stroke-dasharray='6,4'/>
+          <path d='M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z' stroke-dasharray='6,4'/>
+          <path d='M 340,285 C 380,270 420,270 460,285'/>
+          <path d='M 220,285 L 140,270'/>
+          <path d='M 580,285 L 660,270'/>
+          <circle cx='280' cy='300' r='45' stroke='${accentColor}' stroke-width='3'/>
+          <circle cx='520' cy='300' r='45' stroke='${accentColor}' stroke-width='3'/>
+          <path d='M 325,280 Q 400,265 475,280' stroke='${accentColor}' stroke-width='3'/>
+          <path d='M 235,280 L 150,260' stroke='${accentColor}' stroke-width='3'/>
+          <path d='M 565,280 L 650,260' stroke='${accentColor}' stroke-width='3'/>
+        </g>
+        <text x='50%' y='440' font-family='Georgia, serif' font-size='16' font-style='italic' fill='${accentColor}' text-anchor='middle' letter-spacing='2'>${label}</text>
+      </svg>`;
+      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
     }
 
     const HERO_SLIDES = [{
