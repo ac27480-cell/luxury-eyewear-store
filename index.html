@@ -278,28 +278,6 @@
       overflow: hidden;
     }
 
-    /* ===== HERO – korrigiert für mobile Geräte ===== */
-    #hero {
-      min-height: 75vh;
-      height: auto;
-      background-color: #1a1918;
-      display: flex;
-      align-items: flex-end;
-    }
-    #hero .absolute.inset-0 {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-    #hero .z-20 {
-      position: relative;
-      z-index: 20;
-      width: 100%;
-      padding-bottom: 2rem;
-    }
-
     /* Hero-Beschreibungstext */
     .hero-description {
       font-size: 0.9rem;
@@ -316,22 +294,6 @@
       .hero-description {
         font-size: 1.1rem;
         max-width: 60%;
-      }
-    }
-    @media (max-width: 640px) {
-      #hero h1 {
-        font-size: 2.5rem;
-        line-height: 1.2;
-      }
-      #hero .mt-8 {
-        margin-top: 1.5rem;
-      }
-      #hero .pb-16 {
-        padding-bottom: 2rem;
-      }
-      #hero .px-6 {
-        padding-left: 1rem;
-        padding-right: 1rem;
       }
     }
   </style>
@@ -382,16 +344,16 @@
   </header>
 
   <!-- ===== HERO – INTERAKTIVE MANUFAKTUREN-SLIDESHOW ===== -->
-  <section id="hero" class="relative text-white overflow-hidden fade-in touch-manipulation">
+  <section id="hero" class="relative h-[75vh] min-h-[500px] bg-stone-900 text-white overflow-hidden fade-in touch-manipulation">
     <div id="hero-slides" class="absolute inset-0"></div>
     <div class="absolute inset-0 bg-black/50 z-10"></div>
-    <div class="relative z-20 max-w-7xl mx-auto w-full px-6 lg:px-12 pb-8 md:pb-16">
+    <div class="relative z-20 max-w-7xl mx-auto h-full flex flex-col justify-end px-6 lg:px-12 pb-16">
       <p class="text-[11px] uppercase tracking-[0.35em] text-stone-300 mb-3">Independent Eyewear & Curated Retailers</p>
       <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-light leading-[1.1] max-w-3xl">
         Weltweit kuratiert.<br /><span class="italic">Direkt vom Fachhändler.</span>
       </h1>
       <div id="hero-description" class="hero-description text-stone-200 mt-4 max-w-2xl"></div>
-      <div class="mt-8 flex flex-wrap justify-between items-end border-t border-white/20 pt-6 gap-4">
+      <div class="mt-8 flex justify-between items-end border-t border-white/20 pt-6">
         <p class="text-xs tracking-widest uppercase text-stone-300 max-w-md">Die führenden unabhängigen Brillenmarken & Partner-Optiker</p>
         <span id="hero-slide-label" class="text-[10px] uppercase tracking-[0.25em] text-stone-400 hero-label-click">Andy Wolf</span>
       </div>
@@ -1450,7 +1412,7 @@
       document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
     }
 
-    // ===== KORRIGIERTE setupHeroSlider (Klick auf Banner + mobile Optimierung) =====
+    // ===== KORRIGIERTE setupHeroSlider – NUR Klick-Funktionalität, kein Layout-Eingriff =====
     function setupHeroSlider() {
       const container = document.getElementById('hero-slides');
       const label = document.getElementById('hero-slide-label');
@@ -1476,21 +1438,22 @@
         currentBrand = HERO_SLIDES[index].label;
       }
 
-      // ===== Klick auf das gesamte Hero-Banner (nur Hintergrund, nicht auf Label) =====
+      // ----- NEU: Klick auf das gesamte Hero-Element (nicht auf Label) -----
       const hero = document.getElementById('hero');
-      // Entferne alte Listener (falls vorhanden)
+      // Vorhandene Listener entfernen (falls vorhanden) – wir verwenden einen einzigen Listener
       hero.removeEventListener('click', heroClickHandler);
       hero.addEventListener('click', heroClickHandler);
 
       function heroClickHandler(e) {
-        // Wenn auf den Markennamen oder die Beschreibung geklickt wurde, nicht ausführen
+        // Wenn der Klick auf den Markennamen oder die Beschreibung fällt, nicht ausführen
         if (e.target.closest('#hero-slide-label') || e.target.closest('#hero-description')) return;
+        // Filter auf aktuelle Marke setzen
         document.getElementById('searchInput').value = currentBrand;
         filterProducts();
         document.getElementById('product-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
 
-      // ===== Klick auf den Markennamen (wie gehabt) =====
+      // Klick auf Markennamen (wie gehabt)
       if (label) {
         label.removeEventListener('click', labelClickHandler);
         label.addEventListener('click', labelClickHandler);
@@ -1508,7 +1471,7 @@
         openBrandModal(currentBrand);
       }
 
-      // ===== Touch- und Maus-Interaktionen für Swipe (unverändert) =====
+      // ----- Touch-Swipe (unverändert) -----
       hero.addEventListener('touchstart', function(e) {
         touchStartX = e.changedTouches[0].screenX;
       }, { passive: true });
@@ -1548,7 +1511,7 @@
       });
       hero.addEventListener('mouseleave', function() { mouseDown = false; });
 
-      // ===== Autoplay =====
+      // ----- Autoplay -----
       let autoInterval = setInterval(() => {
         heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
         updateSlide(heroSlideIndex);
