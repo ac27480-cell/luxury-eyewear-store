@@ -95,6 +95,15 @@
       opacity: 0.6;
     }
 
+    /* Hero-Klick-Label */
+    .hero-label-click {
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+    .hero-label-click:hover {
+      opacity: 0.7;
+    }
+
     /* Bezahl-Optionen (sanft) */
     .payment-option {
       display: flex;
@@ -163,7 +172,7 @@
       background-color: var(--border-editorial);
     }
 
-    /* ===== INTRO OVERLAY — DUNKLER HINTERGRUND + GOLDENER TINTENVERLAUF ===== */
+    /* ===== INTRO OVERLAY ===== */
     #intro-overlay {
       position: fixed;
       inset: 0;
@@ -277,6 +286,10 @@
       font-weight: 300;
       opacity: 0.9;
       transition: opacity 0.8s ease;
+      cursor: pointer;
+    }
+    .hero-description:hover {
+      opacity: 0.7;
     }
     @media (min-width: 768px) {
       .hero-description {
@@ -307,7 +320,6 @@
         <span class="text-2xl md:text-3xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
       </a>
       <div class="flex items-center space-x-8 text-xs tracking-widest uppercase font-medium">
-        <!-- Navigation – für iPad im Querformat optimiert (touch-action, cursor) -->
         <nav class="hidden md:flex space-x-8 text-[11px] tracking-[0.2em] text-[var(--text-muted)]">
           <button onclick="navigateTo('home')" class="nav-btn hover:text-black transition-colors">Kollektion</button>
           <button onclick="navigateTo('locator')" class="nav-btn hover:text-black transition-colors">Store-Finder</button>
@@ -332,8 +344,8 @@
     </div>
   </header>
 
-  <!-- ===== HERO – FLIESSENDE MANUFAKTUREN-SLIDESHOW mit Beschreibung ===== -->
-  <section id="hero" class="relative h-[75vh] min-h-[500px] bg-stone-900 text-white overflow-hidden fade-in">
+  <!-- ===== HERO – INTERAKTIVE MANUFAKTUREN-SLIDESHOW ===== -->
+  <section id="hero" class="relative h-[75vh] min-h-[500px] bg-stone-900 text-white overflow-hidden fade-in touch-manipulation">
     <div id="hero-slides" class="absolute inset-0"></div>
     <div class="absolute inset-0 bg-black/50 z-10"></div>
     <div class="relative z-20 max-w-7xl mx-auto h-full flex flex-col justify-end px-6 lg:px-12 pb-16">
@@ -341,14 +353,44 @@
       <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-light leading-[1.1] max-w-3xl">
         Weltweit kuratiert.<br /><span class="italic">Direkt vom Fachhändler.</span>
       </h1>
-      <!-- Beschreibungstext für die aktuelle Marke -->
+      <!-- Beschreibungstext – klickbar öffnet Marken-Portrait -->
       <div id="hero-description" class="hero-description text-stone-200 mt-4 max-w-2xl"></div>
       <div class="mt-8 flex justify-between items-end border-t border-white/20 pt-6">
         <p class="text-xs tracking-widest uppercase text-stone-300 max-w-md">Die führenden unabhängigen Brillenmarken & Partner-Optiker</p>
-        <span id="hero-slide-label" class="text-[10px] uppercase tracking-[0.25em] text-stone-400">Andy Wolf</span>
+        <!-- Klickbares Label öffnet ebenfalls das Marken-Portrait -->
+        <span id="hero-slide-label" class="text-[10px] uppercase tracking-[0.25em] text-stone-400 hero-label-click">Andy Wolf</span>
       </div>
     </div>
   </section>
+
+  <!-- ===== MARKEN-PORTRAIT MODAL ===== -->
+  <div id="brandModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
+    <div class="modal-card rounded-none max-h-[90vh] overflow-y-auto">
+      <div class="sticky top-0 z-10 flex justify-end p-4 bg-[var(--bg-editorial)] border-b border-[var(--border-editorial)]">
+        <button onclick="closeBrandModal()" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors">&times;</button>
+      </div>
+      <div class="p-6 md:p-8">
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Platz für Marken-Skizze oder Logo -->
+          <div class="bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-4 flex items-center justify-center">
+            <img id="brand-modal-img" src="" alt="Marke" class="w-full h-auto object-contain max-h-[300px]" />
+          </div>
+          <div>
+            <h2 id="brand-modal-name" class="text-4xl font-serif font-light mb-4"></h2>
+            <p id="brand-modal-story" class="text-sm text-[var(--text-muted)] leading-relaxed mb-6"></p>
+            <div class="flex flex-wrap gap-3 pt-4 border-t border-[var(--border-editorial)]">
+              <button onclick="filterByBrand()" class="px-6 py-3 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors">
+                Zur Kollektion dieser Marke
+              </button>
+              <button onclick="closeBrandModal()" class="px-6 py-3 border border-[var(--border-editorial)] text-xs uppercase tracking-widest hover:bg-stone-200 transition-colors">
+                Schließen
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== PAGE: HOME ===== -->
   <main id="page-home" class="page-content max-w-7xl mx-auto px-6 lg:px-12 py-16">
@@ -629,7 +671,7 @@
     </div>
   </div>
 
-  <!-- ===== FOOTER – mit Zahlungsarten-Symbolen ===== -->
+  <!-- ===== FOOTER ===== -->
   <footer class="mt-32 border-t border-[var(--border-editorial)] bg-[var(--surface-editorial)] px-6 lg:px-12 py-16">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-xs">
       <div>
@@ -678,6 +720,56 @@
   <script>
     // -------- DATA --------
     const IMAGE_PLACEHOLDER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><rect width='100%' height='100%' fill='%23f4f2ed'/><g stroke='%2373706b' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z' stroke-dasharray='6,4'/><path d='M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z' stroke-dasharray='6,4'/><path d='M 340,285 C 380,270 420,270 460,285'/><path d='M 220,285 L 140,270'/><path d='M 580,285 L 660,270'/><circle cx='280' cy='300' r='45' stroke='%231a1918' stroke-width='3'/><circle cx='520' cy='300' r='45' stroke='%231a1918' stroke-width='3'/><path d='M 325,280 Q 400,265 475,280' stroke='%231a1918' stroke-width='3'/><path d='M 235,280 L 150,260' stroke='%231a1918' stroke-width='3'/><path d='M 565,280 L 650,260' stroke='%231a1918' stroke-width='3'/></g><text x='50%' y='440' font-family='Georgia, serif' font-size='14' font-style='italic' fill='%2373706b' text-anchor='middle' letter-spacing='2'>[ MANUFAKTUR SKIZZE ]</text></svg>";
+
+    // Marken-Portrait-Daten
+    const BRAND_DATA = {
+      'Andy Wolf': {
+        story: 'Andy Wolf steht für exklusive Brillenmanufaktur aus Österreich. Jede Fassung wird mit höchster Präzision und nachhaltigem Bio-Acetat in Hartberg gefertigt. Die geometrische Linienführung und die Liebe zum Detail machen jede Brille zu einem Unikat.',
+        img: IMAGE_PLACEHOLDER
+      },
+      'MYKITA': {
+        story: 'MYKITA vereint Berliner Ingenieurskunst mit avantgardistischem Design. Das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl ist ein Meilenstein der Eyewear-Entwicklung. Gefertigt im Herzen der Hauptstadt.',
+        img: IMAGE_PLACEHOLDER
+      },
+      'Lindberg': {
+        story: 'Lindberg – dänischer Minimalismus in Reinform. Die schraubenlosen Titandraht-Designs sind federleicht und bieten maximalen Tragekomfort. Jede Brille ist ein Ausdruck skandinavischer Ästhetik und handwerklicher Perfektion.',
+        img: IMAGE_PLACEHOLDER
+      },
+      'Jacques Marie Mage': {
+        story: 'Jacques Marie Mage – limitierte Auflagen aus Frankreich. Mit 10mm Acetat und charakteristischem Skulpturenschliff kreiert das Atelier zeitlose Meisterwerke, die Kunst und Handwerk vereinen. Jedes Modell ist ein Statement.',
+        img: IMAGE_PLACEHOLDER
+      },
+      'DITA Eyewear': {
+        story: 'DITA Eyewear – japanische Präzision und amerikanisches Design. Die Acetat-Titan-Hybridkonstruktionen werden auf höchstem handwerklichem Niveau gefertigt und stehen für Langlebigkeit und zeitlosen Stil.',
+        img: IMAGE_PLACEHOLDER
+      }
+    };
+
+    function createHeroSVG(accentColor, bgColor, label) {
+      return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><rect width='100%' height='100%' fill='${bgColor}'/><g stroke='${accentColor}' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z' stroke-dasharray='6,4'/><path d='M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z' stroke-dasharray='6,4'/><path d='M 340,285 C 380,270 420,270 460,285'/><path d='M 220,285 L 140,270'/><path d='M 580,285 L 660,270'/><circle cx='280' cy='300' r='45' stroke='${accentColor}' stroke-width='3'/><circle cx='520' cy='300' r='45' stroke='${accentColor}' stroke-width='3'/><path d='M 325,280 Q 400,265 475,280' stroke='${accentColor}' stroke-width='3'/><path d='M 235,280 L 150,260' stroke='${accentColor}' stroke-width='3'/><path d='M 565,280 L 650,260' stroke='${accentColor}' stroke-width='3'/></g><text x='50%' y='440' font-family='Georgia, serif' font-size='16' font-style='italic' fill='${accentColor}' text-anchor='middle' letter-spacing='2'>${label}</text></svg>`;
+    }
+
+    const HERO_SLIDES = [{
+      label: 'Andy Wolf',
+      description: 'Handgefertigt in Österreich – nachhaltiges Bio-Acetat und geometrische Linienführung für zeitlose Eleganz.',
+      img: createHeroSVG('#c9a87c', '#2a2826', 'ANDY WOLF')
+    }, {
+      label: 'MYKITA',
+      description: 'Berliner Ingenieurskunst – das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl.',
+      img: createHeroSVG('#b8860b', '#1a1918', 'MYKITA')
+    }, {
+      label: 'Lindberg',
+      description: 'Dänischer Minimalismus – schraubenloses Titandraht-Design für maximalen Tragekomfort.',
+      img: createHeroSVG('#8a7a6a', '#2f2b27', 'LINDBERG')
+    }, {
+      label: 'Jacques Marie Mage',
+      description: 'Limitierte Auflagen – 10mm Acetat mit charakteristischem Skulpturenschliff aus Frankreich.',
+      img: createHeroSVG('#a68b66', '#1e1c1a', 'JACQUES MARIE MAGE')
+    }, {
+      label: 'DITA Eyewear',
+      description: 'Japanische Präzision – Acetat-Titan-Hybridkonstruktion auf höchstem handwerklichem Niveau.',
+      img: createHeroSVG('#6b5d4e', '#242220', 'DITA')
+    }];
 
     const STORE_DATABASE = [
       { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
@@ -799,52 +891,13 @@
         desc: 'Traditionelles Brillenhandwerk aus King’s Cross, London.', search: 'cubitts london brillenlaboratorium' }
     ];
 
-    // -------- HERO SLIDES mit individuellen Marken und Beschreibungen --------
-    function generateHeroSVG(markenname, akzentFarbe, hintergrundFarbe) {
-      return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='600' viewBox='0 0 1200 600'>
-        <rect width='100%' height='100%' fill='${hintergrundFarbe}'/>
-        <g stroke='${akzentFarbe}' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-          <path d='M 350,300 C 350,220 500,220 500,300 C 500,380 350,380 350,300 Z' stroke-dasharray='8,6'/>
-          <path d='M 700,300 C 700,220 850,220 850,300 C 850,380 700,380 700,300 Z' stroke-dasharray='8,6'/>
-          <path d='M 500,280 C 560,260 640,260 700,280'/>
-          <path d='M 350,280 L 250,260'/>
-          <path d='M 850,280 L 950,260'/>
-          <circle cx='425' cy='300' r='60' stroke='${akzentFarbe}' stroke-width='4'/>
-          <circle cx='775' cy='300' r='60' stroke='${akzentFarbe}' stroke-width='4'/>
-          <path d='M 490,270 Q 600,250 710,270' stroke='${akzentFarbe}' stroke-width='4'/>
-          <path d='M 370,270 L 270,240' stroke='${akzentFarbe}' stroke-width='4'/>
-          <path d='M 830,270 L 930,240' stroke='${akzentFarbe}' stroke-width='4'/>
-        </g>
-        <text x='50%' y='480' font-family='Georgia, serif' font-size='28' font-style='italic' fill='${akzentFarbe}' text-anchor='middle' letter-spacing='4'>${markenname}</text>
-      </svg>`;
-    }
-
-    const HERO_SLIDES = [{
-      label: 'Andy Wolf',
-      description: 'Handgefertigt in Österreich – nachhaltiges Bio-Acetat und geometrische Linienführung für zeitlose Eleganz.',
-      img: generateHeroSVG('ANDY WOLF', '#c9a87c', '#2a2826')
-    }, {
-      label: 'MYKITA',
-      description: 'Berliner Ingenieurskunst – das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl.',
-      img: generateHeroSVG('MYKITA', '#b8860b', '#1a1918')
-    }, {
-      label: 'Lindberg',
-      description: 'Dänischer Minimalismus – schraubenloses Titandraht-Design für maximalen Tragekomfort.',
-      img: generateHeroSVG('LINDBERG', '#8a7a6a', '#2f2b27')
-    }, {
-      label: 'Jacques Marie Mage',
-      description: 'Limitierte Auflagen – 10mm Acetat mit charakteristischem Skulpturenschliff aus Frankreich.',
-      img: generateHeroSVG('JACQUES MARIE MAGE', '#a68b66', '#1e1c1a')
-    }, {
-      label: 'DITA Eyewear',
-      description: 'Japanische Präzision – Acetat-Titan-Hybridkonstruktion auf höchstem handwerklichem Niveau.',
-      img: generateHeroSVG('DITA', '#6b5d4e', '#242220')
-    }];
-
     // -------- STATE --------
     let wishlist = [];
     let cart = [];
     let heroSlideIndex = 0;
+    let currentBrand = 'Andy Wolf';
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     // -------- INTRO --------
     let introDone = false;
@@ -890,7 +943,7 @@
       }, 2500);
     }
 
-    // -------- NAVIGATION (Logo führt zu Home) --------
+    // -------- NAVIGATION --------
     function navigateTo(pageId) {
       document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
       const page = document.getElementById('page-' + pageId);
@@ -954,6 +1007,45 @@
       document.getElementById('productModal').classList.add('hidden');
       document.getElementById('productModal').classList.remove('flex');
       document.body.style.overflow = '';
+    }
+
+    // -------- MARKEN-PORTRAIT MODAL --------
+    function openBrandModal(brandName) {
+      const data = BRAND_DATA[brandName];
+      if (!data) {
+        showToast('Informationen zu dieser Marke folgen in Kürze.');
+        return;
+      }
+      document.getElementById('brand-modal-name').innerText = brandName;
+      document.getElementById('brand-modal-story').innerText = data.story;
+      document.getElementById('brand-modal-img').src = data.img;
+      // Speichere die aktuelle Marke für den "Zur Kollektion"-Button
+      document.getElementById('brand-modal-name').dataset.brand = brandName;
+      document.getElementById('brandModal').classList.remove('hidden');
+      document.getElementById('brandModal').classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBrandModal() {
+      document.getElementById('brandModal').classList.add('hidden');
+      document.getElementById('brandModal').classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    // Filter nach Marke (für Kollektion-Button)
+    function filterByBrand() {
+      const brand = document.getElementById('brand-modal-name').dataset.brand;
+      if (brand) {
+        closeBrandModal();
+        // Zur Homepage navigieren und Suchfeld mit Markennamen befüllen
+        navigateTo('home');
+        document.getElementById('searchInput').value = brand;
+        filterProducts();
+        // Sanft zur Produktliste scrollen
+        setTimeout(() => {
+          document.getElementById('product-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
+      }
     }
 
     // -------- PRODUKT-GRID --------
@@ -1288,7 +1380,7 @@
       document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
     }
 
-    // -------- HERO SLIDER (fließende Manufakturen mit Beschreibung) --------
+    // -------- HERO SLIDER mit Swipe- & Klick-Interaktion --------
     function setupHeroSlider() {
       const container = document.getElementById('hero-slides');
       const label = document.getElementById('hero-slide-label');
@@ -1299,25 +1391,95 @@
         const img = document.createElement('img');
         img.src = slide.img;
         img.className =
-          `absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
+          `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
         img.alt = slide.label;
         container.appendChild(img);
       });
 
-      if (label) label.textContent = HERO_SLIDES[0].label;
-      if (desc) desc.textContent = HERO_SLIDES[0].description;
-
-      setInterval(() => {
+      function updateSlide(index) {
         const imgs = container.querySelectorAll('img');
-        if (!imgs.length) return;
-        imgs[heroSlideIndex].classList.remove('opacity-100');
-        imgs[heroSlideIndex].classList.add('opacity-0');
-        heroSlideIndex = (heroSlideIndex + 1) % imgs.length;
-        imgs[heroSlideIndex].classList.remove('opacity-0');
-        imgs[heroSlideIndex].classList.add('opacity-100');
-        if (label) label.textContent = HERO_SLIDES[heroSlideIndex].label;
-        if (desc) desc.textContent = HERO_SLIDES[heroSlideIndex].description;
-      }, 6000); // 6 Sekunden für besseren Lesefluss
+        imgs.forEach((img, i) => {
+          img.classList.toggle('opacity-100', i === index);
+          img.classList.toggle('opacity-0', i !== index);
+        });
+        if (label) label.textContent = HERO_SLIDES[index].label;
+        if (desc) desc.textContent = HERO_SLIDES[index].description;
+        currentBrand = HERO_SLIDES[index].label;
+        // Klick-Event für Label und Beschreibung setzen
+        label.onclick = () => openBrandModal(currentBrand);
+        desc.onclick = () => openBrandModal(currentBrand);
+      }
+
+      // Initial setzen
+      updateSlide(0);
+
+      // Swipe-Erkennung
+      const hero = document.getElementById('hero');
+      hero.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      hero.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      }, { passive: true });
+
+      // Auch Maus-Drag (für Desktop) – optional
+      let mouseDown = false;
+      let mouseStartX = 0;
+      hero.addEventListener('mousedown', function(e) {
+        mouseDown = true;
+        mouseStartX = e.screenX;
+      });
+      hero.addEventListener('mouseup', function(e) {
+        if (mouseDown) {
+          const diff = mouseStartX - e.screenX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) nextSlide();
+            else prevSlide();
+          }
+          mouseDown = false;
+        }
+      });
+      hero.addEventListener('mouseleave', function() { mouseDown = false; });
+
+      function handleSwipe() {
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) { // Schwellwert für Swipe
+          if (diff > 0) {
+            nextSlide();
+          } else {
+            prevSlide();
+          }
+        }
+      }
+
+      function nextSlide() {
+        heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
+        updateSlide(heroSlideIndex);
+      }
+
+      function prevSlide() {
+        heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
+        updateSlide(heroSlideIndex);
+      }
+
+      // Automatischer Wechsel (deaktivieren, wenn User interagiert)
+      let autoInterval = setInterval(nextSlide, 6000);
+
+      // Auto-Play zurücksetzen bei Interaktion
+      hero.addEventListener('touchstart', function() {
+        clearInterval(autoInterval);
+        autoInterval = setInterval(nextSlide, 6000);
+      }, { passive: true });
+      hero.addEventListener('mousedown', function() {
+        clearInterval(autoInterval);
+        autoInterval = setInterval(nextSlide, 6000);
+      });
+
+      // Initial Klick-Events setzen
+      if (label) label.onclick = () => openBrandModal(currentBrand);
+      if (desc) desc.onclick = () => openBrandModal(currentBrand);
     }
 
     // -------- NEWSLETTER --------
