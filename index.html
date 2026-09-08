@@ -301,32 +301,49 @@
     <span id="toast-msg">Hinweis</span>
   </div>
 
-  <!-- ===== HEADER ===== -->
-  <header class="sticky top-0 z-40 bg-[#fcfbf9]/90 backdrop-blur-md border-b border-[var(--border-editorial)] px-6 lg:px-12 py-5 transition-all">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <a onclick="navigateTo('home')" class="cursor-pointer">
-        <span class="text-2xl md:text-3xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
+  <!-- ===== HEADER (optimiert für iPad) ===== -->
+  <header class="sticky top-0 z-40 bg-[#fcfbf9]/95 backdrop-blur-md border-b border-[var(--border-editorial)] px-4 lg:px-12 py-4 transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <!-- Logo -->
+      <a onclick="navigateTo('home')" class="cursor-pointer shrink-0">
+        <span class="text-xl md:text-2xl lg:text-3xl font-serif tracking-[0.2em] uppercase font-light">LUXEVUE</span>
       </a>
-      <div class="flex items-center space-x-8 text-xs tracking-widest uppercase font-medium">
-        <nav class="hidden md:flex space-x-8 text-[11px] tracking-[0.2em] text-[var(--text-muted)]">
-          <button onclick="navigateTo('home')" class="nav-btn hover:text-black transition-colors">Kollektion</button>
-          <button onclick="navigateTo('locator')" class="nav-btn hover:text-black transition-colors">Store-Finder</button>
-          <button onclick="navigateTo('configurator')" class="nav-btn hover:text-black transition-colors">Konfigurator</button>
-          <button onclick="navigateTo('account')" class="nav-btn hover:text-black transition-colors">Stores & Optiker</button>
-        </nav>
-        <div class="flex items-center space-x-5 border-l border-[var(--border-editorial)] pl-6">
-          <button onclick="navigateTo('wishlist')" class="relative p-1 hover:opacity-70 transition-opacity nav-btn" aria-label="Wunschliste">
-            <i class="fa-regular fa-heart text-lg"></i>
-            <span id="wishlist-count" class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
-          </button>
-          <button onclick="navigateTo('cart')" class="relative p-1 hover:opacity-70 transition-opacity nav-btn" aria-label="Warenkorb">
-            <i class="fa-solid fa-bag-shopping text-lg"></i>
-            <span id="cart-count" class="absolute -top-1.5 -right-2 bg-stone-800 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
-          </button>
-        </div>
+
+      <!-- Navigation: auf iPad als klare Buttons, auf Desktop wie bisher -->
+      <nav class="hidden md:flex items-center space-x-2 lg:space-x-6 overflow-x-auto no-scrollbar">
+        <button onclick="navigateTo('home')" data-nav="home"
+                class="nav-btn whitespace-nowrap px-4 py-2.5 text-[11px] tracking-[0.15em] uppercase font-medium rounded-none border border-transparent hover:border-[var(--border-editorial)] hover:bg-[var(--surface-editorial)] transition-all">
+          Kollektion
+        </button>
+        <button onclick="navigateTo('locator')" data-nav="locator"
+                class="nav-btn whitespace-nowrap px-4 py-2.5 text-[11px] tracking-[0.15em] uppercase font-medium rounded-none border border-transparent hover:border-[var(--border-editorial)] hover:bg-[var(--surface-editorial)] transition-all">
+          Store-Finder
+        </button>
+        <button onclick="navigateTo('configurator')" data-nav="configurator"
+                class="nav-btn whitespace-nowrap px-4 py-2.5 text-[11px] tracking-[0.15em] uppercase font-medium rounded-none border border-transparent hover:border-[var(--border-editorial)] hover:bg-[var(--surface-editorial)] transition-all">
+          Konfigurator
+        </button>
+        <button onclick="navigateTo('account')" data-nav="account"
+                class="nav-btn whitespace-nowrap px-4 py-2.5 text-[11px] tracking-[0.15em] uppercase font-medium rounded-none border border-transparent hover:border-[var(--border-editorial)] hover:bg-[var(--surface-editorial)] transition-all">
+          Stores & Optiker
+        </button>
+      </nav>
+
+      <!-- Icons (Wunschliste, Warenkorb) -->
+      <div class="flex items-center space-x-3 lg:space-x-5 border-l border-[var(--border-editorial)] pl-3 lg:pl-6 shrink-0">
+        <button onclick="navigateTo('wishlist')" class="relative p-2 hover:opacity-70 transition-opacity nav-btn" aria-label="Wunschliste">
+          <i class="fa-regular fa-heart text-lg md:text-xl"></i>
+          <span id="wishlist-count" class="absolute -top-1 -right-1 bg-black text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full hidden">0</span>
+        </button>
+        <button onclick="navigateTo('cart')" class="relative p-2 hover:opacity-70 transition-opacity nav-btn" aria-label="Warenkorb">
+          <i class="fa-solid fa-bag-shopping text-lg md:text-xl"></i>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-stone-800 text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full hidden">0</span>
+        </button>
       </div>
     </div>
-    <div class="max-w-7xl mx-auto mt-4 pt-3 border-t border-[var(--border-editorial)]/40 flex items-center">
+
+    <!-- Suchleiste -->
+    <div class="max-w-7xl mx-auto mt-3 pt-3 border-t border-[var(--border-editorial)]/40 flex items-center">
       <i class="fa-solid fa-magnifying-glass text-xs text-[var(--text-muted)] mr-3"></i>
       <input type="text" id="searchInput" onkeyup="debouncedSearch()" placeholder="Suchen nach Marke, Optiker, Stadt oder Stil..." class="w-full bg-transparent text-xs tracking-wide focus:outline-none placeholder:text-[var(--text-muted)]/60" />
     </div>
@@ -407,34 +424,34 @@
       </div>
 
       <div class="brand-sketch-container">
-        <!-- Fallback auf IMAGE_PLACEHOLDER wird im onerror verwendet -->
+        <!-- Nur echte Marken aus dem Projekt -->
         <div class="brand-item" onclick="openBrandModal('Andy Wolf')">
-          <img src="./assets/brands/tom-ford-sketch.png" alt="Tom Ford Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
-          <span>Tom Ford</span>
+          <img src="./assets/brands/andy-wolf-sketch.png" alt="Andy Wolf Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
+          <span>Andy Wolf</span>
+        </div>
+        <div class="brand-item" onclick="openBrandModal('MYKITA')">
+          <img src="./assets/brands/mykita-sketch.png" alt="MYKITA Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
+          <span>MYKITA</span>
         </div>
         <div class="brand-item" onclick="openBrandModal('DITA Eyewear')">
           <img src="./assets/brands/dita-sketch.png" alt="DITA Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>DITA</span>
         </div>
         <div class="brand-item" onclick="openBrandModal('Jacques Marie Mage')">
-          <img src="./assets/brands/cartier-sketch.png" alt="Cartier Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
-          <span>Cartier</span>
-        </div>
-        <div class="brand-item" onclick="openBrandModal('MYKITA')">
-          <img src="./assets/brands/ysl-sketch.png" alt="YSL Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
-          <span>Yves Saint Laurent</span>
+          <img src="./assets/brands/jmm-sketch.png" alt="Jacques Marie Mage Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
+          <span>Jacques Marie Mage</span>
         </div>
         <div class="brand-item" onclick="openBrandModal('Lindberg')">
-          <img src="./assets/brands/gucci-sketch.png" alt="Gucci Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
-          <span>Gucci</span>
+          <img src="./assets/brands/lindberg-sketch.png" alt="Lindberg Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
+          <span>Lindberg</span>
         </div>
         <div class="brand-item" onclick="openBrandModal('Cutler and Gross')">
           <img src="./assets/brands/cutler-gross-sketch.png" alt="Cutler and Gross Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>Cutler and Gross</span>
         </div>
-        <div class="brand-item" onclick="openBrandModal('Peter and May')">
-          <img src="./assets/brands/peter-may-sketch.png" alt="Peter and May Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
-          <span>Peter and May</span>
+        <div class="brand-item" onclick="openBrandModal('Matsuda')">
+          <img src="./assets/brands/matsuda-sketch.png" alt="Matsuda Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
+          <span>Matsuda</span>
         </div>
       </div>
     </section>
@@ -763,7 +780,7 @@
       'Jacques Marie Mage': { story: 'Jacques Marie Mage – limitierte Auflagen aus Frankreich. Mit 10mm Acetat und charakteristischem Skulpturenschliff kreiert das Atelier zeitlose Meisterwerke, die Kunst und Handwerk vereinen. Jedes Modell ist ein Statement.', img: IMAGE_PLACEHOLDER },
       'DITA Eyewear': { story: 'DITA Eyewear – japanische Präzision und amerikanisches Design. Die Acetat-Titan-Hybridkonstruktionen werden auf höchstem handwerklichem Niveau gefertigt und stehen für Langlebigkeit und zeitlosen Stil.', img: IMAGE_PLACEHOLDER },
       'Cutler and Gross': { story: 'Cutler and Gross – britischer Statement-Style aus Knightsbridge, London. Handgefertigte Meisterwerke für Individualisten mit starkem Sinn für Ästhetik.', img: IMAGE_PLACEHOLDER },
-      'Peter and May': { story: 'Peter and May – Pariser Eleganz trifft auf zeitgenössisches Design. Klare Linien und ausgewogene Proportionen zeichnen diese unabhängige Brand aus.', img: IMAGE_PLACEHOLDER }
+      'Matsuda': { story: 'Matsuda – japanische Graveurskunst aus Sabae. Detaillierte Ziselierungen auf reinstem Titan und Acetat, gefertigt in der Tradition der Samurai-Schmiedekunst.', img: IMAGE_PLACEHOLDER }
     };
 
     // ==================== HERO SLIDES ====================
@@ -933,6 +950,17 @@
     }
 
     // ==================== NAVIGATION ====================
+    function setActiveNav(pageId) {
+      document.querySelectorAll('[data-nav]').forEach(btn => {
+        const isActive = btn.dataset.nav === pageId;
+        btn.classList.toggle('bg-[var(--text-main)]', isActive);
+        btn.classList.toggle('text-white', isActive);
+        btn.classList.toggle('border-[var(--text-main)]', isActive);
+        btn.classList.toggle('bg-transparent', !isActive);
+        btn.classList.toggle('text-[var(--text-muted)]', !isActive);
+      });
+    }
+
     function navigateTo(pageId) {
       document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
       const page = document.getElementById('page-' + pageId);
@@ -944,6 +972,7 @@
       if (hero) hero.classList.toggle('hidden', pageId !== 'home');
       if (pageId === 'cart') updateCartUI();
       if (pageId === 'checkout') renderCheckout();
+      setActiveNav(pageId); // aktive Navigation markieren
     }
 
     // ==================== INTRO ====================
@@ -1087,7 +1116,7 @@
       }, 300);
     }
 
-    // Event-Delegation für Warenkorb & Wunschliste in Produktliste
+    // Event-Delegation für Produktliste
     document.getElementById('product-list').addEventListener('click', function(e) {
       const addBtn = e.target.closest('.add-to-cart-btn');
       const wishBtn = e.target.closest('.wishlist-btn');
@@ -1445,7 +1474,7 @@
       }
     }
 
-    // Event-Listener für Modal-Buttons (einmalig)
+    // Event-Listener für Modal-Buttons
     document.getElementById('modal-product-addcart').addEventListener('click', function() {
       if (currentProductForModal) {
         const store = getStoreInfo(currentProductForModal.storeId);
