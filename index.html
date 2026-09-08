@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="de" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LUXEVUE — Independent Eyewear</title>
 
   <!-- High-End Webfonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com">
   </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
     :root {
@@ -82,14 +82,74 @@
       transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
-    /* Bezahl-Icons */
-    .payment-icon {
-      font-size: 2rem;
-      opacity: 0.7;
-      transition: opacity 0.2s;
+    /* Bezahl-Icons - Ohne Rahmen, sanft */
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background-color: var(--surface-editorial);
+      border-radius: 0;
+      transition: background-color 0.2s ease;
+      cursor: pointer;
     }
-    .payment-icon:hover {
-      opacity: 1;
+    .payment-option:hover {
+      background-color: #e8e4dc;
+    }
+    .payment-option input[type="radio"] {
+      accent-color: var(--text-main);
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      flex-shrink: 0;
+    }
+    .payment-option .payment-icon {
+      font-size: 1.75rem;
+      width: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .payment-option .payment-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--text-main);
+    }
+
+    /* Produkt-Modal */
+    .modal-overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+    }
+    .modal-card {
+      max-width: 720px;
+      width: 90%;
+      background: var(--bg-editorial);
+      border: 1px solid var(--border-editorial);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+    @media (min-width: 640px) {
+      .modal-card {
+        width: 75%;
+      }
+    }
+    @media (min-width: 1024px) {
+      .modal-card {
+        width: 50%;
+      }
+    }
+
+    /* Scrollbar im Modal */
+    .modal-card .overflow-y-auto {
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-editorial) transparent;
+    }
+    .modal-card .overflow-y-auto::-webkit-scrollbar {
+      width: 4px;
+    }
+    .modal-card .overflow-y-auto::-webkit-scrollbar-thumb {
+      background-color: var(--border-editorial);
     }
   </style>
 </head>
@@ -133,7 +193,7 @@
     <!-- Suchleiste -->
     <div class="max-w-7xl mx-auto mt-4 pt-3 border-t border-[var(--border-editorial)]/40 flex items-center">
       <i class="fa-solid fa-magnifying-glass text-xs text-[var(--text-muted)] mr-3"></i>
-      <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suchen nach Marke, Optiker, Stadt oder Stil..." class="w-full bg-transparent text-xs tracking-wide focus:outline-none placeholder:text-[var(--text-muted)]/60" />
+      <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Suchen nach Marke, Optiker, Stadt oder Stil..." class="w-full bg-transparent text-xs tracking-wide focus:outline-none placeholder:text-[var(--text-muted)]/60">
     </div>
   </header>
 
@@ -144,7 +204,7 @@
     <div class="relative z-20 max-w-7xl mx-auto h-full flex flex-col justify-end px-6 lg:px-12 pb-16">
       <p class="text-[11px] uppercase tracking-[0.35em] text-stone-300 mb-3">Independent Eyewear & Curated Retailers</p>
       <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-light leading-[1.1] max-w-3xl">
-        Weltweit kuratiert.<br /><span class="italic">Direkt vom Fachhändler.</span>
+        Weltweit kuratiert.<br><span class="italic">Direkt vom Fachhändler.</span>
       </h1>
       <div class="mt-8 flex justify-between items-end border-t border-white/20 pt-6">
         <p class="text-xs tracking-widest uppercase text-stone-300 max-w-md">Die führenden unabhängigen Brillenmarken & Partner-Optiker</p>
@@ -210,53 +270,6 @@
 
   </main>
 
-  <!-- ===== PAGE: PRODUKT-DETAIL (separate Datei) ===== -->
-  <section id="page-product" class="page-content hidden max-w-5xl mx-auto px-6 lg:px-12 py-16">
-    <button onclick="navigateTo('home')" class="mb-8 text-xs uppercase tracking-widest text-[var(--text-muted)] hover:text-black transition-colors">
-      <i class="fa-solid fa-arrow-left mr-2"></i> Zurück zur Kollektion
-    </button>
-
-    <div class="grid md:grid-cols-2 gap-12">
-      <!-- Bild -->
-      <div class="bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-6 flex items-center justify-center">
-        <img id="product-detail-img" src="" alt="Produkt" class="w-full h-auto object-contain max-h-[500px]" />
-      </div>
-
-      <!-- Infos -->
-      <div>
-        <p id="product-detail-brand" class="text-xs uppercase tracking-[0.25em] text-[var(--text-muted)] font-semibold"></p>
-        <h2 id="product-detail-name" class="text-4xl font-serif font-light my-3"></h2>
-        <p id="product-detail-price" class="text-xl font-medium text-stone-800 mb-4"></p>
-        <p id="product-detail-desc" class="text-sm text-[var(--text-muted)] leading-relaxed mb-6"></p>
-
-        <!-- Store Info -->
-        <div id="product-detail-store" class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-sm mb-6">
-          <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)] block mb-1">Bezugsquelle</span>
-          <div class="flex justify-between items-center">
-            <div>
-              <p class="font-medium" id="product-detail-store-name"></p>
-              <p class="text-xs text-[var(--text-muted)]" id="product-detail-store-city"></p>
-            </div>
-            <a id="product-detail-store-url" href="#" target="_blank" class="px-4 py-2 bg-[#1a1918] text-white text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-stone-800 transition-colors">
-              <span>Zum Store</span>
-              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Aktionen -->
-        <div class="flex flex-col sm:flex-row gap-4">
-          <button id="product-detail-addcart" class="flex-1 py-4 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">
-            In den Warenkorb
-          </button>
-          <button id="product-detail-wishlist" class="py-4 px-6 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors flex items-center justify-center gap-2">
-            <i class="fa-regular fa-heart"></i> Merken
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== PAGE: STORE LOCATOR ===== -->
   <section id="page-locator" class="page-content hidden max-w-7xl mx-auto px-6 lg:px-12 py-16">
     <div class="mb-10 pb-4 border-b border-[var(--border-editorial)]">
@@ -267,7 +280,7 @@
     <div class="bg-[var(--surface-editorial)] p-6 border border-[var(--border-editorial)] mb-10 grid md:grid-cols-3 gap-4">
       <div>
         <label class="block text-[10px] uppercase tracking-widest text-[var(--text-muted)] mb-2">Stadt / Region</label>
-        <input type="text" id="locatorSearchInput" onkeyup="filterStoreLocator()" placeholder="z. B. München, Berlin…" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs focus:outline-none" />
+        <input type="text" id="locatorSearchInput" onkeyup="filterStoreLocator()" placeholder="z. B. München, Berlin…" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs focus:outline-none">
       </div>
       <div>
         <label class="block text-[10px] uppercase tracking-widest text-[var(--text-muted)] mb-2">Kategorie</label>
@@ -335,12 +348,11 @@
     <button onclick="shareWishlist()" class="mt-8 px-8 py-4 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors">Favoriten teilen</button>
   </section>
 
-  <!-- ===== PAGE: WARENKORB & CHECKOUT ===== -->
+  <!-- ===== PAGE: WARENKORB ===== -->
   <section id="page-cart" class="page-content hidden max-w-5xl mx-auto px-6 py-16">
     <h1 class="text-4xl font-serif font-light tracking-wide mb-8">Ihr Warenkorb</h1>
     <div id="cart-container" class="space-y-4"></div>
 
-    <!-- Zusammenfassung & Checkout-Button -->
     <div id="cart-summary" class="hidden mt-12 pt-8 border-t border-[var(--border-editorial)]">
       <div class="flex justify-between font-serif text-2xl mb-8">
         <span>Gesamtsumme</span>
@@ -360,7 +372,7 @@
 
     <h1 class="text-4xl font-serif font-light tracking-wide mb-8">Kasse</h1>
 
-    <div class="bg-white border border-[var(--border-editorial)] p-8 space-y-6">
+    <div class="bg-white border border-[var(--border-editorial)] p-8 space-y-8">
       <!-- Bestellübersicht -->
       <div>
         <h2 class="text-sm font-semibold uppercase tracking-wider mb-4">Ihre Bestellung</h2>
@@ -371,39 +383,39 @@
         </div>
       </div>
 
-      <!-- Zahlungsarten -->
+      <!-- Zahlungsarten – ohne Rahmen, als sanfte Liste -->
       <div>
         <h2 class="text-sm font-semibold uppercase tracking-wider mb-4">Zahlungsart</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <label class="flex items-center gap-2 p-3 border border-[var(--border-editorial)] hover:border-black cursor-pointer transition-colors">
-            <input type="radio" name="payment" value="creditcard" checked />
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <label class="payment-option">
+            <input type="radio" name="payment" value="creditcard" checked>
             <i class="fa-regular fa-credit-card payment-icon"></i>
-            <span class="text-xs">Kreditkarte</span>
+            <span class="payment-label">Kreditkarte</span>
           </label>
-          <label class="flex items-center gap-2 p-3 border border-[var(--border-editorial)] hover:border-black cursor-pointer transition-colors">
-            <input type="radio" name="payment" value="paypal" />
+          <label class="payment-option">
+            <input type="radio" name="payment" value="paypal">
             <i class="fa-brands fa-paypal payment-icon"></i>
-            <span class="text-xs">PayPal</span>
+            <span class="payment-label">PayPal</span>
           </label>
-          <label class="flex items-center gap-2 p-3 border border-[var(--border-editorial)] hover:border-black cursor-pointer transition-colors">
-            <input type="radio" name="payment" value="klarna" />
+          <label class="payment-option">
+            <input type="radio" name="payment" value="klarna">
             <i class="fa-regular fa-clock payment-icon"></i>
-            <span class="text-xs">Klarna</span>
+            <span class="payment-label">Klarna</span>
           </label>
-          <label class="flex items-center gap-2 p-3 border border-[var(--border-editorial)] hover:border-black cursor-pointer transition-colors">
-            <input type="radio" name="payment" value="applepay" />
+          <label class="payment-option">
+            <input type="radio" name="payment" value="applepay">
             <i class="fa-brands fa-apple payment-icon"></i>
-            <span class="text-xs">Apple Pay</span>
+            <span class="payment-label">Apple Pay</span>
           </label>
-          <label class="flex items-center gap-2 p-3 border border-[var(--border-editorial)] hover:border-black cursor-pointer transition-colors">
-            <input type="radio" name="payment" value="googlepay" />
+          <label class="payment-option">
+            <input type="radio" name="payment" value="googlepay">
             <i class="fa-brands fa-google-pay payment-icon"></i>
-            <span class="text-xs">Google Pay</span>
+            <span class="payment-label">Google Pay</span>
           </label>
-          <label class="flex items-center gap-2 p-3 border border-[var(--border-editorial)] hover:border-black cursor-pointer transition-colors">
-            <input type="radio" name="payment" value="vorkasse" />
+          <label class="payment-option">
+            <input type="radio" name="payment" value="vorkasse">
             <i class="fa-regular fa-building-columns payment-icon"></i>
-            <span class="text-xs">Vorkasse</span>
+            <span class="payment-label">Vorkasse</span>
           </label>
         </div>
       </div>
@@ -412,17 +424,17 @@
       <div>
         <h2 class="text-sm font-semibold uppercase tracking-wider mb-4">Ihre Daten</h2>
         <div class="grid md:grid-cols-2 gap-4">
-          <input type="text" id="checkout-firstname" placeholder="Vorname" class="w-full p-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-sm focus:outline-none focus:border-black" />
-          <input type="text" id="checkout-lastname" placeholder="Nachname" class="w-full p-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-sm focus:outline-none focus:border-black" />
-          <input type="email" id="checkout-email" placeholder="E-Mail" class="w-full p-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-sm focus:outline-none focus:border-black" />
-          <input type="text" id="checkout-address" placeholder="Adresse" class="w-full p-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-sm focus:outline-none focus:border-black" />
+          <input type="text" id="checkout-firstname" placeholder="Vorname" class="w-full p-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-sm focus:outline-none focus:border-black">
+          <input type="text" id="checkout-lastname" placeholder="Nachname" class="w-full p-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-sm focus:outline-none focus:border-black">
+          <input type="email" id="checkout-email" placeholder="E-Mail" class="w-full p-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-sm focus:outline-none focus:border-black">
+          <input type="text" id="checkout-address" placeholder="Adresse" class="w-full p-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-sm focus:outline-none focus:border-black">
         </div>
       </div>
 
       <!-- AGB + Bestellen -->
       <div class="pt-4 border-t border-[var(--border-editorial)]">
         <label class="flex items-center gap-2 text-xs text-[var(--text-muted)]">
-          <input type="checkbox" id="checkout-agb" /> Ich akzeptiere die AGB und Datenschutzbestimmungen.
+          <input type="checkbox" id="checkout-agb"> Ich akzeptiere die AGB und Datenschutzbestimmungen.
         </label>
         <button onclick="placeOrder()" class="w-full mt-6 py-5 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">
           Jetzt kaufen
@@ -440,8 +452,8 @@
         <h3 class="font-serif text-2xl font-light">VIP-Sehtest & Anprobe</h3>
         <p class="text-xs text-[var(--text-muted)] leading-relaxed">Vereinbaren Sie eine persönliche Beratung bei unseren Partneroptikern.</p>
         <div class="space-y-3 pt-4">
-          <input type="text" placeholder="Name" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs" />
-          <input type="date" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs" />
+          <input type="text" placeholder="Name" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs">
+          <input type="date" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs">
           <button onclick="showToast('Terminanfrage übermittelt.')" class="w-full py-3 bg-[#1a1918] text-white text-xs uppercase tracking-widest">Termin anfragen</button>
         </div>
       </div>
@@ -453,12 +465,64 @@
     </div>
   </section>
 
+  <!-- ===== PRODUKT-MODAL (separate Karte) ===== -->
+  <div id="productModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
+    <div class="modal-card rounded-none max-h-[90vh] overflow-y-auto">
+      <!-- Schließen-Button -->
+      <div class="sticky top-0 z-10 flex justify-end p-4 bg-[var(--bg-editorial)] border-b border-[var(--border-editorial)]">
+        <button onclick="closeProductModal()" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors">&times;</button>
+      </div>
+
+      <div class="p-6 md:p-8">
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Bild -->
+          <div class="bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-4 flex items-center justify-center">
+            <img id="modal-product-img" src="" alt="Produkt" class="w-full h-auto object-contain max-h-[300px]">
+          </div>
+
+          <!-- Infos -->
+          <div>
+            <p id="modal-product-brand" class="text-xs uppercase tracking-[0.25em] text-[var(--text-muted)] font-semibold"></p>
+            <h2 id="modal-product-name" class="text-3xl font-serif font-light my-2"></h2>
+            <p id="modal-product-price" class="text-lg font-medium text-stone-800 mb-3"></p>
+            <p id="modal-product-desc" class="text-sm text-[var(--text-muted)] leading-relaxed mb-5"></p>
+
+            <!-- Store Info -->
+            <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-sm mb-5">
+              <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)] block mb-1">Bezugsquelle</span>
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="font-medium" id="modal-product-store-name"></p>
+                  <p class="text-xs text-[var(--text-muted)]" id="modal-product-store-city"></p>
+                </div>
+                <a id="modal-product-store-url" href="#" target="_blank" class="px-4 py-2 bg-[#1a1918] text-white text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-stone-800 transition-colors">
+                  <span>Zum Store</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Aktionen -->
+            <div class="flex flex-col sm:flex-row gap-3">
+              <button id="modal-product-addcart" class="flex-1 py-3.5 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">
+                In den Warenkorb
+              </button>
+              <button id="modal-product-wishlist" class="py-3.5 px-6 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors flex items-center justify-center gap-2">
+                <i class="fa-regular fa-heart"></i> Merken
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== FOOTER ===== -->
   <footer class="mt-32 border-t border-[var(--border-editorial)] bg-[var(--surface-editorial)] px-6 lg:px-12 py-16">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-xs">
       <div>
         <span class="text-2xl font-serif tracking-[0.2em] uppercase font-light block mb-4">LUXEVUE</span>
-        <p class="text-[var(--text-muted)] leading-relaxed">Independent Eyewear Directory.<br />Kuratierte Manufakturen & Fachgeschäfte weltweit.</p>
+        <p class="text-[var(--text-muted)] leading-relaxed">Independent Eyewear Directory.<br>Kuratierte Manufakturen & Fachgeschäfte weltweit.</p>
       </div>
       <div>
         <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Rechtliches</h4>
@@ -472,7 +536,7 @@
         <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Newsletter</h4>
         <p class="text-[var(--text-muted)] mb-4">Exklusive Einblicke in neue Kollektionen.</p>
         <div class="flex border-b border-black/20 pb-1">
-          <input type="email" id="newsletter-email" placeholder="E-Mail Adresse" class="bg-transparent flex-1 text-xs focus:outline-none" />
+          <input type="email" id="newsletter-email" placeholder="E-Mail Adresse" class="bg-transparent flex-1 text-xs focus:outline-none">
           <button onclick="subscribeNewsletter()" class="uppercase tracking-widest text-[10px] font-semibold">Anmelden</button>
         </div>
       </div>
@@ -638,61 +702,47 @@
     }
 
     // -------- NAVIGATION --------
-    function navigateTo(pageId, param) {
-      // Alle Seiten ausblenden
+    function navigateTo(pageId) {
       document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
-
-      // Spezialfall: product-detail mit ID
-      if (pageId === 'product' && param) {
-        const page = document.getElementById('page-product');
-        page.classList.remove('hidden');
-        renderProductDetail(param);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-      }
-
       const page = document.getElementById('page-' + pageId);
       if (page) {
         page.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-
-      // Wenn auf Cart navigiert, aktualisieren
-      if (pageId === 'cart') {
-        updateCartUI();
-      }
-      if (pageId === 'checkout') {
-        renderCheckout();
-      }
+      if (pageId === 'cart') updateCartUI();
+      if (pageId === 'checkout') renderCheckout();
     }
 
-    // -------- PRODUKT-DETAIL --------
-    function renderProductDetail(productId) {
+    // -------- PRODUKT-MODAL --------
+    function openProductModal(productId) {
       const p = PRODUCTS.find(x => x.id === parseInt(productId));
-      if (!p) {
-        showToast('Produkt nicht gefunden');
-        navigateTo('home');
-        return;
-      }
+      if (!p) { showToast('Produkt nicht gefunden'); return; }
       const store = getStoreInfo(p.storeId);
 
-      document.getElementById('product-detail-img').src = p.img;
-      document.getElementById('product-detail-brand').innerText = p.brand;
-      document.getElementById('product-detail-name').innerText = p.name;
-      document.getElementById('product-detail-price').innerText = p.price;
-      document.getElementById('product-detail-desc').innerText = p.desc;
-      document.getElementById('product-detail-store-name').innerText = store.name;
-      document.getElementById('product-detail-store-city').innerText = store.type + ' — ' + store.city;
-      document.getElementById('product-detail-store-url').href = store.url;
+      document.getElementById('modal-product-img').src = p.img;
+      document.getElementById('modal-product-brand').innerText = p.brand;
+      document.getElementById('modal-product-name').innerText = p.name;
+      document.getElementById('modal-product-price').innerText = p.price;
+      document.getElementById('modal-product-desc').innerText = p.desc;
+      document.getElementById('modal-product-store-name').innerText = store.name;
+      document.getElementById('modal-product-store-city').innerText = store.type + ' — ' + store.city;
+      document.getElementById('modal-product-store-url').href = store.url;
 
       // Add to cart
-      document.getElementById('product-detail-addcart').onclick = function() {
+      document.getElementById('modal-product-addcart').onclick = function() {
         addToCart(p.name, p.price, p.img, store.name);
+        closeProductModal();
       };
 
       // Wishlist
-      document.getElementById('product-detail-wishlist').onclick = function() {
-        const icon = this.querySelector('i');
+      const wishBtn = document.getElementById('modal-product-wishlist');
+      const icon = wishBtn.querySelector('i');
+      if (wishlist.includes(p.name)) {
+        icon.className = 'fa-solid fa-heart text-rose-600';
+      } else {
+        icon.className = 'fa-regular fa-heart';
+      }
+      wishBtn.onclick = function() {
         if (wishlist.includes(p.name)) {
           wishlist = wishlist.filter(x => x !== p.name);
           icon.className = 'fa-regular fa-heart';
@@ -704,13 +754,17 @@
         }
         updateWishlistUI();
       };
-      // Initialen Zustand des Herzchens setzen
-      const icon = document.getElementById('product-detail-wishlist').querySelector('i');
-      if (wishlist.includes(p.name)) {
-        icon.className = 'fa-solid fa-heart text-rose-600';
-      } else {
-        icon.className = 'fa-regular fa-heart';
-      }
+
+      // Modal anzeigen
+      document.getElementById('productModal').classList.remove('hidden');
+      document.getElementById('productModal').classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.add('hidden');
+      document.getElementById('productModal').classList.remove('flex');
+      document.body.style.overflow = '';
     }
 
     // -------- PRODUKT-GRID --------
@@ -733,7 +787,7 @@
         const card = document.createElement('div');
         card.className = 'product-card group cursor-pointer';
         card.innerHTML = `
-            <div class="img-zoom-container bg-[var(--surface-editorial)] mb-5 border border-[var(--border-editorial)] relative" onclick="navigateTo('product', ${p.id})">
+            <div class="img-zoom-container bg-[var(--surface-editorial)] mb-5 border border-[var(--border-editorial)] relative" onclick="openProductModal(${p.id})">
               <img src="${p.img}" alt="${p.name}" class="w-full h-80 object-cover">
             </div>
             <div class="flex justify-between items-start mb-2">
@@ -806,7 +860,6 @@
 
     // -------- WARENKORB --------
     function addToCart(name, price, img, storeName) {
-      // Prüfen, ob bereits vorhanden, dann Menge erhöhen?
       const existing = cart.find(item => item.name === name);
       if (existing) {
         existing.quantity = (existing.quantity || 1) + 1;
@@ -847,7 +900,7 @@
                   <img src="${item.img}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]">
                   <div>
                     <p class="text-xs font-medium">${item.name}</p>
-                    <p class="text-[10px] text-[var(--text-muted)]">${item.price} — Partner: ${item.storeName || 'Optiker'}</p>
+                    <p class="text-[10px] text-[var(--text-muted)]">${item.price} — ${item.storeName || 'Optiker'}</p>
                     <div class="flex items-center gap-2 mt-1">
                       <button onclick="changeQuantity(${index}, -1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">-</button>
                       <span class="text-xs">${item.quantity || 1}</span>
@@ -915,7 +968,6 @@
 
     // -------- CHECKOUT --------
     function renderCheckout() {
-      // Bestellübersicht
       const container = document.getElementById('checkout-items');
       const totalEl = document.getElementById('checkout-total');
       let total = 0;
@@ -934,33 +986,18 @@
     }
 
     function placeOrder() {
-      // AGB prüfen
       const agb = document.getElementById('checkout-agb');
-      if (!agb.checked) {
-        showToast('Bitte akzeptieren Sie die AGB.');
-        return;
-      }
-      // Felder prüfen (vereinfacht)
+      if (!agb.checked) { showToast('Bitte akzeptieren Sie die AGB.'); return; }
       const firstname = document.getElementById('checkout-firstname').value.trim();
       const lastname = document.getElementById('checkout-lastname').value.trim();
       const email = document.getElementById('checkout-email').value.trim();
       const address = document.getElementById('checkout-address').value.trim();
-      if (!firstname || !lastname || !email || !address) {
-        showToast('Bitte füllen Sie alle Felder aus.');
-        return;
-      }
-      // Zahlungsart ermitteln
+      if (!firstname || !lastname || !email || !address) { showToast('Bitte füllen Sie alle Felder aus.'); return; }
       const payment = document.querySelector('input[name="payment"]:checked');
-      if (!payment) {
-        showToast('Bitte wählen Sie eine Zahlungsart.');
-        return;
-      }
-      // Erfolgsmeldung
+      if (!payment) { showToast('Bitte wählen Sie eine Zahlungsart.'); return; }
       showToast('Vielen Dank für Ihre Bestellung! Sie erhalten eine Bestätigung per E-Mail.');
-      // Warenkorb leeren
       cart = [];
       updateCartUI();
-      // Zurück zur Startseite
       navigateTo('home');
     }
 
@@ -1011,7 +1048,7 @@
       renderStoreLocatorGrid();
     }
 
-    // -------- STORE DIRECTORY (Account) --------
+    // -------- STORE DIRECTORY --------
     function renderStoreDirectory() {
       const list = document.getElementById('store-directory-list');
       list.innerHTML = STORE_DATABASE.map(s => `
@@ -1088,7 +1125,6 @@
       updateCartUI();
       updateWishlistUI();
       setupScrollAnimations();
-      // Startseite anzeigen
       navigateTo('home');
     });
   </script>
