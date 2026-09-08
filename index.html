@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <script src="https://cdn.tailwindcss.js">
+  <script src="https://cdn.tailwindcss.com">
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
@@ -780,7 +780,7 @@
       }
     };
 
-    // ===== KORRIGIERTE SVG-Funktion (encodeURIComponent) =====
+    // KORRIGIERTE createHeroSVG-Funktion
     function createHeroSVG(accentColor, bgColor, label) {
       const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'>
         <rect width='100%' height='100%' fill='${bgColor}'/>
@@ -1412,7 +1412,6 @@
       document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
     }
 
-    // ===== KORRIGIERTE setupHeroSlider – NUR Klick-Funktionalität, kein Layout-Eingriff =====
     function setupHeroSlider() {
       const container = document.getElementById('hero-slides');
       const label = document.getElementById('hero-slide-label');
@@ -1422,7 +1421,8 @@
       HERO_SLIDES.forEach((slide, i) => {
         const img = document.createElement('img');
         img.src = slide.img;
-        img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
+        img.className =
+          `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
         img.alt = slide.label;
         container.appendChild(img);
       });
@@ -1436,57 +1436,20 @@
         if (label) label.textContent = HERO_SLIDES[index].label;
         if (desc) desc.textContent = HERO_SLIDES[index].description;
         currentBrand = HERO_SLIDES[index].label;
+        if (label) label.onclick = () => openBrandModal(currentBrand);
+        if (desc) desc.onclick = () => openBrandModal(currentBrand);
       }
 
-      // ----- NEU: Klick auf das gesamte Hero-Element (nicht auf Label) -----
+      updateSlide(0);
+
       const hero = document.getElementById('hero');
-      // Vorhandene Listener entfernen (falls vorhanden) – wir verwenden einen einzigen Listener
-      hero.removeEventListener('click', heroClickHandler);
-      hero.addEventListener('click', heroClickHandler);
-
-      function heroClickHandler(e) {
-        // Wenn der Klick auf den Markennamen oder die Beschreibung fällt, nicht ausführen
-        if (e.target.closest('#hero-slide-label') || e.target.closest('#hero-description')) return;
-        // Filter auf aktuelle Marke setzen
-        document.getElementById('searchInput').value = currentBrand;
-        filterProducts();
-        document.getElementById('product-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-
-      // Klick auf Markennamen (wie gehabt)
-      if (label) {
-        label.removeEventListener('click', labelClickHandler);
-        label.addEventListener('click', labelClickHandler);
-      }
-      function labelClickHandler(e) {
-        e.stopPropagation();
-        openBrandModal(currentBrand);
-      }
-
-      if (desc) {
-        desc.removeEventListener('click', descClickHandler);
-        desc.addEventListener('click', descClickHandler);
-      }
-      function descClickHandler(e) {
-        openBrandModal(currentBrand);
-      }
-
-      // ----- Touch-Swipe (unverändert) -----
       hero.addEventListener('touchstart', function(e) {
         touchStartX = e.changedTouches[0].screenX;
       }, { passive: true });
 
       hero.addEventListener('touchend', function(e) {
         touchEndX = e.changedTouches[0].screenX;
-        const diff = touchStartX - touchEndX;
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) {
-            heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
-          } else {
-            heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
-          }
-          updateSlide(heroSlideIndex);
-        }
+        handleSwipe();
       }, { passive: true });
 
       let mouseDown = false;
@@ -1499,41 +1462,45 @@
         if (mouseDown) {
           const diff = mouseStartX - e.screenX;
           if (Math.abs(diff) > 50) {
-            if (diff > 0) {
-              heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
-            } else {
-              heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
-            }
-            updateSlide(heroSlideIndex);
+            if (diff > 0) nextSlide();
+            else prevSlide();
           }
           mouseDown = false;
         }
       });
       hero.addEventListener('mouseleave', function() { mouseDown = false; });
 
-      // ----- Autoplay -----
-      let autoInterval = setInterval(() => {
+      function handleSwipe() {
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) nextSlide();
+          else prevSlide();
+        }
+      }
+
+      function nextSlide() {
         heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
         updateSlide(heroSlideIndex);
-      }, 6000);
+      }
+
+      function prevSlide() {
+        heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
+        updateSlide(heroSlideIndex);
+      }
+
+      let autoInterval = setInterval(nextSlide, 6000);
 
       hero.addEventListener('touchstart', function() {
         clearInterval(autoInterval);
-        autoInterval = setInterval(() => {
-          heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
-          updateSlide(heroSlideIndex);
-        }, 6000);
+        autoInterval = setInterval(nextSlide, 6000);
       }, { passive: true });
       hero.addEventListener('mousedown', function() {
         clearInterval(autoInterval);
-        autoInterval = setInterval(() => {
-          heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
-          updateSlide(heroSlideIndex);
-        }, 6000);
+        autoInterval = setInterval(nextSlide, 6000);
       });
 
-      // Initial anzeigen
-      updateSlide(0);
+      if (label) label.onclick = () => openBrandModal(currentBrand);
+      if (desc) desc.onclick = () => openBrandModal(currentBrand);
     }
 
     function subscribeNewsletter() {
@@ -1566,5 +1533,5 @@
     });
   </script>
 
-</body>
+</>
 </html>
