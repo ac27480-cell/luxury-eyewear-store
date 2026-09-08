@@ -245,6 +245,43 @@
     .recent-card {
       min-width: 200px;
     }
+
+    /* NEU: Styling für die Marken-Skizzen Grid Sektion */
+    .brand-sketch-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      width: 100%;
+      align-items: center;
+    }
+    .brand-item {
+      text-align: center;
+      background: #ffffff;
+      padding: 16px;
+      border: 1px solid var(--border-editorial);
+      border-radius: 0px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+    .brand-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      border-color: var(--text-main);
+    }
+    .brand-item img {
+      width: 100%;
+      height: 80px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 10px auto;
+    }
+    .brand-item span {
+      font-size: 12px;
+      font-weight: 600;
+      color: #222;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
   </style>
 </head>
 <body>
@@ -353,6 +390,48 @@
         <p class="text-xs md:text-sm text-[var(--text-muted)] leading-relaxed font-light">
           <strong class="font-semibold text-stone-900">LUXEVUE</strong> ist der kuratierte Treffpunkt für unabhängige Brillenmanufakturen, exzellente Handwerkskunst und erstklassige Fachgeschäfte weltweit.
         </p>
+      </div>
+    </section>
+
+    <!-- NEU: Exklusive Marken & Skizzen Showcase auf der Startseite eingebunden -->
+    <section class="mb-20 fade-in">
+      <div class="flex justify-between items-baseline mb-8 pb-4 border-b border-[var(--border-editorial)]">
+        <div>
+          <p class="text-[10px] uppercase tracking-[0.3em] text-[var(--text-muted)] mb-1">Design & Skizzen</p>
+          <h2 class="text-2xl md:text-3xl font-serif font-light tracking-wide">Exklusive Marken-Skizzen</h2>
+        </div>
+        <span class="text-xs tracking-widest uppercase text-[var(--text-muted)]">Atelier Einblicke</span>
+      </div>
+
+      <div class="brand-sketch-container">
+        <div class="brand-item" onclick="openBrandModalFromSketch('Andy Wolf')">
+          <img src="./assets/brands/tom-ford-sketch.png" alt="Tom Ford Skizze" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Tom+Ford';">
+          <span>Tom Ford</span>
+        </div>
+        <div class="brand-item" onclick="openBrandModalFromSketch('DITA Eyewear')">
+          <img src="./assets/brands/dita-sketch.png" alt="DITA Skizze" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=DITA';">
+          <span>DITA</span>
+        </div>
+        <div class="brand-item" onclick="openBrandModalFromSketch('Jacques Marie Mage')">
+          <img src="./assets/brands/cartier-sketch.png" alt="Cartier Skizze" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Cartier';">
+          <span>Cartier</span>
+        </div>
+        <div class="brand-item" onclick="openBrandModalFromSketch('MYKITA')">
+          <img src="./assets/brands/ysl-sketch.png" alt="YSL Skizze" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=YSL';">
+          <span>Yves Saint Laurent</span>
+        </div>
+        <div class="brand-item" onclick="openBrandModalFromSketch('Lindberg')">
+          <img src="./assets/brands/gucci-sketch.png" alt="Gucci Skizze" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Gucci';">
+          <span>Gucci</span>
+        </div>
+        <div class="brand-item" onclick="openBrandModalFromSketch('Cutler and Gross')">
+          <img src="./assets/brands/cutler-gross-sketch.png" alt="Cutler and Gross Skizze" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Cutler+Gross';">
+          <span>Cutler and Gross</span>
+        </div>
+        <div class="brand-item" onclick="openBrandModalFromSketch('Peter and May')">
+          <img src="./assets/brands/peter-may-sketch.png" alt="Peter and May Skizze" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Peter+and+May';">
+          <span>Peter and May</span>
+        </div>
       </div>
     </section>
 
@@ -657,14 +736,16 @@
   </footer>
 
   <script>
-    const IMAGE_PLACEHOLDER = "data:image/svg+xml;utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgODAwIDYwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y0ZjJlZCIvPjxnIHN0cm9rZT0iIzczNzA2YiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0gMjIwLDMwMCBDIDIyMCwyNDAgMzxoLDQwIDM0MCwzMDAgQyAzNDAsMzYwIDIyMCwzNjAgMjIwLDMwMCBaIiBzdHJva2UtZGFzaGFycmF5PSI2LDQiLz48cGF0aCBkPSJNIDQ2MCwzMDAgQyA0NjAsMjQwIDU4MCwyNDAgNTgwLDMwMCBDIDU4MCwzNjAgNDYwLDM2MCA0NjAsMzAwIFoiIHN0cm9rZS1kYXNoYXJyYXk9IjYsNCIvPjxwYXRoIGQ9Ik0gMzQwLDI4NSBDIDM4MCwyNzAgNDIwLDI3MCA0NjAsMjg1Ii8+PHBhdGggZD0iTSAyMjAsMjg1IEwgMTQwLDI3MCIvPjxwYXRoIGQ9Ik0gNTgwLDI4NSBMIDY2MCwyNzAiLz48Y2lyY2xlIGN4PSIyODAiIGN5PSIzMDAiIHI9IjQ1IiBzdHJva2U9IiMxYTE5MTgiIHN0cm9rZS13aWR0aD0iMyIvPjxjaXJjbGUgY3g9IjUyMCIgY3k9IjMwMCIgcj0iNDUiIHN0cm9rZT0iIzFhMTkxOCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTSAzMjUsMjgw QyA0MDAsMjY1IDQ3NSwyODAiIHN0cm9rZT0iIzFhMTkxOCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTSAyMzUsMjgwIEwgMTUwLDI2MCIgc3Ryb2tlPSIjMWExOTE4IiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNIDU2NSwyODAgTCA2NTAsMjYwIiBzdHJva2U9IiMxYTE5MTgiIHN0cm9rZS13aWR0aD0iMyIvPjwvZz48dGV4dCB4PSIwJSIgeT0iNDQwIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZmlsbD0iIzczNzA2YiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9Ij2iPlsgTUFOVUZBS1RVUiBTS0laWkUgXTwvdGV4dD48L3N2Zz4=";
+    const IMAGE_PLACEHOLDER = "data:image/svg+xml;utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgODAwIDYwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y0ZjJlZCIvPjxnIHN0cm9rZT0iIzczNzA2YiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0gMjIwLDMwMCBDIDIyMCwyNDAgMzxoLDQwIDM0MCwzMDAgQyAzNDAsMzYwIDIyMCwzNjAgMjIwLDMwMCBaIiBzdHJva2UtZGFzaGFycmF5PSI2LDQiLz48cGF0aCBkPSJNIDQ2MCwzMDAgQyA0NjAsMjQwIDU4MCwyNDAgNTgwLDMwMCBDIDU4MCwzNjAgNDYwLDM2MCA0NjAsMzAwIFoiIHN0cm9rZS1kYXNoYXJyYXk9IjYsNCIvPjxwYXRoIGQ9Ik0gMzkwLDI4NSBDIDM4MCwyNzAgNDIwLDI3MCA0NjAsMjg1Ii8+PHBhdGggZD0iTSAyMjAsMjg1IEwgMTQwLDI3MCIvPjxwYXRoIGQ9Ik0gNTgwLDI4NSBMIDY2MCwyNzAiLz48Y2lyY2xlIGN4PSIyODAiIGN5PSIzMDAiIHI9IjQ1IiBzdHJva2U9IiMxYTE5MTgiIHN0cm9rZS13aWR0aD0iMyIvPjxjaXJjbGUgY3g9IjUyMCIgY3k9IjMwMCIgcj0iNDUiIHN0cm9rZT0iIzFhMTkxOCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTSAzMjUsMjgw QyA0MDAsMjY1IDQ3NSwyODAiIHN0cm9rZT0iIzFhMTkxOCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTSAyMzUsMjgwIEwgMTUwLDI2MCIgc3Ryb2tlPSIjMWExOTE4IiBzdHJva2Utd2lkdGg9IjMiLz48cGF0aCBkPSJNIDU2NSwyODAgTCA2NTAsMjYwIiBzdHJva2U9IiMxYTE5MTgiIHN0cm9rZS13aWR0aD0iMyIvPjwvZz48dGV4dCB4PSIwJSIgeT0iNDQwIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZmlsbD0iIzczNzA2YiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9Ij2iPlsgTUFOVUZBS1RVUiBTS0laWkUgXTwvdGV4dD48L3N2Zz4=";
 
     const BRAND_DATA = {
       'Andy Wolf': { story: 'Andy Wolf steht für exklusive Brillenmanufaktur aus Österreich. Jede Fassung wird mit höchster Präzision und nachhaltigem Bio-Acetat in Hartberg gefertigt. Die geometrische Linienführung und die Liebe zum Detail machen jede Brille zu einem Unikat.', img: IMAGE_PLACEHOLDER },
       'MYKITA': { story: 'MYKITA vereint Berliner Ingenieurskunst mit avantgardistischem Design. Das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl ist ein Meilenstein der Eyewear-Entwicklung. Gefertigt im Herzen der Hauptstadt.', img: IMAGE_PLACEHOLDER },
       'Lindberg': { story: 'Lindberg – dänischer Minimalismus in Reinform. Die schraubenlosen Titandraht-Designs sind federleicht und bieten maximalen Tragekomfort. Jede Brille ist ein Ausdruck skandinavischer Ästhetik und handwerklicher Perfektion.', img: IMAGE_PLACEHOLDER },
       'Jacques Marie Mage': { story: 'Jacques Marie Mage – limitierte Auflagen aus Frankreich. Mit 10mm Acetat und charakteristischem Skulpturenschliff kreiert das Atelier zeitlose Meisterwerke, die Kunst und Handwerk vereinen. Jedes Modell ist ein Statement.', img: IMAGE_PLACEHOLDER },
-      'DITA Eyewear': { story: 'DITA Eyewear – japanische Präzision und amerikanisches Design. Die Acetat-Titan-Hybridkonstruktionen werden auf höchstem handwerklichem Niveau gefertigt und stehen für Langlebigkeit und zeitlosen Stil.', img: IMAGE_PLACEHOLDER }
+      'DITA Eyewear': { story: 'DITA Eyewear – japanische Präzision und amerikanisches Design. Die Acetat-Titan-Hybridkonstruktionen werden auf höchstem handwerklichem Niveau gefertigt und stehen für Langlebigkeit und zeitlosen Stil.', img: IMAGE_PLACEHOLDER },
+      'Cutler and Gross': { story: 'Cutler and Gross – britischer Statement-Style aus Knightsbridge, London. Handgefertigte Meisterwerke für Individualisten mit starkem Sinn für Ästhetik.', img: IMAGE_PLACEHOLDER },
+      'Peter and May': { story: 'Peter and May – Pariser Eleganz trifft auf zeitgenössisches Design. Klare Linien und ausgewogene Proportionen zeichnen diese unabhängige Brand aus.', img: IMAGE_PLACEHOLDER }
     };
 
     function createHeroSVG(accentColor, bgColor, label) {
@@ -928,6 +1009,10 @@
       document.getElementById('brandModal').classList.remove('hidden');
       document.getElementById('brandModal').classList.add('flex');
       document.body.style.overflow = 'hidden';
+    }
+
+    function openBrandModalFromSketch(brandName) {
+      openBrandModal(brandName);
     }
 
     function closeBrandModal() {
