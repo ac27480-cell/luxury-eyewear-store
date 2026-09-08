@@ -10,8 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <script src="https://cdn.tailwindcss.com">
-  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
@@ -862,6 +861,17 @@
       ]
     };
 
+    // ===== NEU: Farbzuordnung für jedes Land =====
+    const COUNTRY_COLORS = {
+      "Deutschland / Ö / CH": 'bg-amber-100',
+      "Japan": 'bg-red-100',
+      "Frankreich": 'bg-blue-100',
+      "Italien": 'bg-green-100',
+      "USA / Nordamerika": 'bg-indigo-100',
+      "Dänemark & Skandinavien": 'bg-cyan-100',
+      "Großbritannien": 'bg-purple-100',
+    };
+
     const PRODUCTS = [
       { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER,
         desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium' },
@@ -1192,13 +1202,17 @@
     function renderLabelTags(country) {
       const container = document.getElementById('selected-country-labels');
       container.innerHTML = '';
+      // Hintergrundfarbe je Land auswählen
+      const bgColorClass = COUNTRY_COLORS[country] || 'bg-[var(--surface-editorial)]';
       INDEPENDENT_LABELS[country].forEach(label => {
         const tag = document.createElement('span');
         tag.className =
-          'text-[10px] bg-[var(--surface-editorial)] border border-[var(--border-editorial)] px-3 py-1.5 tracking-wider text-[var(--text-main)] font-medium cursor-pointer hover:border-black transition-colors';
+          `text-[10px] ${bgColorClass} border border-[var(--border-editorial)] px-3 py-1.5 tracking-wider text-[var(--text-main)] font-medium cursor-pointer hover:border-black transition-colors`;
         tag.textContent = label;
         tag.onclick = () => {
-          const brandClean = label.split(' ')[0];
+          // Nur den Markennamen vor der Klammer verwenden (falls vorhanden)
+          const brandMatch = label.match(/^([^(]+)/);
+          const brandClean = brandMatch ? brandMatch[1].trim() : label;
           document.getElementById('searchInput').value = brandClean;
           filterProducts();
         };
@@ -1358,7 +1372,7 @@
               <p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${s.city}</p>
             </div>
             <div class="pt-4 border-t border-[var(--border-editorial)]/60 flex justify-between items-center">
-              <a href="${s.url}" target="_blank" class="text-xs font-semibold underline hover:text-stone-600 flex items-center space-x-1">
+              <a href="${s.url}" target="_blank" rel="noopener" class="text-xs font-semibold underline hover:text-stone-600 flex items-center space-x-1">
                 <span>Website besuchen</span>
                 <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
               </a>
@@ -1394,7 +1408,7 @@
               <strong class="font-medium">${s.name}</strong>
               <span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span>
             </div>
-            <a href="${s.url}" target="_blank" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
+            <a href="${s.url}" target="_blank" rel="noopener" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
               <span>Website</span>
               <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
             </a>
@@ -1533,5 +1547,5 @@
     });
   </script>
 
-</>
+</body>
 </html>
