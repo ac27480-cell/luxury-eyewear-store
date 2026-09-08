@@ -134,6 +134,23 @@
   <!-- Hauptinhalt (Home / Kollektion) -->
   <main id="page-home" class="page-content max-w-7xl mx-auto px-6 lg:px-12 py-16">
 
+    <!-- INTRO-SEKTION (BUCH-AUFTAKT / MANIFEST) -->
+    <section class="mb-20 py-12 px-8 lg:px-16 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-center fade-in">
+      <div class="max-w-3xl mx-auto">
+        <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-4">Das Auftakt-Manifest</p>
+        <h2 class="text-3xl md:text-4xl font-serif font-light italic mb-6 leading-tight text-stone-900">
+          „Zwischen Präzision, Handwerk und der Leidenschaft für das Besondere.“
+        </h2>
+        <div class="w-12 h-[1px] bg-stone-400 mx-auto mb-6"></div>
+        <p class="text-base font-light text-stone-800 leading-relaxed mb-6">
+          Vom Spielfeld bis ins optische Handwerk: Wahre Qualität entsteht dort, wo der Blick geschult ist, Perfektion auf Leidenschaft trifft und Details den Unterschied machen.
+        </p>
+        <p class="text-xs md:text-sm text-[var(--text-muted)] leading-relaxed font-light">
+          <strong class="font-semibold text-stone-900">LUXEVUE</strong> ist der kuratierte Treffpunkt für unabhängige Brillenmanufakturen, exzellente Handwerkskunst und erstklassige Fachgeschäfte weltweit. Entdecken Sie außergewöhnliche Kollektionen, zeitloses Design und die feinsten Adressen für Ihre persönliche Anprobe.
+        </p>
+      </div>
+    </section>
+
     <!-- Herkunftsland Filter & World's Best Independent Labels -->
     <section class="mb-14">
       <div class="flex items-center justify-between mb-6">
@@ -374,10 +391,8 @@
 
   <!-- Inline Script Logik -->
   <script>
-    // Hochwertiges Skizzen-Platzhalter-Bild als SVG Data URL
     const IMAGE_PLACEHOLDER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><rect width='100%' height='100%' fill='%23f4f2ed'/><g stroke='%2373706b' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z' stroke-dasharray='6,4'/><path d='M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z' stroke-dasharray='6,4'/><path d='M 340,285 C 380,270 420,270 460,285'/><path d='M 220,285 L 140,270'/><path d='M 580,285 L 660,270'/><circle cx='280' cy='300' r='45' stroke='%231a1918' stroke-width='3'/><circle cx='520' cy='300' r='45' stroke='%231a1918' stroke-width='3'/><path d='M 325,280 Q 400,265 475,280' stroke='%231a1918' stroke-width='3'/><path d='M 235,280 L 150,260' stroke='%231a1918' stroke-width='3'/><path d='M 565,280 L 650,260' stroke='%231a1918' stroke-width='3'/></g><text x='50%' y='440' font-family='Georgia, serif' font-size='14' font-style='italic' fill='%2373706b' text-anchor='middle' letter-spacing='2'>[ MANUFAKTUR SKIZZE ]</text></svg>";
 
-    // Datenbank Partner-Stores und E-Shops mit URLs
     const STORE_DATABASE = [
       { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
       { id: 'leidmann', name: "Leidmann", type: "Boutique / Fachgeschäft", city: "München", url: "https://www.leidmann.de" },
@@ -389,7 +404,6 @@
       { id: 'misterspex', name: "Mister Spex", type: "Omnichannel / Online", city: "Berlin / Online", url: "https://www.misterspex.de" }
     ];
 
-    // Weltweite Top Independent Eyewear Labels
     const INDEPENDENT_LABELS = {
       "Deutschland / Ö / CH": [
         "MYKITA (Berlin)", "ic! berlin", "Lunor (Schwarzwald)", "CAZAL", "Andy Wolf (Österreich)", 
@@ -418,9 +432,7 @@
       ]
     };
 
-    // Vollständige Produkt-Datenbank für jede Marke aus allen Kategorien
     const PRODUCTS = [
-      // Deutschland / Ö / CH
       { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium' },
       { id: 2, brand: 'MYKITA', name: 'Lite Tuva', price: '490 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Patentiertes schraubenloses Gelenk aus ultraleichtem Edelstahl, gefertigt in Berlin.', search: 'mykita lite tuva berlin specsberlin' },
       { id: 3, brand: 'ic! berlin', name: 'Silk East', price: '450 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Federleichte Federedelstahl-Fassung ohne Schrauben und Lötstellen.', search: 'ic berlin silk ehler optik flensburg' },
@@ -432,8 +444,6 @@
       { id: 9, brand: 'Reiz Germany', name: 'Mangan Series', price: '410 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Klassisches Acetat-Handwerk gefertigt in deutschen Manufakturen.', search: 'reiz germany mangan ehler optik flensburg' },
       { id: 10, brand: 'Funk Eyewear', name: 'Dieter B.', price: '390 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Unkonventionelles Brillendesign aus der Kinzigtaler Manufaktur.', search: 'funk eyewear dieter brillenlaboratorium' },
       { id: 11, brand: 'Hoffmann Natural Eyewear', name: 'Bespoke Horn 22', price: '850 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Meisterhafte Handarbeit aus echtem Büffelhorn. Jedes Stück ein Unikat.', search: 'hoffmann natural eyewear horn leidmann' },
-
-      // Japan
       { id: 12, brand: 'Matsuda', name: 'M3086 Titanium', price: '920 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Graveurskunst aus Sabae, Japan. Detaillierte Ziselierungen auf reinstem Titan.', search: 'matsuda japan sabae leidmann' },
       { id: 13, brand: 'DITA Eyewear', name: 'Statesman Six', price: '890 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Japanische Präzision. Acetat-Titan-Hybridkonstruktion auf höchstem Niveau.', search: 'dita statesman japan leidmann muenchen' },
       { id: 14, brand: 'Eyevan 7285', name: 'Model 338', price: '580 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Japanischer Eyewear-Kult seit 1972. Ästhetische Perfektion und Tragekomfort.', search: 'eyevan 7285 specsberlin japan' },
@@ -441,33 +451,23 @@
       { id: 16, brand: 'Yuichi Toyama', name: 'U-129 Double Dutch', price: '530 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Moderne japanische Ästhetik inspiriert von traditioneller Fadenkunst.', search: 'yuichi toyama double dutch specsberlin' },
       { id: 17, brand: 'Factory900', name: 'FA-240 Sculpted', price: '560 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Dreidimensionale Acetat-Skulpturen mit futuristischer Formensprache.', search: 'factory900 sabae brillenlaboratorium' },
       { id: 18, brand: 'KameManNen', name: 'KMN-113', price: '490 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Eines der ältesten Brillenlabels Japans. Schildkröten-Symbolik für Ewigkeit.', search: 'kamemannen japan bellevue' },
-
-      // Frankreich
       { id: 19, brand: 'Jacques Marie Mage', name: 'Dealan Noir', price: '790 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Limitierte Auflage. 10mm Acetat mit charakteristischem Skulpturenschliff.', search: 'jmm jacques marie mage dealan leidmann' },
       { id: 20, brand: 'Anne et Valentin', name: 'FANZINE Atelier', price: '430 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Farbenfroher Avantgarde-Stil aus Toulouse. Individueller Geometrie-Mix.', search: 'anne et valentin toulouse specsberlin' },
       { id: 21, brand: 'Lafont Paris', name: 'Réédition Parisian', price: '360 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Pariser Chic und französisches Savoir-faire seit 1923.', search: 'lafont paris ehler optik flensburg' },
       { id: 22, brand: 'Thierry Lasry', name: 'Sexxxy Cat-Eye', price: '440 €', storeId: 'edeloptics', img: IMAGE_PLACEHOLDER, desc: 'Futuristischer Vintage-Look, beliebt bei internationalen Celebrities.', search: 'thierry lasry paris edel optics' },
       { id: 23, brand: 'Ahlem Eyewear', name: 'Place de la Concorde', price: '495 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Inspiration der Pariser Architektur, handgefertigt in Oyonnax, Frankreich.', search: 'ahlem paris oyonnax leidmann' },
       { id: 24, brand: 'Lucas de Staël', name: 'Monsieur Leather', price: '880 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Pariser Atelierfassung überzogen mit edlem Rindsleder und Granitstein.', search: 'lucas de stael paris leder stein bellevue' },
-
-      // Italien
       { id: 25, brand: 'Res/Rei', name: 'Philosophia', price: '370 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Handmade in Italy. Fokus auf nachhaltiges Acetat und lebendige Farben.', search: 'res rei italy brillenlaboratorium' },
       { id: 26, brand: 'L.G.R', name: 'Reunion Explorer', price: '420 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Afrikanische Abenteuer-Inspiration vereint mit italienischer Handwerkskunst.', search: 'lgr reunion leidmann' },
       { id: 27, brand: 'Tavat Eyewear', name: 'SoupCan Round', price: '495 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Sandgestrahltes Uhrengehäuse-Konzept, gefertigt in den italienischen Alpen.', search: 'tavat soupcan specsberlin' },
       { id: 28, brand: 'Movitra', name: 'Bruno Rotating', price: '540 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Patentierter Drehmechanismus aus Mailand zum Schutz der Gläser.', search: 'movitra bruno mailand bellevue' },
-
-      // USA / Nordamerika
       { id: 29, brand: 'Oliver Peoples', name: 'Gregory Peck', price: '360 €', storeId: 'misterspex', img: IMAGE_PLACEHOLDER, desc: 'Klassischer Hollywood-Intellektuellen-Look aus Sunset Boulevard, L.A.', search: 'oliver peoples gregory peck misterspex' },
       { id: 30, brand: 'Garrett Leight (GLCO)', name: 'Hampton Sun', price: '330 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Entspannter Venice Beach Lifestyle mit kalifornischem Spirit.', search: 'garrett leight glco hampton specsberlin' },
       { id: 31, brand: 'Moscot (NYC)', name: 'Lemtosh Original', price: '320 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Die Legende aus der Lower East Side in New York City seit 1915.', search: 'moscot lemtosh new york specsberlin' },
       { id: 32, brand: 'Barton Perreira', name: 'Roxbury Aviator', price: '510 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Luxuriöse Ästhetik entworfen von Patty Perreira in Kalifornien.', search: 'barton perreira leidmann' },
-
-      // Dänemark & Skandinavien
       { id: 33, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Dänischer Minimalismus. Schraubenloses Titandraht-Design mit maximalem Tragekomfort.', search: 'lindberg titan daenemark bellevue hamburg' },
       { id: 34, brand: 'Ørgreen Optics', name: 'Quantum High-Tech', price: '480 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Kopenhagener Design aus Reintitan mit unverwechselbaren Farbkombinationen.', search: 'orgreen optics kopenhagen ehler optik' },
       { id: 35, brand: 'ProDesign Denmark', name: 'Essential 12', price: '290 €', storeId: 'optikerbode', img: IMAGE_PLACEHOLDER, desc: 'Funktionales skandinavisches Brillendesign mit klaren Strukturen.', search: 'prodesign denmark optiker bode' },
-
-      // Großbritannien
       { id: 36, brand: 'Cutler and Gross', name: '1386 Bold King', price: '470 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Britischer Statement-Style aus Knightsbridge, London.', search: 'cutler and gross london specsberlin' },
       { id: 37, brand: 'Cubitts', name: 'Judd Round', price: '240 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Traditionelles Brillenhandwerk aus King’s Cross, London.', search: 'cubitts london brillenlaboratorium' }
     ];
@@ -864,7 +864,6 @@
       }
     }
 
-    // Initialisierung beim Laden des DOMs
     window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
