@@ -18,27 +18,21 @@
       --font-serif: 'Cormorant Garamond', Georgia, serif;
       --font-sans: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
     }
-
     html, body {
       background-color: #fbf9f6 !important;
       color: #2c2a29 !important;
       font-family: var(--font-sans);
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       scroll-behavior: smooth;
     }
-
-    h1, h2, h3, h4, .font-serif {
-      font-family: var(--font-serif);
-    }
-
+    h1, h2, h3, h4, .font-serif { font-family: var(--font-serif); }
     .bg-beige { background-color: #e6dfd5 !important; }
     .bg-beige-light { background-color: #f4f0eb !important; }
     .border-beige { border-color: #e2dbd1 !important; }
     .scrollbar-none::-webkit-scrollbar { display: none; }
     .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Intro – komplett schwarz */
+    /* Intro */
     #intro {
       position: fixed; inset: 0; z-index: 9999; cursor: pointer; pointer-events: auto;
       background-color: #000;
@@ -61,34 +55,41 @@
     #intro.open .panel.right { transform: translateX(100%); }
     #intro.open .intro-text { opacity: 0; }
 
-    /* Hero-Bereich */
+    /* Hero mit Bild-Slider */
     #hero {
-      background: linear-gradient(to bottom, #1c1917 0%, #1c1917 40%, #fbf9f6 100%);
-      color: #fff;
-      padding: 80px 20px 120px;
+      position: relative;
+      height: 500px;
+      overflow: hidden;
+    }
+    #hero-slides img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 1s ease;
+    }
+    #hero-overlay {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0,0,0,0.4);
+    }
+    #hero-content {
+      position: relative;
+      z-index: 10;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-    }
-    #hero h1 {
-      font-size: 3.5rem;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      line-height: 1.2;
-    }
-    #hero p {
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      opacity: 0.7;
+      color: #fff;
+      padding: 0 20px;
     }
 
-    /* Dunkle Sektion */
-    .dark-section {
-      background-color: #1c1917;
-      color: #fbf9f6;
-    }
+    .dark-section { background-color: #1c1917; color: #fbf9f6; }
 
-    /* Produktkarten – Hover-Effekte */
+    /* Produktkarten */
     .product-card {
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
@@ -96,14 +97,10 @@
       transform: translateY(-4px);
       box-shadow: 0 12px 24px rgba(0,0,0,0.08);
     }
-    .product-card img {
-      transition: transform 0.5s ease;
-    }
-    .product-card:hover img {
-      transform: scale(1.03);
-    }
+    .product-card img { transition: transform 0.5s ease; }
+    .product-card:hover img { transform: scale(1.03); }
 
-    /* Checkout Formular */
+    /* Checkout */
     #checkout-form {
       transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
       max-height: 0; opacity: 0; overflow: hidden;
@@ -163,7 +160,6 @@
       background-color: #f4f0eb;
     }
 
-    /* Scroll-Animationen */
     .fade-in {
       opacity: 0;
       transform: translateY(20px);
@@ -174,13 +170,8 @@
       transform: translateY(0);
     }
 
-    /* Footer */
-    footer a {
-      transition: color 0.2s ease;
-    }
-    footer a:hover {
-      color: #a16207;
-    }
+    footer a { transition: color 0.2s ease; }
+    footer a:hover { color: #a16207; }
   </style>
 </head>
 <body class="min-h-screen pb-28 bg-[#fbf9f6] text-[#2c2a29]">
@@ -194,10 +185,12 @@
 
   <div id="spotify-container"></div>
 
+  <!-- Toast -->
   <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 bg-stone-900 text-white text-xs px-4 py-2.5 rounded-full shadow-lg z-50 transition-opacity duration-300 opacity-0 pointer-events-none">
     <span id="toast-msg">Hinweis</span>
   </div>
 
+  <!-- Live-Chat -->
   <a id="liveChatBtn" href="https://wa.me/491234567890" target="_blank" title="Live-Chat via WhatsApp">
     <i class="fa-brands fa-whatsapp text-2xl"></i>
   </a>
@@ -227,11 +220,15 @@
     </div>
   </header>
 
-  <!-- Hero-Bereich -->
+  <!-- Hero mit Bild-Slider -->
   <section id="hero" class="fade-in">
-    <p>Independent Eyewear</p>
-    <h1>Weltweit kuratiert.<br>Zeitlos getragen.</h1>
-    <p class="mt-6">Entdecken Sie die feinsten unabhängigen Brillenmanufakturen</p>
+    <div id="hero-slides"></div>
+    <div id="hero-overlay"></div>
+    <div id="hero-content">
+      <p class="tracking-[0.3em] uppercase text-xs md:text-sm opacity-80">Independent Eyewear</p>
+      <h1 class="text-4xl md:text-6xl font-serif font-light mt-4">Weltweit kuratiert.<br>Zeitlos getragen.</h1>
+      <p class="mt-6 text-sm md:text-base tracking-widest uppercase opacity-70">Entdecken Sie die feinsten unabhängigen Brillenmanufakturen</p>
+    </div>
   </section>
 
   <!-- Hauptbereich -->
@@ -241,13 +238,13 @@
     <div class="flex space-x-3 overflow-x-auto pb-6 mb-8 scrollbar-none" id="country-filter-bar"></div>
 
     <!-- Labels des gewählten Landes -->
-    <div id="selected-country-labels" class="flex flex-wrap gap-3 mb-12"></div>
+    <div id="selected-country-labels" class="flex flex-wrap gap-3 mb-8"></div>
 
     <!-- Produktliste -->
     <h2 class="text-3xl font-serif tracking-widest uppercase mb-8 fade-in">Aktuelle Kollektion</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="product-list"></div>
 
-    <!-- Dunkle Sektion: Manufakturen -->
+    <!-- Dunkle Sektion -->
     <section class="dark-section mt-20 -mx-4 px-4 py-20 fade-in">
       <div class="max-w-4xl mx-auto text-center">
         <p class="text-xs tracking-[0.3em] uppercase opacity-60 mb-4">Handwerkskunst</p>
@@ -465,33 +462,34 @@
       { name: "Ace & Tate", type: "online", state: "Online E-Shop (NL)", desc: "Eigenmarke, minimalistisch", url: "https://www.aceandtate.com", status: "Eigenmarke", brands: ["Ace & Tate"] },
       { name: "Viu Eyewear", type: "online", state: "Online E-Shop (CH)", desc: "Nachhaltig, Online-first", url: "https://www.viu.ch", status: "Eigenmarke", brands: ["Viu"] },
       { name: "Lunor.de", type: "online", state: "Online E-Shop", desc: "Manufaktur-Online-Shop", url: "https://www.lunor.de", status: "Eigenmarke + Auswahl", brands: ["Lunor", "DITA", "Matsuda"] },
-      { name: "Leidmann München", type: "store", state: "München", desc: "Benchmark für Independent Luxury Eyewear", url: "#", status: "Exklusiv", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury", "Anne et Valentin", "RIGARDS", "Jean-François Rey", "Lafont Paris", "Alain Mikli", "Kuboraum", "Retrosuperfuture", "Théodore", "Etnia Barcelona", "Theo Eyewear", "Garrett Leight", "Barton Perreira", "Morgenthal Frederics", "Salt. Optics", "Blake Kuwahara", "Ahlem", "Oliver Goldsmith", "Linda Farrow", "Kirk Originals", "Ørgreen Optics", "Fleye Copenhagen", "Dutz Eyewear", "Monoqool", "Dawson Eyewear", "Vue DC", "Lool Eyewear", "Nina Mûr", "Palens", "Gentle Monster", "Komono", "WaKaze", "Coterie", "Mieu Eyewear", "Pared Eyewear", "Krewe", "Moa"] },
-      { name: "specs.berlin", type: "store", state: "Berlin", desc: "Crème de la Crème der Independent-Szene", url: "#", status: "Limitierte Serien", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "Peter and May", "Anne et Valentin", "RIGARDS", "Kuboraum", "Retrosuperfuture", "Theo Eyewear", "Garrett Leight", "Barton Perreira", "Morgenthal Frederics", "Salt. Optics", "Blake Kuwahara", "Ahlem", "Oliver Goldsmith", "Linda Farrow", "Kirk Originals", "Ørgreen Optics", "Fleye Copenhagen", "Dutz Eyewear", "Monoqool", "Dawson Eyewear", "Vue DC", "Lool Eyewear", "Nina Mûr", "Palens", "Gentle Monster", "Komono", "WaKaze", "Coterie", "Mieu Eyewear", "Pared Eyewear", "Krewe", "Moa"] },
-      { name: "Noble Optic House Berlin", type: "store", state: "Berlin", desc: "Luxus- und Couture-Segment", url: "#", status: "VIP-Betreuung", brands: ["Cartier", "Maybach Icons of Luxury", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Linda Farrow"] },
-      { name: "Söhnges / Rheingold-Optik", type: "store", state: "Düsseldorf", desc: "Königsallee-Umfeld – japanische Titan-Manufakturen", url: "#", status: "Diskrete Beratung", brands: ["DITA", "Matsuda", "Cutler and Gross", "Jacques Marie Mage", "Peter and May", "Kuboraum", "Retrosuperfuture", "Théodore", "Etnia Barcelona", "Theo Eyewear"] },
-      { name: "Bellevue Optical Hamburg", type: "store", state: "Hamburg", desc: "Renommiertester Independent-Optiker im Norden", url: "#", status: "Seltene Nischenmarken", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "DITA", "Peter and May", "Anne et Valentin", "RIGARDS", "Kuboraum", "Retrosuperfuture", "Theo Eyewear", "Garrett Leight", "Barton Perreira", "Morgenthal Frederics", "Salt. Optics", "Blake Kuwahara", "Ahlem", "Oliver Goldsmith", "Linda Farrow", "Kirk Originals", "Ørgreen Optics", "Fleye Copenhagen", "Dutz Eyewear", "Monoqool", "Dawson Eyewear", "Vue DC", "Lool Eyewear", "Nina Mûr", "Palens", "Gentle Monster", "Komono", "WaKaze", "Coterie", "Mieu Eyewear", "Pared Eyewear", "Krewe", "Moa"] },
-      { name: "Hanse-Viertel Optik", type: "store", state: "Hamburg", desc: "Offizielle Lizenzen für Cartier, DITA und JMM", url: "#", status: "Exklusive Modelle", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Maybach Icons of Luxury", "Matsuda", "Cutler and Gross", "Peter and May"] },
-      { name: "Sehwerk / Optik Kollektiv Köln", type: "store", state: "Köln", desc: "Boutiquen mit Fokus auf Handwerkskunst", url: "#", status: "Limitierte Serien", brands: ["Cartier", "Peter and May", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Kuboraum", "Retrosuperfuture", "Théodore"] },
-      { name: "Ehler Optik & Akustik", type: "store", state: "Schleswig-Holstein", desc: "Große Straße 12, Flensburg", url: "#", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "DITA"] },
-      { name: "Fielmann Luxury Lounge", type: "store", state: "Schleswig-Holstein", desc: "Holm 48, Flensburg", url: "#", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg"] },
-      { name: "Fielmann Flagship Hamburg", type: "store", state: "Hamburg", desc: "Jungfernstieg 40, 20354 Hamburg", url: "#", status: "Große Auswahl", brands: ["Cartier", "Andy Wolf", "Lindberg"] },
-      { name: "Optik Habel", type: "store", state: "Berlin", desc: "Schloßstraße 90, 12163 Berlin", url: "#", status: "Cartier exklusiv", brands: ["Cartier", "DITA", "Jacques Marie Mage"] },
-      { name: "Brillenwerk Stuttgart", type: "store", state: "Baden-Württemberg", desc: "Königstraße 45, 70173 Stuttgart", url: "#", status: "Verfügbar", brands: ["Cartier", "DITA", "Tom Ford"] },
-      { name: "Sehwerk Karlsruhe", type: "store", state: "Baden-Württemberg", desc: "Kaiserstraße 140, Karlsruhe", url: "#", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford"] },
-      { name: "Blickfang Optik", type: "store", state: "Baden-Württemberg", desc: "Königstraße 22, Stuttgart", url: "#", status: "1 Stück", brands: ["Andy Wolf", "Cartier", "DITA"] },
-      { name: "Optik Steininger", type: "store", state: "Bayern", desc: "Sendlinger Straße 25, 80331 München", url: "#", status: "Cartier Partner", brands: ["Cartier"] },
-      { name: "Andy Wolf Flagship Store", type: "store", state: "Wien (AT)", desc: "Tuchlauben 11, 1010 Wien", url: "#", status: "Alle Kollektionen", brands: ["Andy Wolf"] },
-      { name: "Cartier Boutique Berlin", type: "store", state: "Berlin", desc: "Kurfürstendamm 186, 10707 Berlin", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
-      { name: "Cartier Boutique München", type: "store", state: "Bayern", desc: "Maximilianstraße 20, 80539 München", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
-      { name: "Cartier Boutique Wien", type: "store", state: "Wien (AT)", desc: "Kohlmarkt 1, 1010 Wien", url: "#", status: "Komplette Kollektion", brands: ["Cartier"] },
-      { name: "Götti Store Zürich", type: "store", state: "Zürich (CH)", desc: "Götti Switzerland – Flagship Store", url: "#", status: "Eigenmarke", brands: ["Götti Switzerland"] },
-      { name: "Viu Store Zürich", type: "store", state: "Zürich (CH)", desc: "Viu Eyewear – Store & Optiker", url: "#", status: "Eigenmarke", brands: ["Viu"] },
-      { name: "Cutler and Gross Flagship London", type: "store", state: "London (UK)", desc: "Cutler and Gross – Flagship Store", url: "#", status: "Eigenmarke", brands: ["Cutler and Gross"] },
-      { name: "Oliver Goldsmith Gallery London", type: "store", state: "London (UK)", desc: "Oliver Goldsmith – Gallery & Store", url: "#", status: "Eigenmarke", brands: ["Oliver Goldsmith"] },
-      { name: "Kuboraum Store Mailand", type: "store", state: "Mailand (IT)", desc: "Kuboraum – Flagship Store", url: "#", status: "Eigenmarke", brands: ["Kuboraum"] },
-      { name: "Mondelliani Rom", type: "store", state: "Rom (IT)", desc: "Mondelliani – Römische Manufaktur", url: "#", status: "Eigenmarke", brands: ["Mondelliani"] },
-      { name: "Theo Eyewear Store Antwerpen", type: "store", state: "Antwerpen (BE)", desc: "Theo Eyewear – Store", url: "#", status: "Eigenmarke", brands: ["Theo Eyewear"] },
-      { name: "Leidmann Dependance", type: "store", state: "München", desc: "Zweite Filiale für Independent-Labels", url: "#", status: "Verfügbar", brands: ["Jacques Marie Mage", "DITA", "Matsuda", "Cutler and Gross", "Peter and May", "Kuboraum", "Retrosuperfuture"] }
+
+      { name: "Leidmann München", type: "store", state: "München", desc: "Benchmark für Independent Luxury Eyewear", url: "https://www.leidmann.de", status: "Exklusiv", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Maybach Icons of Luxury", "Anne et Valentin", "RIGARDS", "Jean-François Rey", "Lafont Paris", "Alain Mikli", "Kuboraum", "Retrosuperfuture", "Théodore", "Etnia Barcelona", "Theo Eyewear", "Garrett Leight", "Barton Perreira", "Morgenthal Frederics", "Salt. Optics", "Blake Kuwahara", "Ahlem", "Oliver Goldsmith", "Linda Farrow", "Kirk Originals", "Ørgreen Optics", "Fleye Copenhagen", "Dutz Eyewear", "Monoqool", "Dawson Eyewear", "Vue DC", "Lool Eyewear", "Nina Mûr", "Palens", "Gentle Monster", "Komono", "WaKaze", "Coterie", "Mieu Eyewear", "Pared Eyewear", "Krewe", "Moa"] },
+      { name: "specs.berlin", type: "store", state: "Berlin", desc: "Crème de la Crème der Independent-Szene", url: "https://specs.berlin", status: "Limitierte Serien", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "Peter and May", "Anne et Valentin", "RIGARDS", "Kuboraum", "Retrosuperfuture", "Theo Eyewear", "Garrett Leight", "Barton Perreira", "Morgenthal Frederics", "Salt. Optics", "Blake Kuwahara", "Ahlem", "Oliver Goldsmith", "Linda Farrow", "Kirk Originals", "Ørgreen Optics", "Fleye Copenhagen", "Dutz Eyewear", "Monoqool", "Dawson Eyewear", "Vue DC", "Lool Eyewear", "Nina Mûr", "Palens", "Gentle Monster", "Komono", "WaKaze", "Coterie", "Mieu Eyewear", "Pared Eyewear", "Krewe", "Moa"] },
+      { name: "Noble Optic House Berlin", type: "store", state: "Berlin", desc: "Luxus- und Couture-Segment", url: "https://www.nobleoptichouse.de", status: "VIP-Betreuung", brands: ["Cartier", "Maybach Icons of Luxury", "DITA", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Peter and May", "Linda Farrow"] },
+      { name: "Söhnges / Rheingold-Optik", type: "store", state: "Düsseldorf", desc: "Königsallee-Umfeld – japanische Titan-Manufakturen", url: "https://www.soehnges.de", status: "Diskrete Beratung", brands: ["DITA", "Matsuda", "Cutler and Gross", "Jacques Marie Mage", "Peter and May", "Kuboraum", "Retrosuperfuture", "Théodore", "Etnia Barcelona", "Theo Eyewear"] },
+      { name: "Bellevue Optical Hamburg", type: "store", state: "Hamburg", desc: "Renommiertester Independent-Optiker im Norden", url: "https://www.bellevue-optical.de", status: "Seltene Nischenmarken", brands: ["Jacques Marie Mage", "Cutler and Gross", "Matsuda", "DITA", "Peter and May", "Anne et Valentin", "RIGARDS", "Kuboraum", "Retrosuperfuture", "Theo Eyewear", "Garrett Leight", "Barton Perreira", "Morgenthal Frederics", "Salt. Optics", "Blake Kuwahara", "Ahlem", "Oliver Goldsmith", "Linda Farrow", "Kirk Originals", "Ørgreen Optics", "Fleye Copenhagen", "Dutz Eyewear", "Monoqool", "Dawson Eyewear", "Vue DC", "Lool Eyewear", "Nina Mûr", "Palens", "Gentle Monster", "Komono", "WaKaze", "Coterie", "Mieu Eyewear", "Pared Eyewear", "Krewe", "Moa"] },
+      { name: "Hanse-Viertel Optik", type: "store", state: "Hamburg", desc: "Offizielle Lizenzen für Cartier, DITA und JMM", url: "https://www.hanseviertel-optik.de", status: "Exklusive Modelle", brands: ["Cartier", "DITA", "Jacques Marie Mage", "Maybach Icons of Luxury", "Matsuda", "Cutler and Gross", "Peter and May"] },
+      { name: "Sehwerk / Optik Kollektiv Köln", type: "store", state: "Köln", desc: "Boutiquen mit Fokus auf Handwerkskunst", url: "https://www.sehwerk-koeln.de", status: "Limitierte Serien", brands: ["Cartier", "Peter and May", "Jacques Marie Mage", "Matsuda", "Cutler and Gross", "Kuboraum", "Retrosuperfuture", "Théodore"] },
+      { name: "Ehler Optik & Akustik", type: "store", state: "Schleswig-Holstein", desc: "Große Straße 12, Flensburg", url: "https://www.ehler-optik.de", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "DITA"] },
+      { name: "Fielmann Luxury Lounge", type: "store", state: "Schleswig-Holstein", desc: "Holm 48, Flensburg", url: "https://www.fielmann.de", status: "Auswahl vorrätig", brands: ["Andy Wolf", "Cartier", "Tom Ford", "Lindberg"] },
+      { name: "Fielmann Flagship Hamburg", type: "store", state: "Hamburg", desc: "Jungfernstieg 40, 20354 Hamburg", url: "https://www.fielmann.de", status: "Große Auswahl", brands: ["Cartier", "Andy Wolf", "Lindberg"] },
+      { name: "Optik Habel", type: "store", state: "Berlin", desc: "Schloßstraße 90, 12163 Berlin", url: "https://www.optik-habel.de", status: "Cartier exklusiv", brands: ["Cartier", "DITA", "Jacques Marie Mage"] },
+      { name: "Brillenwerk Stuttgart", type: "store", state: "Baden-Württemberg", desc: "Königstraße 45, 70173 Stuttgart", url: "https://www.brillenwerk-stuttgart.de", status: "Verfügbar", brands: ["Cartier", "DITA", "Tom Ford"] },
+      { name: "Sehwerk Karlsruhe", type: "store", state: "Baden-Württemberg", desc: "Kaiserstraße 140, Karlsruhe", url: "https://www.sehwerk-karlsruhe.de", status: "Verfügbar", brands: ["Andy Wolf", "Cartier", "Tom Ford"] },
+      { name: "Blickfang Optik", type: "store", state: "Baden-Württemberg", desc: "Königstraße 22, Stuttgart", url: "https://www.blickfang-optik.de", status: "1 Stück", brands: ["Andy Wolf", "Cartier", "DITA"] },
+      { name: "Optik Steininger", type: "store", state: "Bayern", desc: "Sendlinger Straße 25, 80331 München", url: "https://www.optik-steininger.de", status: "Cartier Partner", brands: ["Cartier"] },
+      { name: "Andy Wolf Flagship Store", type: "store", state: "Wien (AT)", desc: "Tuchlauben 11, 1010 Wien", url: "https://www.andy-wolf.com", status: "Alle Kollektionen", brands: ["Andy Wolf"] },
+      { name: "Cartier Boutique Berlin", type: "store", state: "Berlin", desc: "Kurfürstendamm 186, 10707 Berlin", url: "https://www.cartier.com", status: "Komplette Kollektion", brands: ["Cartier"] },
+      { name: "Cartier Boutique München", type: "store", state: "Bayern", desc: "Maximilianstraße 20, 80539 München", url: "https://www.cartier.com", status: "Komplette Kollektion", brands: ["Cartier"] },
+      { name: "Cartier Boutique Wien", type: "store", state: "Wien (AT)", desc: "Kohlmarkt 1, 1010 Wien", url: "https://www.cartier.com", status: "Komplette Kollektion", brands: ["Cartier"] },
+      { name: "Götti Store Zürich", type: "store", state: "Zürich (CH)", desc: "Götti Switzerland – Flagship Store", url: "https://www.gotti.swiss", status: "Eigenmarke", brands: ["Götti Switzerland"] },
+      { name: "Viu Store Zürich", type: "store", state: "Zürich (CH)", desc: "Viu Eyewear – Store & Optiker", url: "https://www.viu.ch", status: "Eigenmarke", brands: ["Viu"] },
+      { name: "Cutler and Gross Flagship London", type: "store", state: "London (UK)", desc: "Cutler and Gross – Flagship Store", url: "https://www.cutlerandgross.com", status: "Eigenmarke", brands: ["Cutler and Gross"] },
+      { name: "Oliver Goldsmith Gallery London", type: "store", state: "London (UK)", desc: "Oliver Goldsmith – Gallery & Store", url: "https://www.olivergoldsmith.com", status: "Eigenmarke", brands: ["Oliver Goldsmith"] },
+      { name: "Kuboraum Store Mailand", type: "store", state: "Mailand (IT)", desc: "Kuboraum – Flagship Store", url: "https://www.kuboraum.com", status: "Eigenmarke", brands: ["Kuboraum"] },
+      { name: "Mondelliani Rom", type: "store", state: "Rom (IT)", desc: "Mondelliani – Römische Manufaktur", url: "https://www.mondelliani.com", status: "Eigenmarke", brands: ["Mondelliani"] },
+      { name: "Theo Eyewear Store Antwerpen", type: "store", state: "Antwerpen (BE)", desc: "Theo Eyewear – Store", url: "https://www.theo.be", status: "Eigenmarke", brands: ["Theo Eyewear"] },
+      { name: "Leidmann Dependance", type: "store", state: "München", desc: "Zweite Filiale für Independent-Labels", url: "https://www.leidmann.de", status: "Verfügbar", brands: ["Jacques Marie Mage", "DITA", "Matsuda", "Cutler and Gross", "Peter and May", "Kuboraum", "Retrosuperfuture"] }
     ];
 
     const INDEPENDENT_LABELS = {
@@ -509,6 +507,22 @@
       "China / Hongkong": ["WaKaze", "Coterie", "Mieu Eyewear"]
     };
 
+    const COUNTRY_BRAND_MAP = {
+      "Deutschland / Österreich / Schweiz": ["Andy Wolf"],
+      "Dänemark / Skandinavien": ["Lindberg"],
+      "Frankreich": ["Cartier"]
+    };
+
+    // Hero-Slider Bilder
+    const HERO_IMAGES = [
+      'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1485875437342-9b39470b3d95?auto=format&fit=crop&w=1600&q=80'
+    ];
+
     // ---------- State ----------
     let wishlist = [];
     let cart = [];
@@ -516,11 +530,14 @@
     let musicPlaying = false;
     let spotifyLoaded = false;
     let spotifyIframe = null;
+    let currentAllowedBrands = null;
+    let heroSlideIndex = 0;
 
     // ---------- Init ----------
     function init() {
       renderCountryFilterBar();
-      renderProducts();
+      setupHeroSlider();
+      renderProducts(currentAllowedBrands);
       updateWishlistUI();
       updateCartUI();
       populateStoreSelect();
@@ -533,12 +550,29 @@
     function setupScrollAnimations() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
+          if (entry.isIntersecting) entry.target.classList.add('visible');
         });
       }, { threshold: 0.1 });
       document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    function setupHeroSlider() {
+      const container = document.getElementById('hero-slides');
+      if (!container) return;
+      HERO_IMAGES.forEach((src, i) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = 'Trendbrille Independent Label';
+        img.style.opacity = i === 0 ? '1' : '0';
+        container.appendChild(img);
+      });
+      setInterval(() => {
+        const imgs = container.querySelectorAll('img');
+        if (!imgs.length) return;
+        imgs[heroSlideIndex].style.opacity = '0';
+        heroSlideIndex = (heroSlideIndex + 1) % imgs.length;
+        imgs[heroSlideIndex].style.opacity = '1';
+      }, 4000);
     }
 
     function renderCountryFilterBar() {
@@ -564,6 +598,9 @@
         tag.textContent = label;
         container.appendChild(tag);
       });
+      currentAllowedBrands = COUNTRY_BRAND_MAP[country] || [];
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      renderProducts(currentAllowedBrands, query);
     }
 
     function openIntro() {
@@ -626,12 +663,23 @@
       icon.className = musicPlaying ? 'fa-solid fa-pause text-base' : 'fa-solid fa-play text-base';
     }
 
-    function renderProducts(filterBrand = 'all', query = '') {
+    function renderProducts(allowedBrands = null, query = '') {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
-      PRODUCTS.forEach(product => {
-        if (filterBrand !== 'all' && product.brand !== filterBrand) return;
-        if (query && !(product.name + ' ' + product.brand + ' ' + product.search).toLowerCase().includes(query)) return;
+      let filteredProducts = PRODUCTS;
+      if (allowedBrands && allowedBrands.length > 0) {
+        filteredProducts = PRODUCTS.filter(p => allowedBrands.includes(p.brand));
+      }
+      if (query) {
+        filteredProducts = filteredProducts.filter(p => 
+          (p.name + ' ' + p.brand + ' ' + p.search).toLowerCase().includes(query)
+        );
+      }
+      if (filteredProducts.length === 0) {
+        container.innerHTML = '<p class="text-stone-500 text-sm">Keine Brillen für diese Auswahl gefunden. Entdecken Sie unsere Stores.</p>';
+        return;
+      }
+      filteredProducts.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card bg-white rounded-sm border border-beige overflow-hidden';
         card.innerHTML = `
@@ -659,7 +707,7 @@
 
     function filterProducts() {
       const query = document.getElementById('searchInput').value.toLowerCase();
-      renderProducts('all', query);
+      renderProducts(currentAllowedBrands, query);
     }
 
     function openDetail(id) {
@@ -726,17 +774,13 @@
       });
       html += '<div class="font-semibold text-stone-900 border-b border-beige pb-1 mt-3 mb-2">Optiker Fachgeschäfte & Partner</div>';
       matchingStores.filter(s => s.type === 'store').forEach(store => {
-        html += `<a href="#" onclick="showStoreInfo('${store.name}', '${store.desc}'); return false;" class="flex justify-between border-b border-beige/60 pb-1.5 hover:bg-stone-200/50 p-1 rounded transition">
+        html += `<a href="${store.url}" target="_blank" class="flex justify-between border-b border-beige/60 pb-1.5 hover:bg-stone-200/50 p-1 rounded transition">
           <div><p class="font-medium text-stone-900">${store.name} <span class="text-[9px] bg-stone-200 text-stone-700 px-1 py-0.5 rounded ml-1">${store.state}</span></p>
           <p class="text-stone-500 text-[10px]">${store.desc}</p></div>
           <span class="text-emerald-700 font-medium text-[11px]">${store.status}</span></a>`;
       });
       container.innerHTML = html;
       container.classList.remove('hidden');
-    }
-
-    function showStoreInfo(name, desc) {
-      showToast(`${name} – ${desc}`);
     }
 
     function addToCart(name, price, img) {
