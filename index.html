@@ -235,7 +235,7 @@
         </div>
 
         <div>
-          <label class="block text-xs uppercase tracking-wider font-semibold mb-3">2. Glas-Tönung</label>
+          <label class="block text-xs uppercase tracking-wider font-semibold mb-3">2. Glasstönung</label>
           <div class="flex space-x-3">
             <button onclick="setConfigLens('bg-transparent')" class="px-4 py-2 border border-black text-xs uppercase tracking-wider">Klarglas</button>
             <button onclick="setConfigLens('bg-stone-900/60')" class="px-4 py-2 bg-stone-900 text-white text-xs uppercase tracking-wider">Dunkelgrau 85%</button>
@@ -389,7 +389,7 @@
     // Weltweite Top Independent Eyewear Labels
     const INDEPENDENT_LABELS = {
       "Deutschland / Ö / CH": [
-        "MYKITA", "ic! berlin", "Lunor", "CAZAL", "Andy Wolf", 
+        "MYKITA (Berlin)", "ic! berlin", "Lunor (Schwarzwald)", "CAZAL", "Andy Wolf (Österreich)", 
         "Götti Switzerland", "Klenze & Baum", "Rolf Spectacles", "Reiz Germany", "Funk Eyewear", "Hoffmann Natural Eyewear"
       ],
       "Japan": [
@@ -397,92 +397,32 @@
         "Takahiro Miyashita", "Nackymade", "Factory900", "KameManNen", "Boston Club"
       ],
       "Frankreich": [
-        "Jacques Marie Mage", "Anne et Valentin", "Lafont Paris", "Thierry Lasry", 
+        "Jacques Marie Mage (Atelier/Design)", "Anne et Valentin", "Lafont Paris", "Thierry Lasry", 
         "Ahlem Eyewear", "Morel France", "J.F. Rey", "Sabine Be", "Lucas de Staël"
       ],
       "Italien": [
-        "Res/Rei", "L.G.R", "Tavat Eyewear", "Movitra", "Kubeora", "Haffmans & Neumeister", "NATIVE SONS"
+        "Res/Rei", "L.G.R", "Tavat Eyewear", "Movitra", "Kubeora", "Haffmans & Neumeister (Collab)", "NATIVE SONS"
       ],
       "USA / Nordamerika": [
-        "Oliver Peoples", "Garrett Leight", "Salt Optics", "Barton Perreira", 
-        "Moscot", "Robert Marc NYC", "Talla Eyewear"
+        "Oliver Peoples", "Garrett Leight (GLCO)", "Salt Optics", "Barton Perreira", 
+        "Moscot (NYC)", "Robert Marc NYC", "Talla Eyewear"
       ],
       "Dänemark & Skandinavien": [
-        "Lindberg", "Ørgreen Optics", "ProDesign Denmark", "Fleye Copenhagen", "Kaibosh"
+        "Lindberg", "Ørgreen Optics", "ProDesign Denmark", "Fleye Copenhagen", "Kaibosh (Norwegen)"
       ],
       "Großbritannien": [
         "Cutler and Gross", "Oliver Goldsmith", "Tom Davies", "Cubitts"
       ]
     };
 
-    // Vollständige Produkt- & Marken-Liste aller Independent Labels mit integrierten Online-Bildern als Platzhalter
+    // Produkte
     const PRODUCTS = [
-      // DACH
-      { id: 1, brand: 'MYKITA', name: 'Lite Tuva Noir', price: '490 €', storeId: 'specsberlin', country: 'Deutschland / Ö / CH', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Edelstahl-Fassung aus der Berliner Manufaktur.', search: 'mykita berlin stainless steel' },
-      { id: 2, brand: 'ic! berlin', name: 'Silk East Silver', price: '450 €', storeId: 'ehler', country: 'Deutschland / Ö / CH', img: 'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80', desc: 'Schraubenloses Design aus deutschem Federedelstahl.', search: 'ic berlin federedelstahl Germany' },
-      { id: 3, brand: 'Lunor', name: 'Classic Round Gold', price: '520 €', storeId: 'leidmann', country: 'Deutschland / Ö / CH', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Feinste Handwerkskunst aus dem Schwarzwald.', search: 'lunor klassisch schwarzwald gold' },
-      { id: 4, brand: 'CAZAL', name: 'Legends 607', price: '480 €', storeId: 'edeloptics', country: 'Deutschland / Ö / CH', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', desc: 'Ikonisches Vintage-Acetat-Design der Extraklasse.', search: 'cazal vintage legend acetat' },
-      { id: 5, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeId: 'brillenlab', country: 'Deutschland / Ö / CH', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Handgefertigt in Österreich aus Bio-Acetat.', search: 'andy wolf oesterreich bio acetat' },
-      { id: 6, brand: 'Götti Switzerland', name: 'Perspective Minimal', price: '460 €', storeId: 'bellevue', country: 'Deutschland / Ö / CH', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Schweizer Präzision im additiven 3D-Druck.', search: 'gotti switzerland schweiz 3d' },
-      { id: 7, brand: 'Klenze & Baum', name: 'Vanguard 3D', price: '440 €', storeId: 'specsberlin', country: 'Deutschland / Ö / CH', img: 'https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?auto=format&fit=crop&w=1000&q=80', desc: 'Innovatives 3D-Druck Verfahren aus München.', search: 'klenze baum muenchen vanguard' },
-      { id: 8, brand: 'Rolf Spectacles', name: 'Wood Collection', price: '750 €', storeId: 'leidmann', country: 'Deutschland / Ö / CH', img: 'https://images.unsplash.com/photo-1516714435131-44d6b64dc6a2?auto=format&fit=crop&w=1000&q=80', desc: 'Echtholzbrillen aus Tiroler Handarbeit.', search: 'rolf spectacles holz tirol' },
-      { id: 9, brand: 'Reiz Germany', name: 'Optat Acetat', price: '410 €', storeId: 'ehler', country: 'Deutschland / Ö / CH', img: 'https://images.unsplash.com/photo-1509695507497-903c140c43b0?auto=format&fit=crop&w=1000&q=80', desc: 'Zeitlose Ästhetik aus deutscher Manufaktur.', search: 'reiz germany acetat' },
-      { id: 10, brand: 'Funk Eyewear', name: 'Dieter Custom', price: '390 €', storeId: 'brillenlab', country: 'Deutschland / Ö / CH', img: 'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80', desc: 'Bayerische Brillenmanufaktur mit Charakter.', search: 'funk eyewear bayern' },
-      { id: 11, brand: 'Hoffmann Natural Eyewear', name: 'Buffalo Horn 101', price: '890 €', storeId: 'leidmann', country: 'Deutschland / Ö / CH', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Handgefertigte Naturhorn-Fassung aus der Eifel.', search: 'hoffmann horn naturhorn eifel' },
-
-      // Japan
-      { id: 12, brand: 'Matsuda', name: 'M3023 Titanium', price: '820 €', storeId: 'leidmann', country: 'Japan', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', desc: 'Japanische Meisterklasse mit Gravuren in Handarbeit.', search: 'matsuda japan titan gravur' },
-      { id: 13, brand: 'DITA Eyewear', name: 'Statesman Six', price: '890 €', storeId: 'leidmann', country: 'Japan', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Luxuriöse Titan-Acetat Komposition.', search: 'dita japan luxury titan' },
-      { id: 14, brand: 'Eyevan 7285', name: 'Model 319', price: '580 €', storeId: 'specsberlin', country: 'Japan', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Minimalistisches japanisches Vintage-Design.', search: 'eyevan japan vintage' },
-      { id: 15, brand: 'Masunaga 1905', name: 'GMS-805', price: '560 €', storeId: 'bellevue', country: 'Japan', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Kaiserliche Brillenmanufaktur aus Fukui.', search: 'masunaga fukui japan 1905' },
-      { id: 16, brand: 'Yuichi Toyama', name: 'U-067 Dual', price: '510 €', storeId: 'specsberlin', country: 'Japan', img: 'https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?auto=format&fit=crop&w=1000&q=80', desc: 'Moderne Linienführung inspiriert von Tokio.', search: 'yuichi toyama tokio japan' },
-      { id: 17, brand: 'Takahiro Miyashita', name: 'Soloist Edition', price: '640 €', storeId: 'leidmann', country: 'Japan', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Avantgardistisches Brillendesign.', search: 'takahiro miyashita soloist japan' },
-      { id: 18, brand: 'Nackymade', name: 'Hand Carved Dragon', price: '720 €', storeId: 'leidmann', country: 'Japan', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', desc: 'Einzelstücke mit handgeschnitzten Bügeln.', search: 'nackymade japan handarbeit' },
-      { id: 19, brand: 'Factory900', name: 'FA-240 Sculpted', price: '490 €', storeId: 'specsberlin', country: 'Japan', img: 'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80', desc: 'Dreidimensionale Acetat-Skulpturen.', search: 'factory900 3d acetat japan' },
-      { id: 20, brand: 'KameManNen', name: 'KMN-99 Round', price: '470 €', storeId: 'bellevue', country: 'Japan', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Älteste Brillenmarke Japans seit 1917.', search: 'kamemannen japan titan 1917' },
-      { id: 21, brand: 'Boston Club', name: 'Daniel Round', price: '430 €', storeId: 'ehler', country: 'Japan', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Japanische Neuinterpretation klassischer US-Formen.', search: 'boston club japan classic' },
-
-      // Frankreich
-      { id: 22, brand: 'Jacques Marie Mage', name: 'Dealan Noir', price: '790 €', storeId: 'leidmann', country: 'Frankreich', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Limitierte Sammlerstücke in französischer Ästhetik.', search: 'jmm jacques marie mage dealan' },
-      { id: 23, brand: 'Anne et Valentin', name: 'Kromatik Paris', price: '420 €', storeId: 'specsberlin', country: 'Frankreich', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Kreativer Ausdruck und lebendige Farben aus Toulouse.', search: 'anne et valentin toulouse france' },
-      { id: 24, brand: 'Lafont Paris', name: 'Réedition 1923', price: '360 €', storeId: 'ehler', country: 'Frankreich', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Pariser Eleganz und Tradition seit über 90 Jahren.', search: 'lafont paris france' },
-      { id: 25, brand: 'Thierry Lasry', name: 'Sexxxy Black', price: '440 €', storeId: 'edeloptics', country: 'Frankreich', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', desc: 'Avantgardistische Sonnenbrillen aus Paris.', search: 'thierry lasry paris sunset' },
-      { id: 26, brand: 'Ahlem Eyewear', name: 'Place de la Concorde', price: '490 €', storeId: 'leidmann', country: 'Frankreich', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Handgefertigt in Oyonnax mit 22k Goldbeschichtung.', search: 'ahlem paris oyonnax gold' },
-      { id: 27, brand: 'Morel France', name: 'Öga Wood Hybrid', price: '380 €', storeId: 'optikerbode', country: 'Frankreich', img: 'https://images.unsplash.com/photo-1516714435131-44d6b64dc6a2?auto=format&fit=crop&w=1000&q=80', desc: 'Traditionelle französische Manufaktur im Jura-Gebirge.', search: 'morel france jura oega' },
-      { id: 28, brand: 'J.F. Rey', name: 'Carbon & Wood 22', price: '460 €', storeId: 'specsberlin', country: 'Frankreich', img: 'https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?auto=format&fit=crop&w=1000&q=80', desc: 'High-Tech Materialmix aus Carbon und Acetat.', search: 'jf rey marseille france' },
-      { id: 29, brand: 'Sabine Be', name: 'Be Cat-Eye', price: '390 €', storeId: 'brillenlab', country: 'Frankreich', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Extravagantes Design aus Frankreich.', search: 'sabine be france cateye' },
-      { id: 30, brand: 'Lucas de Staël', name: 'Leather Frame Edition', price: '950 €', storeId: 'leidmann', country: 'Frankreich', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Echtleder- & Steinbezogene Titanbrillen aus Paris.', search: 'lucas de stael paris leder' },
-
-      // Italien
-      { id: 31, brand: 'Res/Rei', name: 'Barocco Violet', price: '370 €', storeId: 'specsberlin', country: 'Italien', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Handgefertigt in Italien aus exklusiven Acetatfarben.', search: 'res rei italy acetat' },
-      { id: 32, brand: 'L.G.R', name: 'Reunion Flap', price: '410 €', storeId: 'leidmann', country: 'Italien', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', desc: 'Italienische Handwerkskunst inspiriert von Afrika.', search: 'lgr reunion italy optics' },
-      { id: 33, brand: 'Tavat Eyewear', name: 'Soupcan Round', price: '520 €', storeId: 'bellevue', country: 'Italien', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Ikonisches Uhrmacher-Scharnier aus den Dolomiten.', search: 'tavat soupcan dolomiten italy' },
-      { id: 34, brand: 'Movitra', name: 'Rotation Frame', price: '480 €', storeId: 'specsberlin', country: 'Italien', img: 'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80', desc: 'Patentierter Drehmechanismus zum Schutz der Gläser.', search: 'movitra mailand milano italy' },
-      { id: 35, brand: 'Kubeora', name: 'Mailand Pure', price: '360 €', storeId: 'brillenlab', country: 'Italien', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Clean Ästhetik aus der Modemetropole Mailand.', search: 'kubeora milano mailand' },
-      { id: 36, brand: 'Haffmans & Neumeister', name: 'Collab Ultra Light', price: '490 €', storeId: 'specsberlin', country: 'Italien', img: 'https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?auto=format&fit=crop&w=1000&q=80', desc: 'Ultraflacher Edelstahl mit minimalistischem Anspruch.', search: 'haffmans neumeister ultralight' },
-      { id: 37, brand: 'NATIVE SONS', name: 'Guerrilla Custom', price: '530 €', storeId: 'leidmann', country: 'Italien', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Handgefertigte High-End Fassungen in limitierter Stückzahl.', search: 'native sons luxury optics' },
-
-      // USA / Nordamerika
-      { id: 38, brand: 'Oliver Peoples', name: 'Gregory Peck', price: '380 €', storeId: 'misterspex', country: 'USA / Nordamerika', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', desc: 'Kalifornischer Vintage-Klassiker aus Hollywood.', search: 'oliver peoples hollywood california' },
-      { id: 39, brand: 'Garrett Leight', name: 'Hampton California', price: '340 €', storeId: 'specsberlin', country: 'USA / Nordamerika', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Lässiger Venice Beach Style in bester Acetatqualität.', search: 'garrett leight glco venice beach' },
-      { id: 40, brand: 'Salt Optics', name: 'Lodge Titanium', price: '460 €', storeId: 'bellevue', country: 'USA / Nordamerika', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Inspiriert von der Natur Kaliforniens.', search: 'salt optics california nature' },
-      { id: 41, brand: 'Barton Perreira', name: 'Cagney Tortoise', price: '480 €', storeId: 'leidmann', country: 'USA / Nordamerika', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Damen- & Herrenbrillen auf Couture-Niveau.', search: 'barton perreira hollywood luxury' },
-      { id: 42, brand: 'Moscot', name: 'Lemtosh NYC', price: '320 €', storeId: 'specsberlin', country: 'USA / Nordamerika', img: 'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80', desc: 'Kult-Brille aus New Yorks Lower East Side seit 1915.', search: 'moscot lemtosh new york nyc' },
-      { id: 43, brand: 'Robert Marc NYC', name: 'Iconic Hinge 800', price: '490 €', storeId: 'leidmann', country: 'USA / Nordamerika', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Typisches NYC-Scharnier und zeitlose Formen.', search: 'robert marc nyc new york' },
-      { id: 44, brand: 'Talla Eyewear', name: 'Gentleman Line', price: '390 €', storeId: 'ehler', country: 'USA / Nordamerika', img: 'https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?auto=format&fit=crop&w=1000&q=80', desc: 'Eleganz für den modernen Mann.', search: 'talla eyewear gentleman' },
-
-      // Skandinavien
-      { id: 45, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', storeId: 'bellevue', country: 'Dänemark & Skandinavien', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Dänischer Minimalismus aus ultra-leichtem Titan.', search: 'lindberg titan daenemark bellevue' },
-      { id: 46, brand: 'Ørgreen Optics', name: 'Quantum Titanium', price: '480 €', storeId: 'specsberlin', country: 'Dänemark & Skandinavien', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Dänisches Design mit markanten Farbkombinationen.', search: 'orgreen optics kopenhagen titan' },
-      { id: 47, brand: 'ProDesign Denmark', name: 'Axiom Flex', price: '310 €', storeId: 'optikerbode', country: 'Dänemark & Skandinavien', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Funktionaler dänischer Lifestyle.', search: 'prodesign denmark aarhus' },
-      { id: 48, brand: 'Fleye Copenhagen', name: 'Carbon Wood Light', price: '430 €', storeId: 'ehler', country: 'Dänemark & Skandinavien', img: 'https://images.unsplash.com/photo-1516714435131-44d6b64dc6a2?auto=format&fit=crop&w=1000&q=80', desc: 'Hypoallergene Materialien im Kopenhagener Stil.', search: 'fleye copenhagen carbon holz' },
-      { id: 49, brand: 'Kaibosh', name: 'Nordic Light', price: '190 €', storeId: 'brillenlab', country: 'Dänemark & Skandinavien', img: 'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80', desc: 'Norwegisches Concept Eyewear Design aus Bergen.', search: 'kaibosh norwegen bergen' },
-
-      // Großbritannien
-      { id: 50, brand: 'Cutler and Gross', name: '0692 Kingsman', price: '420 €', storeId: 'leidmann', country: 'Großbritannien', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', desc: 'Britische Maßschneiderei für die Augen.', search: 'cutler and gross london kingsman' },
-      { id: 51, brand: 'Oliver Goldsmith', name: 'Manhattan 1960', price: '390 €', storeId: 'specsberlin', country: 'Großbritannien', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Pioniere des Sonnenbrillendesigns aus London.', search: 'oliver goldsmith london vintage' },
-      { id: 52, brand: 'Tom Davies', name: 'Bespoke Titanium', price: '680 €', storeId: 'bellevue', country: 'Großbritannien', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Britisches Maßdesign auf individuellem Kundenwunsch.', search: 'tom davies bespoke london titan' },
-      { id: 53, brand: 'Cubitts', name: 'Judd King Cross', price: '220 €', storeId: 'brillenlab', country: 'Großbritannien', img: 'https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?auto=format&fit=crop&w=1000&q=80', desc: 'Klassisch englisches Brillendesign aus Kings Cross.', search: 'cubitts london kings cross' }
+      { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeId: 'brillenlab', img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1000&q=80', desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium' },
+      { id: 2, brand: 'MYKITA', name: 'Lite Tuva', price: '490 €', storeId: 'specsberlin', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80', desc: 'Patentiertes schraubenloses Gelenk aus ultraleichtem Edelstahl, gefertigt in Berlin.', search: 'mykita lite tuva berlin specsberlin' },
+      { id: 3, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', storeId: 'bellevue', img: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=1000&q=80', desc: 'Dänischer Minimalismus. Schraubenloses Titandraht-Design mit maximalem Tragekomfort.', search: 'lindberg titan daenemark bellevue hamburg' },
+      { id: 4, brand: 'DITA', name: 'Statesman Six', price: '890 €', storeId: 'leidmann', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1000&q=80', desc: 'Japanische Präzision. Acetat-Titan-Hybridkonstruktion auf höchstem Niveau.', search: 'dita statesman japan leidmann muenchen' },
+      { id: 5, brand: 'Jacques Marie Mage', name: 'Dealan Noir', price: '790 €', storeId: 'leidmann', img: 'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?auto=format&fit=crop&w=1000&q=80', desc: 'Limitierte Auflage aus Japan. 10mm Acetat mit charakteristischem Skulpturenschliff.', search: 'jmm jacques marie mage dealan leidmann' },
+      { id: 6, brand: 'ic! berlin', name: 'Silk East', price: '450 €', storeId: 'ehler', img: 'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1000&q=80', desc: 'Federleichte Federedelstahl-Fassung ohne Schrauben und Lötstellen.', search: 'ic berlin silk ehler optik flensburg' }
     ];
 
     const HERO_SLIDES = [
@@ -494,7 +434,6 @@
     let wishlist = [];
     let cart = [];
     let heroSlideIndex = 0;
-    let selectedCountryFilter = "Deutschland / Ö / CH";
 
     function init() {
       renderCountryFilters();
@@ -540,54 +479,27 @@
     function renderCountryFilters() {
       const bar = document.getElementById('country-filter-bar');
       bar.innerHTML = '';
-      
-      const allBtn = document.createElement('button');
-      allBtn.className = `filter-btn text-[10px] uppercase border border-[var(--border-editorial)] px-4 py-2 hover:border-black transition-colors whitespace-nowrap active`;
-      allBtn.textContent = 'Alle Regionen';
-      allBtn.onclick = () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        allBtn.classList.add('active');
-        selectedCountryFilter = 'ALL';
-        renderLabelTags('ALL');
-        renderProducts();
-      };
-      bar.appendChild(allBtn);
-
-      Object.keys(INDEPENDENT_LABELS).forEach((country) => {
+      Object.keys(INDEPENDENT_LABELS).forEach((country, index) => {
         const btn = document.createElement('button');
-        btn.className = `filter-btn text-[10px] uppercase border border-[var(--border-editorial)] px-4 py-2 hover:border-black transition-colors whitespace-nowrap`;
+        btn.className = `filter-btn text-[10px] uppercase border border-[var(--border-editorial)] px-4 py-2 hover:border-black transition-colors whitespace-nowrap ${index === 0 ? 'active' : ''}`;
         btn.textContent = country;
         btn.onclick = () => {
           document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
-          selectedCountryFilter = country;
           renderLabelTags(country);
-          renderProducts();
         };
         bar.appendChild(btn);
       });
-      renderLabelTags('ALL');
+      renderLabelTags(Object.keys(INDEPENDENT_LABELS)[0]);
     }
 
     function renderLabelTags(country) {
       const container = document.getElementById('selected-country-labels');
       container.innerHTML = '';
-
-      let labelsToDisplay = [];
-      if (country === 'ALL') {
-        Object.values(INDEPENDENT_LABELS).forEach(arr => { labelsToDisplay = labelsToDisplay.concat(arr); });
-      } else {
-        labelsToDisplay = INDEPENDENT_LABELS[country] || [];
-      }
-
-      labelsToDisplay.forEach(label => {
-        const tag = document.createElement('button');
-        tag.className = 'text-[10px] bg-[var(--surface-editorial)] border border-[var(--border-editorial)] px-3 py-1.5 tracking-wider text-[var(--text-main)] font-medium hover:border-black transition-colors';
+      INDEPENDENT_LABELS[country].forEach(label => {
+        const tag = document.createElement('span');
+        tag.className = 'text-[10px] bg-[var(--surface-editorial)] border border-[var(--border-editorial)] px-3 py-1.5 tracking-wider text-[var(--text-main)] font-medium';
         tag.textContent = label;
-        tag.onclick = () => {
-          document.getElementById('searchInput').value = label;
-          renderProducts(label.toLowerCase());
-        };
         container.appendChild(tag);
       });
     }
@@ -601,20 +513,8 @@
       container.innerHTML = '';
       
       let items = PRODUCTS;
-
-      // Filter nach ausgewählter Region
-      if (selectedCountryFilter && selectedCountryFilter !== 'ALL') {
-        items = items.filter(p => p.country === selectedCountryFilter);
-      }
-
-      // Filter nach Suchfeld
       if (query) {
-        items = items.filter(p => (p.brand + ' ' + p.name + ' ' + p.search + ' ' + p.country).toLowerCase().includes(query));
-      }
-
-      if (items.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-12 text-center">Keine Brillenmodelle für diese Auswahl gefunden.</p>';
-        return;
+        items = items.filter(p => (p.brand + ' ' + p.name + ' ' + p.search).toLowerCase().includes(query));
       }
 
       items.forEach(p => {
@@ -623,13 +523,12 @@
         card.className = 'product-card group cursor-pointer';
         card.innerHTML = `
           <div class="img-zoom-container bg-[var(--surface-editorial)] mb-5 border border-[var(--border-editorial)] relative" onclick="openDetail(${p.id})">
-            <img src="${p.img}" alt="${p.brand} ${p.name}" class="w-full h-80 object-cover">
-            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 text-[9px] uppercase tracking-widest text-stone-800 border border-[var(--border-editorial)] font-medium">${p.brand}</span>
+            <img src="${p.img}" alt="${p.name}" class="w-full h-80 object-cover">
           </div>
           
           <div class="flex justify-between items-start mb-2">
             <div>
-              <p class="text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">${p.country}</p>
+              <p class="text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">${p.brand}</p>
               <h3 class="font-serif text-xl font-light">${p.name}</h3>
             </div>
             <p class="text-xs font-medium">${p.price}</p>
@@ -647,15 +546,14 @@
           </div>
 
           <div class="mt-4 pt-3 border-t border-[var(--border-editorial)]/50 flex space-x-3">
-            <button onclick="addToCart('${p.brand} ${p.name}', '${p.price}', '${p.img}', '${store.name}')" class="flex-1 py-2.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest hover:bg-stone-800 transition-colors">In den Warenkorb</button>
-            <button onclick="toggleWishlist(this, '${p.brand} ${p.name}')" class="px-3 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors"><i class="fa-regular fa-heart"></i></button>
+            <button onclick="addToCart('${p.name}', '${p.price}', '${p.img}', '${store.name}')" class="flex-1 py-2.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest hover:bg-stone-800 transition-colors">In den Warenkorb</button>
+            <button onclick="toggleWishlist(this, '${p.name}')" class="px-3 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors"><i class="fa-regular fa-heart"></i></button>
           </div>
         `;
         container.appendChild(card);
       });
     }
 
-    // STORE-LOCATOR LOGIK & ERWEITERUNG
     function renderStoreLocatorGrid(filteredStores = null) {
       const container = document.getElementById('locator-grid');
       if (!container) return;
@@ -708,7 +606,6 @@
       renderStoreLocatorGrid();
     }
 
-    // KONFIGURATOR LOGIK
     function setConfigFrame(colorClass) {
       const frame = document.getElementById('config-frame-preview');
       frame.className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
@@ -731,7 +628,7 @@
       if (!p) return;
       const store = getStoreInfo(p.storeId);
 
-      document.getElementById('modalBrand').innerText = p.brand + ' (' + p.country + ')';
+      document.getElementById('modalBrand').innerText = p.brand;
       document.getElementById('modalName').innerText = p.name;
       document.getElementById('modalPrice').innerText = p.price;
       document.getElementById('modalDesc').innerText = p.desc;
@@ -751,7 +648,7 @@
         </div>
       `;
 
-      document.getElementById('modalAddBtn').onclick = () => { addToCart(p.brand + ' ' + p.name, p.price, p.img, store.name); closeDetail(); };
+      document.getElementById('modalAddBtn').onclick = () => { addToCart(p.name, p.price, p.img, store.name); closeDetail(); };
       document.getElementById('detailModal').classList.remove('hidden');
       document.getElementById('detailModal').classList.add('flex');
     }
@@ -910,6 +807,7 @@
       }
     }
 
+    // Initialisierung beim Laden des DOMs
     window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
