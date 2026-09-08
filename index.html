@@ -34,10 +34,7 @@
       overflow-x: hidden;
     }
 
-    h1,
-    h2,
-    h3,
-    .font-serif {
+    h1, h2, h3, .font-serif {
       font-family: var(--font-serif);
     }
 
@@ -151,16 +148,6 @@
     @media (min-width: 1024px) {
       .modal-card { width: 50%; }
     }
-    .modal-card .overflow-y-auto {
-      scrollbar-width: thin;
-      scrollbar-color: var(--border-editorial) transparent;
-    }
-    .modal-card .overflow-y-auto::-webkit-scrollbar {
-      width: 4px;
-    }
-    .modal-card .overflow-y-auto::-webkit-scrollbar-thumb {
-      background-color: var(--border-editorial);
-    }
 
     #intro-overlay {
       position: fixed;
@@ -194,22 +181,13 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       filter: drop-shadow(0 4px 30px rgba(201, 168, 124, 0.35));
-      transition: transform 1.6s cubic-bezier(0.25, 1, 0.5, 1),
-                  opacity 1.6s ease,
-                  filter 1.6s ease,
-                  letter-spacing 1.6s ease;
-      transform: scale(1);
-      opacity: 1;
+      transition: transform 1.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.6s ease, filter 1.6s ease, letter-spacing 1.6s ease;
     }
     .intro-title.dissolve {
       transform: scale(0.85) translateY(-30px);
       opacity: 0;
       filter: blur(14px) drop-shadow(0 8px 50px rgba(201, 168, 124, 0.5));
       letter-spacing: 0.5em;
-      background: linear-gradient(135deg, #f0ebe3 0%, #c9a87c 50%, #a68b66 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
     .intro-sub {
@@ -218,12 +196,7 @@
       text-transform: uppercase;
       color: #b5a58a;
       margin-top: 1rem;
-      transition: opacity 1.2s ease 0.3s,
-                  transform 1.2s ease 0.3s,
-                  filter 1.2s ease 0.3s;
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0px);
+      transition: opacity 1.2s ease 0.3s, transform 1.2s ease 0.3s, filter 1.2s ease 0.3s;
     }
     .intro-sub.dissolve {
       opacity: 0;
@@ -412,63 +385,6 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16" id="product-list"></div>
     </section>
 
-    <!-- ===== INSPIRATION & EDITORIAL SEKTION ===== -->
-    <section class="mb-24 py-16 px-6 lg:px-12 bg-white border border-[var(--border-editorial)] fade-in">
-      <div class="max-w-4xl mx-auto text-center mb-16">
-        <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-3">Inspiration & Perspektiven</p>
-        <h2 class="text-3xl md:text-4xl font-serif font-light tracking-wide">Handwerk trifft Haltung</h2>
-        <div class="w-10 h-[1px] bg-stone-300 mx-auto mt-4"></div>
-      </div>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="p-6 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex flex-col justify-between">
-          <div>
-            <span class="text-[9px] uppercase tracking-widest text-[var(--text-muted)] block mb-2">Atelier Insights</span>
-            <h3 class="font-serif text-2xl font-light mb-3">Die Seele des Acetats</h3>
-            <p class="text-xs text-[var(--text-muted)] leading-relaxed font-light mb-6">
-              Bio-Acetat aus pflanzlicher Cellulose: Warum Manufakturen in Hartberg, Sabae und Oyonnax auf natürliche Rohstoffe und wochenlange Handpolituren setzen.
-            </p>
-          </div>
-          <button onclick="showToast('Editorial wird geladen...')" class="text-[10px] uppercase tracking-widest font-semibold text-left underline decoration-stone-400 hover:text-black">Artikel lesen</button>
-        </div>
-        <div class="p-6 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex flex-col justify-between">
-          <div>
-            <span class="text-[9px] uppercase tracking-widest text-[var(--text-muted)] block mb-2">Design Philosophie</span>
-            <h3 class="font-serif text-2xl font-light mb-3">Schraubenlose Präzision</h3>
-            <p class="text-xs text-[var(--text-muted)] leading-relaxed font-light mb-6">
-              Von Berliner Edelstahl-Innovationen bis zu dänischem Titandraht: Wie Verzicht auf mechanische Bauteile maximale Leichtigkeit und Langlebigkeit erzeugt.
-            </p>
-          </div>
-          <button onclick="showToast('Editorial wird geladen...')" class="text-[10px] uppercase tracking-widest font-semibold text-left underline decoration-stone-400 hover:text-black">Artikel lesen</button>
-        </div>
-        <div class="p-6 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex flex-col justify-between">
-          <div>
-            <span class="text-[9px] uppercase tracking-widest text-[var(--text-muted)] block mb-2">Fachhandel & Beratung</span>
-            <h3 class="font-serif text-2xl font-light mb-3">Der geschulte Blick</h3>
-            <p class="text-xs text-[var(--text-muted)] leading-relaxed font-light mb-6">
-              Warum die perfekte Passform und der individuelle Sehtest beim spezialisierten Optiker durch keinen Algorithmus der Welt ersetzt werden können.
-            </p>
-          </div>
-          <button onclick="showToast('Editorial wird geladen...')" class="text-[10px] uppercase tracking-widest font-semibold text-left underline decoration-stone-400 hover:text-black">Artikel lesen</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="bg-[#1a1918] text-[#fcfbf9] -mx-6 lg:-mx-12 px-6 lg:px-20 py-24 my-20 fade-in">
-      <div class="max-w-4xl mx-auto text-center">
-        <p class="text-[10px] uppercase tracking-[0.4em] opacity-50 mb-4">Exzellenz & Handwerk</p>
-        <h2 class="text-4xl md:text-5xl font-serif font-light mb-8 leading-tight">Authentische Brillenkunst & Premium-Stores</h2>
-        <p class="text-sm md:text-base font-light text-stone-300 leading-relaxed max-w-2xl mx-auto">
-          LUXEVUE verbindet Liebhaber erstklassigen Brillendesigns mit den feinsten unabhängigen Ateliers und spezialisierten Optikern.
-        </p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mt-16 pt-12 border-t border-white/10">
-          <div><p class="text-4xl font-serif font-light">60+</p><p class="text-[10px] uppercase tracking-widest text-stone-400 mt-2">Top Labels</p></div>
-          <div><p class="text-4xl font-serif font-light">Global</p><p class="text-[10px] uppercase tracking-widest text-stone-400 mt-2">Manufakturen</p></div>
-          <div><p class="text-4xl font-serif font-light">100%</p><p class="text-[10px] uppercase tracking-widest text-stone-400 mt-2">Independent</p></div>
-          <div><p class="text-4xl font-serif font-light">Direkt</p><p class="text-[10px] uppercase tracking-widest text-stone-400 mt-2">Store Links</p></div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <!-- ===== PAGE: STORE LOCATOR ===== -->
@@ -602,7 +518,7 @@
           </label>
           <label class="payment-option">
             <input type="radio" name="payment" value="googlepay" />
-            <i class="fa-brands fa-google-pay payment-icon"></i>
+            <i class="fa-brands fa-google payment-icon"></i>
             <span class="payment-label">Google Pay</span>
           </label>
           <label class="payment-option">
@@ -727,7 +643,7 @@
           <i class="fa-brands fa-paypal" title="PayPal"></i>
           <i class="fa-regular fa-clock" title="Klarna"></i>
           <i class="fa-brands fa-apple" title="Apple Pay"></i>
-          <i class="fa-brands fa-google-pay" title="Google Pay"></i>
+          <i class="fa-brands fa-google" title="Google Pay"></i>
           <i class="fa-regular fa-building-columns" title="Vorkasse"></i>
         </div>
         <p class="text-[10px] text-[var(--text-muted)] mt-3 leading-relaxed">
@@ -865,10 +781,9 @@
       { id: 34, brand: 'Ørgreen Optics', name: 'Quantum High-Tech', price: '480 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Kopenhagener Design aus Reintitan mit unverwechselbaren Farbkombinationen.', search: 'orgreen optics kopenhagen ehler optik' },
       { id: 35, brand: 'ProDesign Denmark', name: 'Essential 12', price: '290 €', storeId: 'optikerbode', img: IMAGE_PLACEHOLDER, desc: 'Funktionales skandinavisches Brillendesign mit klaren Strukturen.', search: 'prodesign denmark optiker bode' },
       { id: 36, brand: 'Cutler and Gross', name: '1386 Bold King', price: '470 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Britischer Statement-Style aus Knightsbridge, London.', search: 'cutler and gross london specsberlin' },
-      { id: 37, brand: 'Cubitts', name: 'Judd Round', price: '240 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Traditionelles Brillenhandwerk aus King\\'s Cross, London.', search: 'cubitts london brillenlaboratorium' }
+      { id: 37, brand: 'Cubitts', name: 'Judd Round', price: '240 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Traditionelles Brillenhandwerk aus King\'s Cross, London.', search: 'cubitts london brillenlaboratorium' }
     ];
 
-    // ---------- State ----------
     let wishlist = JSON.parse(localStorage.getItem('luxevue_wishlist') || '[]');
     let cart = JSON.parse(localStorage.getItem('luxevue_cart') || '[]');
     let recentlyViewed = JSON.parse(localStorage.getItem('luxevue_recent') || '[]');
@@ -879,7 +794,6 @@
     let introDone = false;
     let searchTimeout;
 
-    // ---------- Persistenz ----------
     function persistCart() {
       localStorage.setItem('luxevue_cart', JSON.stringify(cart));
       updateCartUI();
@@ -892,7 +806,6 @@
       localStorage.setItem('luxevue_recent', JSON.stringify(recentlyViewed));
     }
 
-    // ---------- Intro ----------
     function dismissIntro() {
       if (introDone) return;
       introDone = true;
@@ -914,7 +827,6 @@
     document.getElementById('intro-overlay').addEventListener('click', dismissIntro);
     document.getElementById('intro-overlay').addEventListener('touchstart', dismissIntro);
 
-    // ---------- Hilfsfunktionen ----------
     function getStoreInfo(storeId) {
       return STORE_DATABASE.find(s => s.id === storeId) || { name: 'Zertifizierter Optiker', url: '#', city: 'Fachhandel', type: 'Fachgeschäft' };
     }
@@ -937,14 +849,12 @@
         page.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-      // Hero nur auf der Startseite anzeigen
       const hero = document.getElementById('hero');
       if (hero) hero.classList.toggle('hidden', pageId !== 'home');
       if (pageId === 'cart') updateCartUI();
       if (pageId === 'checkout') renderCheckout();
     }
 
-    // ---------- Produkt-Modal ----------
     function openProductModal(productId) {
       const p = PRODUCTS.find(x => x.id === parseInt(productId));
       if (!p) { showToast('Produkt nicht gefunden'); return; }
@@ -987,7 +897,6 @@
         persistWishlist();
       };
 
-      // Zuletzt angesehen
       if (!recentlyViewed.includes(productId)) {
         recentlyViewed.unshift(productId);
         recentlyViewed = recentlyViewed.slice(0, 6);
@@ -1006,7 +915,6 @@
       document.body.style.overflow = '';
     }
 
-    // ---------- Marken-Modal ----------
     function openBrandModal(brandName) {
       const data = BRAND_DATA[brandName];
       if (!data) {
@@ -1041,7 +949,6 @@
       }
     }
 
-    // ---------- Produkte rendern ----------
     function renderProducts(query = '', maxPrice = 1000) {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
@@ -1095,11 +1002,7 @@
       document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
           e.stopPropagation();
-          const name = this.dataset.name;
-          const price = this.dataset.price;
-          const img = this.dataset.img;
-          const store = this.dataset.store;
-          addToCart(name, price, img, store);
+          addToCart(this.dataset.name, this.dataset.price, this.dataset.img, this.dataset.store);
         });
       });
 
@@ -1136,7 +1039,6 @@
       }, 300);
     }
 
-    // ---------- Länderfilter ----------
     function renderCountryFilters() {
       const bar = document.getElementById('country-filter-bar');
       bar.innerHTML = '';
@@ -1172,7 +1074,6 @@
       });
     }
 
-    // ---------- Warenkorb ----------
     function addToCart(name, price, img, storeName) {
       const existing = cart.find(item => item.name === name);
       if (existing) {
@@ -1249,7 +1150,6 @@
       summary.classList.remove('hidden');
     }
 
-    // ---------- Wunschliste ----------
     function updateWishlistUI() {
       const badge = document.getElementById('wishlist-count');
       const container = document.getElementById('wishlist-container');
@@ -1274,7 +1174,6 @@
       window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
 
-    // ---------- Checkout ----------
     function renderCheckout() {
       const container = document.getElementById('checkout-items');
       const totalEl = document.getElementById('checkout-total');
@@ -1309,7 +1208,6 @@
       navigateTo('home');
     }
 
-    // ---------- Store Locator ----------
     function renderStoreLocatorGrid(filteredStores) {
       const container = document.getElementById('locator-grid');
       const stores = filteredStores || STORE_DATABASE;
@@ -1372,7 +1270,6 @@
       `).join('');
     }
 
-    // ---------- Konfigurator ----------
     function setConfigFrame(colorClass) {
       const frame = document.getElementById('config-frame-preview');
       frame.className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
@@ -1383,7 +1280,6 @@
       document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
     }
 
-    // ---------- Hero Slider ----------
     function setupHeroSlider() {
       const container = document.getElementById('hero-slides');
       const label = document.getElementById('hero-slide-label');
@@ -1423,24 +1319,6 @@
         handleSwipe();
       }, { passive: true });
 
-      let mouseDown = false;
-      let mouseStartX = 0;
-      hero.addEventListener('mousedown', function(e) {
-        mouseDown = true;
-        mouseStartX = e.screenX;
-      });
-      hero.addEventListener('mouseup', function(e) {
-        if (mouseDown) {
-          const diff = mouseStartX - e.screenX;
-          if (Math.abs(diff) > 50) {
-            if (diff > 0) nextSlide();
-            else prevSlide();
-          }
-          mouseDown = false;
-        }
-      });
-      hero.addEventListener('mouseleave', function() { mouseDown = false; });
-
       function handleSwipe() {
         const diff = touchStartX - touchEndX;
         if (Math.abs(diff) > 50) {
@@ -1465,16 +1343,8 @@
         clearInterval(autoInterval);
         autoInterval = setInterval(nextSlide, 6000);
       }, { passive: true });
-      hero.addEventListener('mousedown', function() {
-        clearInterval(autoInterval);
-        autoInterval = setInterval(nextSlide, 6000);
-      });
-
-      if (label) label.onclick = () => openBrandModal(currentBrand);
-      if (desc) desc.onclick = () => openBrandModal(currentBrand);
     }
 
-    // ---------- Newsletter ----------
     function subscribeNewsletter() {
       const email = document.getElementById('newsletter-email').value;
       if (!email.includes('@')) { showToast('Gültige E-Mail erforderlich'); return; }
@@ -1482,7 +1352,6 @@
       document.getElementById('newsletter-email').value = '';
     }
 
-    // ---------- Scroll Animationen ----------
     function setupScrollAnimations() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
@@ -1490,7 +1359,6 @@
       document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     }
 
-    // ---------- Zuletzt angesehene Produkte ----------
     function renderRecentlyViewed() {
       const section = document.getElementById('recently-viewed-section');
       const container = document.getElementById('recently-viewed-container');
@@ -1504,7 +1372,6 @@
       recentlyViewed.forEach(pid => {
         const p = PRODUCTS.find(x => x.id === pid);
         if (!p) return;
-        const store = getStoreInfo(p.storeId);
         const card = document.createElement('div');
         card.className = 'recent-card product-card group cursor-pointer bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-3';
         card.innerHTML = `
@@ -1519,7 +1386,6 @@
       });
     }
 
-    // ---------- Initialisierung ----------
     window.addEventListener('DOMContentLoaded', function() {
       document.body.classList.add('intro-active');
       document.body.style.overflow = 'hidden';
