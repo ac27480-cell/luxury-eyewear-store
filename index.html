@@ -495,6 +495,7 @@
       </div>
 
       <div class="brand-sketch-container">
+        <!-- Luxusmarken aus dem Hero, aber auch unabhängige -->
         <div class="brand-item" onclick="openBrandModal('Tom Ford')">
           <img src="./assets/brands/tom-ford-sketch.png" alt="Tom Ford Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>Tom Ford</span>
@@ -510,6 +511,19 @@
         <div class="brand-item" onclick="openBrandModal('Cutler and Gross')">
           <img src="./assets/brands/cutler-gross-sketch.png" alt="Cutler and Gross Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>Cutler and Gross</span>
+        </div>
+        <!-- Zusätzlich einige unabhängige Marken -->
+        <div class="brand-item" onclick="openBrandModal('Andy Wolf')">
+          <img src="./assets/brands/andy-wolf-sketch.png" alt="Andy Wolf Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
+          <span>Andy Wolf</span>
+        </div>
+        <div class="brand-item" onclick="openBrandModal('MYKITA')">
+          <img src="./assets/brands/mykita-sketch.png" alt="MYKITA Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
+          <span>MYKITA</span>
+        </div>
+        <div class="brand-item" onclick="openBrandModal('Matsuda')">
+          <img src="./assets/brands/matsuda-sketch.png" alt="Matsuda Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
+          <span>Matsuda</span>
         </div>
       </div>
     </section>
@@ -865,7 +879,7 @@
       return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
     }
 
-    // --- BRAND_DATA als Array ---
+    // --- BRAND_DATA für Hero (Luxusmarken) ---
     const BRAND_DATA = [
       { name: "Tom Ford", subtitle: "Luxury & Boldness", desc: "Kühne Acetat-Silhouetten treffen auf die ikonische Metal-T-Branding-Ästhetik.", img: "./assets/brands/tomford.jpg" },
       { name: "DITA", subtitle: "Artisan Precision", desc: "Japanische Handwerkskunst, gefertigt in monatelangen Produktionsprozessen.", img: "./assets/brands/dita.jpg" },
@@ -884,61 +898,86 @@
       { id: 'misterspex', name: "Mister Spex", type: "Omnichannel / Online", city: "Berlin / Online", url: "https://www.misterspex.de" }
     ];
 
+    // ==================== INDEPENDENT LABELS (vollständig) ====================
     const INDEPENDENT_LABELS = {
-      "Italien / USA": ["Tom Ford"],
-      "Japan": ["DITA"],
-      "Frankreich": ["Cartier"],
-      "Großbritannien": ["Cutler and Gross"]
+      "Deutschland / Ö / CH": [
+        "MYKITA (Berlin)", "ic! berlin", "Lunor (Schwarzwald)", "CAZAL", "Andy Wolf (Österreich)",
+        "Götti Switzerland", "Klenze & Baum", "Rolf Spectacles", "Reiz Germany", "Funk Eyewear", "Hoffmann Natural Eyewear"
+      ],
+      "Japan": [
+        "Matsuda", "DITA Eyewear", "Eyevan 7285", "Masunaga 1905", "Yuichi Toyama",
+        "Takahiro Miyashita", "Nackymade", "Factory900", "KameManNen", "Boston Club"
+      ],
+      "Frankreich": [
+        "Jacques Marie Mage (Atelier/Design)", "Anne et Valentin", "Lafont Paris", "Thierry Lasry",
+        "Ahlem Eyewear", "Morel France", "J.F. Rey", "Sabine Be", "Lucas de Staël"
+      ],
+      "Italien": [
+        "Res/Rei", "L.G.R", "Tavat Eyewear", "Movitra", "Kubeora", "Haffmans & Neumeister (Collab)", "NATIVE SONS"
+      ],
+      "USA / Nordamerika": [
+        "Oliver Peoples", "Garrett Leight (GLCO)", "Salt Optics", "Barton Perreira",
+        "Moscot (NYC)", "Robert Marc NYC", "Talla Eyewear"
+      ],
+      "Dänemark & Skandinavien": [
+        "Lindberg", "Ørgreen Optics", "ProDesign Denmark", "Fleye Copenhagen", "Kaibosh (Norwegen)"
+      ],
+      "Großbritannien": [
+        "Cutler and Gross", "Oliver Goldsmith", "Tom Davies", "Cubitts"
+      ]
     };
     const COUNTRY_COLORS = {
-      "Italien / USA": 'bg-amber-100',
+      "Deutschland / Ö / CH": 'bg-amber-100',
       "Japan": 'bg-red-100',
       "Frankreich": 'bg-blue-100',
-      "Großbritannien": 'bg-purple-100'
+      "Italien": 'bg-green-100',
+      "USA / Nordamerika": 'bg-indigo-100',
+      "Dänemark & Skandinavien": 'bg-cyan-100',
+      "Großbritannien": 'bg-purple-100',
     };
 
-    // 37 Produkte
+    // ==================== PRODUKTE (37 unabhängige Modelle) ====================
     const PRODUCTS = [
-      { id: 1, brand: 'Tom Ford', name: 'TF 5555-B', price: '390 €', storeId: 'brillenlab', form: 'Eckig', desc: 'Kühne Acetat-Silhouette mit Metal-T-Branding.' },
-      { id: 2, brand: 'Tom Ford', name: 'FT 0888', price: '410 €', storeId: 'leidmann', form: 'Panto', desc: 'Zeitloser Panto-Look mit markanter Bügelprägung.' },
-      { id: 3, brand: 'Tom Ford', name: 'TF 5665', price: '430 €', storeId: 'specsberlin', form: 'Rund', desc: 'Runde Acetatfassung mit dezentem Glanz.' },
-      { id: 4, brand: 'Tom Ford', name: 'FT 0999', price: '450 €', storeId: 'bellevue', form: 'Aviator', desc: 'Modern interpretierte Aviator-Form.' },
-      { id: 5, brand: 'Tom Ford', name: 'TF 5800', price: '470 €', storeId: 'ehler', form: 'Eckig', desc: 'Extrabreite Bügel mit ikonischem T-Branding.' },
-      { id: 6, brand: 'Tom Ford', name: 'FT 1010', price: '490 €', storeId: 'edeloptics', form: 'Panto', desc: 'Komfortable Passform mit luxuriösem Finish.' },
-      { id: 7, brand: 'Tom Ford', name: 'TF 5999', price: '510 €', storeId: 'misterspex', form: 'Rund', desc: 'Retro-inspirierte runde Silhouette.' },
-      { id: 8, brand: 'Tom Ford', name: 'FT 1112', price: '530 €', storeId: 'brillenlab', form: 'Eckig', desc: 'Akzentuierte Kanten und feine Linien.' },
-      { id: 9, brand: 'DITA', name: 'Flight.006', price: '650 €', storeId: 'leidmann', form: 'Aviator', desc: 'Japanische Handwerkskunst in Perfektion.' },
-      { id: 10, brand: 'DITA', name: 'Statesman Two', price: '690 €', storeId: 'specsberlin', form: 'Panto', desc: 'Zeitloser Klassiker mit DITA-DNA.' },
-      { id: 11, brand: 'DITA', name: 'Grandmaster', price: '720 €', storeId: 'bellevue', form: 'Rund', desc: 'Massives Acetat mit filigraner Metallseele.' },
-      { id: 12, brand: 'DITA', name: 'Lancaster', price: '680 €', storeId: 'ehler', form: 'Eckig', desc: 'Elegante Eckigkeit mit subtilem Glanz.' },
-      { id: 13, brand: 'DITA', name: 'Insider', price: '700 €', storeId: 'edeloptics', form: 'Panto', desc: 'Modernisierter Panto mit markantem Gelenk.' },
-      { id: 14, brand: 'DITA', name: 'Pilot', price: '730 €', storeId: 'misterspex', form: 'Aviator', desc: 'Luxus-Aviator mit Titan-Armierung.' },
-      { id: 15, brand: 'DITA', name: 'Rambler', price: '660 €', storeId: 'brillenlab', form: 'Rund', desc: 'Lässige Rundform für den Alltag.' },
-      { id: 16, brand: 'DITA', name: 'Statesman', price: '710 €', storeId: 'leidmann', form: 'Eckig', desc: 'Der Ursprung der Marke – zeitlos.' },
-      { id: 17, brand: 'Cartier', name: 'CT0048O', price: '890 €', storeId: 'specsberlin', form: 'Panto', desc: 'Eleganz aus Gold und edlem Acetat.' },
-      { id: 18, brand: 'Cartier', name: 'CT0256O', price: '920 €', storeId: 'bellevue', form: 'Rund', desc: 'Runde Form mit ikonischen Scharnieren.' },
-      { id: 19, brand: 'Cartier', name: 'CT0333O', price: '870 €', storeId: 'ehler', form: 'Eckig', desc: 'Kantiges Design mit edlen Materialien.' },
-      { id: 20, brand: 'Cartier', name: 'CT0456O', price: '940 €', storeId: 'edeloptics', form: 'Aviator', desc: 'Aviator im Maison-Stil.' },
-      { id: 21, brand: 'Cartier', name: 'CT0522O', price: '880 €', storeId: 'misterspex', form: 'Panto', desc: 'Zeitlose Panto-Form mit feinem Dekor.' },
-      { id: 22, brand: 'Cartier', name: 'CT0666O', price: '910 €', storeId: 'brillenlab', form: 'Rund', desc: 'Harmonische Rundung, vollendete Eleganz.' },
-      { id: 23, brand: 'Cartier', name: 'CT0789O', price: '930 €', storeId: 'leidmann', form: 'Eckig', desc: 'Statement-Brille mit klaren Linien.' },
-      { id: 24, brand: 'Cartier', name: 'CT0888O', price: '900 €', storeId: 'specsberlin', form: 'Aviator', desc: 'Moderner Aviator mit Vintage-Touch.' },
-      { id: 25, brand: 'Cutler and Gross', name: '9316', price: '440 €', storeId: 'bellevue', form: 'Rund', desc: 'Exzentrische Rundform mit Farbakzenten.' },
-      { id: 26, brand: 'Cutler and Gross', name: '1258', price: '460 €', storeId: 'ehler', form: 'Panto', desc: 'Klassischer Panto mit Londoner Flair.' },
-      { id: 27, brand: 'Cutler and Gross', name: '1334', price: '480 €', storeId: 'edeloptics', form: 'Eckig', desc: 'Gewagte eckige Silhouette.' },
-      { id: 28, brand: 'Cutler and Gross', name: '1402', price: '450 €', storeId: 'misterspex', form: 'Rund', desc: 'Vintage-Rund mit modernem Twist.' },
-      { id: 29, brand: 'Cutler and Gross', name: '1466', price: '470 €', storeId: 'brillenlab', form: 'Aviator', desc: 'Aviator im britischen Avantgarde-Stil.' },
-      { id: 30, brand: 'Cutler and Gross', name: '1510', price: '490 €', storeId: 'leidmann', form: 'Panto', desc: 'Panto mit unerwarteten Details.' },
-      { id: 31, brand: 'Cutler and Gross', name: '1588', price: '500 €', storeId: 'specsberlin', form: 'Eckig', desc: 'Markante Kanten und kräftige Farben.' },
-      { id: 32, brand: 'Cutler and Gross', name: '1630', price: '510 €', storeId: 'bellevue', form: 'Rund', desc: 'Runde Fassung mit künstlerischem Anspruch.' },
-      { id: 33, brand: 'Cutler and Gross', name: '1699', price: '520 €', storeId: 'ehler', form: 'Aviator', desc: 'Aviator mit extravaganter Linienführung.' },
-      { id: 34, brand: 'Cutler and Gross', name: '1720', price: '430 €', storeId: 'edeloptics', form: 'Panto', desc: 'Leichter Panto für den Alltag.' },
-      { id: 35, brand: 'Cutler and Gross', name: '1788', price: '460 €', storeId: 'misterspex', form: 'Eckig', desc: 'Klare Kante, unverwechselbarer Look.' },
-      { id: 36, brand: 'Cutler and Gross', name: '1845', price: '480 €', storeId: 'brillenlab', form: 'Rund', desc: 'Zeitlose Rundform mit britischem Charme.' },
-      { id: 37, brand: 'Cutler and Gross', name: '1902', price: '500 €', storeId: 'leidmann', form: 'Aviator', desc: 'Aviator mit auffälligen Bügeln.' }
+      { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeId: 'brillenlab', form: 'Panto', desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.' },
+      { id: 2, brand: 'MYKITA', name: 'Lite Tuva', price: '490 €', storeId: 'specsberlin', form: 'Rund', desc: 'Patentiertes schraubenloses Gelenk aus ultraleichtem Edelstahl, gefertigt in Berlin.' },
+      { id: 3, brand: 'ic! berlin', name: 'Silk East', price: '450 €', storeId: 'ehler', form: 'Eckig', desc: 'Federleichte Federedelstahl-Fassung ohne Schrauben und Lötstellen.' },
+      { id: 4, brand: 'Lunor', name: 'Classic Round', price: '520 €', storeId: 'bellevue', form: 'Rund', desc: 'Traditionelles Schwarzwälder Handwerk. Zeitlose Eleganz in Reinform.' },
+      { id: 5, brand: 'CAZAL', name: 'Legends 607', price: '460 €', storeId: 'edeloptics', form: 'Eckig', desc: 'Ikone des Eyewear-Designs von Cari Zalloni. Unverkennbarer Vintage-Charakter.' },
+      { id: 6, brand: 'Götti Switzerland', name: 'Perspective ORIS', price: '510 €', storeId: 'leidmann', form: 'Panto', desc: 'Schweizer Präzision aus dem 3D-Drucker. Minimalistisch und hochentwickelt.' },
+      { id: 7, brand: 'Klenze & Baum', name: 'Vespera 01', price: '480 €', storeId: 'specsberlin', form: 'Eckig', desc: 'Münchner Designschmiede mit innovativem Tilting-Hinge Gelenksystem.' },
+      { id: 8, brand: 'Rolf Spectacles', name: 'Eucalyptus 102', price: '720 €', storeId: 'bellevue', form: 'Rund', desc: 'Echte Holzbrille aus den Tiroler Alpen. 100% naturbelassen ohne Metallschrauben.' },
+      { id: 9, brand: 'Reiz Germany', name: 'Mangan Series', price: '410 €', storeId: 'ehler', form: 'Panto', desc: 'Klassisches Acetat-Handwerk gefertigt in deutschen Manufakturen.' },
+      { id: 10, brand: 'Funk Eyewear', name: 'Dieter B.', price: '390 €', storeId: 'brillenlab', form: 'Eckig', desc: 'Unkonventionelles Brillendesign aus der Kinzigtaler Manufaktur.' },
+      { id: 11, brand: 'Hoffmann Natural Eyewear', name: 'Bespoke Horn 22', price: '850 €', storeId: 'leidmann', form: 'Rund', desc: 'Meisterhafte Handarbeit aus echtem Büffelhorn. Jedes Stück ein Unikat.' },
+      { id: 12, brand: 'Matsuda', name: 'M3086 Titanium', price: '920 €', storeId: 'leidmann', form: 'Panto', desc: 'Graveurskunst aus Sabae, Japan. Detaillierte Ziselierungen auf reinstem Titan.' },
+      { id: 13, brand: 'DITA Eyewear', name: 'Statesman Six', price: '890 €', storeId: 'leidmann', form: 'Eckig', desc: 'Japanische Präzision. Acetat-Titan-Hybridkonstruktion auf höchstem Niveau.' },
+      { id: 14, brand: 'Eyevan 7285', name: 'Model 338', price: '580 €', storeId: 'specsberlin', form: 'Rund', desc: 'Japanischer Eyewear-Kult seit 1972. Ästhetische Perfektion und Tragekomfort.' },
+      { id: 15, brand: 'Masunaga 1905', name: 'GMS-805', price: '640 €', storeId: 'bellevue', form: 'Panto', desc: 'Hoflieferant des japanischen Kaiserhauses. Über 100 Jahre Manufaktur-Tradition.' },
+      { id: 16, brand: 'Yuichi Toyama', name: 'U-129 Double Dutch', price: '530 €', storeId: 'specsberlin', form: 'Rund', desc: 'Moderne japanische Ästhetik inspiriert von traditioneller Fadenkunst.' },
+      { id: 17, brand: 'Factory900', name: 'FA-240 Sculpted', price: '560 €', storeId: 'brillenlab', form: 'Eckig', desc: 'Dreidimensionale Acetat-Skulpturen mit futuristischer Formensprache.' },
+      { id: 18, brand: 'KameManNen', name: 'KMN-113', price: '490 €', storeId: 'bellevue', form: 'Panto', desc: 'Eines der ältesten Brillenlabels Japans. Schildkröten-Symbolik für Ewigkeit.' },
+      { id: 19, brand: 'Jacques Marie Mage', name: 'Dealan Noir', price: '790 €', storeId: 'leidmann', form: 'Eckig', desc: 'Limitierte Auflage. 10mm Acetat mit charakteristischem Skulpturenschliff.' },
+      { id: 20, brand: 'Anne et Valentin', name: 'FANZINE Atelier', price: '430 €', storeId: 'specsberlin', form: 'Rund', desc: 'Farbenfroher Avantgarde-Stil aus Toulouse. Individueller Geometrie-Mix.' },
+      { id: 21, brand: 'Lafont Paris', name: 'Réédition Parisian', price: '360 €', storeId: 'ehler', form: 'Panto', desc: 'Pariser Chic und französisches Savoir-faire seit 1923.' },
+      { id: 22, brand: 'Thierry Lasry', name: 'Sexxxy Cat-Eye', price: '440 €', storeId: 'edeloptics', form: 'Cateye', desc: 'Futuristischer Vintage-Look, beliebt bei internationalen Celebrities.' },
+      { id: 23, brand: 'Ahlem Eyewear', name: 'Place de la Concorde', price: '495 €', storeId: 'leidmann', form: 'Eckig', desc: 'Inspiration der Pariser Architektur, handgefertigt in Oyonnax, Frankreich.' },
+      { id: 24, brand: 'Lucas de Staël', name: 'Monsieur Leather', price: '880 €', storeId: 'bellevue', form: 'Rund', desc: 'Pariser Atelierfassung überzogen mit edlem Rindsleder und Granitstein.' },
+      { id: 25, brand: 'Res/Rei', name: 'Philosophia', price: '370 €', storeId: 'brillenlab', form: 'Panto', desc: 'Handmade in Italy. Fokus auf nachhaltiges Acetat und lebendige Farben.' },
+      { id: 26, brand: 'L.G.R', name: 'Reunion Explorer', price: '420 €', storeId: 'leidmann', form: 'Aviator', desc: 'Afrikanische Abenteuer-Inspiration vereint mit italienischer Handwerkskunst.' },
+      { id: 27, brand: 'Tavat Eyewear', name: 'SoupCan Round', price: '495 €', storeId: 'specsberlin', form: 'Rund', desc: 'Sandgestrahltes Uhrengehäuse-Konzept, gefertigt in den italienischen Alpen.' },
+      { id: 28, brand: 'Movitra', name: 'Bruno Rotating', price: '540 €', storeId: 'bellevue', form: 'Panto', desc: 'Patentierter Drehmechanismus aus Mailand zum Schutz der Gläser.' },
+      { id: 29, brand: 'Oliver Peoples', name: 'Gregory Peck', price: '360 €', storeId: 'misterspex', form: 'Eckig', desc: 'Klassischer Hollywood-Intellektuellen-Look aus Sunset Boulevard, L.A.' },
+      { id: 30, brand: 'Garrett Leight (GLCO)', name: 'Hampton Sun', price: '330 €', storeId: 'specsberlin', form: 'Rund', desc: 'Entspannter Venice Beach Lifestyle mit kalifornischem Spirit.' },
+      { id: 31, brand: 'Moscot (NYC)', name: 'Lemtosh Original', price: '320 €', storeId: 'specsberlin', form: 'Panto', desc: 'Die Legende aus der Lower East Side in New York City seit 1915.' },
+      { id: 32, brand: 'Barton Perreira', name: 'Roxbury Aviator', price: '510 €', storeId: 'leidmann', form: 'Aviator', desc: 'Luxuriöse Ästhetik entworfen von Patty Perreira in Kalifornien.' },
+      { id: 33, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', storeId: 'bellevue', form: 'Rund', desc: 'Dänischer Minimalismus. Schraubenloses Titandraht-Design mit maximalem Tragekomfort.' },
+      { id: 34, brand: 'Ørgreen Optics', name: 'Quantum High-Tech', price: '480 €', storeId: 'ehler', form: 'Panto', desc: 'Kopenhagener Design aus Reintitan mit unverwechselbaren Farbkombinationen.' },
+      { id: 35, brand: 'ProDesign Denmark', name: 'Essential 12', price: '290 €', storeId: 'optikerbode', form: 'Eckig', desc: 'Funktionales skandinavisches Brillendesign mit klaren Strukturen.' },
+      { id: 36, brand: 'Cutler and Gross', name: '1386 Bold King', price: '470 €', storeId: 'specsberlin', form: 'Eckig', desc: 'Britischer Statement-Style aus Knightsbridge, London.' },
+      { id: 37, brand: 'Cubitts', name: 'Judd Round', price: '240 €', storeId: 'brillenlab', form: 'Rund', desc: 'Traditionelles Brillenhandwerk aus King\'s Cross, London.' }
     ];
 
-    const FORMS = ['Alle', 'Panto', 'Rund', 'Eckig', 'Aviator'];
+    const FORMS = ['Alle', 'Panto', 'Rund', 'Eckig', 'Cateye', 'Aviator'];
 
     // ==================== STATE ====================
     let wishlist = JSON.parse(localStorage.getItem('luxevue_wishlist') || '[]');
@@ -1252,7 +1291,9 @@
         tag.className = `text-[10px] ${bgColorClass} border border-[var(--border-editorial)] px-3 py-1.5 tracking-wider text-[var(--text-main)] font-medium cursor-pointer hover:border-black transition-colors`;
         tag.textContent = label;
         tag.onclick = () => {
-          document.getElementById('searchInput').value = label;
+          const brandMatch = label.match(/^([^(]+)/);
+          const brandClean = brandMatch ? brandMatch[1].trim() : label;
+          document.getElementById('searchInput').value = brandClean;
           filterProducts();
         };
         container.appendChild(tag);
@@ -1512,10 +1553,10 @@
     }
 
     function openBrandModal(brandName) {
-      const brand = BRAND_DATA.find(b => b.name === brandName);
+      // Für Luxusmarken aus BRAND_DATA oder unabhängige Marken (nur Story fehlt, zeige Standardtext)
+      let brand = BRAND_DATA.find(b => b.name === brandName);
       if (!brand) {
-        showToast('Informationen zu dieser Marke folgen in Kürze.');
-        return;
+        brand = { name: brandName, desc: 'Unabhängige Brillenmanufaktur mit Fokus auf Handwerk und Design.', img: IMAGE_PLACEHOLDER };
       }
       document.getElementById('brand-modal-name').innerText = brand.name;
       document.getElementById('brand-modal-story').innerText = brand.desc;
