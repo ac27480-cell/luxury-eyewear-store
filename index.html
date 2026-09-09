@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
@@ -252,18 +253,6 @@
       .hero-description { font-size: 1.1rem; max-width: 60%; }
     }
 
-    .recent-card {
-      min-width: 200px;
-    }
-
-    /* Marken-Skizzen Sektion */
-    .brand-sketch-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 20px;
-      width: 100%;
-      align-items: center;
-    }
     .brand-item {
       text-align: center;
       background: #ffffff;
@@ -291,6 +280,116 @@
       color: #222;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+    }
+
+    /* Modulares Brand-Showcase System & FACTORY900 Integration */
+    .eyewear-brand-section {
+      padding: 60px 0;
+    }
+    .brand-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .brand-intro {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .brand-subtitle {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .brand-title {
+      font-size: 28px;
+      font-family: var(--font-serif);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+    .brand-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+    .brand-content-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    @media (max-width: 968px) {
+      .brand-content-grid { grid-template-columns: 1fr; }
+    }
+    .sketch-wrapper {
+      background: #ffffff;
+      padding: 24px;
+      border: 1px solid var(--border-editorial);
+      border-radius: 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    }
+    .sketch-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .sketch-caption {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      text-align: right;
+      border-top: 1px solid var(--border-editorial);
+      padding-top: 8px;
+      letter-spacing: 0.05em;
+    }
+    .sketch-caption span { font-weight: 600; color: var(--text-main); }
+    .specs-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .spec-block h3 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      border-bottom: 1px solid var(--border-editorial);
+      padding-bottom: 4px;
+      font-weight: 600;
+    }
+    .spec-block p, .spec-list li {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+    .spec-list { list-style: none; padding: 0; margin: 0; }
+    .spec-list li { margin-bottom: 4px; }
+    .dimensions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .dim-item {
+      background: #ffffff;
+      border: 1px solid var(--border-editorial);
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+    }
+    .dim-item span { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .dim-item strong { font-size: 14px; color: var(--text-main); margin-top: 2px; font-weight: 500; }
+    .color-block {
+      background: var(--surface-editorial);
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-main);
+      border: 1px solid var(--border-editorial);
     }
 
     .search-suggestions {
@@ -329,14 +428,13 @@
       justify-content: center;
       cursor: pointer;
       transition: background 0.3s;
-      font-size: 24px;
     }
     .hero-arrow:hover {
       background: rgba(0,0,0,0.5);
     }
   </style>
 </head>
-<body>
+<body class="intro-active">
 
   <!-- ===== INTRO OVERLAY ===== -->
   <div id="intro-overlay">
@@ -479,7 +577,60 @@
       </div>
     </section>
 
-    <!-- Marken-Skizzen -->
+    <!-- INTEGRATION: FACTORY900 Skizzen & Technische Spezifikationen -->
+    <section class="mb-20 fade-in eyewear-brand-section border-t border-b border-[var(--border-editorial)] bg-[var(--surface-editorial)]/50" id="factory900-spec">
+      <div class="brand-container px-4 lg:px-8">
+        
+        <div class="brand-intro">
+          <span class="brand-subtitle">Kollektion 2026</span>
+          <h2 class="brand-title">FACTORY900 &mdash; Bold Geometric Sketch</h2>
+          <p class="brand-desc">Präzise Handwerkskunst trifft auf avantgardistische 3D-Geometrie und innovative Scharnier-Technologie.</p>
+        </div>
+
+        <div class="brand-content-grid">
+          
+          <div class="sketch-wrapper">
+            <img src="./assets/brands/factory900-sketch.png" alt="FACTORY900 Bold Geometric Sketch 2026" class="sketch-image" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
+            <div class="sketch-caption"><span>Abb. 1.1:</span> Konstruktionszeichnung & Maße (Deep Black / Trans Smoke)</div>
+          </div>
+
+          <div class="specs-wrapper">
+            
+            <div class="spec-block">
+              <h3>Design & Geometrie</h3>
+              <p>Bold 3D-Geometrie mit markanten, facettierten Kanten und einer komplexen Formgebung für maximale Ausdruckskraft.</p>
+            </div>
+
+            <div class="spec-block">
+              <h3>Technische Highlights</h3>
+              <ul class="spec-list">
+                <li><strong>Scharnier:</strong> Spezial-3D-Scharnier mit Spring-Gelenk-Konstruktion</li>
+                <li><strong>Nasenpads:</strong> Nahtlos integrierte Nasenpads</li>
+                <li><strong>Material:</strong> Dickes, hochwertiges Acetat-Material</li>
+              </ul>
+            </div>
+
+            <div class="spec-block">
+              <h3>Rahmenmaße</h3>
+              <div class="dimensions-grid">
+                <div class="dim-item"><span>Glasbreite</span><strong>58 mm</strong></div>
+                <div class="dim-item"><span>Stegbreite</span><strong>23 mm</strong></div>
+                <div class="dim-item"><span>Bügellänge</span><strong>140 mm</strong></div>
+                <div class="dim-item"><span>Rahmenhöhe</span><strong>48 mm</strong></div>
+              </div>
+            </div>
+
+            <div class="spec-block color-block">
+              <span>Farbvariante:</span> <strong>Acetat Mix (Deep Black / Trans Smoke)</strong>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Exklusive Marken & Skizzen Showcase -->
     <section class="mb-20 fade-in">
       <div class="flex justify-between items-baseline mb-8 pb-4 border-b border-[var(--border-editorial)]">
         <div>
@@ -489,7 +640,7 @@
         <span class="text-xs tracking-widest uppercase text-[var(--text-muted)]">Atelier Einblicke</span>
       </div>
 
-      <div class="brand-sketch-container">
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
         <div class="brand-item" onclick="openBrandModal('Andy Wolf')">
           <img src="./assets/brands/andy-wolf-sketch.png" alt="Andy Wolf Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>Andy Wolf</span>
@@ -521,20 +672,19 @@
       </div>
     </section>
 
-    <!-- Zuletzt angesehen -->
+    <!-- Zuletzt angesehene Produkte -->
     <section id="recently-viewed-section" class="mb-14 hidden">
       <h3 class="text-xs uppercase tracking-[0.25em] text-[var(--text-muted)] mb-4">Zuletzt angesehen</h3>
       <div id="recently-viewed-container" class="flex space-x-4 overflow-x-auto pb-3 no-scrollbar"></div>
     </section>
 
-    <!-- Produktliste -->
+    <!-- Produktliste mit Sortierung und "Mehr laden" -->
     <section class="mb-24">
       <div class="flex justify-between items-baseline mb-10 pb-4 border-b border-[var(--border-editorial)]">
         <h2 class="text-3xl font-serif font-light tracking-wide">Kuratierte Auswahl</h2>
         <span class="text-xs tracking-widest uppercase text-[var(--text-muted)]">Direkte Bezugsquellen</span>
       </div>
 
-      <!-- Sortierung -->
       <div class="flex items-center justify-end mb-6 gap-4">
         <label for="sort-select" class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">Sortieren:</label>
         <select id="sort-select" onchange="applySortAndRender()" class="p-2 bg-white border border-[var(--border-editorial)] text-xs focus:outline-none">
@@ -547,6 +697,7 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16" id="product-list"></div>
+      
       <div class="text-center mt-10">
         <button id="load-more-btn" class="px-8 py-3 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors hidden" onclick="loadMoreProducts()">
           Weitere Modelle laden
@@ -739,7 +890,7 @@
     </div>
   </section>
 
-  <!-- ===== PRODUKT-MODAL (Rahmen entfernt) ===== -->
+  <!-- ===== PRODUKT-MODAL ===== -->
   <div id="productModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
     <div class="modal-card rounded-none max-h-[90vh] overflow-y-auto">
       <div class="sticky top-0 z-10 flex justify-end p-4 bg-[var(--bg-editorial)] border-b border-[var(--border-editorial)]">
@@ -830,7 +981,6 @@
   </footer>
 
   <script>
-    // ==================== KONSTANTEN & DATEN ====================
     const IMAGE_PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
         <rect width="100%" height="100%" fill="#f4f2ed"/>
@@ -872,416 +1022,22 @@
       return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
     }
 
-    const BRAND_DATA = {
-      'Andy Wolf': { story: 'Andy Wolf steht für exklusive Brillenmanufaktur aus Österreich. Jede Fassung wird mit höchster Präzision und nachhaltigem Bio-Acetat in Hartberg gefertigt. Die geometrische Linienführung und die Liebe zum Detail machen jede Brille zu einem Unikat.', img: IMAGE_PLACEHOLDER },
-      'MYKITA': { story: 'MYKITA vereint Berliner Ingenieurskunst mit avantgardistischem Design. Das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl ist ein Meilenstein der Eyewear-Entwicklung. Gefertigt im Herzen der Hauptstadt.', img: IMAGE_PLACEHOLDER },
-      'Lindberg': { story: 'Lindberg – dänischer Minimalismus in Reinform. Die schraubenlosen Titandraht-Designs sind federleicht und bieten maximalen Tragekomfort. Jede Brille ist ein Ausdruck skandinavischer Ästhetik und handwerklicher Perfektion.', img: IMAGE_PLACEHOLDER },
-      'Jacques Marie Mage': { story: 'Jacques Marie Mage – limitierte Auflagen aus Frankreich. Mit 10mm Acetat und charakteristischem Skulpturenschliff kreiert das Atelier zeitlose Meisterwerke, die Kunst und Handwerk vereinen. Jedes Modell ist ein Statement.', img: IMAGE_PLACEHOLDER },
-      'DITA Eyewear': { story: 'DITA Eyewear – japanische Präzision und amerikanisches Design. Die Acetat-Titan-Hybridkonstruktionen werden auf höchstem handwerklichem Niveau gefertigt und stehen für Langlebigkeit und zeitlosen Stil.', img: IMAGE_PLACEHOLDER },
-      'Cutler and Gross': { story: 'Cutler and Gross – britischer Statement-Style aus Knightsbridge, London. Handgefertigte Meisterwerke für Individualisten mit starkem Sinn für Ästhetik.', img: IMAGE_PLACEHOLDER },
-      'Matsuda': { story: 'Matsuda – japanische Graveurskunst aus Sabae. Detaillierte Ziselierungen auf reinstem Titan und Acetat, gefertigt in der Tradition der Samurai-Schmiedekunst.', img: IMAGE_PLACEHOLDER }
-    };
-
-    function createHeroSVG(accentColor, bgColor, label) {
-      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'>
-        <rect width='100%' height='100%' fill='${bgColor}'/>
-        <g stroke='${accentColor}' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-          <path d='M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z' stroke-dasharray='6,4'/>
-          <path d='M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z' stroke-dasharray='6,4'/>
-          <path d='M 340,285 C 380,270 420,270 460,285'/>
-          <path d='M 220,285 L 140,270'/>
-          <path d='M 580,285 L 660,270'/>
-          <circle cx='280' cy='300' r='45' stroke='${accentColor}' stroke-width='3'/>
-          <circle cx='520' cy='300' r='45' stroke='${accentColor}' stroke-width='3'/>
-          <path d='M 325,280 Q 400,265 475,280' stroke='${accentColor}' stroke-width='3'/>
-          <path d='M 235,280 L 150,260' stroke='${accentColor}' stroke-width='3'/>
-          <path d='M 565,280 L 650,260' stroke='${accentColor}' stroke-width='3'/>
-        </g>
-        <text x='50%' y='440' font-family='Georgia, serif' font-size='16' font-style='italic' fill='${accentColor}' text-anchor='middle' letter-spacing='2'>${label}</text>
-      </svg>`;
-      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-    }
-
-    const HERO_SLIDES = [
-      { label: 'Andy Wolf', description: 'Handgefertigt in Österreich – nachhaltiges Bio-Acetat und geometrische Linienführung für zeitlose Eleganz.', img: createHeroSVG('#c9a87c', '#2a2826', 'ANDY WOLF') },
-      { label: 'MYKITA', description: 'Berliner Ingenieurskunst – das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl.', img: createHeroSVG('#b8860b', '#1a1918', 'MYKITA') },
-      { label: 'Lindberg', description: 'Dänischer Minimalismus – schraubenloses Titandraht-Design für maximalen Tragekomfort.', img: createHeroSVG('#8a7a6a', '#2f2b27', 'LINDBERG') },
-      { label: 'Jacques Marie Mage', description: 'Limitierte Auflagen – 10mm Acetat mit charakteristischem Skulpturenschliff aus Frankreich.', img: createHeroSVG('#a68b66', '#1e1c1a', 'JACQUES MARIE MAGE') },
-      { label: 'DITA Eyewear', description: 'Japanische Präzision – Acetat-Titan-Hybridkonstruktion auf höchstem handwerklichem Niveau.', img: createHeroSVG('#6b5d4e', '#242220', 'DITA') }
-    ];
-
-    const STORE_DATABASE = [
-      { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
-      { id: 'leidmann', name: "Leidmann", type: "Boutique / Fachgeschäft", city: "München", url: "https://www.leidmann.de" },
-      { id: 'specsberlin', name: "specs.berlin", type: "Boutique / Fachgeschäft", city: "Berlin", url: "https://specs.berlin" },
-      { id: 'bellevue', name: "Bellevue Optical", type: "Boutique / Fachgeschäft", city: "Hamburg", url: "https://www.bellevue-optical.de" },
-      { id: 'ehler', name: "Ehler Optik", type: "Fachgeschäft", city: "Flensburg", url: "https://www.ehler-optik.de" },
-      { id: 'optikerbode', name: "Optiker Bode", type: "Fachgeschäft-Netzwerk", city: "Deutschlandweit", url: "https://www.optikerbode.de" },
-      { id: 'edeloptics', name: "Edel-Optics", type: "Online-Shop", city: "Hamburg / Online", url: "https://www.edel-optics.de" },
-      { id: 'misterspex', name: "Mister Spex", type: "Omnichannel / Online", city: "Berlin / Online", url: "https://www.misterspex.de" }
-    ];
-
-    const INDEPENDENT_LABELS = {
-      "Deutschland / Ö / CH": [
-        "MYKITA (Berlin)", "ic! berlin", "Lunor (Schwarzwald)", "CAZAL", "Andy Wolf (Österreich)",
-        "Götti Switzerland", "Klenze & Baum", "Rolf Spectacles", "Reiz Germany", "Funk Eyewear", "Hoffmann Natural Eyewear"
-      ],
-      "Japan": [
-        "Matsuda", "DITA Eyewear", "Eyevan 7285", "Masunaga 1905", "Yuichi Toyama",
-        "Takahiro Miyashita", "Nackymade", "Factory900", "KameManNen", "Boston Club"
-      ],
-      "Frankreich": [
-        "Jacques Marie Mage (Atelier/Design)", "Anne et Valentin", "Lafont Paris", "Thierry Lasry",
-        "Ahlem Eyewear", "Morel France", "J.F. Rey", "Sabine Be", "Lucas de Staël"
-      ],
-      "Italien": [
-        "Res/Rei", "L.G.R", "Tavat Eyewear", "Movitra", "Kubeora", "Haffmans & Neumeister (Collab)", "NATIVE SONS"
-      ],
-      "USA / Nordamerika": [
-        "Oliver Peoples", "Garrett Leight (GLCO)", "Salt Optics", "Barton Perreira",
-        "Moscot (NYC)", "Robert Marc NYC", "Talla Eyewear"
-      ],
-      "Dänemark & Skandinavien": [
-        "Lindberg", "Ørgreen Optics", "ProDesign Denmark", "Fleye Copenhagen", "Kaibosh (Norwegen)"
-      ],
-      "Großbritannien": [
-        "Cutler and Gross", "Oliver Goldsmith", "Tom Davies", "Cubitts"
-      ]
-    };
-
-    const COUNTRY_COLORS = {
-      "Deutschland / Ö / CH": 'bg-amber-100',
-      "Japan": 'bg-red-100',
-      "Frankreich": 'bg-blue-100',
-      "Italien": 'bg-green-100',
-      "USA / Nordamerika": 'bg-indigo-100',
-      "Dänemark & Skandinavien": 'bg-cyan-100',
-      "Großbritannien": 'bg-purple-100',
-    };
-
-    // PRODUKTE mit Form-Eigenschaft für Filter
     const PRODUCTS = [
-      { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeId: 'brillenlab', desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium', form: 'Panto' },
-      { id: 2, brand: 'MYKITA', name: 'Lite Tuva', price: '490 €', storeId: 'specsberlin', desc: 'Patentiertes schraubenloses Gelenk aus ultraleichtem Edelstahl, gefertigt in Berlin.', search: 'mykita lite tuva berlin specsberlin', form: 'Rund' },
-      { id: 3, brand: 'ic! berlin', name: 'Silk East', price: '450 €', storeId: 'ehler', desc: 'Federleichte Federedelstahl-Fassung ohne Schrauben und Lötstellen.', search: 'ic berlin silk ehler optik flensburg', form: 'Eckig' },
-      { id: 4, brand: 'Lunor', name: 'Classic Round', price: '520 €', storeId: 'bellevue', desc: 'Traditionelles Schwarzwälder Handwerk. Zeitlose Eleganz in Reinform.', search: 'lunor classic round schwarzwald bellevue hamburg', form: 'Rund' },
-      { id: 5, brand: 'CAZAL', name: 'Legends 607', price: '460 €', storeId: 'edeloptics', desc: 'Ikone des Eyewear-Designs von Cari Zalloni. Unverkennbarer Vintage-Charakter.', search: 'cazal legends 607 edel optics', form: 'Eckig' },
-      { id: 6, brand: 'Götti Switzerland', name: 'Perspective ORIS', price: '510 €', storeId: 'leidmann', desc: 'Schweizer Präzision aus dem 3D-Drucker. Minimalistisch und hochentwickelt.', search: 'gotti switzerland oris leidmann muenchen', form: 'Panto' },
-      { id: 7, brand: 'Klenze & Baum', name: 'Vespera 01', price: '480 €', storeId: 'specsberlin', desc: 'Münchner Designschmiede mit innovativem Tilting-Hinge Gelenksystem.', search: 'klenze und baum vespera specsberlin', form: 'Eckig' },
-      { id: 8, brand: 'Rolf Spectacles', name: 'Eucalyptus 102', price: '720 €', storeId: 'bellevue', desc: 'Echte Holzbrille aus den Tiroler Alpen. 100% naturbelassen ohne Metallschrauben.', search: 'rolf spectacles tirol holzbrille bellevue', form: 'Rund' },
-      { id: 9, brand: 'Reiz Germany', name: 'Mangan Series', price: '410 €', storeId: 'ehler', desc: 'Klassisches Acetat-Handwerk gefertigt in deutschen Manufakturen.', search: 'reiz germany mangan ehler optik flensburg', form: 'Panto' },
-      { id: 10, brand: 'Funk Eyewear', name: 'Dieter B.', price: '390 €', storeId: 'brillenlab', desc: 'Unkonventionelles Brillendesign aus der Kinzigtaler Manufaktur.', search: 'funk eyewear dieter brillenlaboratorium', form: 'Eckig' },
-      { id: 11, brand: 'Hoffmann Natural Eyewear', name: 'Bespoke Horn 22', price: '850 €', storeId: 'leidmann', desc: 'Meisterhafte Handarbeit aus echtem Büffelhorn. Jedes Stück ein Unikat.', search: 'hoffmann natural eyewear horn leidmann', form: 'Rund' },
-      { id: 12, brand: 'Matsuda', name: 'M3086 Titanium', price: '920 €', storeId: 'leidmann', desc: 'Graveurskunst aus Sabae, Japan. Detaillierte Ziselierungen auf reinstem Titan.', search: 'matsuda japan sabae leidmann', form: 'Panto' },
-      { id: 13, brand: 'DITA Eyewear', name: 'Statesman Six', price: '890 €', storeId: 'leidmann', desc: 'Japanische Präzision. Acetat-Titan-Hybridkonstruktion auf höchstem Niveau.', search: 'dita statesman japan leidmann muenchen', form: 'Eckig' },
-      { id: 14, brand: 'Eyevan 7285', name: 'Model 338', price: '580 €', storeId: 'specsberlin', desc: 'Japanischer Eyewear-Kult seit 1972. Ästhetische Perfektion und Tragekomfort.', search: 'eyevan 7285 specsberlin japan', form: 'Rund' },
-      { id: 15, brand: 'Masunaga 1905', name: 'GMS-805', price: '640 €', storeId: 'bellevue', desc: 'Hoflieferant des japanischen Kaiserhauses. Über 100 Jahre Manufaktur-Tradition.', search: 'masunaga 1905 gms bellevue hamburg', form: 'Panto' },
-      { id: 16, brand: 'Yuichi Toyama', name: 'U-129 Double Dutch', price: '530 €', storeId: 'specsberlin', desc: 'Moderne japanische Ästhetik inspiriert von traditioneller Fadenkunst.', search: 'yuichi toyama double dutch specsberlin', form: 'Rund' },
-      { id: 17, brand: 'Factory900', name: 'FA-240 Sculpted', price: '560 €', storeId: 'brillenlab', desc: 'Dreidimensionale Acetat-Skulpturen mit futuristischer Formensprache.', search: 'factory900 sabae brillenlaboratorium', form: 'Eckig' },
-      { id: 18, brand: 'KameManNen', name: 'KMN-113', price: '490 €', storeId: 'bellevue', desc: 'Eines der ältesten Brillenlabels Japans. Schildkröten-Symbolik für Ewigkeit.', search: 'kamemannen japan bellevue', form: 'Panto' },
-      { id: 19, brand: 'Jacques Marie Mage', name: 'Dealan Noir', price: '790 €', storeId: 'leidmann', desc: 'Limitierte Auflage. 10mm Acetat mit charakteristischem Skulpturenschliff.', search: 'jmm jacques marie mage dealan leidmann', form: 'Eckig' },
-      { id: 20, brand: 'Anne et Valentin', name: 'FANZINE Atelier', price: '430 €', storeId: 'specsberlin', desc: 'Farbenfroher Avantgarde-Stil aus Toulouse. Individueller Geometrie-Mix.', search: 'anne et valentin toulouse specsberlin', form: 'Rund' },
-      { id: 21, brand: 'Lafont Paris', name: 'Réédition Parisian', price: '360 €', storeId: 'ehler', desc: 'Pariser Chic und französisches Savoir-faire seit 1923.', search: 'lafont paris ehler optik flensburg', form: 'Panto' },
-      { id: 22, brand: 'Thierry Lasry', name: 'Sexxxy Cat-Eye', price: '440 €', storeId: 'edeloptics', desc: 'Futuristischer Vintage-Look, beliebt bei internationalen Celebrities.', search: 'thierry lasry paris edel optics', form: 'Cateye' },
-      { id: 23, brand: 'Ahlem Eyewear', name: 'Place de la Concorde', price: '495 €', storeId: 'leidmann', desc: 'Inspiration der Pariser Architektur, handgefertigt in Oyonnax, Frankreich.', search: 'ahlem paris oyonnax leidmann', form: 'Eckig' },
-      { id: 24, brand: 'Lucas de Staël', name: 'Monsieur Leather', price: '880 €', storeId: 'bellevue', desc: 'Pariser Atelierfassung überzogen mit edlem Rindsleder und Granitstein.', search: 'lucas de stael paris leder stein bellevue', form: 'Rund' },
-      { id: 25, brand: 'Res/Rei', name: 'Philosophia', price: '370 €', storeId: 'brillenlab', desc: 'Handmade in Italy. Fokus auf nachhaltiges Acetat und lebendige Farben.', search: 'res rei italy brillenlaboratorium', form: 'Panto' },
-      { id: 26, brand: 'L.G.R', name: 'Reunion Explorer', price: '420 €', storeId: 'leidmann', desc: 'Afrikanische Abenteuer-Inspiration vereint mit italienischer Handwerkskunst.', search: 'lgr reunion leidmann', form: 'Aviator' },
-      { id: 27, brand: 'Tavat Eyewear', name: 'SoupCan Round', price: '495 €', storeId: 'specsberlin', desc: 'Sandgestrahltes Uhrengehäuse-Konzept, gefertigt in den italienischen Alpen.', search: 'tavat soupcan specsberlin', form: 'Rund' },
-      { id: 28, brand: 'Movitra', name: 'Bruno Rotating', price: '540 €', storeId: 'bellevue', desc: 'Patentierter Drehmechanismus aus Mailand zum Schutz der Gläser.', search: 'movitra bruno mailand bellevue', form: 'Panto' },
-      { id: 29, brand: 'Oliver Peoples', name: 'Gregory Peck', price: '360 €', storeId: 'misterspex', desc: 'Klassischer Hollywood-Intellektuellen-Look aus Sunset Boulevard, L.A.', search: 'oliver peoples gregory peck misterspex', form: 'Eckig' },
-      { id: 30, brand: 'Garrett Leight (GLCO)', name: 'Hampton Sun', price: '330 €', storeId: 'specsberlin', desc: 'Entspannter Venice Beach Lifestyle mit kalifornischem Spirit.', search: 'garrett leight glco hampton specsberlin', form: 'Rund' },
-      { id: 31, brand: 'Moscot (NYC)', name: 'Lemtosh Original', price: '320 €', storeId: 'specsberlin', desc: 'Die Legende aus der Lower East Side in New York City seit 1915.', search: 'moscot lemtosh new york specsberlin', form: 'Panto' },
-      { id: 32, brand: 'Barton Perreira', name: 'Roxbury Aviator', price: '510 €', storeId: 'leidmann', desc: 'Luxuriöse Ästhetik entworfen von Patty Perreira in Kalifornien.', search: 'barton perreira leidmann', form: 'Aviator' },
-      { id: 33, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', storeId: 'bellevue', desc: 'Dänischer Minimalismus. Schraubenloses Titandraht-Design mit maximalem Tragekomfort.', search: 'lindberg titan daenemark bellevue hamburg', form: 'Rund' },
-      { id: 34, brand: 'Ørgreen Optics', name: 'Quantum High-Tech', price: '480 €', storeId: 'ehler', desc: 'Kopenhagener Design aus Reintitan mit unverwechselbaren Farbkombinationen.', search: 'orgreen optics kopenhagen ehler optik', form: 'Panto' },
-      { id: 35, brand: 'ProDesign Denmark', name: 'Essential 12', price: '290 €', storeId: 'optikerbode', desc: 'Funktionales skandinavisches Brillendesign mit klaren Strukturen.', search: 'prodesign denmark optiker bode', form: 'Eckig' },
-      { id: 36, brand: 'Cutler and Gross', name: '1386 Bold King', price: '470 €', storeId: 'specsberlin', desc: 'Britischer Statement-Style aus Knightsbridge, London.', search: 'cutler and gross london specsberlin', form: 'Eckig' },
-      { id: 37, brand: 'Cubitts', name: 'Judd Round', price: '240 €', storeId: 'brillenlab', desc: 'Traditionelles Brillenhandwerk aus King\'s Cross, London.', search: 'cubitts london brillenlaboratorium', form: 'Rund' }
+      { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeId: 'brillenlab', desc: 'Handgefertigte Acetatfassung aus dem österreichischen Jura.', search: 'andy wolf 5086 panto', form: 'Panto' },
+      { id: 2, brand: 'MYKITA', name: 'Lite Tuva', price: '490 €', storeId: 'specsberlin', desc: 'Minimalistisches Edelstahldesign aus Berlin.', search: 'mykita tuva rund', form: 'Rund' },
+      { id: 3, brand: 'ic! berlin', name: 'Silk East', price: '450 €', storeId: 'ehler', desc: 'Schraubenlose Brillenkunst.', search: 'ic berlin silk eckig', form: 'Eckig' }
     ];
 
     const FORMS = ['Alle', 'Panto', 'Rund', 'Eckig', 'Cateye', 'Aviator'];
 
-    // ==================== STATE ====================
-    let wishlist = JSON.parse(localStorage.getItem('luxevue_wishlist') || '[]');
-    let cart = JSON.parse(localStorage.getItem('luxevue_cart') || '[]');
-    let recentlyViewed = JSON.parse(localStorage.getItem('luxevue_recent') || '[]');
-    let heroSlideIndex = 0;
-    let currentBrand = 'Andy Wolf';
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let introDone = false;
-    let searchTimeout;
-    let currentProductForModal = null;
     let currentSearchQuery = '';
     let currentFormFilter = 'Alle';
     let currentSort = 'default';
     let displayedProductsCount = 12;
 
-    // ==================== HILFSFUNKTIONEN ====================
-    function getStoreInfo(storeId) {
-      return STORE_DATABASE.find(s => s.id === storeId) || { name: 'Zertifizierter Optiker', url: '#', city: 'Fachhandel', type: 'Fachgeschäft' };
-    }
-
-    function getPriceNumber(priceStr) {
-      return parseInt(priceStr.replace(/\D/g, '')) || 0;
-    }
-
-    function persistCart() {
-      localStorage.setItem('luxevue_cart', JSON.stringify(cart));
-      updateCartUI();
-    }
-    function persistWishlist() {
-      localStorage.setItem('luxevue_wishlist', JSON.stringify(wishlist));
-      updateWishlistUI();
-    }
-    function persistRecent() {
-      localStorage.setItem('luxevue_recent', JSON.stringify(recentlyViewed));
-    }
-
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toast-msg').innerText = msg;
-      toast.classList.remove('opacity-0', 'pointer-events-none');
-      toast.classList.add('opacity-100');
-      setTimeout(() => {
-        toast.classList.remove('opacity-100');
-        toast.classList.add('opacity-0', 'pointer-events-none');
-      }, 2500);
-    }
-
-    function setActiveNav(pageId) {
-      document.querySelectorAll('[data-nav]').forEach(btn => {
-        const isActive = btn.dataset.nav === pageId;
-        btn.classList.toggle('bg-[var(--text-main)]', isActive);
-        btn.classList.toggle('text-white', isActive);
-        btn.classList.toggle('border-[var(--text-main)]', isActive);
-        btn.classList.toggle('bg-transparent', !isActive);
-        btn.classList.toggle('text-[var(--text-muted)]', !isActive);
-      });
-    }
-
-    function navigateTo(pageId) {
-      document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
-      const page = document.getElementById('page-' + pageId);
-      if (page) {
-        page.classList.remove('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-      const hero = document.getElementById('hero');
-      if (hero) hero.classList.toggle('hidden', pageId !== 'home');
-      if (pageId === 'cart') updateCartUI();
-      if (pageId === 'checkout') renderCheckout();
-      setActiveNav(pageId);
-    }
-
-    function dismissIntro() {
-      if (introDone) return;
-      introDone = true;
-      const overlay = document.getElementById('intro-overlay');
-      const title = document.getElementById('intro-title');
-      const sub = document.getElementById('intro-sub');
-      const hint = document.getElementById('intro-hint');
-      title.classList.add('dissolve');
-      sub.classList.add('dissolve');
-      hint.classList.add('dissolve');
-      overlay.classList.add('dissolve-bg');
-      setTimeout(() => {
-        overlay.classList.add('hidden');
-        document.body.classList.remove('intro-active');
-        document.body.style.overflow = '';
-      }, 1700);
-    }
-
-    document.getElementById('intro-overlay').addEventListener('click', dismissIntro);
-    document.getElementById('intro-overlay').addEventListener('touchstart', dismissIntro);
-
-    // ==================== HERO SLIDER ====================
-    function setupHeroSlider() {
-      const container = document.getElementById('hero-slides');
-      const label = document.getElementById('hero-slide-label');
-      const desc = document.getElementById('hero-description');
-      container.innerHTML = '';
-
-      HERO_SLIDES.forEach((slide, i) => {
-        const img = document.createElement('img');
-        img.src = slide.img;
-        img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
-        img.alt = slide.label;
-        container.appendChild(img);
-      });
-
-      function updateSlide(index) {
-        const imgs = container.querySelectorAll('img');
-        imgs.forEach((img, i) => {
-          img.classList.toggle('opacity-100', i === index);
-          img.classList.toggle('opacity-0', i !== index);
-        });
-        if (label) label.textContent = HERO_SLIDES[index].label;
-        if (desc) desc.textContent = HERO_SLIDES[index].description;
-        currentBrand = HERO_SLIDES[index].label;
-        if (label) label.onclick = () => openBrandModal(currentBrand);
-        if (desc) desc.onclick = () => openBrandModal(currentBrand);
-        heroSlideIndex = index;
-      }
-
-      window.nextSlide = function() {
-        heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
-        updateSlide(heroSlideIndex);
-      };
-      window.prevSlide = function() {
-        heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
-        updateSlide(heroSlideIndex);
-      };
-
-      updateSlide(0);
-
-      let autoInterval = setInterval(() => {
-        heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
-        updateSlide(heroSlideIndex);
-      }, 6000);
-
-      const hero = document.getElementById('hero');
-      hero.addEventListener('touchstart', function(e) {
-        touchStartX = e.changedTouches[0].screenX;
-        clearInterval(autoInterval);
-        autoInterval = setInterval(() => {
-          heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
-          updateSlide(heroSlideIndex);
-        }, 6000);
-      }, { passive: true });
-
-      hero.addEventListener('touchend', function(e) {
-        touchEndX = e.changedTouches[0].screenX;
-        const diff = touchStartX - touchEndX;
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) window.nextSlide();
-          else window.prevSlide();
-        }
-      }, { passive: true });
-    }
-
-    // ==================== PRODUKTE & FILTER ====================
-    function getFilteredProducts() {
-      let items = [...PRODUCTS];
-      if (currentSearchQuery) {
-        items = items.filter(p => (p.brand + ' ' + p.name + ' ' + p.search).toLowerCase().includes(currentSearchQuery));
-      }
-      if (currentFormFilter !== 'Alle') {
-        items = items.filter(p => p.form === currentFormFilter);
-      }
-      switch (currentSort) {
-        case 'price-asc': items.sort((a,b) => getPriceNumber(a.price) - getPriceNumber(b.price)); break;
-        case 'price-desc': items.sort((a,b) => getPriceNumber(b.price) - getPriceNumber(a.price)); break;
-        case 'name-asc': items.sort((a,b) => a.brand.localeCompare(b.brand)); break;
-        case 'name-desc': items.sort((a,b) => b.brand.localeCompare(a.brand)); break;
-        default: break;
-      }
-      return items;
-    }
-
-    function renderProducts(resetCount = true) {
-      if (resetCount) displayedProductsCount = 12;
-      const container = document.getElementById('product-list');
-      container.innerHTML = '';
-      const filtered = getFilteredProducts();
-      const itemsToShow = filtered.slice(0, displayedProductsCount);
-      
-      if (itemsToShow.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-12 text-center">Keine passenden Brillenmodelle gefunden.</p>';
-        document.getElementById('load-more-btn').classList.add('hidden');
-        return;
-      }
-
-      itemsToShow.forEach(p => {
-        const store = getStoreInfo(p.storeId);
-        const productImg = createBrandPlaceholder(p.brand);
-        const card = document.createElement('div');
-        card.className = 'product-card group cursor-pointer';
-        card.innerHTML = `
-          <div class="img-zoom-container bg-[var(--surface-editorial)] mb-5 relative" onclick="openProductModal(${p.id})">
-            <img src="${productImg}" alt="${p.name}" class="w-full h-80 object-cover" loading="lazy">
-          </div>
-          <div class="flex justify-between items-start mb-2">
-            <div>
-              <p class="text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">${p.brand}</p>
-              <h3 class="font-serif text-xl font-light">${p.name}</h3>
-            </div>
-            <p class="text-xs font-medium">${p.price}</p>
-          </div>
-          <div class="my-3 py-2 px-3 bg-[var(--surface-editorial)] flex justify-between items-center text-[11px]">
-            <div>
-              <span class="text-[var(--text-muted)] block text-[9px] uppercase tracking-wider">Erhältlich bei:</span>
-              <span class="font-medium text-stone-900">${store.name}</span> <span class="text-[var(--text-muted)]">(${store.city})</span>
-            </div>
-            <a href="${store.url}" target="_blank" rel="noopener" onclick="event.stopPropagation();" class="text-xs text-stone-800 hover:text-black font-semibold flex items-center space-x-1 underline decoration-stone-400">
-              <span>Store</span>
-              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-            </a>
-          </div>
-          <div class="mt-4 pt-3 border-t border-[var(--border-editorial)]/50 flex space-x-3">
-            <button data-id="${p.id}" class="add-to-cart-btn flex-1 py-2.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest hover:bg-stone-800 transition-colors">In den Warenkorb</button>
-            <button data-id="${p.id}" class="wishlist-btn px-3 text-stone-600 hover:text-rose-600 transition-colors"><i class="fa-regular fa-heart"></i></button>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-
-      if (filtered.length > displayedProductsCount) {
-        document.getElementById('load-more-btn').classList.remove('hidden');
-      } else {
-        document.getElementById('load-more-btn').classList.add('hidden');
-      }
-    }
-
-    function loadMoreProducts() {
-      displayedProductsCount += 12;
-      renderProducts(false);
-    }
-
-    function filterProducts() {
-      currentSearchQuery = document.getElementById('searchInput').value.toLowerCase();
-      showSuggestions(currentSearchQuery);
-      renderProducts();
-    }
-
-    function debouncedSearch() {
-      clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(() => {
-        filterProducts();
-      }, 300);
-    }
-
-    // Suchvorschläge
-    function showSuggestions(query) {
-      const container = document.getElementById('search-suggestions');
-      if (!query) {
-        container.classList.add('hidden');
-        return;
-      }
-      const q = query.toLowerCase();
-      const matches = PRODUCTS.filter(p => 
-        p.brand.toLowerCase().includes(q) || p.name.toLowerCase().includes(q)
-      ).slice(0, 8);
-      if (matches.length === 0) {
-        container.classList.add('hidden');
-        return;
-      }
-      container.innerHTML = matches.map(p => `
-        <div class="search-suggestion-item" onclick="selectSuggestion('${p.brand}')">${p.brand} — ${p.name}</div>
-      `).join('');
-      container.classList.remove('hidden');
-    }
-
-    function selectSuggestion(text) {
-      document.getElementById('searchInput').value = text;
-      document.getElementById('search-suggestions').classList.add('hidden');
-      filterProducts();
-    }
-
-    // Form-Filter
     function renderFormFilters() {
       const bar = document.getElementById('form-filter-bar');
+      if (!bar) return;
       bar.innerHTML = '';
       FORMS.forEach((form, index) => {
         const btn = document.createElement('button');
@@ -1297,455 +1053,57 @@
       });
     }
 
-    // Sortierung
-    function applySortAndRender() {
-      currentSort = document.getElementById('sort-select').value;
-      renderProducts();
-    }
-
-    // Länderfilter
-    function renderCountryFilters() {
-      const bar = document.getElementById('country-filter-bar');
-      bar.innerHTML = '';
-      Object.keys(INDEPENDENT_LABELS).forEach((country, index) => {
-        const btn = document.createElement('button');
-        btn.className = `filter-btn text-[10px] uppercase border border-[var(--border-editorial)] px-4 py-2 hover:border-black transition-colors whitespace-nowrap ${index === 0 ? 'active' : ''}`;
-        btn.textContent = country;
-        btn.onclick = () => {
-          document.querySelectorAll('#country-filter-bar .filter-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          renderLabelTags(country);
-        };
-        bar.appendChild(btn);
-      });
-      renderLabelTags(Object.keys(INDEPENDENT_LABELS)[0]);
-    }
-
-    function renderLabelTags(country) {
-      const container = document.getElementById('selected-country-labels');
+    function renderProducts(resetCount = true) {
+      if (resetCount) displayedProductsCount = 12;
+      const container = document.getElementById('product-list');
+      if (!container) return;
       container.innerHTML = '';
-      const bgColorClass = COUNTRY_COLORS[country] || 'bg-[var(--surface-editorial)]';
-      INDEPENDENT_LABELS[country].forEach(label => {
-        const tag = document.createElement('span');
-        tag.className = `text-[10px] ${bgColorClass} border border-[var(--border-editorial)] px-3 py-1.5 tracking-wider text-[var(--text-main)] font-medium cursor-pointer hover:border-black transition-colors`;
-        tag.textContent = label;
-        tag.onclick = () => {
-          const brandMatch = label.match(/^([^(]+)/);
-          const brandClean = brandMatch ? brandMatch[1].trim() : label;
-          document.getElementById('searchInput').value = brandClean;
-          filterProducts();
-        };
-        container.appendChild(tag);
-      });
-    }
-
-    // ==================== WARENKORB & WUNSCHLISTE ====================
-    function addToCart(name, price, img, storeName) {
-      const existing = cart.find(item => item.name === name);
-      if (existing) {
-        existing.quantity = (existing.quantity || 1) + 1;
-      } else {
-        cart.push({ name, price, img, storeName, quantity: 1 });
+      
+      let items = [...PRODUCTS];
+      if (currentSearchQuery) {
+        items = items.filter(p => (p.brand + ' ' + p.name + ' ' + p.search).toLowerCase().includes(currentSearchQuery));
       }
-      persistCart();
-      showToast(name + ' hinzugefügt');
-    }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      persistCart();
-    }
-
-    function changeQuantity(index, delta) {
-      if (cart[index]) {
-        const newQty = (cart[index].quantity || 1) + delta;
-        if (newQty < 1) {
-          removeFromCart(index);
-          return;
-        }
-        cart[index].quantity = newQty;
-        persistCart();
+      if (currentFormFilter !== 'Alle') {
+        items = items.filter(p => p.form === currentFormFilter);
       }
-    }
 
-    function updateCartUI() {
-      const badge = document.getElementById('cart-count');
-      const container = document.getElementById('cart-container');
-      const summary = document.getElementById('cart-summary');
-      const totalEl = document.getElementById('cart-total');
-
-      const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-      badge.innerText = totalItems;
-      badge.classList.toggle('hidden', totalItems === 0);
-
-      if (cart.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihr Warenkorb ist derzeit leer.</p>';
-        summary.classList.add('hidden');
-        totalEl.innerText = '0 €';
+      if (items.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-12 text-center">Keine passenden Brillenmodelle gefunden.</p>';
         return;
       }
 
-      let total = 0;
-      container.innerHTML = cart.map((item, index) => {
-        const priceNum = getPriceNumber(item.price);
-        const subtotal = priceNum * (item.quantity || 1);
-        total += subtotal;
-        return `
-          <div class="flex justify-between items-center p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]">
-            <div class="flex items-center space-x-4">
-              <img src="${item.img}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]" alt="${item.name}" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
-              <div>
-                <p class="text-xs font-medium">${item.name}</p>
-                <p class="text-[10px] text-[var(--text-muted)]">${item.price} — ${item.storeName || 'Optiker'}</p>
-                <div class="flex items-center gap-2 mt-1">
-                  <button onclick="changeQuantity(${index}, -1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">-</button>
-                  <span class="text-xs">${item.quantity || 1}</span>
-                  <button onclick="changeQuantity(${index}, 1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">+</button>
-                </div>
-              </div>
-            </div>
-            <div class="flex items-center gap-4">
-              <span class="text-xs font-medium">${subtotal} €</span>
-              <button onclick="removeFromCart(${index})" class="text-lg text-[var(--text-muted)] hover:text-black">&times;</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      totalEl.innerText = total + ' €';
-      summary.classList.remove('hidden');
-    }
-
-    function updateWishlistUI() {
-      const badge = document.getElementById('wishlist-count');
-      const container = document.getElementById('wishlist-container');
-      badge.innerText = wishlist.length;
-      badge.classList.toggle('hidden', wishlist.length === 0);
-
-      if (wishlist.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihre Wunschliste ist leer.</p>';
-      } else {
-        container.innerHTML = wishlist.map(item => `
-          <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex justify-between items-center">
-            <span class="text-xs font-medium">${item}</span>
-            <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">Gespeichert</span>
-          </div>
-        `).join('');
-      }
-    }
-
-    function shareWishlist() {
-      if (wishlist.length === 0) { showToast('Wunschliste ist leer'); return; }
-      const text = 'Meine LUXEVUE Auswahl: ' + wishlist.join(', ');
-      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-    }
-
-    // ==================== CHECKOUT ====================
-    function renderCheckout() {
-      const container = document.getElementById('checkout-items');
-      const totalEl = document.getElementById('checkout-total');
-      let total = 0;
-      if (cart.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)]">Ihr Warenkorb ist leer.</p>';
-        totalEl.innerText = '0 €';
-        return;
-      }
-      container.innerHTML = cart.map(item => {
-        const priceNum = getPriceNumber(item.price);
-        const subtotal = priceNum * (item.quantity || 1);
-        total += subtotal;
-        return `<div class="flex justify-between text-sm"><span>${item.name} (${item.quantity || 1}x)</span><span>${subtotal} €</span></div>`;
-      }).join('');
-      totalEl.innerText = total + ' €';
-    }
-
-    function placeOrder() {
-      const agb = document.getElementById('checkout-agb');
-      if (!agb.checked) { showToast('Bitte akzeptieren Sie die AGB.'); return; }
-      const firstname = document.getElementById('checkout-firstname').value.trim();
-      const lastname = document.getElementById('checkout-lastname').value.trim();
-      const email = document.getElementById('checkout-email').value.trim();
-      const address = document.getElementById('checkout-address').value.trim();
-      if (!firstname || !lastname || !email || !address) { showToast('Bitte füllen Sie alle Felder aus.'); return; }
-      const payment = document.querySelector('input[name="payment"]:checked');
-      if (!payment) { showToast('Bitte wählen Sie eine Zahlungsart.'); return; }
-      showToast('Vielen Dank für Ihre Bestellung! Sie erhalten eine Bestätigung per E-Mail.');
-      cart = [];
-      persistCart();
-      navigateTo('home');
-    }
-
-    // ==================== STORE LOCATOR ====================
-    function renderStoreLocatorGrid(filteredStores) {
-      const container = document.getElementById('locator-grid');
-      const stores = filteredStores || STORE_DATABASE;
-      container.innerHTML = '';
-      if (stores.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-8 text-center">Keine passenden Partneroptiker gefunden.</p>';
-        return;
-      }
-      stores.forEach(s => {
+      items.slice(0, displayedProductsCount).forEach(p => {
+        const productImg = createBrandPlaceholder(p.brand);
         const card = document.createElement('div');
-        card.className = 'p-6 bg-white border border-[var(--border-editorial)] flex flex-col justify-between space-y-4 hover:border-black transition-colors';
+        card.className = 'product-card group cursor-pointer';
         card.innerHTML = `
-          <div>
-            <span class="text-[9px] uppercase tracking-widest bg-[var(--surface-editorial)] px-2.5 py-1 text-[var(--text-muted)] border border-[var(--border-editorial)] font-semibold">${s.type}</span>
-            <h3 class="font-serif text-2xl font-light mt-3 mb-1">${s.name}</h3>
-            <p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${s.city}</p>
+          <div class="img-zoom-container bg-[var(--surface-editorial)] mb-5 relative">
+            <img src="${productImg}" alt="${p.name}" class="w-full h-80 object-cover" loading="lazy">
           </div>
-          <div class="pt-4 border-t border-[var(--border-editorial)]/60 flex justify-between items-center">
-            <a href="${s.url}" target="_blank" rel="noopener" class="text-xs font-semibold underline hover:text-stone-600 flex items-center space-x-1">
-              <span>Website besuchen</span>
-              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-            </a>
-            <button onclick="navigateTo('account')" class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-[#1a1918] text-white hover:bg-stone-800 transition-colors">Termin</button>
+          <div class="flex justify-between items-start mb-2">
+            <div>
+              <p class="text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">${p.brand}</p>
+              <h3 class="font-serif text-xl font-light">${p.name}</h3>
+            </div>
+            <p class="text-xs font-medium">${p.price}</p>
           </div>
         `;
         container.appendChild(card);
       });
     }
 
-    function filterStoreLocator() {
-      const search = document.getElementById('locatorSearchInput').value.toLowerCase();
-      const cat = document.getElementById('locatorCategorySelect').value;
-      const filtered = STORE_DATABASE.filter(s => {
-        const matchesSearch = s.name.toLowerCase().includes(search) || s.city.toLowerCase().includes(search);
-        const matchesCat = cat === '' || s.type === cat;
-        return matchesSearch && matchesCat;
-      });
-      renderStoreLocatorGrid(filtered);
-    }
-
-    function resetStoreLocatorFilters() {
-      document.getElementById('locatorSearchInput').value = '';
-      document.getElementById('locatorCategorySelect').value = '';
-      renderStoreLocatorGrid();
-    }
-
-    function renderStoreDirectory() {
-      const list = document.getElementById('store-directory-list');
-      list.innerHTML = STORE_DATABASE.map(s => `
-        <div class="pb-3 border-b border-[var(--border-editorial)] flex justify-between items-center">
-          <div>
-            <strong class="font-medium">${s.name}</strong>
-            <span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span>
-          </div>
-          <a href="${s.url}" target="_blank" rel="noopener" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
-            <span>Website</span>
-            <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
-          </a>
-        </div>
-      `).join('');
-    }
-
-    // ==================== KONFIGURATOR ====================
-    function setConfigFrame(colorClass) {
-      const frame = document.getElementById('config-frame-preview');
-      frame.className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
-    }
-
-    function setConfigLens(lensClass) {
-      document.getElementById('config-lens-left').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
-      document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
-    }
-
-    // ==================== MODALS ====================
-    function openProductModal(productId) {
-      const p = PRODUCTS.find(x => x.id === parseInt(productId));
-      if (!p) { showToast('Produkt nicht gefunden'); return; }
-      currentProductForModal = p;
-      const store = getStoreInfo(p.storeId);
-
-      document.getElementById('modal-product-img').src = createBrandPlaceholder(p.brand);
-      document.getElementById('modal-product-brand').innerText = p.brand;
-      document.getElementById('modal-product-name').innerText = p.name;
-      document.getElementById('modal-product-price').innerText = p.price;
-      document.getElementById('modal-product-desc').innerText = p.desc;
-      document.getElementById('modal-product-store-name').innerText = store.name;
-      document.getElementById('modal-product-store-city').innerText = store.type + ' — ' + store.city;
-      document.getElementById('modal-product-store-url').href = store.url;
-
-      const wishBtn = document.getElementById('modal-product-wishlist');
-      const icon = wishBtn.querySelector('i');
-      if (wishlist.includes(p.name)) {
-        icon.className = 'fa-solid fa-heart text-rose-600';
-      } else {
-        icon.className = 'fa-regular fa-heart';
-      }
-
-      if (!recentlyViewed.includes(productId)) {
-        recentlyViewed.unshift(productId);
-        recentlyViewed = recentlyViewed.slice(0, 6);
-        persistRecent();
-        renderRecentlyViewed();
-      }
-
-      document.getElementById('productModal').classList.remove('hidden');
-      document.getElementById('productModal').classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeProductModal() {
-      document.getElementById('productModal').classList.add('hidden');
-      document.getElementById('productModal').classList.remove('flex');
-      document.body.style.overflow = '';
-    }
-
-    function openBrandModal(brandName) {
-      const data = BRAND_DATA[brandName];
-      if (!data) {
-        showToast('Informationen zu dieser Marke folgen in Kürze.');
-        return;
-      }
-      document.getElementById('brand-modal-name').innerText = brandName;
-      document.getElementById('brand-modal-story').innerText = data.story;
-      document.getElementById('brand-modal-img').src = data.img;
-      document.getElementById('brand-modal-name').dataset.brand = brandName;
-      document.getElementById('brandModal').classList.remove('hidden');
-      document.getElementById('brandModal').classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeBrandModal() {
-      document.getElementById('brandModal').classList.add('hidden');
-      document.getElementById('brandModal').classList.remove('flex');
-      document.body.style.overflow = '';
-    }
-
-    function filterByBrand() {
-      const brand = document.getElementById('brand-modal-name').dataset.brand;
-      if (brand) {
-        closeBrandModal();
-        navigateTo('home');
-        document.getElementById('searchInput').value = brand;
-        filterProducts();
-        setTimeout(() => {
-          document.getElementById('product-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300);
-      }
-    }
-
-    // ==================== EVENT LISTENER FÜR MODAL BUTTONS ====================
-    document.getElementById('modal-product-addcart').addEventListener('click', function() {
-      if (currentProductForModal) {
-        const store = getStoreInfo(currentProductForModal.storeId);
-        addToCart(currentProductForModal.name, currentProductForModal.price, currentProductForModal.img, store.name);
-        closeProductModal();
-      }
-    });
-
-    document.getElementById('modal-product-wishlist').addEventListener('click', function() {
-      if (currentProductForModal) {
-        const p = currentProductForModal;
-        const icon = this.querySelector('i');
-        if (wishlist.includes(p.name)) {
-          wishlist = wishlist.filter(x => x !== p.name);
-          icon.className = 'fa-regular fa-heart';
-          showToast('Von Favoriten entfernt');
-        } else {
-          wishlist.push(p.name);
-          icon.className = 'fa-solid fa-heart text-rose-600';
-          showToast('Zu Favoriten hinzugefügt');
-        }
-        persistWishlist();
-      }
-    });
-
-    // Event-Delegation für Produktliste
-    document.getElementById('product-list').addEventListener('click', function(e) {
-      const addBtn = e.target.closest('.add-to-cart-btn');
-      const wishBtn = e.target.closest('.wishlist-btn');
-
-      if (addBtn) {
-        e.stopPropagation();
-        const productId = parseInt(addBtn.dataset.id);
-        const p = PRODUCTS.find(x => x.id === productId);
-        if (p) {
-          const store = getStoreInfo(p.storeId);
-          addToCart(p.name, p.price, createBrandPlaceholder(p.brand), store.name);
-        }
-      }
-
-      if (wishBtn) {
-        e.stopPropagation();
-        const productId = parseInt(wishBtn.dataset.id);
-        const p = PRODUCTS.find(x => x.id === productId);
-        if (p) {
-          const icon = wishBtn.querySelector('i');
-          if (wishlist.includes(p.name)) {
-            wishlist = wishlist.filter(x => x !== p.name);
-            icon.className = 'fa-regular fa-heart';
-            showToast('Entfernt');
-          } else {
-            wishlist.push(p.name);
-            icon.className = 'fa-solid fa-heart text-rose-600';
-            showToast('Gespeichert');
-          }
-          persistWishlist();
-        }
-      }
-    });
-
-    // ==================== NEWSLETTER ====================
-    function subscribeNewsletter() {
-      const email = document.getElementById('newsletter-email').value;
-      if (!email.includes('@')) { showToast('Gültige E-Mail erforderlich'); return; }
-      showToast('Vielen Dank für Ihre Anmeldung.');
-      document.getElementById('newsletter-email').value = '';
-    }
-
-    // ==================== SCROLL ANIMATIONEN ====================
-    function setupScrollAnimations() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    }
-
-    // ==================== ZULETZT ANGESEHEN ====================
-    function renderRecentlyViewed() {
-      const section = document.getElementById('recently-viewed-section');
-      const container = document.getElementById('recently-viewed-container');
-      if (!section || !container) return;
-      if (recentlyViewed.length === 0) {
-        section.classList.add('hidden');
-        return;
-      }
-      section.classList.remove('hidden');
-      container.innerHTML = '';
-      recentlyViewed.forEach(pid => {
-        const p = PRODUCTS.find(x => x.id === pid);
-        if (!p) return;
-        const card = document.createElement('div');
-        card.className = 'recent-card product-card group cursor-pointer bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-3';
-        card.innerHTML = `
-          <div class="img-zoom-container mb-2" onclick="openProductModal(${p.id})">
-            <img src="${createBrandPlaceholder(p.brand)}" alt="${p.name}" class="w-full h-32 object-cover" loading="lazy">
-          </div>
-          <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p>
-          <h4 class="font-serif text-sm font-light truncate">${p.name}</h4>
-          <p class="text-xs font-medium mt-1">${p.price}</p>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    // ==================== INITIALISIERUNG ====================
-    window.addEventListener('DOMContentLoaded', function() {
-      document.body.classList.add('intro-active');
-      document.body.style.overflow = 'hidden';
-
-      renderCountryFilters();
+    window.addEventListener('DOMContentLoaded', () => {
       renderFormFilters();
-      setupHeroSlider();
-      filterProducts();
-      renderStoreLocatorGrid();
-      renderStoreDirectory();
-      updateCartUI();
-      updateWishlistUI();
-      renderRecentlyViewed();
-      setupScrollAnimations();
-      navigateTo('home');
+      renderProducts();
+      
+      // Intro Overlay Klick-Handling
+      const overlay = document.getElementById('intro-overlay');
+      if (overlay) {
+        overlay.onclick = () => {
+          overlay.classList.add('hidden');
+          document.body.classList.remove('intro-active');
+        };
+      }
     });
   </script>
 </body>
