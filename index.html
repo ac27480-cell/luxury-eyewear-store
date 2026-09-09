@@ -400,7 +400,6 @@
 
   <!-- ===== HERO ===== -->
   <section id="hero" class="relative h-[75vh] min-h-[500px] bg-stone-900 text-white overflow-hidden fade-in touch-manipulation">
-    <!-- Hintergrundbilder werden dynamisch über JS geladen -->
     <div id="hero-brand-container" class="absolute inset-0 bg-cover bg-center transition-opacity duration-300"></div>
     <div class="absolute inset-0 bg-black/50 z-10"></div>
     <button class="hero-arrow left-4" onclick="prevSlide()" aria-label="Vorheriges Bild" title="Zurück">‹</button>
@@ -413,7 +412,6 @@
       <div class="mt-8 flex justify-between items-end border-t border-white/20 pt-6">
         <p class="text-xs tracking-widest uppercase text-stone-300 max-w-md">Die führenden unabhängigen Brillenmarken & Partner-Optiker</p>
         <div class="flex space-x-2">
-          <!-- Punkte für Slider -->
           <span class="hero-dot active w-2 h-2 bg-white cursor-pointer" onclick="updateSlide(0)"></span>
           <span class="hero-dot w-2 h-2 bg-white/50 cursor-pointer" onclick="updateSlide(1)"></span>
           <span class="hero-dot w-2 h-2 bg-white/50 cursor-pointer" onclick="updateSlide(2)"></span>
@@ -497,7 +495,6 @@
       </div>
 
       <div class="brand-sketch-container">
-        <!-- Hier die vier Marken als Kacheln -->
         <div class="brand-item" onclick="openBrandModal('Tom Ford')">
           <img src="./assets/brands/tom-ford-sketch.png" alt="Tom Ford Skizze" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
           <span>Tom Ford</span>
@@ -554,7 +551,6 @@
 
   <!-- ===== PAGE: STORE LOCATOR ===== -->
   <section id="page-locator" class="page-content hidden max-w-7xl mx-auto px-6 lg:px-12 py-16">
-    <!-- Inhalt unverändert -->
     <div class="mb-10 pb-4 border-b border-[var(--border-editorial)]">
       <h1 class="text-4xl font-serif font-light tracking-wide mb-2">Store-Finder & Partneroptiker</h1>
       <p class="text-xs uppercase tracking-widest text-[var(--text-muted)]">Finden Sie zertifizierte Fachgeschäfte und exklusive Boutiquen</p>
@@ -847,37 +843,9 @@
       </svg>
     `);
 
-    // --- NEUE BRAND_DATA (Array mit allen Informationen) ---
-    const BRAND_DATA = [
-      {
-        name: "Tom Ford",
-        subtitle: "Luxury & Boldness",
-        desc: "Kühne Acetat-Silhouetten treffen auf die ikonische Metal-T-Branding-Ästhetik.",
-        img: "./assets/brands/tomford.jpg"
-      },
-      {
-        name: "DITA",
-        subtitle: "Artisan Precision",
-        desc: "Japanische Handwerkskunst, gefertigt in monatelangen Produktionsprozessen.",
-        img: "./assets/brands/dita.jpg"
-      },
-      {
-        name: "Cartier",
-        subtitle: "Maison de Prestige",
-        desc: "Erlesene Materialien wie massives Gold, edles Bubinga-Holz und feinstes Leder.",
-        img: "./assets/brands/cartier.jpg"
-      },
-      {
-        name: "Cutler and Gross",
-        subtitle: "British Avant-Garde",
-        desc: "Exzentrische Klassiker mit unverkennbarer Londoner Bohème-Note seit 1969.",
-        img: "./assets/brands/cutler.jpg"
-      }
-    ];
-
-    // Individuelle Markenplatzhalter als Fallback
     function createBrandPlaceholder(brand) {
-      const color = brand.length % 2 === 0 ? '#c9a87c' : '#b8860b';
+      const colors = ['#c9a87c', '#b8860b', '#8a7a6a', '#a68b66', '#6b5d4e'];
+      const color = colors[brand.length % colors.length];
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
         <rect width="100%" height="100%" fill="#f4f2ed"/>
         <g stroke="${color}" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -897,7 +865,14 @@
       return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
     }
 
-    // --- STORE DATABASE (unverändert) ---
+    // --- BRAND_DATA als Array ---
+    const BRAND_DATA = [
+      { name: "Tom Ford", subtitle: "Luxury & Boldness", desc: "Kühne Acetat-Silhouetten treffen auf die ikonische Metal-T-Branding-Ästhetik.", img: "./assets/brands/tomford.jpg" },
+      { name: "DITA", subtitle: "Artisan Precision", desc: "Japanische Handwerkskunst, gefertigt in monatelangen Produktionsprozessen.", img: "./assets/brands/dita.jpg" },
+      { name: "Cartier", subtitle: "Maison de Prestige", desc: "Erlesene Materialien wie massives Gold, edles Bubinga-Holz und feinstes Leder.", img: "./assets/brands/cartier.jpg" },
+      { name: "Cutler and Gross", subtitle: "British Avant-Garde", desc: "Exzentrische Klassiker mit unverkennbarer Londoner Bohème-Note seit 1969.", img: "./assets/brands/cutler.jpg" }
+    ];
+
     const STORE_DATABASE = [
       { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
       { id: 'leidmann', name: "Leidmann", type: "Boutique / Fachgeschäft", city: "München", url: "https://www.leidmann.de" },
@@ -909,7 +884,20 @@
       { id: 'misterspex', name: "Mister Spex", type: "Omnichannel / Online", city: "Berlin / Online", url: "https://www.misterspex.de" }
     ];
 
-    // --- PRODUKTE (37 Stück, passend zu den vier Marken) ---
+    const INDEPENDENT_LABELS = {
+      "Italien / USA": ["Tom Ford"],
+      "Japan": ["DITA"],
+      "Frankreich": ["Cartier"],
+      "Großbritannien": ["Cutler and Gross"]
+    };
+    const COUNTRY_COLORS = {
+      "Italien / USA": 'bg-amber-100',
+      "Japan": 'bg-red-100',
+      "Frankreich": 'bg-blue-100',
+      "Großbritannien": 'bg-purple-100'
+    };
+
+    // 37 Produkte
     const PRODUCTS = [
       { id: 1, brand: 'Tom Ford', name: 'TF 5555-B', price: '390 €', storeId: 'brillenlab', form: 'Eckig', desc: 'Kühne Acetat-Silhouette mit Metal-T-Branding.' },
       { id: 2, brand: 'Tom Ford', name: 'FT 0888', price: '410 €', storeId: 'leidmann', form: 'Panto', desc: 'Zeitloser Panto-Look mit markanter Bügelprägung.' },
@@ -950,7 +938,7 @@
       { id: 37, brand: 'Cutler and Gross', name: '1902', price: '500 €', storeId: 'leidmann', form: 'Aviator', desc: 'Aviator mit auffälligen Bügeln.' }
     ];
 
-    const FORMS = ['Alle', 'Panto', 'Rund', 'Eckig', 'Cateye', 'Aviator'];
+    const FORMS = ['Alle', 'Panto', 'Rund', 'Eckig', 'Aviator'];
 
     // ==================== STATE ====================
     let wishlist = JSON.parse(localStorage.getItem('luxevue_wishlist') || '[]');
@@ -962,9 +950,9 @@
     let displayedProductsCount = 12;
     let searchTimeout;
     let currentProductForModal = null;
-    let currentBrandName = 'Tom Ford'; // für Hero und Modals
+    let heroInterval = null;
 
-    // ==================== FUNKTIONEN ====================
+    // ==================== HILFSFUNKTIONEN ====================
     function getStoreInfo(storeId) {
       return STORE_DATABASE.find(s => s.id === storeId) || { name: 'Zertifizierter Optiker', url: '#', city: 'Fachhandel', type: 'Fachgeschäft' };
     }
@@ -1035,9 +1023,7 @@
     document.getElementById('intro-overlay').addEventListener('click', dismissIntro);
     document.getElementById('intro-overlay').addEventListener('touchstart', dismissIntro);
 
-    // ==================== HERO SLIDER (neue Array-Logik) ====================
-    let heroInterval = null;
-
+    // ==================== HERO SLIDER ====================
     function setupHeroSlider() {
       const container = document.getElementById('hero-brand-container');
       const title = document.getElementById('hero-brand-title');
@@ -1049,7 +1035,6 @@
       window.updateSlide = function(index) {
         index = (index + BRAND_DATA.length) % BRAND_DATA.length;
         const brand = BRAND_DATA[index];
-        // Fade-Out, dann Inhalt wechseln
         container.style.opacity = '0';
         setTimeout(() => {
           if (title) title.textContent = brand.name;
@@ -1059,7 +1044,6 @@
           container.style.opacity = '1';
         }, 300);
 
-        // Punkte
         document.querySelectorAll('.hero-dot').forEach((dot, idx) => {
           dot.classList.toggle('active', idx === index);
           dot.classList.toggle('bg-white', idx === index);
@@ -1087,7 +1071,6 @@
         }, 6000);
       }
 
-      // Initial
       window.updateSlide(0);
       resetHeroTimer();
     }
@@ -1239,20 +1222,7 @@
       renderProducts();
     }
 
-    // Länderfilter (hier an die neuen Marken angepasst)
-    const INDEPENDENT_LABELS = {
-      "Italien / USA": ["Tom Ford"],
-      "Japan": ["DITA"],
-      "Frankreich": ["Cartier"],
-      "Großbritannien": ["Cutler and Gross"]
-    };
-    const COUNTRY_COLORS = {
-      "Italien / USA": 'bg-amber-100',
-      "Japan": 'bg-red-100',
-      "Frankreich": 'bg-blue-100',
-      "Großbritannien": 'bg-purple-100'
-    };
-
+    // Länderfilter
     function renderCountryFilters() {
       const bar = document.getElementById('country-filter-bar');
       bar.innerHTML = '';
@@ -1286,12 +1256,216 @@
       });
     }
 
-    // ==================== WARENKORB & WUNSCHLISTE (unverändert) ====================
-    // ... (alle Funktionen addToCart, removeFromCart, changeQuantity, updateCartUI, updateWishlistUI, shareWishlist, renderCheckout, placeOrder)
-    // Aus Platzgründen sind sie hier nicht erneut aufgeführt, aber sie sind im vollständigen Code oben enthalten.
+    // ==================== WARENKORB ====================
+    function addToCart(name, price, img, storeName) {
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.quantity = (existing.quantity || 1) + 1;
+      } else {
+        cart.push({ name, price, img, storeName, quantity: 1 });
+      }
+      persistCart();
+      showToast(name + ' hinzugefügt');
+    }
 
-    // ==================== STORE LOCATOR & KONFIGURATOR (unverändert) ====================
-    // ...
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      persistCart();
+    }
+
+    function changeQuantity(index, delta) {
+      if (cart[index]) {
+        const newQty = (cart[index].quantity || 1) + delta;
+        if (newQty < 1) {
+          removeFromCart(index);
+          return;
+        }
+        cart[index].quantity = newQty;
+        persistCart();
+      }
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cart-count');
+      const container = document.getElementById('cart-container');
+      const summary = document.getElementById('cart-summary');
+      const totalEl = document.getElementById('cart-total');
+
+      const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      badge.innerText = totalItems;
+      badge.classList.toggle('hidden', totalItems === 0);
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihr Warenkorb ist derzeit leer.</p>';
+        summary.classList.add('hidden');
+        totalEl.innerText = '0 €';
+        return;
+      }
+
+      let total = 0;
+      container.innerHTML = cart.map((item, index) => {
+        const priceNum = getPriceNumber(item.price);
+        const subtotal = priceNum * (item.quantity || 1);
+        total += subtotal;
+        return `
+          <div class="flex justify-between items-center p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]">
+            <div class="flex items-center space-x-4">
+              <img src="${item.img}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]" alt="${item.name}" onerror="this.onerror=null;this.src=IMAGE_PLACEHOLDER;">
+              <div>
+                <p class="text-xs font-medium">${item.name}</p>
+                <p class="text-[10px] text-[var(--text-muted)]">${item.price} — ${item.storeName || 'Optiker'}</p>
+                <div class="flex items-center gap-2 mt-1">
+                  <button onclick="changeQuantity(${index}, -1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">-</button>
+                  <span class="text-xs">${item.quantity || 1}</span>
+                  <button onclick="changeQuantity(${index}, 1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="text-xs font-medium">${subtotal} €</span>
+              <button onclick="removeFromCart(${index})" class="text-lg text-[var(--text-muted)] hover:text-black">&times;</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      totalEl.innerText = total + ' €';
+      summary.classList.remove('hidden');
+    }
+
+    // ==================== WUNSCHLISTE ====================
+    function updateWishlistUI() {
+      const badge = document.getElementById('wishlist-count');
+      const container = document.getElementById('wishlist-container');
+      badge.innerText = wishlist.length;
+      badge.classList.toggle('hidden', wishlist.length === 0);
+
+      if (wishlist.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihre Wunschliste ist leer.</p>';
+      } else {
+        container.innerHTML = wishlist.map(item => `
+          <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex justify-between items-center">
+            <span class="text-xs font-medium">${item}</span>
+            <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">Gespeichert</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    function shareWishlist() {
+      if (wishlist.length === 0) { showToast('Wunschliste ist leer'); return; }
+      const text = 'Meine LUXEVUE Auswahl: ' + wishlist.join(', ');
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    // ==================== CHECKOUT ====================
+    function renderCheckout() {
+      const container = document.getElementById('checkout-items');
+      const totalEl = document.getElementById('checkout-total');
+      let total = 0;
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)]">Ihr Warenkorb ist leer.</p>';
+        totalEl.innerText = '0 €';
+        return;
+      }
+      container.innerHTML = cart.map(item => {
+        const priceNum = getPriceNumber(item.price);
+        const subtotal = priceNum * (item.quantity || 1);
+        total += subtotal;
+        return `<div class="flex justify-between text-sm"><span>${item.name} (${item.quantity || 1}x)</span><span>${subtotal} €</span></div>`;
+      }).join('');
+      totalEl.innerText = total + ' €';
+    }
+
+    function placeOrder() {
+      const agb = document.getElementById('checkout-agb');
+      if (!agb.checked) { showToast('Bitte akzeptieren Sie die AGB.'); return; }
+      const firstname = document.getElementById('checkout-firstname').value.trim();
+      const lastname = document.getElementById('checkout-lastname').value.trim();
+      const email = document.getElementById('checkout-email').value.trim();
+      const address = document.getElementById('checkout-address').value.trim();
+      if (!firstname || !lastname || !email || !address) { showToast('Bitte füllen Sie alle Felder aus.'); return; }
+      const payment = document.querySelector('input[name="payment"]:checked');
+      if (!payment) { showToast('Bitte wählen Sie eine Zahlungsart.'); return; }
+      showToast('Vielen Dank für Ihre Bestellung! Sie erhalten eine Bestätigung per E-Mail.');
+      cart = [];
+      persistCart();
+      navigateTo('home');
+    }
+
+    // ==================== STORE LOCATOR ====================
+    function renderStoreLocatorGrid(filteredStores) {
+      const container = document.getElementById('locator-grid');
+      const stores = filteredStores || STORE_DATABASE;
+      container.innerHTML = '';
+      if (stores.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-8 text-center">Keine passenden Partneroptiker gefunden.</p>';
+        return;
+      }
+      stores.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'p-6 bg-white border border-[var(--border-editorial)] flex flex-col justify-between space-y-4 hover:border-black transition-colors';
+        card.innerHTML = `
+          <div>
+            <span class="text-[9px] uppercase tracking-widest bg-[var(--surface-editorial)] px-2.5 py-1 text-[var(--text-muted)] border border-[var(--border-editorial)] font-semibold">${s.type}</span>
+            <h3 class="font-serif text-2xl font-light mt-3 mb-1">${s.name}</h3>
+            <p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${s.city}</p>
+          </div>
+          <div class="pt-4 border-t border-[var(--border-editorial)]/60 flex justify-between items-center">
+            <a href="${s.url}" target="_blank" rel="noopener" class="text-xs font-semibold underline hover:text-stone-600 flex items-center space-x-1">
+              <span>Website besuchen</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </a>
+            <button onclick="navigateTo('account')" class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-[#1a1918] text-white hover:bg-stone-800 transition-colors">Termin</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterStoreLocator() {
+      const search = document.getElementById('locatorSearchInput').value.toLowerCase();
+      const cat = document.getElementById('locatorCategorySelect').value;
+      const filtered = STORE_DATABASE.filter(s => {
+        const matchesSearch = s.name.toLowerCase().includes(search) || s.city.toLowerCase().includes(search);
+        const matchesCat = cat === '' || s.type === cat;
+        return matchesSearch && matchesCat;
+      });
+      renderStoreLocatorGrid(filtered);
+    }
+
+    function resetStoreLocatorFilters() {
+      document.getElementById('locatorSearchInput').value = '';
+      document.getElementById('locatorCategorySelect').value = '';
+      renderStoreLocatorGrid();
+    }
+
+    function renderStoreDirectory() {
+      const list = document.getElementById('store-directory-list');
+      list.innerHTML = STORE_DATABASE.map(s => `
+        <div class="pb-3 border-b border-[var(--border-editorial)] flex justify-between items-center">
+          <div>
+            <strong class="font-medium">${s.name}</strong>
+            <span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span>
+          </div>
+          <a href="${s.url}" target="_blank" rel="noopener" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
+            <span>Website</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
+          </a>
+        </div>
+      `).join('');
+    }
+
+    // ==================== KONFIGURATOR ====================
+    function setConfigFrame(colorClass) {
+      const frame = document.getElementById('config-frame-preview');
+      frame.className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
+    }
+
+    function setConfigLens(lensClass) {
+      document.getElementById('config-lens-left').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
+      document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
+    }
 
     // ==================== MODALS ====================
     function openProductModal(productId) {
@@ -1342,7 +1516,7 @@
         return;
       }
       document.getElementById('brand-modal-name').innerText = brand.name;
-      document.getElementById('brand-modal-story').innerText = brand.desc; // oder längere Story
+      document.getElementById('brand-modal-story').innerText = brand.desc;
       document.getElementById('brand-modal-img').src = brand.img;
       document.getElementById('brand-modal-name').dataset.brand = brand.name;
       document.getElementById('brandModal').classList.remove('hidden');
@@ -1370,7 +1544,108 @@
     }
 
     // ==================== EVENT LISTENER ====================
-    // (alle notwendigen Listener für Produktliste, Modal-Buttons etc.)
+    document.getElementById('modal-product-addcart').addEventListener('click', function() {
+      if (currentProductForModal) {
+        const store = getStoreInfo(currentProductForModal.storeId);
+        addToCart(currentProductForModal.name, currentProductForModal.price, createBrandPlaceholder(currentProductForModal.brand), store.name);
+        closeProductModal();
+      }
+    });
+
+    document.getElementById('modal-product-wishlist').addEventListener('click', function() {
+      if (currentProductForModal) {
+        const p = currentProductForModal;
+        const icon = this.querySelector('i');
+        if (wishlist.includes(p.name)) {
+          wishlist = wishlist.filter(x => x !== p.name);
+          icon.className = 'fa-regular fa-heart';
+          showToast('Von Favoriten entfernt');
+        } else {
+          wishlist.push(p.name);
+          icon.className = 'fa-solid fa-heart text-rose-600';
+          showToast('Zu Favoriten hinzugefügt');
+        }
+        persistWishlist();
+      }
+    });
+
+    document.getElementById('product-list').addEventListener('click', function(e) {
+      const addBtn = e.target.closest('.add-to-cart-btn');
+      const wishBtn = e.target.closest('.wishlist-btn');
+
+      if (addBtn) {
+        e.stopPropagation();
+        const productId = parseInt(addBtn.dataset.id);
+        const p = PRODUCTS.find(x => x.id === productId);
+        if (p) {
+          const store = getStoreInfo(p.storeId);
+          addToCart(p.name, p.price, createBrandPlaceholder(p.brand), store.name);
+        }
+      }
+
+      if (wishBtn) {
+        e.stopPropagation();
+        const productId = parseInt(wishBtn.dataset.id);
+        const p = PRODUCTS.find(x => x.id === productId);
+        if (p) {
+          const icon = wishBtn.querySelector('i');
+          if (wishlist.includes(p.name)) {
+            wishlist = wishlist.filter(x => x !== p.name);
+            icon.className = 'fa-regular fa-heart';
+            showToast('Entfernt');
+          } else {
+            wishlist.push(p.name);
+            icon.className = 'fa-solid fa-heart text-rose-600';
+            showToast('Gespeichert');
+          }
+          persistWishlist();
+        }
+      }
+    });
+
+    // ==================== NEWSLETTER ====================
+    function subscribeNewsletter() {
+      const email = document.getElementById('newsletter-email').value;
+      if (!email.includes('@')) { showToast('Gültige E-Mail erforderlich'); return; }
+      showToast('Vielen Dank für Ihre Anmeldung.');
+      document.getElementById('newsletter-email').value = '';
+    }
+
+    // ==================== SCROLL ANIMATIONEN ====================
+    function setupScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    // ==================== ZULETZT ANGESEHEN ====================
+    function renderRecentlyViewed() {
+      const section = document.getElementById('recently-viewed-section');
+      const container = document.getElementById('recently-viewed-container');
+      if (!section || !container) return;
+      if (recentlyViewed.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+      section.classList.remove('hidden');
+      container.innerHTML = '';
+      recentlyViewed.forEach(pid => {
+        const p = PRODUCTS.find(x => x.id === pid);
+        if (!p) return;
+        const card = document.createElement('div');
+        card.className = 'recent-card product-card group cursor-pointer bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-3';
+        card.innerHTML = `
+          <div class="img-zoom-container mb-2" onclick="openProductModal(${p.id})">
+            <img src="${createBrandPlaceholder(p.brand)}" alt="${p.name}" class="w-full h-32 object-cover" loading="lazy">
+          </div>
+          <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p>
+          <h4 class="font-serif text-sm font-light truncate">${p.name}</h4>
+          <p class="text-xs font-medium mt-1">${p.price}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
 
     // ==================== INITIALISIERUNG ====================
     window.addEventListener('DOMContentLoaded', function() {
