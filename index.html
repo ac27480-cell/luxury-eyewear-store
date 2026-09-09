@@ -1023,6 +1023,9 @@
     document.getElementById('intro-overlay').addEventListener('click', dismissIntro);
     document.getElementById('intro-overlay').addEventListener('touchstart', dismissIntro);
 
+    // Automatisch nach 2 Sekunden ausblenden
+    setTimeout(dismissIntro, 2000);
+
     // ==================== HERO SLIDER ====================
     function setupHeroSlider() {
       const container = document.getElementById('hero-brand-container');
@@ -1256,7 +1259,7 @@
       });
     }
 
-    // ==================== WARENKORB ====================
+    // ==================== WARENKORB & WUNSCHLISTE ====================
     function addToCart(name, price, img, storeName) {
       const existing = cart.find(item => item.name === name);
       if (existing) {
@@ -1333,7 +1336,6 @@
       summary.classList.remove('hidden');
     }
 
-    // ==================== WUNSCHLISTE ====================
     function updateWishlistUI() {
       const badge = document.getElementById('wishlist-count');
       const container = document.getElementById('wishlist-container');
@@ -1652,17 +1654,18 @@
       document.body.classList.add('intro-active');
       document.body.style.overflow = 'hidden';
 
-      renderCountryFilters();
-      renderFormFilters();
-      setupHeroSlider();
-      filterProducts();
-      renderStoreLocatorGrid();
-      renderStoreDirectory();
-      updateCartUI();
-      updateWishlistUI();
-      renderRecentlyViewed();
-      setupScrollAnimations();
-      navigateTo('home');
+      // Alle Initialisierungsfunktionen in try-catch, damit ein Fehler nicht die gesamte Seite blockiert
+      try { renderCountryFilters(); } catch(e) { console.error('renderCountryFilters:', e); }
+      try { renderFormFilters(); } catch(e) { console.error('renderFormFilters:', e); }
+      try { setupHeroSlider(); } catch(e) { console.error('setupHeroSlider:', e); }
+      try { filterProducts(); } catch(e) { console.error('filterProducts:', e); }
+      try { renderStoreLocatorGrid(); } catch(e) { console.error('renderStoreLocatorGrid:', e); }
+      try { renderStoreDirectory(); } catch(e) { console.error('renderStoreDirectory:', e); }
+      try { updateCartUI(); } catch(e) { console.error('updateCartUI:', e); }
+      try { updateWishlistUI(); } catch(e) { console.error('updateWishlistUI:', e); }
+      try { renderRecentlyViewed(); } catch(e) { console.error('renderRecentlyViewed:', e); }
+      try { setupScrollAnimations(); } catch(e) { console.error('setupScrollAnimations:', e); }
+      try { navigateTo('home'); } catch(e) { console.error('navigateTo:', e); }
     });
   </script>
 </body>
