@@ -54,6 +54,26 @@
     .nav-btn:active { opacity: 0.6; }
     .hero-label-click { cursor: pointer; transition: opacity 0.3s ease; }
     .hero-label-click:hover { opacity: 0.7; }
+
+    /* ===== HERO-TITEL AUSBLENDEN ===== */
+    .hero-title-fade {
+      transition: opacity 1.6s cubic-bezier(0.25, 1, 0.5, 1),
+                  transform 1.6s cubic-bezier(0.25, 1, 0.5, 1),
+                  filter 1.6s ease;
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0px);
+    }
+    .hero-title-fade.faded-out {
+      opacity: 0;
+      transform: translateY(-28px);
+      filter: blur(8px);
+      pointer-events: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-title-fade { transition: none; }
+    }
+
     .payment-option {
       display: flex; align-items: center; gap: 0.75rem;
       padding: 0.75rem 1rem; background-color: var(--surface-editorial);
@@ -254,7 +274,7 @@
     <div class="absolute inset-0 bg-black/50 z-10"></div>
     <div class="relative z-20 max-w-7xl mx-auto h-full flex flex-col justify-end px-6 lg:px-12 pb-16">
       <p class="text-[11px] uppercase tracking-[0.35em] text-stone-300 mb-3">Independent Eyewear & Curated Retailers</p>
-      <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-light leading-[1.1] max-w-3xl">
+      <h1 id="heroTitle" class="hero-title-fade text-4xl md:text-6xl lg:text-7xl font-serif font-light leading-[1.1] max-w-3xl">
         Weltweit kuratiert.<br /><span class="italic">Direkt vom Fachhändler.</span>
       </h1>
       <div id="hero-description" class="hero-description text-stone-200 mt-4 max-w-2xl"></div>
@@ -527,36 +547,12 @@
       <div>
         <h2 class="text-sm font-semibold uppercase tracking-wider mb-4">Zahlungsart</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <label class="payment-option">
-            <input type="radio" name="payment" value="creditcard" checked />
-            <i class="fa-regular fa-credit-card payment-icon"></i>
-            <span class="payment-label">Kreditkarte</span>
-          </label>
-          <label class="payment-option">
-            <input type="radio" name="payment" value="paypal" />
-            <i class="fa-brands fa-paypal payment-icon"></i>
-            <span class="payment-label">PayPal</span>
-          </label>
-          <label class="payment-option">
-            <input type="radio" name="payment" value="klarna" />
-            <i class="fa-regular fa-clock payment-icon"></i>
-            <span class="payment-label">Klarna</span>
-          </label>
-          <label class="payment-option">
-            <input type="radio" name="payment" value="applepay" />
-            <i class="fa-brands fa-apple payment-icon"></i>
-            <span class="payment-label">Apple Pay</span>
-          </label>
-          <label class="payment-option">
-            <input type="radio" name="payment" value="googlepay" />
-            <i class="fa-brands fa-google-pay payment-icon"></i>
-            <span class="payment-label">Google Pay</span>
-          </label>
-          <label class="payment-option">
-            <input type="radio" name="payment" value="vorkasse" />
-            <i class="fa-solid fa-vault payment-icon"></i>
-            <span class="payment-label">Vorkasse</span>
-          </label>
+          <label class="payment-option"><input type="radio" name="payment" value="creditcard" checked /><i class="fa-regular fa-credit-card payment-icon"></i><span class="payment-label">Kreditkarte</span></label>
+          <label class="payment-option"><input type="radio" name="payment" value="paypal" /><i class="fa-brands fa-paypal payment-icon"></i><span class="payment-label">PayPal</span></label>
+          <label class="payment-option"><input type="radio" name="payment" value="klarna" /><i class="fa-regular fa-clock payment-icon"></i><span class="payment-label">Klarna</span></label>
+          <label class="payment-option"><input type="radio" name="payment" value="applepay" /><i class="fa-brands fa-apple payment-icon"></i><span class="payment-label">Apple Pay</span></label>
+          <label class="payment-option"><input type="radio" name="payment" value="googlepay" /><i class="fa-brands fa-google-pay payment-icon"></i><span class="payment-label">Google Pay</span></label>
+          <label class="payment-option"><input type="radio" name="payment" value="vorkasse" /><i class="fa-solid fa-vault payment-icon"></i><span class="payment-label">Vorkasse</span></label>
         </div>
       </div>
       <div>
@@ -622,21 +618,12 @@
       <p>Eintragung im Handelsregister<br />Registergericht: Amtsgericht Musterstadt<br />Registernummer: HRB 123456</p>
       <h2>Umsatzsteuer-ID</h2>
       <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a UStG:<br />DE 123 456 789</p>
-      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-      <p>Max Mustermann<br />Musterstraße 12<br />12345 Musterstadt</p>
       <h2>Streitschlichtung</h2>
       <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>.</p>
-      <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
-      <h2>Haftung für Inhalte</h2>
-      <p>Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
-      <h2>Haftung für Links</h2>
-      <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
-      <h2>Urheberrecht</h2>
-      <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht.</p>
       <div class="mt-12 pt-6 border-t border-[var(--border-editorial)]">
         <p class="text-xs italic text-[var(--text-muted)]">
           <i class="fa-solid fa-circle-info mr-2"></i>
-          <strong>Hinweis:</strong> Mustertext mit Platzhaltern. Bitte an Ihre tatsächlichen Gegebenheiten anpassen und rechtlich prüfen lassen.
+          <strong>Hinweis:</strong> Mustertext mit Platzhaltern. Bitte an Ihre tatsächlichen Gegebenheiten anpassen.
         </p>
       </div>
     </div>
@@ -653,18 +640,13 @@
     </div>
     <div class="legal-content bg-white border border-[var(--border-editorial)] p-8 md:p-12">
       <p class="text-xs italic text-[var(--text-muted)] mb-8">Gemäß Datenschutz-Grundverordnung (DSGVO)</p>
-      <h2>1. Datenschutz auf einen Blick</h2>
-      <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen.</p>
-      <h2>2. Verantwortliche Stelle</h2>
-      <p><strong>LUXEVUE GmbH</strong><br />Musterstraße 12<br />12345 Musterstadt<br />Telefon: +49 (0) 123 456789<br />E-Mail: <a href="mailto:datenschutz@luxevue.de">datenschutz@luxevue.de</a></p>
-      <h2>3. Erfassung von Daten auf unserer Website</h2>
-      <h3>Server-Log-Dateien</h3>
-      <p>Der Provider der Seiten erhebt und speichert automatisch Informationen in Server-Log-Dateien: Browsertyp, Betriebssystem, Referrer URL, Uhrzeit der Serveranfrage, IP-Adresse.</p>
-      <h2>4. Kontaktformular & Newsletter</h2>
-      <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen oder unseren Newsletter abonnieren, werden Ihre Angaben zwecks Bearbeitung der Anfrage gespeichert.</p>
-      <h2>5. Cookies & lokale Speicherung</h2>
+      <h2>1. Verantwortliche Stelle</h2>
+      <p><strong>LUXEVUE GmbH</strong><br />Musterstraße 12<br />12345 Musterstadt<br />E-Mail: <a href="mailto:datenschutz@luxevue.de">datenschutz@luxevue.de</a></p>
+      <h2>2. Erfassung von Daten</h2>
+      <p>Der Provider der Seiten erhebt und speichert automatisch Informationen in Server-Log-Dateien: Browsertyp, Betriebssystem, Referrer URL, Uhrzeit, IP-Adresse.</p>
+      <h2>3. Cookies & lokale Speicherung</h2>
       <p>Unsere Website verwendet Cookies sowie LocalStorage, um Warenkorb, Wunschliste und zuletzt angesehene Produkte zu speichern. Diese Daten verbleiben ausschließlich auf Ihrem Gerät.</p>
-      <h2>6. Ihre Rechte</h2>
+      <h2>4. Ihre Rechte</h2>
       <ul>
         <li>Auskunft (Art. 15 DSGVO)</li>
         <li>Berichtigung (Art. 16 DSGVO)</li>
@@ -696,24 +678,22 @@
       <h2>§ 1 Geltungsbereich</h2>
       <p>Diese AGB gelten für alle Verträge zwischen der LUXEVUE GmbH und dem Nutzer über www.luxevue.de.</p>
       <h2>§ 2 Vertragspartner</h2>
-      <p><strong>LUXEVUE GmbH</strong><br />Musterstraße 12<br />12345 Musterstadt<br />E-Mail: <a href="mailto:kontakt@luxevue.de">kontakt@luxevue.de</a></p>
+      <p><strong>LUXEVUE GmbH</strong><br />Musterstraße 12<br />12345 Musterstadt</p>
       <h2>§ 3 Zustandekommen des Vertrags</h2>
       <p>Die Darstellung der Produkte auf der Website stellt kein rechtlich bindendes Angebot dar. Mit dem Absenden einer Bestellung gibt der Nutzer ein verbindliches Angebot ab.</p>
       <h2>§ 4 Preise und Versandkosten</h2>
-      <p>Alle Preise verstehen sich in Euro und enthalten die gesetzliche Mehrwertsteuer. Versandkosten werden gesondert ausgewiesen.</p>
+      <p>Alle Preise verstehen sich in Euro und enthalten die gesetzliche Mehrwertsteuer.</p>
       <h2>§ 5 Zahlungsbedingungen</h2>
       <p>Zur Auswahl stehen: Kreditkarte, PayPal, Klarna, Apple Pay, Google Pay, Vorkasse.</p>
       <h2>§ 6 Lieferung</h2>
-      <p>Die Lieferung erfolgt an die angegebene Lieferadresse. Lieferzeit: 3–7 Werktage innerhalb Deutschlands.</p>
+      <p>Die Lieferung erfolgt an die angegebene Lieferadresse. Lieferzeit: 3–7 Werktage.</p>
       <h2>§ 7 Widerrufsrecht</h2>
-      <p>Verbraucher haben ein 14-tägiges Widerrufsrecht. Ausübung durch eindeutige Erklärung an <a href="mailto:kontakt@luxevue.de">kontakt@luxevue.de</a>.</p>
+      <p>Verbraucher haben ein 14-tägiges Widerrufsrecht.</p>
       <h2>§ 8 Gewährleistung</h2>
       <p>Es gelten die gesetzlichen Gewährleistungsregelungen.</p>
       <h2>§ 9 Haftung</h2>
       <p>Der Anbieter haftet nur für Schäden aus vorsätzlichem oder grob fahrlässigem Verhalten.</p>
-      <h2>§ 10 Streitbeilegung</h2>
-      <p>Plattform zur Online-Streitbeilegung: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a></p>
-      <h2>§ 11 Schlussbestimmungen</h2>
+      <h2>§ 10 Schlussbestimmungen</h2>
       <p>Es gilt deutsches Recht.</p>
       <div class="mt-12 pt-6 border-t border-[var(--border-editorial)]">
         <p class="text-xs italic text-[var(--text-muted)]">
@@ -819,41 +799,28 @@
     </div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- JAVASCRIPT -->
-  <!-- ============================================================ -->
   <script>
     /* ==== LIVE-DATENBANK-KONFIGURATION ==== */
-    const SANITY_CONFIG = {
-      projectId: '',
-      dataset: 'production',
-      apiVersion: '2025-02-06'
-    };
+    const SANITY_CONFIG = { projectId: '', dataset: 'production', apiVersion: '2025-02-06' };
+
+    /* ==== HERO-TITEL FADE-KONFIGURATION ==== */
+    // Zeit in Millisekunden, nach der der Haupttext im Hero automatisch verschwindet
+    const HERO_TITLE_FADE_DELAY = 5000;
 
     function getSanityUrl(query) {
       const { projectId, dataset, apiVersion } = SANITY_CONFIG;
       if (!projectId) return null;
-      const encodedQuery = encodeURIComponent(query);
-      return `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}?query=${encodedQuery}`;
+      return `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}?query=${encodeURIComponent(query)}`;
     }
 
     const QUERY_PRODUCTS = `*[_type == "product"]{
-      "id": _id,
-      brand,
-      name,
-      price,
+      "id": _id, brand, name, price,
       "storeIds": stores[]->_id,
-      "img": image.asset->url,
-      desc,
-      search
+      "img": image.asset->url, desc, search
     }`;
 
     const QUERY_STORES = `*[_type == "store"]{
-      "id": _id,
-      name,
-      type,
-      city,
-      url
+      "id": _id, name, type, city, url
     }`;
 
     /* ==== BILDER-PLATZHALTER ==== */
@@ -866,8 +833,7 @@
       "<path d='M 335,290 Q 400,275 465,290' stroke='#1a1918' stroke-width='3'/>" +
       "<path d='M 225,285 L 150,265' stroke='#1a1918' stroke-width='3'/>" +
       "<path d='M 575,285 L 650,265' stroke='#1a1918' stroke-width='3'/>" +
-      "</g>" +
-      "</svg>"
+      "</g></svg>"
     );
 
     /* ==== BRAND_DATA ==== */
@@ -1028,21 +994,12 @@
     let introDone = false;
     let searchTimeout;
     let lastFocusedElement = null;
+    let heroTitleTimer = null;
 
     /* ==== PERSISTENZ ==== */
-    function persistCart() {
-      localStorage.setItem('luxevue_cart', JSON.stringify(cart));
-      updateCartUI();
-    }
-
-    function persistWishlist() {
-      localStorage.setItem('luxevue_wishlist', JSON.stringify(wishlist));
-      updateWishlistUI();
-    }
-
-    function persistRecent() {
-      localStorage.setItem('luxevue_recent', JSON.stringify(recentlyViewed));
-    }
+    function persistCart() { localStorage.setItem('luxevue_cart', JSON.stringify(cart)); updateCartUI(); }
+    function persistWishlist() { localStorage.setItem('luxevue_wishlist', JSON.stringify(wishlist)); updateWishlistUI(); }
+    function persistRecent() { localStorage.setItem('luxevue_recent', JSON.stringify(recentlyViewed)); }
 
     /* ==== MOBILE NAVIGATION ==== */
     function openMobileNav() {
@@ -1056,7 +1013,6 @@
         if (firstLink) firstLink.focus();
       }, 150);
     }
-
     function closeMobileNav() {
       const nav = document.getElementById('mobileNav');
       nav.classList.remove('open');
@@ -1064,7 +1020,6 @@
       setTimeout(() => nav.classList.add('hidden-menu'), 350);
       if (lastFocusedElement) lastFocusedElement.focus();
     }
-
     function mobileNavigate(pageId) {
       closeMobileNav();
       setTimeout(() => navigateTo(pageId), 350);
@@ -1080,29 +1035,46 @@
         }, 500);
       }
     }
-
     function acceptCookies() {
       localStorage.setItem('luxevue_cookie_consent', 'accepted');
       const banner = document.getElementById('cookieBanner');
       if (banner) banner.classList.remove('visible');
     }
 
+    /* ==== HERO-TITEL AUSBLENDEN ==== */
+    function scheduleHeroTitleFade() {
+      const title = document.getElementById('heroTitle');
+      if (!title) return;
+      // Zurücksetzen, falls schon ausgeblendet
+      title.classList.remove('faded-out');
+      clearTimeout(heroTitleTimer);
+      heroTitleTimer = setTimeout(() => {
+        title.classList.add('faded-out');
+      }, HERO_TITLE_FADE_DELAY);
+    }
+
     /* ==== INTRO ==== */
     function dismissIntro() {
       if (introDone) return;
       introDone = true;
+
       const overlay = document.getElementById('intro-overlay');
       const title = document.getElementById('intro-title');
       const sub = document.getElementById('intro-sub');
       const hint = document.getElementById('intro-hint');
+
       title.classList.add('dissolve');
       sub.classList.add('dissolve');
       hint.classList.add('dissolve');
       overlay.classList.add('dissolve-bg');
+
       setTimeout(() => {
         overlay.classList.add('hidden');
         document.body.classList.remove('intro-active');
         document.body.style.overflow = '';
+
+        // Hero-Haupttext nach kurzer Verzögerung ausblenden
+        scheduleHeroTitleFade();
       }, 1700);
     }
 
@@ -1112,12 +1084,10 @@
         name: 'Zertifizierter Optiker', url: '#', city: 'Fachhandel', type: 'Fachgeschäft'
       };
     }
-
     function getStoresForProduct(product) {
       const ids = product.storeIds || (product.storeId ? [product.storeId] : []);
       return ids.map(id => getStoreInfo(id)).filter(s => s && s.name);
     }
-
     function showToast(msg) {
       const toast = document.getElementById('toast');
       document.getElementById('toast-msg').innerText = msg;
@@ -1129,47 +1099,29 @@
       }, 2500);
     }
 
-    /* ==== FOKUS-VERWALTUNG (Barrierefreiheit) ==== */
+    /* ==== FOKUS-VERWALTUNG ==== */
     function focusFirstElement(modalElement) {
-      const focusable = modalElement.querySelector(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
+      const focusable = modalElement.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
       if (focusable) setTimeout(() => focusable.focus(), 50);
     }
-
     function handleModalKeydown(e) {
-      // Escape schließt offene Modals
       if (e.key === 'Escape') {
         const productModal = document.getElementById('productModal');
         const brandModal = document.getElementById('brandModal');
         const mobileNav = document.getElementById('mobileNav');
-        if (!productModal.classList.contains('hidden')) {
-          closeProductModal();
-        } else if (!brandModal.classList.contains('hidden')) {
-          closeBrandModal();
-        } else if (!mobileNav.classList.contains('hidden-menu')) {
-          closeMobileNav();
-        }
+        if (!productModal.classList.contains('hidden')) closeProductModal();
+        else if (!brandModal.classList.contains('hidden')) closeBrandModal();
+        else if (!mobileNav.classList.contains('hidden-menu')) closeMobileNav();
         return;
       }
-
-      // Tab-Fokus im Modal gefangen halten
       if (e.key === 'Tab') {
         const activeModal = document.querySelector('.modal-overlay.flex');
         if (activeModal) {
-          const focusable = activeModal.querySelectorAll(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-          );
+          const focusable = activeModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
           if (focusable.length === 0) return;
-          const first = focusable[0];
-          const last = focusable[focusable.length - 1];
-          if (e.shiftKey && document.activeElement === first) {
-            e.preventDefault();
-            last.focus();
-          } else if (!e.shiftKey && document.activeElement === last) {
-            e.preventDefault();
-            first.focus();
-          }
+          const first = focusable[0], last = focusable[focusable.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
         }
       }
     }
@@ -1231,22 +1183,11 @@
 
       const wishBtn = document.getElementById('modal-product-wishlist');
       const icon = wishBtn.querySelector('i');
-      if (wishlist.includes(p.name)) {
-        icon.className = 'fa-solid fa-heart text-rose-600';
-      } else {
-        icon.className = 'fa-regular fa-heart';
-      }
+      icon.className = wishlist.includes(p.name) ? 'fa-solid fa-heart text-rose-600' : 'fa-regular fa-heart';
       wishBtn.onclick = function(e) {
         e.stopPropagation();
-        if (wishlist.includes(p.name)) {
-          wishlist = wishlist.filter(x => x !== p.name);
-          icon.className = 'fa-regular fa-heart';
-          showToast('Von Favoriten entfernt');
-        } else {
-          wishlist.push(p.name);
-          icon.className = 'fa-solid fa-heart text-rose-600';
-          showToast('Zu Favoriten hinzugefügt');
-        }
+        if (wishlist.includes(p.name)) { wishlist = wishlist.filter(x => x !== p.name); icon.className = 'fa-regular fa-heart'; showToast('Von Favoriten entfernt'); }
+        else { wishlist.push(p.name); icon.className = 'fa-solid fa-heart text-rose-600'; showToast('Zu Favoriten hinzugefügt'); }
         persistWishlist();
       };
 
@@ -1258,16 +1199,13 @@
       }
 
       const modal = document.getElementById('productModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      modal.classList.remove('hidden'); modal.classList.add('flex');
       document.body.style.overflow = 'hidden';
       focusFirstElement(modal);
     }
-
     function closeProductModal() {
       const modal = document.getElementById('productModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+      modal.classList.add('hidden'); modal.classList.remove('flex');
       document.body.style.overflow = '';
       if (lastFocusedElement) lastFocusedElement.focus();
     }
@@ -1282,20 +1220,16 @@
       document.getElementById('brand-modal-img').src = data.img;
       document.getElementById('brand-modal-name').dataset.brand = brandName;
       const modal = document.getElementById('brandModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      modal.classList.remove('hidden'); modal.classList.add('flex');
       document.body.style.overflow = 'hidden';
       focusFirstElement(modal);
     }
-
     function closeBrandModal() {
       const modal = document.getElementById('brandModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+      modal.classList.add('hidden'); modal.classList.remove('flex');
       document.body.style.overflow = '';
       if (lastFocusedElement) lastFocusedElement.focus();
     }
-
     function filterByBrand() {
       const brand = document.getElementById('brand-modal-name').dataset.brand;
       if (brand) {
@@ -1313,23 +1247,12 @@
     function sortProducts(items, sortKey) {
       const sorted = [...items];
       switch (sortKey) {
-        case 'price-asc':
-          sorted.sort((a, b) => (parseInt(String(a.price).replace(/\D/g, '')) || 0) - (parseInt(String(b.price).replace(/\D/g, '')) || 0));
-          break;
-        case 'price-desc':
-          sorted.sort((a, b) => (parseInt(String(b.price).replace(/\D/g, '')) || 0) - (parseInt(String(a.price).replace(/\D/g, '')) || 0));
-          break;
-        case 'name-asc':
-          sorted.sort((a, b) => a.name.localeCompare(b.name, 'de'));
-          break;
-        case 'name-desc':
-          sorted.sort((a, b) => b.name.localeCompare(a.name, 'de'));
-          break;
-        case 'brand-asc':
-          sorted.sort((a, b) => a.brand.localeCompare(b.brand, 'de'));
-          break;
-        default:
-          break;
+        case 'price-asc': sorted.sort((a, b) => (parseInt(String(a.price).replace(/\D/g, '')) || 0) - (parseInt(String(b.price).replace(/\D/g, '')) || 0)); break;
+        case 'price-desc': sorted.sort((a, b) => (parseInt(String(b.price).replace(/\D/g, '')) || 0) - (parseInt(String(a.price).replace(/\D/g, '')) || 0)); break;
+        case 'name-asc': sorted.sort((a, b) => a.name.localeCompare(b.name, 'de')); break;
+        case 'name-desc': sorted.sort((a, b) => b.name.localeCompare(a.name, 'de')); break;
+        case 'brand-asc': sorted.sort((a, b) => a.brand.localeCompare(b.brand, 'de')); break;
+        default: break;
       }
       return sorted;
     }
@@ -1339,13 +1262,8 @@
       const container = document.getElementById('product-list');
       container.innerHTML = '';
       let items = PRODUCTS;
-      if (query) {
-        items = items.filter(p => (p.brand + ' ' + p.name + ' ' + (p.search || '')).toLowerCase().includes(query));
-      }
-      items = items.filter(p => {
-        const priceNum = parseInt(String(p.price).replace(/\D/g, '')) || 0;
-        return priceNum <= maxPrice;
-      });
+      if (query) items = items.filter(p => (p.brand + ' ' + p.name + ' ' + (p.search || '')).toLowerCase().includes(query));
+      items = items.filter(p => { const priceNum = parseInt(String(p.price).replace(/\D/g, '')) || 0; return priceNum <= maxPrice; });
 
       const sortSelect = document.getElementById('sortSelect');
       if (sortSelect) items = sortProducts(items, sortSelect.value);
@@ -1399,21 +1317,13 @@
           addToCart(this.dataset.name, this.dataset.price, this.dataset.img, storeName);
         });
       });
-
       document.querySelectorAll('.wishlist-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
           e.stopPropagation();
           const name = this.dataset.name;
           const icon = this.querySelector('i');
-          if (wishlist.includes(name)) {
-            wishlist = wishlist.filter(x => x !== name);
-            icon.className = 'fa-regular fa-heart';
-            showToast('Entfernt');
-          } else {
-            wishlist.push(name);
-            icon.className = 'fa-solid fa-heart text-rose-600';
-            showToast('Gespeichert');
-          }
+          if (wishlist.includes(name)) { wishlist = wishlist.filter(x => x !== name); icon.className = 'fa-regular fa-heart'; showToast('Entfernt'); }
+          else { wishlist.push(name); icon.className = 'fa-solid fa-heart text-rose-600'; showToast('Gespeichert'); }
           persistWishlist();
         });
       });
@@ -1425,11 +1335,7 @@
       document.getElementById('price-output').innerText = maxPrice + ' €';
       renderProducts(q, maxPrice);
     }
-
-    function debouncedSearch() {
-      clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(filterProducts, 300);
-    }
+    function debouncedSearch() { clearTimeout(searchTimeout); searchTimeout = setTimeout(filterProducts, 300); }
 
     /* ==== LÄNDERFILTER ==== */
     function renderCountryFilters() {
@@ -1448,7 +1354,6 @@
       });
       renderLabelTags(Object.keys(INDEPENDENT_LABELS)[0]);
     }
-
     function renderLabelTags(country) {
       const container = document.getElementById('selected-country-labels');
       container.innerHTML = '';
@@ -1469,15 +1374,11 @@
     /* ==== WARENKORB ==== */
     function addToCart(name, price, img, storeName) {
       const existing = cart.find(item => item.name === name);
-      if (existing) {
-        existing.quantity = (existing.quantity || 1) + 1;
-      } else {
-        cart.push({ name, price, img, storeName, quantity: 1 });
-      }
+      if (existing) existing.quantity = (existing.quantity || 1) + 1;
+      else cart.push({ name, price, img, storeName, quantity: 1 });
       persistCart();
       showToast(name + ' hinzugefügt');
     }
-
     function removeFromCart(index) {
       const item = cart[index];
       if (!item) return;
@@ -1487,7 +1388,6 @@
         showToast('Artikel entfernt');
       }
     }
-
     function changeQuantity(index, delta) {
       if (cart[index]) {
         const n = (cart[index].quantity || 1) + delta;
@@ -1496,7 +1396,6 @@
         persistCart();
       }
     }
-
     function updateCartUI() {
       const badge = document.getElementById('cart-count');
       const container = document.getElementById('cart-container');
@@ -1505,23 +1404,18 @@
       const totalItems = cart.reduce((s, i) => s + (i.quantity || 1), 0);
       badge.innerText = totalItems;
       badge.classList.toggle('hidden', totalItems === 0);
-
       if (cart.length === 0) {
         container.innerHTML = `
           <div class="py-16 text-center">
             <i class="fa-solid fa-bag-shopping text-5xl text-[var(--border-editorial)] mb-6"></i>
             <p class="text-sm text-[var(--text-muted)] tracking-wider mb-2">Ihr Warenkorb ist derzeit leer.</p>
             <p class="text-xs text-[var(--text-muted)] mb-8">Entdecken Sie unsere kuratierten Brillenmanufakturen.</p>
-            <button onclick="navigateTo('home')" class="px-8 py-4 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors">
-              Jetzt Brillen entdecken
-            </button>
-          </div>
-        `;
+            <button onclick="navigateTo('home')" class="px-8 py-4 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors">Jetzt Brillen entdecken</button>
+          </div>`;
         summary.classList.add('hidden');
         totalEl.innerText = '0 €';
         return;
       }
-
       let total = 0;
       container.innerHTML = cart.map((item, index) => {
         const p = parseInt(String(item.price).replace(/\D/g, '')) || 0;
@@ -1545,10 +1439,8 @@
               <span class="text-xs font-medium">${sub} €</span>
               <button onclick="removeFromCart(${index})" class="text-lg text-[var(--text-muted)] hover:text-black" aria-label="Artikel entfernen">&times;</button>
             </div>
-          </div>
-        `;
+          </div>`;
       }).join('');
-
       totalEl.innerText = total + ' €';
       summary.classList.remove('hidden');
     }
@@ -1559,28 +1451,22 @@
       const container = document.getElementById('wishlist-container');
       badge.innerText = wishlist.length;
       badge.classList.toggle('hidden', wishlist.length === 0);
-
       if (wishlist.length === 0) {
         container.innerHTML = `
           <div class="py-16 text-center">
             <i class="fa-regular fa-heart text-5xl text-[var(--border-editorial)] mb-6"></i>
             <p class="text-sm text-[var(--text-muted)] tracking-wider mb-2">Ihre Wunschliste ist leer.</p>
             <p class="text-xs text-[var(--text-muted)] mb-8">Speichern Sie Brillen, die Sie später ansehen möchten.</p>
-            <button onclick="navigateTo('home')" class="px-8 py-4 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors">
-              Zur Kollektion
-            </button>
-          </div>
-        `;
+            <button onclick="navigateTo('home')" class="px-8 py-4 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors">Zur Kollektion</button>
+          </div>`;
       } else {
         container.innerHTML = wishlist.map(item => `
           <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex justify-between items-center">
             <span class="text-xs font-medium">${item}</span>
             <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">Gespeichert</span>
-          </div>
-        `).join('');
+          </div>`).join('');
       }
     }
-
     function shareWishlist() {
       if (wishlist.length === 0) { showToast('Wunschliste ist leer'); return; }
       window.open(`https://wa.me/?text=${encodeURIComponent('Meine LUXEVUE Auswahl: ' + wishlist.join(', '))}`, '_blank');
@@ -1593,8 +1479,7 @@
       let total = 0;
       if (cart.length === 0) {
         container.innerHTML = '<p class="text-xs text-[var(--text-muted)]">Ihr Warenkorb ist leer.</p>';
-        totalEl.innerText = '0 €';
-        return;
+        totalEl.innerText = '0 €'; return;
       }
       container.innerHTML = cart.map(item => {
         const p = parseInt(String(item.price).replace(/\D/g, '')) || 0;
@@ -1604,20 +1489,16 @@
       }).join('');
       totalEl.innerText = total + ' €';
     }
-
     function placeOrder() {
-      const agb = document.getElementById('checkout-agb');
-      if (!agb.checked) { showToast('Bitte akzeptieren Sie die AGB.'); return; }
-      const firstname = document.getElementById('checkout-firstname').value.trim();
-      const lastname = document.getElementById('checkout-lastname').value.trim();
-      const email = document.getElementById('checkout-email').value.trim();
-      const address = document.getElementById('checkout-address').value.trim();
-      if (!firstname || !lastname || !email || !address) { showToast('Bitte füllen Sie alle Felder aus.'); return; }
+      if (!document.getElementById('checkout-agb').checked) { showToast('Bitte akzeptieren Sie die AGB.'); return; }
+      const fn = document.getElementById('checkout-firstname').value.trim();
+      const ln = document.getElementById('checkout-lastname').value.trim();
+      const em = document.getElementById('checkout-email').value.trim();
+      const ad = document.getElementById('checkout-address').value.trim();
+      if (!fn || !ln || !em || !ad) { showToast('Bitte füllen Sie alle Felder aus.'); return; }
       if (!document.querySelector('input[name="payment"]:checked')) { showToast('Bitte wählen Sie eine Zahlungsart.'); return; }
       showToast('Vielen Dank für Ihre Bestellung! Sie erhalten eine Bestätigung per E-Mail.');
-      cart = [];
-      persistCart();
-      navigateTo('home');
+      cart = []; persistCart(); navigateTo('home');
     }
 
     /* ==== STORE LOCATOR ==== */
@@ -1644,204 +1525,10 @@
               <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
             </a>
             <button onclick="navigateTo('account')" class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-[#1a1918] text-white hover:bg-stone-800 transition-colors">Termin</button>
-          </div>
-        `;
+          </div>`;
         container.appendChild(card);
       });
     }
-
     function filterStoreLocator() {
       const search = document.getElementById('locatorSearchInput').value.toLowerCase();
-      const cat = document.getElementById('locatorCategorySelect').value;
-      const filtered = STORE_DATABASE.filter(s => {
-        const mS = s.name.toLowerCase().includes(search) || s.city.toLowerCase().includes(search);
-        const mC = cat === '' || s.type === cat;
-        return mS && mC;
-      });
-      renderStoreLocatorGrid(filtered);
-    }
-
-    function resetStoreLocatorFilters() {
-      document.getElementById('locatorSearchInput').value = '';
-      document.getElementById('locatorCategorySelect').value = '';
-      renderStoreLocatorGrid();
-    }
-
-    function renderStoreDirectory() {
-      const list = document.getElementById('store-directory-list');
-      list.innerHTML = STORE_DATABASE.map(s => `
-        <div class="pb-3 border-b border-[var(--border-editorial)] flex justify-between items-center">
-          <div>
-            <strong class="font-medium">${s.name}</strong>
-            <span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span>
-          </div>
-          <a href="${s.url}" target="_blank" rel="noopener" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
-            <span>Website</span>
-            <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
-          </a>
-        </div>
-      `).join('');
-    }
-
-    /* ==== KONFIGURATOR ==== */
-    function setConfigFrame(colorClass) {
-      document.getElementById('config-frame-preview').className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
-    }
-
-    function setConfigLens(lensClass) {
-      document.getElementById('config-lens-left').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
-      document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
-    }
-
-    /* ==== HERO SLIDER ==== */
-    function setupHeroSlider() {
-      const container = document.getElementById('hero-slides');
-      const label = document.getElementById('hero-slide-label');
-      const desc = document.getElementById('hero-description');
-      container.innerHTML = '';
-
-      HERO_SLIDES.forEach((slide, i) => {
-        const img = document.createElement('img');
-        img.src = slide.img;
-        img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
-        img.alt = slide.label;
-        container.appendChild(img);
-      });
-
-      function updateSlide(index) {
-        const imgs = container.querySelectorAll('img');
-        imgs.forEach((img, i) => {
-          img.classList.toggle('opacity-100', i === index);
-          img.classList.toggle('opacity-0', i !== index);
-        });
-        if (label) label.textContent = HERO_SLIDES[index].label;
-        if (desc) desc.textContent = HERO_SLIDES[index].description;
-        currentBrand = HERO_SLIDES[index].label;
-        if (label) label.onclick = () => openBrandModal(currentBrand);
-        if (desc) desc.onclick = () => openBrandModal(currentBrand);
-      }
-
-      updateSlide(0);
-
-      const hero = document.getElementById('hero');
-
-      hero.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
-      hero.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        const d = touchStartX - touchEndX;
-        if (Math.abs(d) > 50) { if (d > 0) nextSlide(); else prevSlide(); }
-      }, { passive: true });
-
-      let mouseDown = false;
-      let mouseStartX = 0;
-
-      hero.addEventListener('mousedown', e => { mouseDown = true; mouseStartX = e.screenX; });
-      hero.addEventListener('mouseup', e => {
-        if (mouseDown) {
-          const d = mouseStartX - e.screenX;
-          if (Math.abs(d) > 50) { if (d > 0) nextSlide(); else prevSlide(); }
-          mouseDown = false;
-        }
-      });
-      hero.addEventListener('mouseleave', () => { mouseDown = false; });
-
-      function nextSlide() {
-        heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
-        updateSlide(heroSlideIndex);
-      }
-
-      function prevSlide() {
-        heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
-        updateSlide(heroSlideIndex);
-      }
-
-      let autoInterval = setInterval(nextSlide, 6000);
-
-      hero.addEventListener('touchstart', () => {
-        clearInterval(autoInterval);
-        autoInterval = setInterval(nextSlide, 6000);
-      }, { passive: true });
-
-      hero.addEventListener('mousedown', () => {
-        clearInterval(autoInterval);
-        autoInterval = setInterval(nextSlide, 6000);
-      });
-
-      if (label) label.onclick = () => openBrandModal(currentBrand);
-      if (desc) desc.onclick = () => openBrandModal(currentBrand);
-    }
-
-    /* ==== NEWSLETTER & SCROLL ==== */
-    function subscribeNewsletter() {
-      const email = document.getElementById('newsletter-email').value;
-      if (!email.includes('@')) { showToast('Gültige E-Mail erforderlich'); return; }
-      showToast('Vielen Dank für Ihre Anmeldung.');
-      document.getElementById('newsletter-email').value = '';
-    }
-
-    function setupScrollAnimations() {
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    }
-
-    /* ==== ZULETZT ANGESEHEN ==== */
-    function renderRecentlyViewed() {
-      const section = document.getElementById('recently-viewed-section');
-      const container = document.getElementById('recently-viewed-container');
-      if (!section || !container) return;
-      if (recentlyViewed.length === 0) { section.classList.add('hidden'); return; }
-      section.classList.remove('hidden');
-      container.innerHTML = '';
-      recentlyViewed.forEach(pid => {
-        const p = PRODUCTS.find(x => String(x.id) === String(pid));
-        if (!p) return;
-        const card = document.createElement('div');
-        card.className = 'recent-card product-card group cursor-pointer bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-3';
-        card.innerHTML = `
-          <div class="img-zoom-container mb-2" onclick="openProductModal('${p.id}')">
-            <img src="${p.img}" alt="${p.name}" class="w-full h-32 object-cover" loading="lazy">
-          </div>
-          <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p>
-          <h4 class="font-serif text-sm font-light truncate">${p.name}</h4>
-          <p class="text-xs font-medium mt-1">${p.price}</p>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    /* ==== INITIALISIERUNG ==== */
-    // WICHTIG: Event-Listener SOFORT registrieren (nicht auf DOMContentLoaded warten),
-    // damit der Intro-Klick auch bei sehr früher Interaktion funktioniert.
-    document.getElementById('intro-overlay').addEventListener('click', dismissIntro);
-    document.getElementById('intro-overlay').addEventListener('touchstart', dismissIntro);
-    document.addEventListener('keydown', handleModalKeydown);
-
-    window.addEventListener('DOMContentLoaded', async function() {
-      document.body.classList.add('intro-active');
-      document.body.style.overflow = 'hidden';
-
-      // 1. Live-Daten laden (oder Fallback)
-      await loadLiveData();
-
-      // 2. Statische UI-Elemente rendern
-      renderCountryFilters();
-      setupHeroSlider();
-      renderStoreLocatorGrid();
-      renderStoreDirectory();
-      updateCartUI();
-      updateWishlistUI();
-      setupScrollAnimations();
-      navigateTo('home');
-
-      // 3. Produkte rendern (erst nachdem Daten geladen sind)
-      filterProducts();
-      renderRecentlyViewed();
-
-      // 4. Cookie-Banner prüfen
-      checkCookieConsent();
-    });
-  </script>
-</body>
-</html>
+      const cat = document.getElementById
