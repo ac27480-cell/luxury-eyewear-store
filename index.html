@@ -148,6 +148,11 @@
     .modal-card .overflow-y-auto::-webkit-scrollbar { width: 4px; }
     .modal-card .overflow-y-auto::-webkit-scrollbar-thumb { background-color: var(--border-editorial); }
 
+    /* ===== MOBILE MENU SAFE-AREA ===== */
+    #mobile-menu .relative {
+      padding-top: max(1.25rem, env(safe-area-inset-top));
+    }
+
     /* ===== SKELETON LOADER ===== */
     @keyframes skeleton-shimmer {
       0%   { background-position: -400px 0; }
@@ -457,14 +462,14 @@
       <a onclick="navigateTo('home')" class="cursor-pointer">
         <span class="text-2xl md:text-3xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
       </a>
-      <div class="flex items-center space-x-8 text-xs tracking-widest uppercase font-medium">
+      <div class="flex items-center space-x-6 md:space-x-8 text-xs tracking-widest uppercase font-medium">
         <nav class="hidden md:flex space-x-8 text-[11px] tracking-[0.2em] text-[var(--text-muted)]">
           <button onclick="navigateTo('home')" class="nav-btn hover:text-black transition-colors">Kollektion</button>
           <button onclick="navigateTo('locator')" class="nav-btn hover:text-black transition-colors">Store-Finder</button>
           <button onclick="navigateTo('configurator')" class="nav-btn hover:text-black transition-colors">Konfigurator</button>
           <button onclick="navigateTo('account')" class="nav-btn hover:text-black transition-colors">Stores & Optiker</button>
         </nav>
-        <div class="flex items-center space-x-5 border-l border-[var(--border-editorial)] pl-6">
+        <div class="flex items-center space-x-4 md:space-x-5 md:border-l md:border-[var(--border-editorial)] md:pl-6">
           <button onclick="navigateTo('wishlist')" class="relative p-1 hover:opacity-70 transition-opacity nav-btn" aria-label="Wunschliste">
             <i class="fa-regular fa-heart text-lg"></i>
             <span id="wishlist-count" class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
@@ -472,6 +477,10 @@
           <button onclick="navigateTo('cart')" class="relative p-1 hover:opacity-70 transition-opacity nav-btn" aria-label="Warenkorb">
             <i class="fa-solid fa-bag-shopping text-lg"></i>
             <span id="cart-count" class="absolute -top-1.5 -right-2 bg-stone-800 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
+          </button>
+          <button id="mobile-menu-toggle" class="md:hidden p-1 -mr-1 hover:opacity-70 transition-opacity nav-btn"
+                  aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-menu">
+            <i class="fa-solid fa-bars text-xl"></i>
           </button>
         </div>
       </div>
@@ -481,6 +490,26 @@
       <input type="text" id="searchInput" onkeyup="debouncedSearch()" placeholder="Suchen nach Marke, Optiker, Stadt oder Stil..." class="w-full bg-transparent text-xs tracking-wide focus:outline-none placeholder:text-[var(--text-muted)]/60" />
     </div>
   </header>
+
+  <!-- ===== MOBILE MENU ===== -->
+  <div id="mobile-menu" class="fixed inset-0 z-50 hidden md:hidden" role="dialog" aria-modal="true" aria-label="Hauptnavigation">
+    <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+    <div class="relative bg-[var(--bg-editorial)] border-b border-[var(--border-editorial)] px-6 pt-5 pb-8 shadow-2xl"
+         style="animation: page-in 0.3s cubic-bezier(0.25, 1, 0.5, 1) both;">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between mb-6">
+          <span class="text-2xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
+          <button id="mobile-menu-close" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors p-1" aria-label="Menü schließen">&times;</button>
+        </div>
+        <nav class="flex flex-col">
+          <button onclick="navigateToMobile('home')" class="mobile-nav-btn text-left py-4 border-b border-[var(--border-editorial)] text-sm uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-black transition-colors">Kollektion</button>
+          <button onclick="navigateToMobile('locator')" class="mobile-nav-btn text-left py-4 border-b border-[var(--border-editorial)] text-sm uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-black transition-colors">Store-Finder</button>
+          <button onclick="navigateToMobile('configurator')" class="mobile-nav-btn text-left py-4 border-b border-[var(--border-editorial)] text-sm uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-black transition-colors">Konfigurator</button>
+          <button onclick="navigateToMobile('account')" class="mobile-nav-btn text-left py-4 border-b border-[var(--border-editorial)] text-sm uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-black transition-colors">Stores & Optiker</button>
+        </nav>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== HERO ===== -->
   <section id="hero" class="relative h-[75vh] min-h-[500px] bg-stone-900 text-white overflow-hidden fade-in touch-manipulation">
@@ -1188,7 +1217,7 @@
     }
 
     /* ============================================================
-       QUERIES (Stufe 2 – Brand als Reference aufgelöst, Store-Geo)
+       QUERIES
        ============================================================ */
     const QUERY_PRODUCTS = `*[_type == "product"]{
       "id": _id,
@@ -1246,7 +1275,7 @@
     }
 
     /* ============================================================
-       SANITY IMAGE-URL-BUILDER (Stufe 2)
+       SANITY IMAGE-URL-BUILDER
        ============================================================ */
     function getSanityImageUrl(url, opts = {}) {
       if (!url || typeof url !== 'string') return IMAGE_PLACEHOLDER;
@@ -1364,7 +1393,7 @@
     ];
 
     /* ============================================================
-       LIVE-DATEN LADEN (Stufe 2 – mit BRANDS)
+       LIVE-DATEN LADEN
        ============================================================ */
     let PRODUCTS = [];
     let STORE_DATABASE = [];
@@ -1447,7 +1476,7 @@
     }
 
     /* ============================================================
-       HERO-SLIDES (Stufe 3 – upload-ready mit focal)
+       HERO-SLIDES
        ============================================================ */
     const HERO_SLIDES = [
       {
@@ -1647,6 +1676,39 @@
     }
 
     /* ============================================================
+       MOBILE MENU
+       ============================================================ */
+    function openMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const toggle = document.getElementById('mobile-menu-toggle');
+      if (!menu) return;
+      menu.classList.remove('hidden');
+      menu.classList.add('block');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const toggle = document.getElementById('mobile-menu-toggle');
+      if (!menu) return;
+      menu.classList.add('hidden');
+      menu.classList.remove('block');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    function navigateToMobile(pageId) {
+      closeMobileMenu();
+      navigateTo(pageId);
+    }
+
+    // Event-Listener
+    document.getElementById('mobile-menu-toggle')?.addEventListener('click', openMobileMenu);
+    document.getElementById('mobile-menu-close')?.addEventListener('click', closeMobileMenu);
+    document.getElementById('mobile-menu-backdrop')?.addEventListener('click', closeMobileMenu);
+
+    /* ============================================================
        HASH-ROUTING
        ============================================================ */
     function navigateTo(pageId) {
@@ -1699,6 +1761,9 @@
       const hero = document.getElementById('hero');
       if (hero) hero.classList.toggle('hidden', pageId !== 'home');
 
+      // Mobile Menu sicherheitshalber schließen
+      closeMobileMenu();
+
       if (pageId === 'cart') updateCartUI();
       if (pageId === 'checkout') renderCheckout();
       if (pageId === 'wishlist') updateWishlistUI();
@@ -1743,11 +1808,14 @@
     document.addEventListener('keydown', (e) => {
       const productModal = document.getElementById('productModal');
       const brandModal = document.getElementById('brandModal');
+      const mobileMenu = document.getElementById('mobile-menu');
 
       const productOpen = !productModal.classList.contains('hidden');
       const brandOpen = !brandModal.classList.contains('hidden');
+      const mobileOpen = mobileMenu && !mobileMenu.classList.contains('hidden');
 
       if (e.key === 'Escape') {
+        if (mobileOpen) { closeMobileMenu(); return; }
         if (productOpen) { closeProductModal(); return; }
         if (brandOpen) { closeBrandModal(); return; }
       }
@@ -1875,7 +1943,7 @@
     }
 
     /* ============================================================
-       MARKEN-MODAL (Stufe 2 – nutzt BRANDS)
+       MARKEN-MODAL
        ============================================================ */
     function openBrandModal(brandName) {
       const data = BRANDS[brandName] || BRAND_DATA[brandName];
@@ -1916,7 +1984,7 @@
     }
 
     /* ============================================================
-       PRODUKTE RENDERN (Stufe 2 – Sanity-Bilder)
+       PRODUKTE RENDERN
        ============================================================ */
     function renderProducts(query = '', maxPrice = 1000) {
       const container = document.getElementById('product-list');
@@ -2229,7 +2297,7 @@
     }
 
     /* ============================================================
-       STORE LOCATOR (Stufe 3 – store-card + Empty-State)
+       STORE LOCATOR
        ============================================================ */
     function renderStoreLocatorGrid(filteredStores) {
       const container = document.getElementById('locator-grid');
@@ -2312,7 +2380,7 @@
     }
 
     /* ============================================================
-       HERO SLIDER (Stufe 3 – Sanity-Bilder + Ken Burns)
+       HERO SLIDER
        ============================================================ */
     function setupHeroSlider() {
       const container = document.getElementById('hero-slides');
@@ -2434,7 +2502,7 @@
     }
 
     /* ============================================================
-       ZULETZT ANGESEHENE (Stufe 2 – Sanity-Bilder)
+       ZULETZT ANGESEHENE
        ============================================================ */
     function renderRecentlyViewed() {
       const section = document.getElementById('recently-viewed-section');
@@ -2470,7 +2538,7 @@
       document.body.classList.add('intro-active');
       document.body.style.overflow = 'hidden';
 
-      // 1. Skeletons direkt anzeigen, damit User sofort visuelles Feedback hat
+      // 1. Skeletons direkt anzeigen
       renderSkeletons(6);
 
       // 2. Live-Daten laden (oder Fallback)
