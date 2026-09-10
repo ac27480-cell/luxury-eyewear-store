@@ -116,12 +116,33 @@
     .modal-card .overflow-y-auto::-webkit-scrollbar { width: 4px; }
     .modal-card .overflow-y-auto::-webkit-scrollbar-thumb { background-color: var(--border-editorial); }
 
+    /* ===== BACK LINK ===== */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.25s ease;
+      padding: 0;
+      background: none;
+      border: none;
+    }
+    .back-link:hover { color: var(--text-main); }
+    .back-link i {
+      font-size: 0.6rem;
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .back-link:hover i { transform: translateX(-3px); }
+
     /* ===== EDITORIAL INPUTS (feiner) ===== */
     .editorial-input {
       width: 100%;
       background: transparent;
       border: none;
-      /* 0.5px Unterstrich – auf Retina echte Haarlinie */
       border-bottom: 0.5px solid rgba(232, 228, 220, 0.75);
       padding: 0.65rem 0;
       font-size: 0.9rem;
@@ -155,7 +176,7 @@
     }
     .editorial-input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 0.9; }
 
-    /* ===== MOBILE MENU (feiner, dezenter) ===== */
+    /* ===== MOBILE MENU ===== */
     #mobile-menu {
       opacity: 0;
       visibility: hidden;
@@ -183,7 +204,6 @@
     }
     .mobile-menu-link {
       opacity: 0;
-      /* feine 0.5px Trennlinie, weich abgesetzt */
       border-bottom: 0.5px solid rgba(232, 228, 220, 0.55);
     }
     #mobile-menu.menu-open .mobile-menu-link { opacity: 1; }
@@ -465,11 +485,10 @@
     </div>
   </header>
 
-  <!-- ===== MOBILE MENU (Full-Screen, feiner) ===== -->
+  <!-- ===== MOBILE MENU ===== -->
   <div id="mobile-menu" class="fixed inset-0 z-50 hidden md:hidden" role="dialog" aria-modal="true" aria-label="Hauptnavigation">
     <div class="absolute inset-0 bg-[var(--bg-editorial)]"></div>
     <div class="menu-panel relative h-full flex flex-col px-8 pb-10 overflow-y-auto no-scrollbar">
-      <!-- Top bar -->
       <div class="flex items-center justify-between mb-16">
         <span class="text-2xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
         <button id="mobile-menu-close" aria-label="Menü schließen"
@@ -478,7 +497,6 @@
         </button>
       </div>
 
-      <!-- Navigation -->
       <nav class="flex flex-col">
         <button onclick="navigateToMobile('home')" class="mobile-menu-link group text-left py-5 flex items-baseline justify-between">
           <span class="text-2xl font-serif font-light group-hover:italic transition-all duration-300">Kollektion</span>
@@ -498,7 +516,6 @@
         </button>
       </nav>
 
-      <!-- Footer -->
       <div class="mt-auto pt-12 text-[10px] uppercase tracking-[0.3em] text-[var(--text-muted)] opacity-70">
         <p class="mb-1">Independent Eyewear</p>
         <p class="italic font-serif text-sm normal-case tracking-normal text-[var(--text-muted)]">Kuratiert & handgefertigt weltweit</p>
@@ -728,6 +745,10 @@
 
   <!-- ===== PAGE: WUNSCHLISTE ===== -->
   <section id="page-wishlist" class="page-content hidden max-w-4xl mx-auto px-6 py-16">
+    <button onclick="navigateTo('home')" class="back-link mb-10">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>Weiter stöbern</span>
+    </button>
     <h1 class="text-4xl font-serif font-light tracking-wide mb-8">Ihre Favoriten</h1>
     <div id="wishlist-container" class="space-y-4"></div>
     <button onclick="shareWishlist()" class="mt-8 px-8 py-4 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors">Favoriten teilen</button>
@@ -735,6 +756,10 @@
 
   <!-- ===== PAGE: WARENKORB ===== -->
   <section id="page-cart" class="page-content hidden max-w-5xl mx-auto px-6 py-16">
+    <button onclick="navigateTo('home')" class="back-link mb-10">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>Weiter einkaufen</span>
+    </button>
     <h1 class="text-4xl font-serif font-light tracking-wide mb-8">Ihr Warenkorb</h1>
     <div id="cart-container" class="space-y-4"></div>
     <div id="cart-summary" class="hidden mt-12 pt-8 border-t border-[var(--border-editorial)]">
@@ -742,16 +767,22 @@
         <span>Gesamtsumme</span>
         <span id="cart-total">0 €</span>
       </div>
-      <button onclick="navigateTo('checkout')" class="w-full py-5 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">
-        Zur Kasse
-      </button>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button onclick="navigateTo('home')" class="order-2 sm:order-1 flex-1 py-5 border border-[var(--border-editorial)] text-[var(--text-muted)] text-xs uppercase tracking-[0.2em] hover:bg-[var(--surface-editorial)] hover:text-black transition-colors">
+          Weiter einkaufen
+        </button>
+        <button onclick="navigateTo('checkout')" class="order-1 sm:order-2 flex-1 py-5 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">
+          Zur Kasse
+        </button>
+      </div>
     </div>
   </section>
 
   <!-- ===== PAGE: CHECKOUT ===== -->
   <section id="page-checkout" class="page-content hidden max-w-3xl mx-auto px-6 py-16">
-    <button onclick="navigateTo('cart')" class="mb-8 text-xs uppercase tracking-widest text-[var(--text-muted)] hover:text-black transition-colors">
-      <i class="fa-solid fa-arrow-left mr-2"></i> Zum Warenkorb
+    <button onclick="navigateTo('cart')" class="back-link mb-10">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>Zum Warenkorb</span>
     </button>
     <h1 class="text-4xl font-serif font-light tracking-wide mb-8">Kasse</h1>
     <div class="bg-white border border-[var(--border-editorial)] p-8 space-y-8">
@@ -869,8 +900,9 @@
 
   <!-- ===== PAGE: IMPRESSUM ===== -->
   <section id="page-impressum" class="page-content hidden max-w-3xl mx-auto px-6 lg:px-12 py-16">
-    <button onclick="navigateTo('home')" class="mb-8 text-xs uppercase tracking-widest text-[var(--text-muted)] hover:text-black transition-colors">
-      <i class="fa-solid fa-arrow-left mr-2"></i> Zurück zur Startseite
+    <button onclick="navigateTo('home')" class="back-link mb-10">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>Zurück zur Startseite</span>
     </button>
     <div class="mb-10 pb-4 border-b border-[var(--border-editorial)]">
       <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-2">Rechtliches</p>
@@ -911,8 +943,9 @@
 
   <!-- ===== PAGE: DATENSCHUTZ ===== -->
   <section id="page-datenschutz" class="page-content hidden max-w-3xl mx-auto px-6 lg:px-12 py-16">
-    <button onclick="navigateTo('home')" class="mb-8 text-xs uppercase tracking-widest text-[var(--text-muted)] hover:text-black transition-colors">
-      <i class="fa-solid fa-arrow-left mr-2"></i> Zurück zur Startseite
+    <button onclick="navigateTo('home')" class="back-link mb-10">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>Zurück zur Startseite</span>
     </button>
     <div class="mb-10 pb-4 border-b border-[var(--border-editorial)]">
       <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-2">Rechtliches</p>
@@ -971,8 +1004,9 @@
 
   <!-- ===== PAGE: AGB ===== -->
   <section id="page-agb" class="page-content hidden max-w-3xl mx-auto px-6 lg:px-12 py-16">
-    <button onclick="navigateTo('home')" class="mb-8 text-xs uppercase tracking-widest text-[var(--text-muted)] hover:text-black transition-colors">
-      <i class="fa-solid fa-arrow-left mr-2"></i> Zurück zur Startseite
+    <button onclick="navigateTo('home')" class="back-link mb-10">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>Zurück zur Startseite</span>
     </button>
     <div class="mb-10 pb-4 border-b border-[var(--border-editorial)]">
       <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-2">Rechtliches</p>
