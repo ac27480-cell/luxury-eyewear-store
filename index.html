@@ -653,7 +653,6 @@
       return `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}?query=${encodedQuery}`;
     }
 
-    // GROQ: Produkte laden und ALLE zugeordneten Stores mit auslesen
     const QUERY_PRODUCTS = `*[_type == "product"]{
       "id": _id,
       brand,
@@ -701,7 +700,7 @@
     };
 
     /* ============================================================
-       STORES (korrigierte URLs + Plattform-Vielfalt)
+       STORES (korrigierte URLs)
        ============================================================ */
     const FALLBACK_STORES = [
       { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
@@ -715,7 +714,7 @@
     ];
 
     /* ============================================================
-       PRODUKTE mit storeIds-Array (mehrere Bezugsquellen)
+       PRODUKTE mit storeIds-Array
        ============================================================ */
     const FALLBACK_PRODUCTS = [
       { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeIds: ['brillenlab', 'optikerbode'], img: IMAGE_PLACEHOLDER, desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium optiker bode' },
@@ -886,12 +885,10 @@
     document.getElementById('intro-overlay').addEventListener('click', dismissIntro);
     document.getElementById('intro-overlay').addEventListener('touchstart', dismissIntro);
 
-    /* Einzelnen Store holen */
     function getStoreInfo(storeId) {
       return STORE_DATABASE.find(s => s.id === storeId) || { name: 'Zertifizierter Optiker', url: '#', city: 'Fachhandel', type: 'Fachgeschäft' };
     }
 
-    /* ALLE Stores eines Produkts holen */
     function getStoresForProduct(product) {
       const ids = product.storeIds || (product.storeId ? [product.storeId] : []);
       return ids.map(id => getStoreInfo(id)).filter(s => s && s.name);
@@ -908,19 +905,32 @@
       }, 2500);
     }
 
+    /* ============================================================
+       NAVIGATION — KORRIGIERT
+       Erst rendern, dann ganz nach oben scrollen (ohne Nachrutschen)
+       ============================================================ */
     function navigateTo(pageId) {
       document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
       const page = document.getElementById('page-' + pageId);
-      if (page) { page.classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      if (!page) return;
+
+      page.classList.remove('hidden');
+
+      // Hero nur auf der Startseite anzeigen
       const hero = document.getElementById('hero');
       if (hero) hero.classList.toggle('hidden', pageId !== 'home');
+
+      // Inhalte rendern, BEVOR gescrollt wird
       if (pageId === 'cart') updateCartUI();
       if (pageId === 'checkout') renderCheckout();
+      if (pageId === 'wishlist') updateWishlistUI();
+
+      // Erst nach dem Rendern ganz nach oben – ohne Smooth, damit nichts nachspringt
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      });
     }
 
-    /* ============================================================
-       PRODUKT-MODAL (zeigt ALLE Bezugsquellen)
-       ============================================================ */
     function openProductModal(productId) {
       const p = PRODUCTS.find(x => String(x.id) === String(productId));
       if (!p) { showToast('Produkt nicht gefunden'); return; }
@@ -932,7 +942,6 @@
       document.getElementById('modal-product-price').innerText = p.price;
       document.getElementById('modal-product-desc').innerText = p.desc;
 
-      // Mehrere Stores im Modal rendern
       const storesList = document.getElementById('modal-product-stores-list');
       if (stores.length === 0) {
         storesList.innerHTML = '<p class="text-xs text-[var(--text-muted)] italic">Keine Bezugsquelle verfügbar.</p>';
@@ -1005,9 +1014,6 @@
       if (brand) { closeBrandModal(); navigateTo('home'); document.getElementById('searchInput').value = brand; filterProducts(); setTimeout(() => { document.getElementById('product-list').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300); }
     }
 
-    /* ============================================================
-       PRODUKTE RENDERN (mit MEHREREN Store-Links pro Karte)
-       ============================================================ */
     function renderProducts(query = '', maxPrice = 1000) {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
