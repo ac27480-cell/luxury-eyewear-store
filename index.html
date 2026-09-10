@@ -34,28 +34,16 @@
       overflow-x: hidden;
     }
 
-    h1, h2, h3, .font-serif {
-      font-family: var(--font-serif);
-    }
+    h1, h2, h3, .font-serif { font-family: var(--font-serif); }
 
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    .img-zoom-container {
-      overflow: hidden;
-      transition: box-shadow 0.35s ease;
-    }
-    .img-zoom-container img {
-      transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    .product-card:hover .img-zoom-container img {
-      transform: scale(1.04);
-    }
+    .img-zoom-container { overflow: hidden; transition: box-shadow 0.35s ease; }
+    .img-zoom-container img { transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
+    .product-card:hover .img-zoom-container img { transform: scale(1.04); }
 
-    .filter-btn {
-      transition: all 0.25s ease;
-      letter-spacing: 0.12em;
-    }
+    .filter-btn { transition: all 0.25s ease; letter-spacing: 0.12em; }
     .filter-btn.active {
       background-color: var(--text-main);
       color: #ffffff;
@@ -78,11 +66,7 @@
     }
     .nav-btn:active { opacity: 0.6; }
 
-    .hero-label-click {
-      cursor: pointer;
-      transition: opacity 0.3s ease;
-      position: relative;
-    }
+    .hero-label-click { cursor: pointer; transition: opacity 0.3s ease; position: relative; }
     .hero-label-click:hover { opacity: 0.7; }
     .hero-label-click::after {
       content: '';
@@ -94,15 +78,10 @@
       transform-origin: right;
       transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
     }
-    .hero-label-click:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
+    .hero-label-click:hover::after { transform: scaleX(1); transform-origin: left; }
 
     .payment-option {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      display: flex; align-items: center; gap: 0.75rem;
       padding: 0.75rem 1rem;
       background-color: var(--surface-editorial);
       border-radius: 0;
@@ -115,26 +94,16 @@
       width: 16px; height: 16px; margin: 0; flex-shrink: 0;
     }
     .payment-option .payment-icon {
-      font-size: 1.75rem;
-      width: 2rem;
-      text-align: center;
-      color: var(--text-muted);
-      flex-shrink: 0;
+      font-size: 1.75rem; width: 2rem; text-align: center;
+      color: var(--text-muted); flex-shrink: 0;
     }
     .payment-option .payment-label {
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      color: var(--text-main);
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.02em; color: var(--text-main);
     }
 
-    .modal-overlay {
-      background-color: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(4px);
-    }
+    .modal-overlay { background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
     .modal-card {
-      max-width: 720px;
-      width: 90%;
+      max-width: 720px; width: 90%;
       background: var(--bg-editorial);
       border: 1px solid var(--border-editorial);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
@@ -148,10 +117,72 @@
     .modal-card .overflow-y-auto::-webkit-scrollbar { width: 4px; }
     .modal-card .overflow-y-auto::-webkit-scrollbar-thumb { background-color: var(--border-editorial); }
 
-    /* ===== MOBILE MENU SAFE-AREA ===== */
-    #mobile-menu .relative {
-      padding-top: max(1.25rem, env(safe-area-inset-top));
+    /* ===== EDITORIAL INPUTS ===== */
+    .editorial-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border-editorial);
+      padding: 0.75rem 0;
+      font-size: 0.9rem;
+      font-family: var(--font-sans);
+      font-weight: 300;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.3s ease;
+      border-radius: 0;
+      appearance: none;
+      -webkit-appearance: none;
     }
+    .editorial-input:hover { border-bottom-color: #cfc9bd; }
+    .editorial-input:focus { border-bottom-color: var(--text-main); }
+    .editorial-input::placeholder {
+      color: var(--text-muted);
+      opacity: 0.45;
+      font-style: italic;
+      font-family: var(--font-serif);
+      font-size: 1rem;
+    }
+    .editorial-input[type="date"] {
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+    }
+    .editorial-input[type="date"]::-webkit-calendar-picker-indicator {
+      opacity: 0.35;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+    .editorial-input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+
+    /* ===== MOBILE MENU ===== */
+    #mobile-menu {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                  visibility 0.4s ease;
+    }
+    #mobile-menu.menu-open {
+      opacity: 1;
+      visibility: visible;
+    }
+    #mobile-menu .menu-panel {
+      padding-top: max(1.5rem, env(safe-area-inset-top));
+      padding-bottom: max(2.5rem, env(safe-area-inset-bottom));
+    }
+    #mobile-menu.menu-open .mobile-menu-link {
+      animation: menu-item-in 0.6s cubic-bezier(0.25, 1, 0.5, 1) both;
+    }
+    #mobile-menu.menu-open .mobile-menu-link:nth-child(1) { animation-delay: 0.10s; }
+    #mobile-menu.menu-open .mobile-menu-link:nth-child(2) { animation-delay: 0.16s; }
+    #mobile-menu.menu-open .mobile-menu-link:nth-child(3) { animation-delay: 0.22s; }
+    #mobile-menu.menu-open .mobile-menu-link:nth-child(4) { animation-delay: 0.28s; }
+    @keyframes menu-item-in {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .mobile-menu-link { opacity: 0; }
+    #mobile-menu.menu-open .mobile-menu-link { opacity: 1; }
 
     /* ===== SKELETON LOADER ===== */
     @keyframes skeleton-shimmer {
@@ -168,11 +199,7 @@
       background-size: 800px 100%;
       animation: skeleton-shimmer 1.6s infinite linear;
     }
-    .skeleton-card {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
+    .skeleton-card { display: flex; flex-direction: column; gap: 0.75rem; }
     .skeleton-img { width: 100%; aspect-ratio: 1 / 1; }
     .skeleton-line { height: 0.75rem; }
     .skeleton-line.short { width: 40%; }
@@ -180,9 +207,7 @@
     .skeleton-line.tall { height: 1.5rem; }
 
     /* ===== PAGE TRANSITIONS ===== */
-    .page-content {
-      animation: page-in 0.4s cubic-bezier(0.25, 1, 0.5, 1) both;
-    }
+    .page-content { animation: page-in 0.4s cubic-bezier(0.25, 1, 0.5, 1) both; }
     .page-content.hidden { animation: none; }
     @keyframes page-in {
       from { opacity: 0; transform: translateY(12px); }
@@ -197,29 +222,19 @@
       from { opacity: 0; transform: translateY(20px) scale(0.98); }
       to   { opacity: 1; transform: translateY(0) scale(1); }
     }
-
     #productModal, #brandModal { transition: opacity 0.3s ease; }
 
     /* ===== INTRO OVERLAY ===== */
     #intro-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
+      position: fixed; inset: 0; z-index: 9999;
       background: radial-gradient(circle at 50% 40%, #2a2826 0%, #1a1918 60%, #0f0e0d 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       transition: opacity 1.4s cubic-bezier(0.25, 1, 0.5, 1), visibility 1.4s ease;
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      cursor: pointer;
-      user-select: none;
+      opacity: 1; visibility: visible; pointer-events: auto;
+      cursor: pointer; user-select: none;
     }
-    #intro-overlay.hidden {
-      opacity: 0; visibility: hidden; pointer-events: none;
-    }
+    #intro-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
     .intro-title {
       font-family: var(--font-serif);
@@ -235,8 +250,7 @@
                   opacity 1.6s ease,
                   filter 1.6s ease,
                   letter-spacing 1.6s ease;
-      transform: scale(1);
-      opacity: 1;
+      transform: scale(1); opacity: 1;
     }
     .intro-title.dissolve {
       transform: scale(0.85) translateY(-30px);
@@ -252,26 +266,18 @@
       color: #b5a58a;
       margin-top: 1rem;
       transition: opacity 1.2s ease 0.3s, transform 1.2s ease 0.3s, filter 1.2s ease 0.3s;
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0px);
+      opacity: 1; transform: translateY(0); filter: blur(0px);
     }
-    .intro-sub.dissolve {
-      opacity: 0; transform: translateY(16px); filter: blur(6px);
-    }
+    .intro-sub.dissolve { opacity: 0; transform: translateY(16px); filter: blur(6px); }
 
     #intro-overlay.dissolve-bg {
       background: radial-gradient(circle at 50% 40%, #3a3430 0%, #1a1918 60%, #0f0e0d 100%);
     }
 
     .intro-hint {
-      position: absolute;
-      bottom: 3rem;
-      left: 50%;
+      position: absolute; bottom: 3rem; left: 50%;
       transform: translateX(-50%);
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
+      font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
       color: #b5a58a;
       animation: pulse-hint 2.4s ease-in-out infinite;
       opacity: 0.6;
@@ -286,9 +292,7 @@
     body.intro-active { overflow: hidden; }
 
     .hero-description {
-      font-size: 0.9rem;
-      line-height: 1.4;
-      font-weight: 300;
+      font-size: 0.9rem; line-height: 1.4; font-weight: 300;
       opacity: 0.9;
       transition: opacity 0.8s ease;
       cursor: pointer;
@@ -332,21 +336,15 @@
     .legal-content a:hover { text-decoration-color: var(--text-main); }
 
     /* ===== MICRO-INTERACTIONS ===== */
-    button:not(:disabled):active {
-      transform: translateY(1px) scale(0.985);
-    }
+    button:not(:disabled):active { transform: translateY(1px) scale(0.985); }
     button {
       transition: background-color 0.2s ease, color 0.2s ease,
                   border-color 0.2s ease, transform 0.12s ease,
                   opacity 0.2s ease;
     }
 
-    .product-card {
-      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    .product-card:hover {
-      transform: translateY(-4px);
-    }
+    .product-card { transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1); }
+    .product-card:hover { transform: translateY(-4px); }
     .product-card:hover .img-zoom-container {
       box-shadow: 0 12px 32px -12px rgba(26, 25, 24, 0.25);
     }
@@ -355,82 +353,54 @@
       transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
                   border-color 0.2s ease;
     }
-    .store-card:hover {
-      transform: translateY(-3px);
-    }
+    .store-card:hover { transform: translateY(-3px); }
 
     input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      height: 2px;
-      background: var(--border-editorial);
-      outline: none;
+      -webkit-appearance: none; appearance: none;
+      height: 2px; background: var(--border-editorial); outline: none;
     }
     input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
+      -webkit-appearance: none; appearance: none;
       width: 14px; height: 14px;
       background: var(--text-main);
-      border-radius: 50%;
-      cursor: pointer;
+      border-radius: 50%; cursor: pointer;
       transition: transform 0.15s ease;
     }
-    input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.15);
-    }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
     input[type="range"]::-moz-range-thumb {
-      width: 14px; height: 14px;
-      background: var(--text-main);
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
+      width: 14px; height: 14px; background: var(--text-main);
+      border: none; border-radius: 50%; cursor: pointer;
     }
 
     /* ===== EMPTY STATES ===== */
     .empty-state {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 4rem 1.5rem;
-      text-align: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 4rem 1.5rem; text-align: center;
       grid-column: 1 / -1;
     }
     .empty-state .empty-icon {
-      font-size: 2.5rem;
-      color: var(--text-muted);
-      opacity: 0.35;
-      margin-bottom: 1.25rem;
+      font-size: 2.5rem; color: var(--text-muted);
+      opacity: 0.35; margin-bottom: 1.25rem;
     }
     .empty-state .empty-title {
       font-family: var(--font-serif);
-      font-size: 1.5rem;
-      font-weight: 300;
-      margin-bottom: 0.5rem;
-      color: var(--text-main);
+      font-size: 1.5rem; font-weight: 300;
+      margin-bottom: 0.5rem; color: var(--text-main);
     }
     .empty-state .empty-text {
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      max-width: 24rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
+      font-size: 0.75rem; letter-spacing: 0.08em;
+      color: var(--text-muted); max-width: 24rem;
+      line-height: 1.6; margin-bottom: 1.5rem;
     }
     .empty-state .empty-cta {
       padding: 0.75rem 1.75rem;
-      background: var(--text-main);
-      color: #fff;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      cursor: pointer;
-      border: none;
-      transition: background-color 0.2s ease;
+      background: var(--text-main); color: #fff;
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; cursor: pointer;
+      border: none; transition: background-color 0.2s ease;
     }
-    .empty-state .empty-cta:hover {
-      background: #2f2c29;
-    }
+    .empty-state .empty-cta:hover { background: #2f2c29; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -450,7 +420,7 @@
     <div class="intro-hint" id="intro-hint">⟡ Berühren zum Entdecken ⟡</div>
   </div>
 
-  <!-- Toast (ARIA live region) -->
+  <!-- Toast -->
   <div id="toast" role="status" aria-live="polite" aria-atomic="true"
        class="fixed top-6 left-1/2 -translate-x-1/2 bg-[#1a1918] text-white text-xs tracking-wider uppercase px-5 py-3 rounded-none shadow-2xl z-50 pointer-events-none opacity-0 transition-all duration-300">
     <span id="toast-msg">Hinweis</span>
@@ -491,22 +461,43 @@
     </div>
   </header>
 
-  <!-- ===== MOBILE MENU ===== -->
+  <!-- ===== MOBILE MENU (Full-Screen Editorial) ===== -->
   <div id="mobile-menu" class="fixed inset-0 z-50 hidden md:hidden" role="dialog" aria-modal="true" aria-label="Hauptnavigation">
-    <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
-    <div class="relative bg-[var(--bg-editorial)] border-b border-[var(--border-editorial)] px-6 pt-5 pb-8 shadow-2xl"
-         style="animation: page-in 0.3s cubic-bezier(0.25, 1, 0.5, 1) both;">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex items-center justify-between mb-6">
-          <span class="text-2xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
-          <button id="mobile-menu-close" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors p-1" aria-label="Menü schließen">&times;</button>
-        </div>
-        <nav class="flex flex-col">
-          <button onclick="navigateToMobile('home')" class="mobile-nav-btn text-left py-4 border-b border-[var(--border-editorial)] text-sm uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-black transition-colors">Kollektion</button>
-          <button onclick="navigateToMobile('locator')" class="mobile-nav-btn text-left py-4 border-b border-[var(--border-editorial)] text-sm uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-black transition-colors">Store-Finder</button>
-          <button onclick="navigateToMobile('configurator')" class="mobile-nav-btn text-left py-4 border-b border-[var(--border-editorial)] text-sm uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-black transition-colors">Konfigurator</button>
-          <button onclick="navigateToMobile('account')" class="mobile-nav-btn text-left py-4 border-b border-[var(--border-editorial)] text-sm uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-black transition-colors">Stores & Optiker</button>
-        </nav>
+    <div class="absolute inset-0 bg-[var(--bg-editorial)]"></div>
+    <div class="menu-panel relative h-full flex flex-col px-8 pb-10 overflow-y-auto no-scrollbar">
+      <!-- Top bar -->
+      <div class="flex items-center justify-between mb-20">
+        <span class="text-2xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
+        <button id="mobile-menu-close" aria-label="Menü schließen"
+                class="text-3xl text-[var(--text-muted)] hover:text-black transition-colors p-2 -mr-2 leading-none">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex flex-col">
+        <button onclick="navigateToMobile('home')" class="mobile-menu-link group text-left py-6 border-b border-[var(--border-editorial)] flex items-baseline justify-between">
+          <span class="text-3xl font-serif font-light group-hover:italic transition-all duration-300">Kollektion</span>
+          <span class="text-[10px] tracking-[0.3em] text-[var(--text-muted)]">01</span>
+        </button>
+        <button onclick="navigateToMobile('locator')" class="mobile-menu-link group text-left py-6 border-b border-[var(--border-editorial)] flex items-baseline justify-between">
+          <span class="text-3xl font-serif font-light group-hover:italic transition-all duration-300">Store-Finder</span>
+          <span class="text-[10px] tracking-[0.3em] text-[var(--text-muted)]">02</span>
+        </button>
+        <button onclick="navigateToMobile('configurator')" class="mobile-menu-link group text-left py-6 border-b border-[var(--border-editorial)] flex items-baseline justify-between">
+          <span class="text-3xl font-serif font-light group-hover:italic transition-all duration-300">Konfigurator</span>
+          <span class="text-[10px] tracking-[0.3em] text-[var(--text-muted)]">03</span>
+        </button>
+        <button onclick="navigateToMobile('account')" class="mobile-menu-link group text-left py-6 border-b border-[var(--border-editorial)] flex items-baseline justify-between">
+          <span class="text-3xl font-serif font-light group-hover:italic transition-all duration-300">Stores & Optiker</span>
+          <span class="text-[10px] tracking-[0.3em] text-[var(--text-muted)]">04</span>
+        </button>
+      </nav>
+
+      <!-- Footer -->
+      <div class="mt-auto pt-12 text-[10px] uppercase tracking-[0.3em] text-[var(--text-muted)]">
+        <p class="mb-1">Independent Eyewear</p>
+        <p class="italic font-serif text-sm normal-case tracking-normal text-[var(--text-muted)]">Kuratiert & handgefertigt weltweit</p>
       </div>
     </div>
   </div>
@@ -601,12 +592,9 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16" id="product-list"></div>
-      <div id="loading-indicator" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16 mt-0" aria-hidden="true">
-        <!-- Skeletons werden per JS eingefügt -->
-      </div>
+      <div id="loading-indicator" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16 mt-0" aria-hidden="true"></div>
     </section>
 
-    <!-- ===== INSPIRATION & EDITORIAL SEKTION ===== -->
     <section class="mb-24 py-16 px-6 lg:px-12 bg-white border border-[var(--border-editorial)] fade-in">
       <div class="max-w-4xl mx-auto text-center mb-16">
         <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-3">Inspiration & Perspektiven</p>
@@ -826,24 +814,51 @@
     </div>
   </section>
 
-  <!-- ===== PAGE: STORES & OPTIKER ===== -->
-  <section id="page-account" class="page-content hidden max-w-5xl mx-auto px-6 py-16">
-    <h1 class="text-4xl font-serif font-light tracking-wide mb-3">Stores, Partner-Optiker & Onlineshops</h1>
-    <p class="text-xs uppercase tracking-widest text-[var(--text-muted)] mb-12">Direktverlinkung zu zertifizierten Händlern</p>
-    <div class="grid md:grid-cols-2 gap-8 mb-12">
-      <div class="bg-[var(--surface-editorial)] p-8 border border-[var(--border-editorial)] space-y-4">
-        <h3 class="font-serif text-2xl font-light">VIP-Sehtest & Anprobe</h3>
-        <p class="text-xs text-[var(--text-muted)] leading-relaxed">Vereinbaren Sie eine persönliche Beratung bei unseren Partneroptikern.</p>
-        <div class="space-y-3 pt-4">
-          <input type="text" placeholder="Name" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs" />
-          <input type="date" class="w-full p-3 bg-white border border-[var(--border-editorial)] text-xs" />
-          <button onclick="showToast('Terminanfrage übermittelt.')" class="w-full py-3 bg-[#1a1918] text-white text-xs uppercase tracking-widest">Termin anfragen</button>
-        </div>
+  <!-- ===== PAGE: STORES & OPTIKER (Refined) ===== -->
+  <section id="page-account" class="page-content hidden max-w-6xl mx-auto px-6 lg:px-12 py-16">
+    <div class="mb-14 pb-6 border-b border-[var(--border-editorial)]">
+      <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-3">Fachhandel & Beratung</p>
+      <h1 class="text-4xl md:text-5xl font-serif font-light tracking-wide">Stores & Partner-Optiker</h1>
+      <p class="text-sm text-[var(--text-muted)] mt-4 max-w-2xl leading-relaxed">
+        Direktverlinkung zu zertifizierten Händlern und spezialisierten Optikern – für persönliche Beratung, Sehtest und Anprobe.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-5 gap-10 lg:gap-16">
+      <!-- VIP Termin -->
+      <div class="md:col-span-3 bg-[var(--surface-editorial)] p-8 md:p-10 border border-[var(--border-editorial)]">
+        <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-3">Persönliche Beratung</p>
+        <h2 class="font-serif text-3xl font-light mb-3">VIP-Sehtest & Anprobe</h2>
+        <p class="text-xs text-[var(--text-muted)] leading-relaxed mb-10 max-w-md">
+          Vereinbaren Sie einen persönlichen Termin bei einem unserer Partneroptiker – für professionellen Sehtest und individuelle Fassungsberatung.
+        </p>
+
+        <form onsubmit="event.preventDefault(); showToast('Terminanfrage übermittelt.');" class="space-y-8">
+          <div>
+            <label for="appointment-name" class="block text-[10px] uppercase tracking-[0.25em] text-[var(--text-muted)] mb-2">Ihr Name</label>
+            <input id="appointment-name" type="text" placeholder="Vor- und Nachname" class="editorial-input" />
+          </div>
+          <div>
+            <label for="appointment-date" class="block text-[10px] uppercase tracking-[0.25em] text-[var(--text-muted)] mb-2">Wunschtermin</label>
+            <input id="appointment-date" type="date" class="editorial-input" />
+          </div>
+          <div>
+            <label for="appointment-note" class="block text-[10px] uppercase tracking-[0.25em] text-[var(--text-muted)] mb-2">
+              Anliegen <span class="text-[9px] normal-case tracking-normal italic opacity-70">(optional)</span>
+            </label>
+            <input id="appointment-note" type="text" placeholder="z. B. Sehtest, Fassungsberatung" class="editorial-input" />
+          </div>
+          <button type="submit" class="w-full py-4 mt-4 bg-[#1a1918] text-white text-xs uppercase tracking-[0.25em] hover:bg-stone-800 transition-colors">
+            Termin anfragen
+          </button>
+        </form>
       </div>
-      <div class="bg-white p-8 border border-[var(--border-editorial)]">
-        <h3 class="font-serif text-2xl font-light mb-4">Partnernetzwerk</h3>
-        <p class="text-xs text-[var(--text-muted)] leading-relaxed mb-6">Klicken Sie auf den Partner, um direkt zur Website zu gelangen:</p>
-        <div id="store-directory-list" class="space-y-3 text-xs"></div>
+
+      <!-- Partner Directory -->
+      <div class="md:col-span-2">
+        <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-3">Kuratiertes Netzwerk</p>
+        <h2 class="font-serif text-3xl font-light mb-6">Unsere Partner</h2>
+        <div id="store-directory-list"></div>
       </div>
     </div>
   </section>
@@ -859,72 +874,28 @@
     </div>
     <div class="legal-content bg-white border border-[var(--border-editorial)] p-8 md:p-12">
       <p class="text-xs italic text-[var(--text-muted)] mb-8">Angaben gemäß § 5 TMG (Telemediengesetz)</p>
-
       <h2>Anbieter</h2>
-      <p>
-        <strong>LUXEVUE GmbH</strong><br />
-        Musterstraße 12<br />
-        12345 Musterstadt<br />
-        Deutschland
-      </p>
-
+      <p><strong>LUXEVUE GmbH</strong><br />Musterstraße 12<br />12345 Musterstadt<br />Deutschland</p>
       <h2>Vertreten durch</h2>
       <p>Geschäftsführer: Max Mustermann</p>
-
       <h2>Kontakt</h2>
-      <p>
-        Telefon: +49 (0) 123 456789<br />
-        E-Mail: <a href="mailto:kontakt@luxevue.de">kontakt@luxevue.de</a><br />
-        Web: <a href="https://www.luxevue.de">www.luxevue.de</a>
-      </p>
-
+      <p>Telefon: +49 (0) 123 456789<br />E-Mail: <a href="mailto:kontakt@luxevue.de">kontakt@luxevue.de</a><br />Web: <a href="https://www.luxevue.de">www.luxevue.de</a></p>
       <h2>Registereintrag</h2>
-      <p>
-        Eintragung im Handelsregister<br />
-        Registergericht: Amtsgericht Musterstadt<br />
-        Registernummer: HRB 123456
-      </p>
-
+      <p>Eintragung im Handelsregister<br />Registergericht: Amtsgericht Musterstadt<br />Registernummer: HRB 123456</p>
       <h2>Umsatzsteuer-ID</h2>
-      <p>
-        Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
-        DE 123 456 789
-      </p>
-
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />DE 123 456 789</p>
       <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-      <p>
-        Max Mustermann<br />
-        Musterstraße 12<br />
-        12345 Musterstadt
-      </p>
-
+      <p>Max Mustermann<br />Musterstraße 12<br />12345 Musterstadt</p>
       <h2>Streitschlichtung</h2>
-      <p>
-        Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
-        <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>.
-      </p>
-      <p>
-        Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
-      </p>
-
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>.</p>
+      <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
       <h2>Haftung für Inhalte</h2>
-      <p>
-        Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
-      </p>
-      <p>
-        Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
-      </p>
-
+      <p>Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+      <p>Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.</p>
       <h2>Haftung für Links</h2>
-      <p>
-        Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
-      </p>
-
+      <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.</p>
       <h2>Urheberrecht</h2>
-      <p>
-        Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
-      </p>
-
+      <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
       <div class="mt-12 pt-6 border-t border-[var(--border-editorial)]">
         <p class="text-xs italic text-[var(--text-muted)]">
           <i class="fa-solid fa-circle-info mr-2"></i>
@@ -945,27 +916,14 @@
     </div>
     <div class="legal-content bg-white border border-[var(--border-editorial)] p-8 md:p-12">
       <p class="text-xs italic text-[var(--text-muted)] mb-8">Gemäß Datenschutz-Grundverordnung (DSGVO)</p>
-
       <h2>1. Datenschutz auf einen Blick</h2>
-      <p>
-        Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.
-      </p>
-
+      <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
       <h2>2. Verantwortliche Stelle</h2>
       <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
-      <p>
-        <strong>LUXEVUE GmbH</strong><br />
-        Musterstraße 12<br />
-        12345 Musterstadt<br />
-        Telefon: +49 (0) 123 456789<br />
-        E-Mail: <a href="mailto:datenschutz@luxevue.de">datenschutz@luxevue.de</a>
-      </p>
-
+      <p><strong>LUXEVUE GmbH</strong><br />Musterstraße 12<br />12345 Musterstadt<br />Telefon: +49 (0) 123 456789<br />E-Mail: <a href="mailto:datenschutz@luxevue.de">datenschutz@luxevue.de</a></p>
       <h2>3. Erfassung von Daten auf unserer Website</h2>
       <h3>Server-Log-Dateien</h3>
-      <p>
-        Der Provider der Seiten erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind:
-      </p>
+      <p>Der Provider der Seiten erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind:</p>
       <ul>
         <li>Browsertyp und Browserversion</li>
         <li>Verwendetes Betriebssystem</li>
@@ -974,15 +932,9 @@
         <li>Uhrzeit der Serveranfrage</li>
         <li>IP-Adresse</li>
       </ul>
-      <p>
-        Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
-      </p>
-
+      <p>Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.</p>
       <h2>4. Kontaktformular & Newsletter</h2>
-      <p>
-        Wenn Sie uns per Kontaktformular Anfragen zukommen lassen oder unseren Newsletter abonnieren, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
-      </p>
-
+      <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen oder unseren Newsletter abonnieren, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
       <h2>5. Cookies & lokale Speicherung</h2>
       <p>Unsere Website verwendet sogenannte "Cookies" sowie die lokale Speicherung (LocalStorage) Ihres Browsers, um:</p>
       <ul>
@@ -990,10 +942,7 @@
         <li>Ihre Wunschliste zu sichern</li>
         <li>Ihre zuletzt angesehenen Produkte anzuzeigen</li>
       </ul>
-      <p>
-        Diese Daten verbleiben ausschließlich auf Ihrem Gerät und werden nicht an uns übertragen. Sie können diese jederzeit über die Einstellungen Ihres Browsers löschen.
-      </p>
-
+      <p>Diese Daten verbleiben ausschließlich auf Ihrem Gerät und werden nicht an uns übertragen. Sie können diese jederzeit über die Einstellungen Ihres Browsers löschen.</p>
       <h2>6. Ihre Rechte</h2>
       <p>Sie haben jederzeit das Recht auf:</p>
       <ul>
@@ -1004,15 +953,9 @@
         <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
         <li>Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
       </ul>
-      <p>
-        Zur Ausübung Ihrer Rechte genügt eine formlose Mitteilung an <a href="mailto:datenschutz@luxevue.de">datenschutz@luxevue.de</a>.
-      </p>
-
+      <p>Zur Ausübung Ihrer Rechte genügt eine formlose Mitteilung an <a href="mailto:datenschutz@luxevue.de">datenschutz@luxevue.de</a>.</p>
       <h2>7. Beschwerderecht bei der Aufsichtsbehörde</h2>
-      <p>
-        Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung Ihrer personenbezogenen Daten durch uns zu beschweren.
-      </p>
-
+      <p>Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung Ihrer personenbezogenen Daten durch uns zu beschweren.</p>
       <div class="mt-12 pt-6 border-t border-[var(--border-editorial)]">
         <p class="text-xs italic text-[var(--text-muted)]">
           <i class="fa-solid fa-circle-info mr-2"></i>
@@ -1033,34 +976,16 @@
     </div>
     <div class="legal-content bg-white border border-[var(--border-editorial)] p-8 md:p-12">
       <p class="text-xs italic text-[var(--text-muted)] mb-8">Allgemeine Geschäftsbedingungen (AGB) für die Nutzung von LUXEVUE</p>
-
       <h2>§ 1 Geltungsbereich</h2>
-      <p>
-        Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge, die zwischen der LUXEVUE GmbH (nachfolgend „Anbieter") und dem Kunden (nachfolgend „Nutzer") über die Website www.luxevue.de geschlossen werden.
-      </p>
-
+      <p>Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge, die zwischen der LUXEVUE GmbH (nachfolgend „Anbieter") und dem Kunden (nachfolgend „Nutzer") über die Website www.luxevue.de geschlossen werden.</p>
       <h2>§ 2 Vertragspartner</h2>
       <p>Der Kaufvertrag kommt zustande mit:</p>
-      <p>
-        <strong>LUXEVUE GmbH</strong><br />
-        Musterstraße 12<br />
-        12345 Musterstadt<br />
-        E-Mail: <a href="mailto:kontakt@luxevue.de">kontakt@luxevue.de</a>
-      </p>
-
+      <p><strong>LUXEVUE GmbH</strong><br />Musterstraße 12<br />12345 Musterstadt<br />E-Mail: <a href="mailto:kontakt@luxevue.de">kontakt@luxevue.de</a></p>
       <h2>§ 3 Zustandekommen des Vertrags</h2>
-      <p>
-        Die Darstellung der Produkte auf der Website stellt kein rechtlich bindendes Angebot, sondern eine Aufforderung zur Bestellung dar. Mit dem Absenden einer Bestellung über das Checkout-Formular gibt der Nutzer ein verbindliches Angebot zum Kauf der ausgewählten Produkte ab.
-      </p>
-      <p>
-        Der Anbieter behält sich das Recht vor, Bestellungen ohne Angabe von Gründen abzulehnen, insbesondere bei Verdacht auf Missbrauch oder bei nicht verfügbaren Produkten.
-      </p>
-
+      <p>Die Darstellung der Produkte auf der Website stellt kein rechtlich bindendes Angebot, sondern eine Aufforderung zur Bestellung dar. Mit dem Absenden einer Bestellung über das Checkout-Formular gibt der Nutzer ein verbindliches Angebot zum Kauf der ausgewählten Produkte ab.</p>
+      <p>Der Anbieter behält sich das Recht vor, Bestellungen ohne Angabe von Gründen abzulehnen, insbesondere bei Verdacht auf Missbrauch oder bei nicht verfügbaren Produkten.</p>
       <h2>§ 4 Preise und Versandkosten</h2>
-      <p>
-        Alle auf der Website genannten Preise verstehen sich in Euro und enthalten die gesetzliche Mehrwertsteuer. Versandkosten werden im Bestellprozess gesondert ausgewiesen und vor Abschluss der Bestellung angezeigt.
-      </p>
-
+      <p>Alle auf der Website genannten Preise verstehen sich in Euro und enthalten die gesetzliche Mehrwertsteuer. Versandkosten werden im Bestellprozess gesondert ausgewiesen und vor Abschluss der Bestellung angezeigt.</p>
       <h2>§ 5 Zahlungsbedingungen</h2>
       <p>Der Nutzer kann aus folgenden Zahlungsarten wählen:</p>
       <ul>
@@ -1071,44 +996,20 @@
         <li>Google Pay</li>
         <li>Vorkasse</li>
       </ul>
-      <p>
-        Bei Auswahl der Zahlungsart „Vorkasse" ist der Rechnungsbetrag innerhalb von 7 Tagen nach Erhalt der Bestellbestätigung auf das angegebene Bankkonto zu überweisen.
-      </p>
-
+      <p>Bei Auswahl der Zahlungsart „Vorkasse" ist der Rechnungsbetrag innerhalb von 7 Tagen nach Erhalt der Bestellbestätigung auf das angegebene Bankkonto zu überweisen.</p>
       <h2>§ 6 Lieferung</h2>
-      <p>
-        Die Lieferung erfolgt an die vom Nutzer angegebene Lieferadresse. Die Lieferzeit beträgt – sofern nicht anders angegeben – 3 bis 7 Werktage innerhalb Deutschlands. Bei Lieferungen ins Ausland verlängert sich die Lieferzeit entsprechend.
-      </p>
-
+      <p>Die Lieferung erfolgt an die vom Nutzer angegebene Lieferadresse. Die Lieferzeit beträgt – sofern nicht anders angegeben – 3 bis 7 Werktage innerhalb Deutschlands. Bei Lieferungen ins Ausland verlängert sich die Lieferzeit entsprechend.</p>
       <h2>§ 7 Widerrufsrecht</h2>
-      <p>
-        Verbraucher haben ein 14-tägiges Widerrufsrecht. Die Widerrufsfrist beträgt 14 Tage ab dem Tag, an dem der Nutzer oder ein von ihm benannter Dritter die Ware in Besitz genommen hat.
-      </p>
-      <p>
-        Zur Ausübung des Widerrufsrechts genügt eine eindeutige Erklärung per E-Mail an <a href="mailto:kontakt@luxevue.de">kontakt@luxevue.de</a>. Die Ware ist unverzüglich, spätestens binnen 14 Tagen ab Widerruf, zurückzusenden.
-      </p>
-
+      <p>Verbraucher haben ein 14-tägiges Widerrufsrecht. Die Widerrufsfrist beträgt 14 Tage ab dem Tag, an dem der Nutzer oder ein von ihm benannter Dritter die Ware in Besitz genommen hat.</p>
+      <p>Zur Ausübung des Widerrufsrechts genügt eine eindeutige Erklärung per E-Mail an <a href="mailto:kontakt@luxevue.de">kontakt@luxevue.de</a>. Die Ware ist unverzüglich, spätestens binnen 14 Tagen ab Widerruf, zurückzusenden.</p>
       <h2>§ 8 Gewährleistung</h2>
-      <p>
-        Es gelten die gesetzlichen Gewährleistungsregelungen. Bei Mängeln der gelieferten Ware hat der Nutzer Anspruch auf Nacherfüllung, Minderung oder Rücktritt nach den gesetzlichen Bestimmungen.
-      </p>
-
+      <p>Es gelten die gesetzlichen Gewährleistungsregelungen. Bei Mängeln der gelieferten Ware hat der Nutzer Anspruch auf Nacherfüllung, Minderung oder Rücktritt nach den gesetzlichen Bestimmungen.</p>
       <h2>§ 9 Haftung</h2>
-      <p>
-        Der Anbieter haftet nur für Schäden, die auf vorsätzlichem oder grob fahrlässigem Verhalten beruhen. Für leichte Fahrlässigkeit haftet der Anbieter nur bei Verletzung wesentlicher Vertragspflichten, begrenzt auf den vorhersehbaren Schaden.
-      </p>
-
+      <p>Der Anbieter haftet nur für Schäden, die auf vorsätzlichem oder grob fahrlässigem Verhalten beruhen. Für leichte Fahrlässigkeit haftet der Anbieter nur bei Verletzung wesentlicher Vertragspflichten, begrenzt auf den vorhersehbaren Schaden.</p>
       <h2>§ 10 Streitbeilegung</h2>
-      <p>
-        Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung bereit:
-        <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>.
-      </p>
-
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>.</p>
       <h2>§ 11 Schlussbestimmungen</h2>
-      <p>
-        Es gilt deutsches Recht. Sollten einzelne Bestimmungen dieser AGB unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.
-      </p>
-
+      <p>Es gilt deutsches Recht. Sollten einzelne Bestimmungen dieser AGB unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.</p>
       <div class="mt-12 pt-6 border-t border-[var(--border-editorial)]">
         <p class="text-xs italic text-[var(--text-muted)]">
           <i class="fa-solid fa-circle-info mr-2"></i>
@@ -1200,14 +1101,7 @@
   <!-- JAVASCRIPT -->
   <!-- ============================================================ -->
   <script>
-    /* ============================================================
-       LIVE-DATENBANK-KONFIGURATION
-       ============================================================ */
-    const SANITY_CONFIG = {
-      projectId: '',
-      dataset: 'production',
-      apiVersion: '2025-02-06'
-    };
+    const SANITY_CONFIG = { projectId: '', dataset: 'production', apiVersion: '2025-02-06' };
 
     function getSanityUrl(query) {
       const { projectId, dataset, apiVersion } = SANITY_CONFIG;
@@ -1216,9 +1110,6 @@
       return `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}?query=${encodedQuery}`;
     }
 
-    /* ============================================================
-       QUERIES
-       ============================================================ */
     const QUERY_PRODUCTS = `*[_type == "product"]{
       "id": _id,
       "brand": brand->name,
@@ -1250,9 +1141,6 @@
       "img": logo.asset->url
     }`;
 
-    /* ============================================================
-       PREIS-UTILITIES
-       ============================================================ */
     function parsePrice(value) {
       if (typeof value === 'number' && isFinite(value)) return Math.round(value);
       if (value === null || value === undefined) return 0;
@@ -1260,11 +1148,8 @@
       if (!s) return 0;
       const lastComma = s.lastIndexOf(',');
       const lastDot = s.lastIndexOf('.');
-      if (lastComma > lastDot) {
-        s = s.replace(/\./g, '').replace(',', '.');
-      } else if (lastDot > lastComma) {
-        s = s.replace(/,/g, '');
-      }
+      if (lastComma > lastDot) { s = s.replace(/\./g, '').replace(',', '.'); }
+      else if (lastDot > lastComma) { s = s.replace(/,/g, ''); }
       const n = parseFloat(s);
       return isNaN(n) ? 0 : Math.round(n);
     }
@@ -1274,9 +1159,6 @@
       return n.toLocaleString('de-DE') + ' €';
     }
 
-    /* ============================================================
-       SANITY IMAGE-URL-BUILDER
-       ============================================================ */
     function getSanityImageUrl(url, opts = {}) {
       if (!url || typeof url !== 'string') return IMAGE_PLACEHOLDER;
       if (!url.includes('cdn.sanity.io')) return url;
@@ -1288,14 +1170,9 @@
         u.searchParams.set('auto', 'format');
         u.searchParams.set('q', String(opts.quality || 80));
         return u.toString();
-      } catch {
-        return url;
-      }
+      } catch { return url; }
     }
 
-    /* ============================================================
-       BILDER-PLATZHALTER
-       ============================================================ */
     const IMAGE_PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
       "<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'>" +
       "<rect width='100%' height='100%' fill='#f4f2ed'/>" +
@@ -1309,35 +1186,14 @@
       "</svg>"
     );
 
-    /* ============================================================
-       BRAND_DATA — lokale Fallback-Marken
-       ============================================================ */
     const BRAND_DATA = {
-      'Andy Wolf': {
-        story: 'Andy Wolf steht für exklusive Brillenmanufaktur aus Österreich. Jede Fassung wird mit höchster Präzision und nachhaltigem Bio-Acetat in Hartberg gefertigt. Die geometrische Linienführung und die Liebe zum Detail machen jede Brille zu einem Unikat.',
-        img: IMAGE_PLACEHOLDER
-      },
-      'MYKITA': {
-        story: 'MYKITA vereint Berliner Ingenieurskunst mit avantgardistischem Design. Das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl ist ein Meilenstein der Eyewear-Entwicklung. Gefertigt im Herzen der Hauptstadt.',
-        img: IMAGE_PLACEHOLDER
-      },
-      'Lindberg': {
-        story: 'Lindberg – dänischer Minimalismus in Reinform. Die schraubenlosen Titandraht-Designs sind federleicht und bieten maximalen Tragekomfort. Jede Brille ist ein Ausdruck skandinavischer Ästhetik und handwerklicher Perfektion.',
-        img: IMAGE_PLACEHOLDER
-      },
-      'Jacques Marie Mage': {
-        story: 'Jacques Marie Mage – limitierte Auflagen aus Frankreich. Mit 10mm Acetat und charakteristischem Skulpturenschliff kreiert das Atelier zeitlose Meisterwerke, die Kunst und Handwerk vereinen. Jedes Modell ist ein Statement.',
-        img: IMAGE_PLACEHOLDER
-      },
-      'DITA Eyewear': {
-        story: 'DITA Eyewear – japanische Präzision und amerikanisches Design. Die Acetat-Titan-Hybridkonstruktionen werden auf höchstem handwerklichem Niveau gefertigt und stehen für Langlebigkeit und zeitlosen Stil.',
-        img: IMAGE_PLACEHOLDER
-      }
+      'Andy Wolf': { story: 'Andy Wolf steht für exklusive Brillenmanufaktur aus Österreich. Jede Fassung wird mit höchster Präzision und nachhaltigem Bio-Acetat in Hartberg gefertigt. Die geometrische Linienführung und die Liebe zum Detail machen jede Brille zu einem Unikat.', img: IMAGE_PLACEHOLDER },
+      'MYKITA': { story: 'MYKITA vereint Berliner Ingenieurskunst mit avantgardistischem Design. Das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl ist ein Meilenstein der Eyewear-Entwicklung. Gefertigt im Herzen der Hauptstadt.', img: IMAGE_PLACEHOLDER },
+      'Lindberg': { story: 'Lindberg – dänischer Minimalismus in Reinform. Die schraubenlosen Titandraht-Designs sind federleicht und bieten maximalen Tragekomfort. Jede Brille ist ein Ausdruck skandinavischer Ästhetik und handwerklicher Perfektion.', img: IMAGE_PLACEHOLDER },
+      'Jacques Marie Mage': { story: 'Jacques Marie Mage – limitierte Auflagen aus Frankreich. Mit 10mm Acetat und charakteristischem Skulpturenschliff kreiert das Atelier zeitlose Meisterwerke, die Kunst und Handwerk vereinen. Jedes Modell ist ein Statement.', img: IMAGE_PLACEHOLDER },
+      'DITA Eyewear': { story: 'DITA Eyewear – japanische Präzision und amerikanisches Design. Die Acetat-Titan-Hybridkonstruktionen werden auf höchstem handwerklichem Niveau gefertigt und stehen für Langlebigkeit und zeitlosen Stil.', img: IMAGE_PLACEHOLDER }
     };
 
-    /* ============================================================
-       STORES
-       ============================================================ */
     const FALLBACK_STORES = [
       { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
       { id: 'leidmann', name: "Leidmann", type: "Boutique / Fachgeschäft", city: "München", url: "https://leidmann.de" },
@@ -1349,9 +1205,6 @@
       { id: 'misterspex', name: "Mister Spex", type: "Omnichannel / Online", city: "Berlin / Online", url: "https://www.misterspex.de" }
     ];
 
-    /* ============================================================
-       PRODUKTE
-       ============================================================ */
     const FALLBACK_PRODUCTS = [
       { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeIds: ['brillenlab', 'optikerbode'], img: IMAGE_PLACEHOLDER, desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium optiker bode' },
       { id: 2, brand: 'MYKITA', name: 'Lite Tuva', price: '490 €', storeIds: ['specsberlin', 'leidmann', 'bellevue'], img: IMAGE_PLACEHOLDER, desc: 'Patentiertes schraubenloses Gelenk aus ultraleichtem Edelstahl, gefertigt in Berlin.', search: 'mykita lite tuva berlin specsberlin leidmann bellevue' },
@@ -1392,9 +1245,6 @@
       { id: 37, brand: 'Cubitts', name: 'Judd Round', price: '240 €', storeIds: ['brillenlab'], img: IMAGE_PLACEHOLDER, desc: "Traditionelles Brillenhandwerk aus King's Cross, London.", search: 'cubitts london brillenlaboratorium' }
     ];
 
-    /* ============================================================
-       LIVE-DATEN LADEN
-       ============================================================ */
     let PRODUCTS = [];
     let STORE_DATABASE = [];
     let BRANDS = {};
@@ -1405,7 +1255,6 @@
       const urlBrands = getSanityUrl(QUERY_BRANDS);
 
       if (!urlProducts) {
-        console.info('LUXEVUE: Keine Sanity-Konfiguration gefunden. Nutze lokale Beispieldaten.');
         PRODUCTS = FALLBACK_PRODUCTS;
         STORE_DATABASE = FALLBACK_STORES;
         BRANDS = BRAND_DATA;
@@ -1419,34 +1268,16 @@
           fetch(urlStores).then(r => r.json()),
           fetch(urlBrands).then(r => r.json())
         ]);
-
-        PRODUCTS = (resProducts.result || []).map(p => ({
-          ...p,
-          price: p.price ?? 0,
-          storeIds: p.storeIds || [],
-          img: p.img || IMAGE_PLACEHOLDER
-        }));
-
+        PRODUCTS = (resProducts.result || []).map(p => ({ ...p, price: p.price ?? 0, storeIds: p.storeIds || [], img: p.img || IMAGE_PLACEHOLDER }));
         STORE_DATABASE = resStores.result || [];
-
         BRANDS = {};
         (resBrands.result || []).forEach(b => {
           if (!b.name) return;
-          BRANDS[b.name] = {
-            story: b.story || '',
-            img: b.img || IMAGE_PLACEHOLDER,
-            country: b.country || '',
-            slug: b.slug || ''
-          };
+          BRANDS[b.name] = { story: b.story || '', img: b.img || IMAGE_PLACEHOLDER, country: b.country || '', slug: b.slug || '' };
         });
-
-        Object.keys(BRAND_DATA).forEach(k => {
-          if (!BRANDS[k]) BRANDS[k] = BRAND_DATA[k];
-        });
-
-        console.info(`LUXEVUE: ${PRODUCTS.length} Produkte, ${STORE_DATABASE.length} Stores, ${Object.keys(BRANDS).length} Marken live geladen.`);
+        Object.keys(BRAND_DATA).forEach(k => { if (!BRANDS[k]) BRANDS[k] = BRAND_DATA[k]; });
       } catch (err) {
-        console.error('LUXEVUE: Fehler beim Laden der Live-Daten. Nutze lokale Beispieldaten.', err);
+        console.error('LUXEVUE: Fehler beim Laden der Live-Daten.', err);
         PRODUCTS = FALLBACK_PRODUCTS;
         STORE_DATABASE = FALLBACK_STORES;
         BRANDS = BRAND_DATA;
@@ -1455,9 +1286,6 @@
       }
     }
 
-    /* ============================================================
-       HERO-BILD GENERATOR
-       ============================================================ */
     function createHeroSVG(accentColor, bgColor, label) {
       const svg =
         "<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000' viewBox='0 0 1600 1000'>" +
@@ -1475,68 +1303,22 @@
       return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
     }
 
-    /* ============================================================
-       HERO-SLIDES
-       ============================================================ */
     const HERO_SLIDES = [
-      {
-        label: 'Andy Wolf',
-        description: 'Handgefertigt in Österreich – nachhaltiges Bio-Acetat und geometrische Linienführung für zeitlose Eleganz.',
-        img: createHeroSVG('#c9a87c', '#2a2826', 'ANDY WOLF'),
-        focal: 'center'
-      },
-      {
-        label: 'MYKITA',
-        description: 'Berliner Ingenieurskunst – das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl.',
-        img: createHeroSVG('#b8860b', '#1a1918', 'MYKITA'),
-        focal: 'center'
-      },
-      {
-        label: 'Lindberg',
-        description: 'Dänischer Minimalismus – schraubenloses Titandraht-Design für maximalen Tragekomfort.',
-        img: createHeroSVG('#8a7a6a', '#2f2b27', 'LINDBERG'),
-        focal: 'center'
-      },
-      {
-        label: 'Jacques Marie Mage',
-        description: 'Limitierte Auflagen – 10mm Acetat mit charakteristischem Skulpturenschliff aus Frankreich.',
-        img: createHeroSVG('#a68b66', '#1e1c1a', 'JACQUES MARIE MAGE'),
-        focal: 'center'
-      },
-      {
-        label: 'DITA Eyewear',
-        description: 'Japanische Präzision – Acetat-Titan-Hybridkonstruktion auf höchstem handwerklichem Niveau.',
-        img: createHeroSVG('#6b5d4e', '#242220', 'DITA'),
-        focal: 'center'
-      }
+      { label: 'Andy Wolf', description: 'Handgefertigt in Österreich – nachhaltiges Bio-Acetat und geometrische Linienführung für zeitlose Eleganz.', img: createHeroSVG('#c9a87c', '#2a2826', 'ANDY WOLF'), focal: 'center' },
+      { label: 'MYKITA', description: 'Berliner Ingenieurskunst – das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl.', img: createHeroSVG('#b8860b', '#1a1918', 'MYKITA'), focal: 'center' },
+      { label: 'Lindberg', description: 'Dänischer Minimalismus – schraubenloses Titandraht-Design für maximalen Tragekomfort.', img: createHeroSVG('#8a7a6a', '#2f2b27', 'LINDBERG'), focal: 'center' },
+      { label: 'Jacques Marie Mage', description: 'Limitierte Auflagen – 10mm Acetat mit charakteristischem Skulpturenschliff aus Frankreich.', img: createHeroSVG('#a68b66', '#1e1c1a', 'JACQUES MARIE MAGE'), focal: 'center' },
+      { label: 'DITA Eyewear', description: 'Japanische Präzision – Acetat-Titan-Hybridkonstruktion auf höchstem handwerklichem Niveau.', img: createHeroSVG('#6b5d4e', '#242220', 'DITA'), focal: 'center' }
     ];
 
     const INDEPENDENT_LABELS = {
-      "Deutschland / Ö / CH": [
-        "MYKITA (Berlin)", "ic! berlin", "Lunor (Schwarzwald)", "CAZAL", "Andy Wolf (Österreich)",
-        "Götti Switzerland", "Klenze & Baum", "Rolf Spectacles", "Reiz Germany", "Funk Eyewear", "Hoffmann Natural Eyewear"
-      ],
-      "Japan": [
-        "Matsuda", "DITA Eyewear", "Eyevan 7285", "Masunaga 1905", "Yuichi Toyama",
-        "Takahiro Miyashita", "Nackymade", "Factory900", "KameManNen", "Boston Club"
-      ],
-      "Frankreich": [
-        "Jacques Marie Mage (Atelier/Design)", "Anne et Valentin", "Lafont Paris", "Thierry Lasry",
-        "Ahlem Eyewear", "Morel France", "J.F. Rey", "Sabine Be", "Lucas de Staël"
-      ],
-      "Italien": [
-        "Res/Rei", "L.G.R", "Tavat Eyewear", "Movitra", "Kubeora", "Haffmans & Neumeister (Collab)", "NATIVE SONS"
-      ],
-      "USA / Nordamerika": [
-        "Oliver Peoples", "Garrett Leight (GLCO)", "Salt Optics", "Barton Perreira",
-        "Moscot (NYC)", "Robert Marc NYC", "Talla Eyewear"
-      ],
-      "Dänemark & Skandinavien": [
-        "Lindberg", "Ørgreen Optics", "ProDesign Denmark", "Fleye Copenhagen", "Kaibosh (Norwegen)"
-      ],
-      "Großbritannien": [
-        "Cutler and Gross", "Oliver Goldsmith", "Tom Davies", "Cubitts"
-      ]
+      "Deutschland / Ö / CH": ["MYKITA (Berlin)", "ic! berlin", "Lunor (Schwarzwald)", "CAZAL", "Andy Wolf (Österreich)", "Götti Switzerland", "Klenze & Baum", "Rolf Spectacles", "Reiz Germany", "Funk Eyewear", "Hoffmann Natural Eyewear"],
+      "Japan": ["Matsuda", "DITA Eyewear", "Eyevan 7285", "Masunaga 1905", "Yuichi Toyama", "Takahiro Miyashita", "Nackymade", "Factory900", "KameManNen", "Boston Club"],
+      "Frankreich": ["Jacques Marie Mage (Atelier/Design)", "Anne et Valentin", "Lafont Paris", "Thierry Lasry", "Ahlem Eyewear", "Morel France", "J.F. Rey", "Sabine Be", "Lucas de Staël"],
+      "Italien": ["Res/Rei", "L.G.R", "Tavat Eyewear", "Movitra", "Kubeora", "Haffmans & Neumeister (Collab)", "NATIVE SONS"],
+      "USA / Nordamerika": ["Oliver Peoples", "Garrett Leight (GLCO)", "Salt Optics", "Barton Perreira", "Moscot (NYC)", "Robert Marc NYC", "Talla Eyewear"],
+      "Dänemark & Skandinavien": ["Lindberg", "Ørgreen Optics", "ProDesign Denmark", "Fleye Copenhagen", "Kaibosh (Norwegen)"],
+      "Großbritannien": ["Cutler and Gross", "Oliver Goldsmith", "Tom Davies", "Cubitts"]
     };
 
     const COUNTRY_COLORS = {
@@ -1565,26 +1347,10 @@
     let pageBeforeModal = 'home';
     let lastFocusedElement = null;
 
-    /* ============================================================
-       PERSISTENZ
-       ============================================================ */
-    function persistCart() {
-      localStorage.setItem('luxevue_cart', JSON.stringify(cart));
-      updateCartUI();
-    }
+    function persistCart() { localStorage.setItem('luxevue_cart', JSON.stringify(cart)); updateCartUI(); }
+    function persistWishlist() { localStorage.setItem('luxevue_wishlist', JSON.stringify(wishlist)); updateWishlistUI(); }
+    function persistRecent() { localStorage.setItem('luxevue_recent', JSON.stringify(recentlyViewed)); }
 
-    function persistWishlist() {
-      localStorage.setItem('luxevue_wishlist', JSON.stringify(wishlist));
-      updateWishlistUI();
-    }
-
-    function persistRecent() {
-      localStorage.setItem('luxevue_recent', JSON.stringify(recentlyViewed));
-    }
-
-    /* ============================================================
-       SKELETON LOADER
-       ============================================================ */
     function renderSkeletons(count = 6) {
       const container = document.getElementById('loading-indicator');
       if (!container) return;
@@ -1605,9 +1371,6 @@
       container.style.display = 'none';
     }
 
-    /* ============================================================
-       EMPTY-STATE HELPER
-       ============================================================ */
     function renderEmptyState(container, { icon, title, text, ctaLabel, ctaAction }) {
       if (!container) return;
       container.innerHTML = `
@@ -1620,23 +1383,17 @@
       `;
     }
 
-    /* ============================================================
-       INTRO
-       ============================================================ */
     function dismissIntro() {
       if (introDone) return;
       introDone = true;
-
       const overlay = document.getElementById('intro-overlay');
       const title = document.getElementById('intro-title');
       const sub = document.getElementById('intro-sub');
       const hint = document.getElementById('intro-hint');
-
       title.classList.add('dissolve');
       sub.classList.add('dissolve');
       hint.classList.add('dissolve');
       overlay.classList.add('dissolve-bg');
-
       setTimeout(() => {
         overlay.classList.add('hidden');
         document.body.classList.remove('intro-active');
@@ -1647,15 +1404,9 @@
     document.getElementById('intro-overlay').addEventListener('click', dismissIntro);
     document.getElementById('intro-overlay').addEventListener('touchstart', dismissIntro);
 
-    /* ============================================================
-       HILFSFUNKTIONEN
-       ============================================================ */
     function getStoreInfo(storeId) {
       return STORE_DATABASE.find(s => s.id === storeId) || {
-        name: 'Zertifizierter Optiker',
-        url: '#',
-        city: 'Fachhandel',
-        type: 'Fachgeschäft'
+        name: 'Zertifizierter Optiker', url: '#', city: 'Fachhandel', type: 'Fachgeschäft'
       };
     }
 
@@ -1675,16 +1426,15 @@
       }, 2500);
     }
 
-    /* ============================================================
-       MOBILE MENU
-       ============================================================ */
+    /* ===== MOBILE MENU ===== */
     function openMobileMenu() {
       const menu = document.getElementById('mobile-menu');
       const toggle = document.getElementById('mobile-menu-toggle');
       if (!menu) return;
       menu.classList.remove('hidden');
-      menu.classList.add('block');
-      toggle.setAttribute('aria-expanded', 'true');
+      void menu.offsetWidth; // reflow
+      menu.classList.add('menu-open');
+      if (toggle) toggle.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
     }
 
@@ -1692,8 +1442,13 @@
       const menu = document.getElementById('mobile-menu');
       const toggle = document.getElementById('mobile-menu-toggle');
       if (!menu) return;
-      menu.classList.add('hidden');
-      menu.classList.remove('block');
+      if (!menu.classList.contains('menu-open')) return;
+      menu.classList.remove('menu-open');
+      setTimeout(() => {
+        if (!menu.classList.contains('menu-open')) {
+          menu.classList.add('hidden');
+        }
+      }, 420);
       if (toggle) toggle.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
     }
@@ -1703,21 +1458,14 @@
       navigateTo(pageId);
     }
 
-    // Event-Listener
     document.getElementById('mobile-menu-toggle')?.addEventListener('click', openMobileMenu);
     document.getElementById('mobile-menu-close')?.addEventListener('click', closeMobileMenu);
-    document.getElementById('mobile-menu-backdrop')?.addEventListener('click', closeMobileMenu);
 
-    /* ============================================================
-       HASH-ROUTING
-       ============================================================ */
+    /* ===== HASH-ROUTING ===== */
     function navigateTo(pageId) {
       if (!VALID_PAGES.includes(pageId)) return;
-      if (location.hash === '#' + pageId) {
-        applyRoute();
-      } else {
-        location.hash = pageId;
-      }
+      if (location.hash === '#' + pageId) applyRoute();
+      else location.hash = pageId;
     }
 
     function applyRoute() {
@@ -1727,12 +1475,8 @@
       if (route === 'product' && param) {
         showPage(pageBeforeModal || currentPageId || 'home');
         const found = PRODUCTS.find(x => String(x.id) === String(param));
-        if (found) {
-          openProductModalInternal(found);
-        } else {
-          showToast('Produkt nicht gefunden');
-          location.replace('#' + (currentPageId || 'home'));
-        }
+        if (found) openProductModalInternal(found);
+        else { showToast('Produkt nicht gefunden'); location.replace('#' + (currentPageId || 'home')); }
         return;
       }
 
@@ -1752,8 +1496,6 @@
       const page = document.getElementById('page-' + pageId);
       if (!page) return;
       page.classList.remove('hidden');
-
-      // Animation neu triggern
       page.style.animation = 'none';
       void page.offsetWidth;
       page.style.animation = '';
@@ -1761,7 +1503,6 @@
       const hero = document.getElementById('hero');
       if (hero) hero.classList.toggle('hidden', pageId !== 'home');
 
-      // Mobile Menu sicherheitshalber schließen
       closeMobileMenu();
 
       if (pageId === 'cart') updateCartUI();
@@ -1775,9 +1516,7 @@
 
     window.addEventListener('hashchange', applyRoute);
 
-    /* ============================================================
-       MODAL-HELFER
-       ============================================================ */
+    /* ===== MODAL HELPERS ===== */
     function getFocusableIn(container) {
       return Array.from(container.querySelectorAll(
         'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -1789,9 +1528,7 @@
       modalEl.classList.remove('hidden');
       modalEl.classList.add('flex');
       document.body.style.overflow = 'hidden';
-      const target = focusSelector
-        ? modalEl.querySelector(focusSelector)
-        : getFocusableIn(modalEl)[0];
+      const target = focusSelector ? modalEl.querySelector(focusSelector) : getFocusableIn(modalEl)[0];
       if (target) setTimeout(() => target.focus(), 80);
     }
 
@@ -1799,9 +1536,7 @@
       modalEl.classList.add('hidden');
       modalEl.classList.remove('flex');
       document.body.style.overflow = '';
-      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
-        lastFocusedElement.focus();
-      }
+      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') lastFocusedElement.focus();
       lastFocusedElement = null;
     }
 
@@ -1809,7 +1544,6 @@
       const productModal = document.getElementById('productModal');
       const brandModal = document.getElementById('brandModal');
       const mobileMenu = document.getElementById('mobile-menu');
-
       const productOpen = !productModal.classList.contains('hidden');
       const brandOpen = !brandModal.classList.contains('hidden');
       const mobileOpen = mobileMenu && !mobileMenu.classList.contains('hidden');
@@ -1819,7 +1553,6 @@
         if (productOpen) { closeProductModal(); return; }
         if (brandOpen) { closeBrandModal(); return; }
       }
-
       if (e.key === 'Tab') {
         if (productOpen) trapFocus(e, productModal);
         else if (brandOpen) trapFocus(e, brandModal);
@@ -1831,13 +1564,8 @@
       if (focusable.length === 0) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
 
     document.getElementById('productModal').addEventListener('click', (e) => {
@@ -1847,23 +1575,17 @@
       if (e.target.id === 'brandModal') closeBrandModal();
     });
 
-    /* ============================================================
-       PRODUKT-MODAL
-       ============================================================ */
+    /* ===== PRODUCT MODAL ===== */
     function openProductModal(productId) {
       pageBeforeModal = currentPageId || 'home';
-      if (location.hash === '#product/' + productId) {
-        applyRoute();
-      } else {
-        location.hash = 'product/' + productId;
-      }
+      if (location.hash === '#product/' + productId) applyRoute();
+      else location.hash = 'product/' + productId;
     }
 
     function openProductModalInternal(p) {
       const stores = getStoresForProduct(p);
 
-      document.getElementById('modal-product-img').src =
-        getSanityImageUrl(p.img, { width: 1000, height: 1000, fit: 'max' });
+      document.getElementById('modal-product-img').src = getSanityImageUrl(p.img, { width: 1000, height: 1000, fit: 'max' });
       document.getElementById('modal-product-brand').innerText = p.brand;
       document.getElementById('modal-product-name').innerText = p.name;
       document.getElementById('modal-product-price').innerText = formatPrice(p.price);
@@ -1897,11 +1619,8 @@
 
       const wishBtn = document.getElementById('modal-product-wishlist');
       const icon = wishBtn.querySelector('i');
-      if (wishlist.includes(p.name)) {
-        icon.className = 'fa-solid fa-heart text-rose-600';
-      } else {
-        icon.className = 'fa-regular fa-heart';
-      }
+      if (wishlist.includes(p.name)) icon.className = 'fa-solid fa-heart text-rose-600';
+      else icon.className = 'fa-regular fa-heart';
       wishBtn.onclick = function(e) {
         e.stopPropagation();
         if (wishlist.includes(p.name)) {
@@ -1928,47 +1647,32 @@
 
     function hideProductModalInternal() {
       const modal = document.getElementById('productModal');
-      if (!modal.classList.contains('hidden')) {
-        closeModal(modal);
-      }
+      if (!modal.classList.contains('hidden')) closeModal(modal);
     }
 
     function closeProductModal() {
       const target = pageBeforeModal || 'home';
-      if (location.hash === '#' + target) {
-        applyRoute();
-      } else {
-        location.hash = target;
-      }
+      if (location.hash === '#' + target) applyRoute();
+      else location.hash = target;
     }
 
-    /* ============================================================
-       MARKEN-MODAL
-       ============================================================ */
+    /* ===== BRAND MODAL ===== */
     function openBrandModal(brandName) {
       const data = BRANDS[brandName] || BRAND_DATA[brandName];
-      if (!data) {
-        showToast('Informationen zu dieser Marke folgen in Kürze.');
-        return;
-      }
+      if (!data) { showToast('Informationen zu dieser Marke folgen in Kürze.'); return; }
       document.getElementById('brand-modal-name').innerText = brandName;
       document.getElementById('brand-modal-story').innerText = data.story || '';
-      document.getElementById('brand-modal-img').src =
-        getSanityImageUrl(data.img, { width: 800, height: 600, fit: 'max' });
+      document.getElementById('brand-modal-img').src = getSanityImageUrl(data.img, { width: 800, height: 600, fit: 'max' });
       document.getElementById('brand-modal-name').dataset.brand = brandName;
       openModal(document.getElementById('brandModal'));
     }
 
     function hideBrandModalInternal() {
       const modal = document.getElementById('brandModal');
-      if (!modal.classList.contains('hidden')) {
-        closeModal(modal);
-      }
+      if (!modal.classList.contains('hidden')) closeModal(modal);
     }
 
-    function closeBrandModal() {
-      closeModal(document.getElementById('brandModal'));
-    }
+    function closeBrandModal() { closeModal(document.getElementById('brandModal')); }
 
     function filterByBrand() {
       const brand = document.getElementById('brand-modal-name').dataset.brand;
@@ -1983,17 +1687,13 @@
       }
     }
 
-    /* ============================================================
-       PRODUKTE RENDERN
-       ============================================================ */
+    /* ===== PRODUCTS ===== */
     function renderProducts(query = '', maxPrice = 1000) {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
 
       let items = PRODUCTS;
-      if (query) {
-        items = items.filter(p => (p.brand + ' ' + p.name + ' ' + (p.search || '')).toLowerCase().includes(query));
-      }
+      if (query) items = items.filter(p => (p.brand + ' ' + p.name + ' ' + (p.search || '')).toLowerCase().includes(query));
       items = items.filter(p => parsePrice(p.price) <= maxPrice);
 
       if (items.length === 0) {
@@ -2094,9 +1794,7 @@
       filterProducts();
     }
 
-    /* ============================================================
-       LÄNDERFILTER
-       ============================================================ */
+    /* ===== COUNTRY FILTERS ===== */
     function renderCountryFilters() {
       const bar = document.getElementById('country-filter-bar');
       bar.innerHTML = '';
@@ -2131,32 +1829,21 @@
       });
     }
 
-    /* ============================================================
-       WARENKORB
-       ============================================================ */
+    /* ===== CART ===== */
     function addToCart(name, price, img, storeName) {
       const existing = cart.find(item => item.name === name);
-      if (existing) {
-        existing.quantity = (existing.quantity || 1) + 1;
-      } else {
-        cart.push({ name, price, img, storeName, quantity: 1 });
-      }
+      if (existing) existing.quantity = (existing.quantity || 1) + 1;
+      else cart.push({ name, price, img, storeName, quantity: 1 });
       persistCart();
       showToast(name + ' hinzugefügt');
     }
 
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      persistCart();
-    }
+    function removeFromCart(index) { cart.splice(index, 1); persistCart(); }
 
     function changeQuantity(index, delta) {
       if (cart[index]) {
         const n = (cart[index].quantity || 1) + delta;
-        if (n < 1) {
-          removeFromCart(index);
-          return;
-        }
+        if (n < 1) { removeFromCart(index); return; }
         cart[index].quantity = n;
         persistCart();
       }
@@ -2216,9 +1903,7 @@
       summary.classList.remove('hidden');
     }
 
-    /* ============================================================
-       WUNSCHLISTE
-       ============================================================ */
+    /* ===== WISHLIST ===== */
     function updateWishlistUI() {
       const badge = document.getElementById('wishlist-count');
       const container = document.getElementById('wishlist-container');
@@ -2244,16 +1929,11 @@
     }
 
     function shareWishlist() {
-      if (wishlist.length === 0) {
-        showToast('Wunschliste ist leer');
-        return;
-      }
+      if (wishlist.length === 0) { showToast('Wunschliste ist leer'); return; }
       window.open(`https://wa.me/?text=${encodeURIComponent('Meine LUXEVUE Auswahl: ' + wishlist.join(', '))}`, '_blank');
     }
 
-    /* ============================================================
-       CHECKOUT
-       ============================================================ */
+    /* ===== CHECKOUT ===== */
     function renderCheckout() {
       const container = document.getElementById('checkout-items');
       const totalEl = document.getElementById('checkout-total');
@@ -2274,31 +1954,20 @@
 
     function placeOrder() {
       const agb = document.getElementById('checkout-agb');
-      if (!agb.checked) {
-        showToast('Bitte akzeptieren Sie die AGB.');
-        return;
-      }
+      if (!agb.checked) { showToast('Bitte akzeptieren Sie die AGB.'); return; }
       const firstname = document.getElementById('checkout-firstname').value.trim();
       const lastname = document.getElementById('checkout-lastname').value.trim();
       const email = document.getElementById('checkout-email').value.trim();
       const address = document.getElementById('checkout-address').value.trim();
-      if (!firstname || !lastname || !email || !address) {
-        showToast('Bitte füllen Sie alle Felder aus.');
-        return;
-      }
-      if (!document.querySelector('input[name="payment"]:checked')) {
-        showToast('Bitte wählen Sie eine Zahlungsart.');
-        return;
-      }
+      if (!firstname || !lastname || !email || !address) { showToast('Bitte füllen Sie alle Felder aus.'); return; }
+      if (!document.querySelector('input[name="payment"]:checked')) { showToast('Bitte wählen Sie eine Zahlungsart.'); return; }
       showToast('Vielen Dank für Ihre Bestellung! Sie erhalten eine Bestätigung per E-Mail.');
       cart = [];
       persistCart();
       navigateTo('home');
     }
 
-    /* ============================================================
-       STORE LOCATOR
-       ============================================================ */
+    /* ===== STORE LOCATOR ===== */
     function renderStoreLocatorGrid(filteredStores) {
       const container = document.getElementById('locator-grid');
       const stores = filteredStores || STORE_DATABASE;
@@ -2351,25 +2020,25 @@
       renderStoreLocatorGrid();
     }
 
+    /* ===== STORE DIRECTORY (refined) ===== */
     function renderStoreDirectory() {
       const list = document.getElementById('store-directory-list');
+      if (!list) return;
       list.innerHTML = STORE_DATABASE.map(s => `
-        <div class="pb-3 border-b border-[var(--border-editorial)] flex justify-between items-center">
-          <div>
-            <strong class="font-medium">${s.name}</strong>
-            <span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span>
+        <a href="${s.url}" target="_blank" rel="noopener"
+           class="group flex justify-between items-center py-4 border-b border-[var(--border-editorial)] last:border-0 hover:pl-1 transition-all duration-300">
+          <div class="pr-4">
+            <strong class="font-medium text-sm text-stone-900 block group-hover:text-black transition-colors">${s.name}</strong>
+            <span class="block text-[10px] text-[var(--text-muted)] mt-1 tracking-wider">
+              ${s.type} <span class="opacity-40 mx-1">·</span> ${s.city}
+            </span>
           </div>
-          <a href="${s.url}" target="_blank" rel="noopener" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
-            <span>Website</span>
-            <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
-          </a>
-        </div>
+          <i class="fa-solid fa-arrow-right text-[10px] text-[var(--text-muted)] flex-shrink-0 transition-all duration-300 group-hover:translate-x-1 group-hover:text-black"></i>
+        </a>
       `).join('');
     }
 
-    /* ============================================================
-       KONFIGURATOR
-       ============================================================ */
+    /* ===== CONFIGURATOR ===== */
     function setConfigFrame(colorClass) {
       document.getElementById('config-frame-preview').className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
     }
@@ -2379,9 +2048,7 @@
       document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
     }
 
-    /* ============================================================
-       HERO SLIDER
-       ============================================================ */
+    /* ===== HERO SLIDER ===== */
     function setupHeroSlider() {
       const container = document.getElementById('hero-slides');
       const label = document.getElementById('hero-slide-label');
@@ -2417,101 +2084,63 @@
 
       const hero = document.getElementById('hero');
 
-      hero.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, { passive: true });
-
+      hero.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
       hero.addEventListener('touchend', e => {
         touchEndX = e.changedTouches[0].screenX;
         const d = touchStartX - touchEndX;
-        if (Math.abs(d) > 50) {
-          if (d > 0) nextSlide();
-          else prevSlide();
-        }
+        if (Math.abs(d) > 50) { if (d > 0) nextSlide(); else prevSlide(); }
       }, { passive: true });
 
       let mouseDown = false;
       let mouseStartX = 0;
-
-      hero.addEventListener('mousedown', e => {
-        mouseDown = true;
-        mouseStartX = e.screenX;
-      });
-
+      hero.addEventListener('mousedown', e => { mouseDown = true; mouseStartX = e.screenX; });
       hero.addEventListener('mouseup', e => {
         if (mouseDown) {
           const d = mouseStartX - e.screenX;
-          if (Math.abs(d) > 50) {
-            if (d > 0) nextSlide();
-            else prevSlide();
-          }
+          if (Math.abs(d) > 50) { if (d > 0) nextSlide(); else prevSlide(); }
           mouseDown = false;
         }
       });
-
-      hero.addEventListener('mouseleave', () => {
-        mouseDown = false;
-      });
+      hero.addEventListener('mouseleave', () => { mouseDown = false; });
 
       function nextSlide() {
         heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
         updateSlide(heroSlideIndex);
       }
-
       function prevSlide() {
         heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
         updateSlide(heroSlideIndex);
       }
 
       let autoInterval = setInterval(nextSlide, 6000);
-
-      hero.addEventListener('touchstart', () => {
-        clearInterval(autoInterval);
-        autoInterval = setInterval(nextSlide, 6000);
-      }, { passive: true });
-
-      hero.addEventListener('mousedown', () => {
-        clearInterval(autoInterval);
-        autoInterval = setInterval(nextSlide, 6000);
-      });
+      hero.addEventListener('touchstart', () => { clearInterval(autoInterval); autoInterval = setInterval(nextSlide, 6000); }, { passive: true });
+      hero.addEventListener('mousedown', () => { clearInterval(autoInterval); autoInterval = setInterval(nextSlide, 6000); });
 
       if (label) label.onclick = () => openBrandModal(currentBrand);
       if (desc) desc.onclick = () => openBrandModal(currentBrand);
     }
 
-    /* ============================================================
-       NEWSLETTER & SCROLL-ANIMATIONEN
-       ============================================================ */
+    /* ===== NEWSLETTER & SCROLL ===== */
     function subscribeNewsletter() {
       const email = document.getElementById('newsletter-email').value;
-      if (!email.includes('@')) {
-        showToast('Gültige E-Mail erforderlich');
-        return;
-      }
+      if (!email.includes('@')) { showToast('Gültige E-Mail erforderlich'); return; }
       showToast('Vielen Dank für Ihre Anmeldung.');
       document.getElementById('newsletter-email').value = '';
     }
 
     function setupScrollAnimations() {
       const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) e.target.classList.add('visible');
-        });
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
       }, { threshold: 0.1 });
       document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     }
 
-    /* ============================================================
-       ZULETZT ANGESEHENE
-       ============================================================ */
+    /* ===== RECENTLY VIEWED ===== */
     function renderRecentlyViewed() {
       const section = document.getElementById('recently-viewed-section');
       const container = document.getElementById('recently-viewed-container');
       if (!section || !container) return;
-      if (recentlyViewed.length === 0) {
-        section.classList.add('hidden');
-        return;
-      }
+      if (recentlyViewed.length === 0) { section.classList.add('hidden'); return; }
       section.classList.remove('hidden');
       container.innerHTML = '';
       recentlyViewed.forEach(pid => {
@@ -2531,20 +2160,14 @@
       });
     }
 
-    /* ============================================================
-       INITIALISIERUNG
-       ============================================================ */
+    /* ===== INIT ===== */
     window.addEventListener('DOMContentLoaded', async function() {
       document.body.classList.add('intro-active');
       document.body.style.overflow = 'hidden';
 
-      // 1. Skeletons direkt anzeigen
       renderSkeletons(6);
-
-      // 2. Live-Daten laden (oder Fallback)
       await loadLiveData();
 
-      // 3. Statische UI-Elemente rendern
       renderCountryFilters();
       setupHeroSlider();
       renderStoreLocatorGrid();
@@ -2553,13 +2176,9 @@
       updateWishlistUI();
       setupScrollAnimations();
 
-      // 4. Initiale Route anwenden
-      if (!location.hash) {
-        history.replaceState(null, '', '#home');
-      }
+      if (!location.hash) history.replaceState(null, '', '#home');
       applyRoute();
 
-      // 5. Produkte rendern
       filterProducts();
       renderRecentlyViewed();
     });
