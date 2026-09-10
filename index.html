@@ -41,23 +41,14 @@
       font-family: var(--font-serif);
     }
 
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    .img-zoom-container {
-      overflow: hidden;
-    }
+    .img-zoom-container { overflow: hidden; }
     .img-zoom-container img {
       transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
     }
-    .product-card:hover .img-zoom-container img {
-      transform: scale(1.04);
-    }
+    .product-card:hover .img-zoom-container img { transform: scale(1.04); }
 
     .filter-btn {
       transition: all 0.25s ease;
@@ -74,31 +65,19 @@
       transform: translateY(16px);
       transition: opacity 0.8s ease, transform 0.8s ease;
     }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-    #toast {
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
+    #toast { transition: opacity 0.3s ease, transform 0.3s ease; }
 
     .nav-btn {
       cursor: pointer;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
     }
-    .nav-btn:active {
-      opacity: 0.6;
-    }
+    .nav-btn:active { opacity: 0.6; }
 
-    .hero-label-click {
-      cursor: pointer;
-      transition: opacity 0.3s ease;
-    }
-    .hero-label-click:hover {
-      opacity: 0.7;
-    }
+    .hero-label-click { cursor: pointer; transition: opacity 0.3s ease; }
+    .hero-label-click:hover { opacity: 0.7; }
 
     .payment-option {
       display: flex;
@@ -110,15 +89,10 @@
       transition: background-color 0.2s ease;
       cursor: pointer;
     }
-    .payment-option:hover {
-      background-color: #e8e4dc;
-    }
+    .payment-option:hover { background-color: #e8e4dc; }
     .payment-option input[type="radio"] {
       accent-color: var(--text-main);
-      width: 16px;
-      height: 16px;
-      margin: 0;
-      flex-shrink: 0;
+      width: 16px; height: 16px; margin: 0; flex-shrink: 0;
     }
     .payment-option .payment-icon {
       font-size: 1.75rem;
@@ -145,22 +119,14 @@
       border: 1px solid var(--border-editorial);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     }
-    @media (min-width: 640px) {
-      .modal-card { width: 75%; }
-    }
-    @media (min-width: 1024px) {
-      .modal-card { width: 50%; }
-    }
+    @media (min-width: 640px) { .modal-card { width: 75%; } }
+    @media (min-width: 1024px) { .modal-card { width: 50%; } }
     .modal-card .overflow-y-auto {
       scrollbar-width: thin;
       scrollbar-color: var(--border-editorial) transparent;
     }
-    .modal-card .overflow-y-auto::-webkit-scrollbar {
-      width: 4px;
-    }
-    .modal-card .overflow-y-auto::-webkit-scrollbar-thumb {
-      background-color: var(--border-editorial);
-    }
+    .modal-card .overflow-y-auto::-webkit-scrollbar { width: 4px; }
+    .modal-card .overflow-y-auto::-webkit-scrollbar-thumb { background-color: var(--border-editorial); }
 
     /* ===== INTRO OVERLAY ===== */
     #intro-overlay {
@@ -180,9 +146,7 @@
       user-select: none;
     }
     #intro-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+      opacity: 0; visibility: hidden; pointer-events: none;
     }
 
     .intro-title {
@@ -207,10 +171,6 @@
       opacity: 0;
       filter: blur(14px) drop-shadow(0 8px 50px rgba(201, 168, 124, 0.5));
       letter-spacing: 0.5em;
-      background: linear-gradient(135deg, #f0ebe3 0%, #c9a87c 50%, #a68b66 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
     .intro-sub {
@@ -219,17 +179,13 @@
       text-transform: uppercase;
       color: #b5a58a;
       margin-top: 1rem;
-      transition: opacity 1.2s ease 0.3s,
-                  transform 1.2s ease 0.3s,
-                  filter 1.2s ease 0.3s;
+      transition: opacity 1.2s ease 0.3s, transform 1.2s ease 0.3s, filter 1.2s ease 0.3s;
       opacity: 1;
       transform: translateY(0);
       filter: blur(0px);
     }
     .intro-sub.dissolve {
-      opacity: 0;
-      transform: translateY(16px);
-      filter: blur(6px);
+      opacity: 0; transform: translateY(16px); filter: blur(6px);
     }
 
     #intro-overlay.dissolve-bg {
@@ -249,24 +205,13 @@
       opacity: 0.6;
       transition: opacity 1s ease 0.6s;
     }
-    .intro-hint.dissolve {
-      opacity: 0;
-    }
+    .intro-hint.dissolve { opacity: 0; }
     @keyframes pulse-hint {
-      0%,
-      100% {
-        opacity: 0.3;
-        transform: translateX(-50%) scale(1);
-      }
-      50% {
-        opacity: 0.9;
-        transform: translateX(-50%) scale(1.02);
-      }
+      0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+      50% { opacity: 0.9; transform: translateX(-50%) scale(1.02); }
     }
 
-    body.intro-active {
-      overflow: hidden;
-    }
+    body.intro-active { overflow: hidden; }
 
     .hero-description {
       font-size: 0.9rem;
@@ -276,65 +221,42 @@
       transition: opacity 0.8s ease;
       cursor: pointer;
     }
-    .hero-description:hover {
-      opacity: 0.7;
-    }
+    .hero-description:hover { opacity: 0.7; }
     @media (min-width: 768px) {
-      .hero-description {
-        font-size: 1.1rem;
-        max-width: 60%;
-      }
+      .hero-description { font-size: 1.1rem; max-width: 60%; }
     }
 
-    .recent-card {
-      min-width: 200px;
-    }
+    .recent-card { min-width: 200px; }
 
-    /* Rechtsseiten: schöne Textformatierung */
     .legal-content h2 {
-      font-size: 1.5rem;
-      font-weight: 300;
-      margin-top: 2.5rem;
-      margin-bottom: 1rem;
+      font-size: 1.5rem; font-weight: 300;
+      margin-top: 2.5rem; margin-bottom: 1rem;
       padding-bottom: 0.5rem;
       border-bottom: 1px solid var(--border-editorial);
     }
     .legal-content h3 {
-      font-size: 1.1rem;
-      font-weight: 500;
+      font-size: 1.1rem; font-weight: 500;
       font-family: var(--font-sans);
-      margin-top: 1.75rem;
-      margin-bottom: 0.5rem;
+      margin-top: 1.75rem; margin-bottom: 0.5rem;
     }
     .legal-content p {
-      font-size: 0.85rem;
-      line-height: 1.7;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
+      font-size: 0.85rem; line-height: 1.7;
+      color: var(--text-muted); margin-bottom: 1rem;
     }
     .legal-content ul {
-      list-style: disc;
-      padding-left: 1.5rem;
+      list-style: disc; padding-left: 1.5rem;
       margin-bottom: 1rem;
-      font-size: 0.85rem;
-      line-height: 1.7;
+      font-size: 0.85rem; line-height: 1.7;
       color: var(--text-muted);
     }
-    .legal-content li {
-      margin-bottom: 0.25rem;
-    }
-    .legal-content strong {
-      color: var(--text-main);
-      font-weight: 600;
-    }
+    .legal-content li { margin-bottom: 0.25rem; }
+    .legal-content strong { color: var(--text-main); font-weight: 600; }
     .legal-content a {
       color: var(--text-main);
       text-decoration: underline;
       text-decoration-color: var(--border-editorial);
     }
-    .legal-content a:hover {
-      text-decoration-color: var(--text-main);
-    }
+    .legal-content a:hover { text-decoration-color: var(--text-main); }
   </style>
 </head>
 <body>
@@ -346,8 +268,9 @@
     <div class="intro-hint" id="intro-hint">⟡ Berühren zum Entdecken ⟡</div>
   </div>
 
-  <!-- Toast -->
-  <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 bg-[#1a1918] text-white text-xs tracking-wider uppercase px-5 py-3 rounded-none shadow-2xl z-50 pointer-events-none opacity-0 transition-all duration-300">
+  <!-- Toast (ARIA live region) -->
+  <div id="toast" role="status" aria-live="polite" aria-atomic="true"
+       class="fixed top-6 left-1/2 -translate-x-1/2 bg-[#1a1918] text-white text-xs tracking-wider uppercase px-5 py-3 rounded-none shadow-2xl z-50 pointer-events-none opacity-0 transition-all duration-300">
     <span id="toast-msg">Hinweis</span>
   </div>
 
@@ -400,10 +323,11 @@
   </section>
 
   <!-- ===== MARKEN-PORTRAIT MODAL ===== -->
-  <div id="brandModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
+  <div id="brandModal" role="dialog" aria-modal="true" aria-labelledby="brand-modal-name"
+       class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
     <div class="modal-card rounded-none max-h-[90vh] overflow-y-auto">
       <div class="sticky top-0 z-10 flex justify-end p-4 bg-[var(--bg-editorial)] border-b border-[var(--border-editorial)]">
-        <button onclick="closeBrandModal()" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors">&times;</button>
+        <button onclick="closeBrandModal()" aria-label="Schließen" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors">&times;</button>
       </div>
       <div class="p-6 md:p-8">
         <div class="grid md:grid-cols-2 gap-8">
@@ -434,7 +358,7 @@
       <div class="max-w-3xl mx-auto">
         <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-4">Das Auftakt-Manifest</p>
         <h2 class="text-3xl md:text-4xl font-serif font-light italic mb-6 leading-tight text-stone-900">
-          „Zwischen Präzision, Handwerk und der Leidenschaft für das Besondere.“
+          „Zwischen Präzision, Handwerk und der Leidenschaft für das Besondere."
         </h2>
         <div class="w-12 h-[1px] bg-stone-400 mx-auto mb-6"></div>
         <p class="text-base font-light text-stone-800 leading-relaxed mb-6">
@@ -822,9 +746,7 @@
       </p>
 
       <h2>2. Verantwortliche Stelle</h2>
-      <p>
-        Verantwortlich für die Datenverarbeitung auf dieser Website ist:
-      </p>
+      <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
       <p>
         <strong>LUXEVUE GmbH</strong><br />
         Musterstraße 12<br />
@@ -856,9 +778,7 @@
       </p>
 
       <h2>5. Cookies & lokale Speicherung</h2>
-      <p>
-        Unsere Website verwendet sogenannte "Cookies" sowie die lokale Speicherung (LocalStorage) Ihres Browsers, um:
-      </p>
+      <p>Unsere Website verwendet sogenannte "Cookies" sowie die lokale Speicherung (LocalStorage) Ihres Browsers, um:</p>
       <ul>
         <li>Ihren Warenkorb zwischen Sitzungen zu speichern</li>
         <li>Ihre Wunschliste zu sichern</li>
@@ -914,9 +834,7 @@
       </p>
 
       <h2>§ 2 Vertragspartner</h2>
-      <p>
-        Der Kaufvertrag kommt zustande mit:
-      </p>
+      <p>Der Kaufvertrag kommt zustande mit:</p>
       <p>
         <strong>LUXEVUE GmbH</strong><br />
         Musterstraße 12<br />
@@ -938,9 +856,7 @@
       </p>
 
       <h2>§ 5 Zahlungsbedingungen</h2>
-      <p>
-        Der Nutzer kann aus folgenden Zahlungsarten wählen:
-      </p>
+      <p>Der Nutzer kann aus folgenden Zahlungsarten wählen:</p>
       <ul>
         <li>Kreditkarte</li>
         <li>PayPal</li>
@@ -997,10 +913,11 @@
   </section>
 
   <!-- ===== PRODUKT-MODAL ===== -->
-  <div id="productModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
+  <div id="productModal" role="dialog" aria-modal="true" aria-labelledby="modal-product-name"
+       class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
     <div class="modal-card rounded-none max-h-[90vh] overflow-y-auto">
       <div class="sticky top-0 z-10 flex justify-end p-4 bg-[var(--bg-editorial)] border-b border-[var(--border-editorial)]">
-        <button onclick="closeProductModal()" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors">&times;</button>
+        <button onclick="closeProductModal()" aria-label="Schließen" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors">&times;</button>
       </div>
       <div class="p-6 md:p-8">
         <div class="grid md:grid-cols-2 gap-8">
@@ -1113,6 +1030,32 @@
     }`;
 
     /* ============================================================
+       PREIS-UTILITIES  (robust gegen "380 €", "1.200 €", 380, "380,00 €")
+       ============================================================ */
+    function parsePrice(value) {
+      if (typeof value === 'number' && isFinite(value)) return Math.round(value);
+      if (value === null || value === undefined) return 0;
+      let s = String(value).replace(/[^\d.,]/g, '');
+      if (!s) return 0;
+      const lastComma = s.lastIndexOf(',');
+      const lastDot = s.lastIndexOf('.');
+      if (lastComma > lastDot) {
+        // Deutsches Format: Punkt = Tausender, Komma = Dezimal
+        s = s.replace(/\./g, '').replace(',', '.');
+      } else if (lastDot > lastComma) {
+        // US-Format: Komma = Tausender, Punkt = Dezimal
+        s = s.replace(/,/g, '');
+      }
+      const n = parseFloat(s);
+      return isNaN(n) ? 0 : Math.round(n);
+    }
+
+    function formatPrice(value) {
+      const n = parsePrice(value);
+      return n.toLocaleString('de-DE') + ' €';
+    }
+
+    /* ============================================================
        BILDER-PLATZHALTER (textfrei)
        ============================================================ */
     const IMAGE_PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
@@ -1155,7 +1098,7 @@
     };
 
     /* ============================================================
-       STORES — mit korrigierten URLs und Plattform-Vielfalt
+       STORES
        ============================================================ */
     const FALLBACK_STORES = [
       { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
@@ -1169,7 +1112,7 @@
     ];
 
     /* ============================================================
-       PRODUKTE — mit storeIds-Array (mehrere Bezugsquellen)
+       PRODUKTE
        ============================================================ */
     const FALLBACK_PRODUCTS = [
       { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeIds: ['brillenlab', 'optikerbode'], img: IMAGE_PLACEHOLDER, desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium optiker bode' },
@@ -1324,6 +1267,8 @@
       "Großbritannien": 'bg-purple-100',
     };
 
+    const VALID_PAGES = ['home', 'locator', 'configurator', 'wishlist', 'cart', 'checkout', 'account', 'impressum', 'datenschutz', 'agb'];
+
     let wishlist = JSON.parse(localStorage.getItem('luxevue_wishlist') || '[]');
     let cart = JSON.parse(localStorage.getItem('luxevue_cart') || '[]');
     let recentlyViewed = JSON.parse(localStorage.getItem('luxevue_recent') || '[]');
@@ -1333,6 +1278,11 @@
     let touchEndX = 0;
     let introDone = false;
     let searchTimeout;
+
+    // ===== ROUTING STATE =====
+    let currentPageId = 'home';      // die zuletzt aktive Seite (hinter evtl. Modal)
+    let pageBeforeModal = 'home';    // wohin closeProductModal zurückführt
+    let lastFocusedElement = null;   // Fokus-Restore für Modals
 
     /* ============================================================
        PERSISTENZ
@@ -1407,40 +1357,156 @@
     }
 
     /* ============================================================
-       NAVIGATION — Erst rendern, dann ganz nach oben scrollen
+       HASH-ROUTING
        ============================================================ */
     function navigateTo(pageId) {
+      if (!VALID_PAGES.includes(pageId)) return;
+      if (location.hash === '#' + pageId) {
+        applyRoute();
+      } else {
+        location.hash = pageId; // löst hashchange → applyRoute aus
+      }
+    }
+
+    function applyRoute() {
+      const hash = location.hash.slice(1) || 'home';
+      const [route, param] = hash.split('/');
+
+      // Deep-Link auf Produkt: #product/5
+      if (route === 'product' && param) {
+        // Seite hinter dem Modal beibehalten
+        showPage(pageBeforeModal || currentPageId || 'home');
+        const found = PRODUCTS.find(x => String(x.id) === String(param));
+        if (found) {
+          openProductModalInternal(found);
+        } else {
+          // Produkt (noch) nicht gefunden → auf Home umleiten
+          showToast('Produkt nicht gefunden');
+          location.replace('#' + (currentPageId || 'home'));
+        }
+        return;
+      }
+
+      // Alle Modals schließen, wenn keine Produkt-Route aktiv ist
+      hideProductModalInternal();
+      hideBrandModalInternal();
+
+      if (VALID_PAGES.includes(route)) {
+        currentPageId = route;
+        showPage(route);
+      } else {
+        location.replace('#home');
+      }
+    }
+
+    function showPage(pageId) {
       document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
       const page = document.getElementById('page-' + pageId);
       if (!page) return;
-
       page.classList.remove('hidden');
 
-      // Hero nur auf der Startseite anzeigen
       const hero = document.getElementById('hero');
       if (hero) hero.classList.toggle('hidden', pageId !== 'home');
 
-      // Inhalte rendern, BEVOR gescrollt wird
+      // Seitenspezifisches Re-Rendering
       if (pageId === 'cart') updateCartUI();
       if (pageId === 'checkout') renderCheckout();
       if (pageId === 'wishlist') updateWishlistUI();
 
-      // Erst nach dem Rendern ganz nach oben – ohne Smooth, damit nichts nachspringt
       requestAnimationFrame(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       });
     }
 
+    window.addEventListener('hashchange', applyRoute);
+
+    /* ============================================================
+       MODAL-HELFER (Fokus, ESC, ARIA, Backdrop)
+       ============================================================ */
+    function getFocusableIn(container) {
+      return Array.from(container.querySelectorAll(
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )).filter(el => el.offsetParent !== null);
+    }
+
+    function openModal(modalEl, focusSelector) {
+      lastFocusedElement = document.activeElement;
+      modalEl.classList.remove('hidden');
+      modalEl.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      // Fokus in das Modal setzen
+      const target = focusSelector
+        ? modalEl.querySelector(focusSelector)
+        : getFocusableIn(modalEl)[0];
+      if (target) setTimeout(() => target.focus(), 80);
+    }
+
+    function closeModal(modalEl) {
+      modalEl.classList.add('hidden');
+      modalEl.classList.remove('flex');
+      document.body.style.overflow = '';
+      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+        lastFocusedElement.focus();
+      }
+      lastFocusedElement = null;
+    }
+
+    // Globaler Keydown-Handler: ESC schließt Modals, Tab macht Fokus-Trap
+    document.addEventListener('keydown', (e) => {
+      const productModal = document.getElementById('productModal');
+      const brandModal = document.getElementById('brandModal');
+
+      const productOpen = !productModal.classList.contains('hidden');
+      const brandOpen = !brandModal.classList.contains('hidden');
+
+      if (e.key === 'Escape') {
+        if (productOpen) { closeProductModal(); return; }
+        if (brandOpen) { closeBrandModal(); return; }
+      }
+
+      if (e.key === 'Tab') {
+        if (productOpen) trapFocus(e, productModal);
+        else if (brandOpen) trapFocus(e, brandModal);
+      }
+    });
+
+    function trapFocus(e, modalEl) {
+      const focusable = getFocusableIn(modalEl);
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    // Backdrop-Klick schließt Modal (nur wenn direkt auf das Overlay geklickt wird)
+    document.getElementById('productModal').addEventListener('click', (e) => {
+      if (e.target.id === 'productModal') closeProductModal();
+    });
+    document.getElementById('brandModal').addEventListener('click', (e) => {
+      if (e.target.id === 'brandModal') closeBrandModal();
+    });
+
     /* ============================================================
        PRODUKT-MODAL
        ============================================================ */
     function openProductModal(productId) {
-      const p = PRODUCTS.find(x => String(x.id) === String(productId));
-      if (!p) {
-        showToast('Produkt nicht gefunden');
-        return;
+      // Merken, von welcher Seite aus geöffnet wurde
+      pageBeforeModal = currentPageId || 'home';
+      // Hash setzen → applyRoute() öffnet das Modal
+      if (location.hash === '#product/' + productId) {
+        applyRoute();
+      } else {
+        location.hash = 'product/' + productId;
       }
+    }
 
+    function openProductModalInternal(p) {
       const stores = getStoresForProduct(p);
 
       document.getElementById('modal-product-img').src = p.img;
@@ -1504,15 +1570,24 @@
         renderRecentlyViewed();
       }
 
-      document.getElementById('productModal').classList.remove('hidden');
-      document.getElementById('productModal').classList.add('flex');
-      document.body.style.overflow = 'hidden';
+      openModal(document.getElementById('productModal'), '#modal-product-addcart');
+    }
+
+    function hideProductModalInternal() {
+      const modal = document.getElementById('productModal');
+      if (!modal.classList.contains('hidden')) {
+        closeModal(modal);
+      }
     }
 
     function closeProductModal() {
-      document.getElementById('productModal').classList.add('hidden');
-      document.getElementById('productModal').classList.remove('flex');
-      document.body.style.overflow = '';
+      // Zurück zur vorherigen Seite (Hash-Update → applyRoute schließt das Modal)
+      const target = pageBeforeModal || 'home';
+      if (location.hash === '#' + target) {
+        applyRoute();
+      } else {
+        location.hash = target;
+      }
     }
 
     /* ============================================================
@@ -1528,15 +1603,18 @@
       document.getElementById('brand-modal-story').innerText = data.story;
       document.getElementById('brand-modal-img').src = data.img;
       document.getElementById('brand-modal-name').dataset.brand = brandName;
-      document.getElementById('brandModal').classList.remove('hidden');
-      document.getElementById('brandModal').classList.add('flex');
-      document.body.style.overflow = 'hidden';
+      openModal(document.getElementById('brandModal'));
+    }
+
+    function hideBrandModalInternal() {
+      const modal = document.getElementById('brandModal');
+      if (!modal.classList.contains('hidden')) {
+        closeModal(modal);
+      }
     }
 
     function closeBrandModal() {
-      document.getElementById('brandModal').classList.add('hidden');
-      document.getElementById('brandModal').classList.remove('flex');
-      document.body.style.overflow = '';
+      closeModal(document.getElementById('brandModal'));
     }
 
     function filterByBrand() {
@@ -1563,10 +1641,7 @@
       if (query) {
         items = items.filter(p => (p.brand + ' ' + p.name + ' ' + (p.search || '')).toLowerCase().includes(query));
       }
-      items = items.filter(p => {
-        const priceNum = parseInt(String(p.price).replace(/\D/g, '')) || 0;
-        return priceNum <= maxPrice;
-      });
+      items = items.filter(p => parsePrice(p.price) <= maxPrice);
 
       if (items.length === 0) {
         container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-12 text-center">Keine passenden Brillenmodelle gefunden.</p>';
@@ -1624,470 +1699,4 @@
           const name = this.dataset.name;
           const icon = this.querySelector('i');
           if (wishlist.includes(name)) {
-            wishlist = wishlist.filter(x => x !== name);
-            icon.className = 'fa-regular fa-heart';
-            showToast('Entfernt');
-          } else {
-            wishlist.push(name);
-            icon.className = 'fa-solid fa-heart text-rose-600';
-            showToast('Gespeichert');
-          }
-          persistWishlist();
-        });
-      });
-    }
-
-    function filterProducts() {
-      const q = document.getElementById('searchInput').value.toLowerCase();
-      const maxPrice = parseInt(document.getElementById('price-range').value);
-      document.getElementById('price-output').innerText = maxPrice + ' €';
-      renderProducts(q, maxPrice);
-    }
-
-    function debouncedSearch() {
-      clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(filterProducts, 300);
-    }
-
-    /* ============================================================
-       LÄNDERFILTER
-       ============================================================ */
-    function renderCountryFilters() {
-      const bar = document.getElementById('country-filter-bar');
-      bar.innerHTML = '';
-      Object.keys(INDEPENDENT_LABELS).forEach((country, index) => {
-        const btn = document.createElement('button');
-        btn.className = `filter-btn text-[10px] uppercase border border-[var(--border-editorial)] px-4 py-2 hover:border-black transition-colors whitespace-nowrap ${index === 0 ? 'active' : ''}`;
-        btn.textContent = country;
-        btn.onclick = () => {
-          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          renderLabelTags(country);
-        };
-        bar.appendChild(btn);
-      });
-      renderLabelTags(Object.keys(INDEPENDENT_LABELS)[0]);
-    }
-
-    function renderLabelTags(country) {
-      const container = document.getElementById('selected-country-labels');
-      container.innerHTML = '';
-      const bgColorClass = COUNTRY_COLORS[country] || 'bg-[var(--surface-editorial)]';
-      INDEPENDENT_LABELS[country].forEach(label => {
-        const tag = document.createElement('span');
-        tag.className = `text-[10px] ${bgColorClass} border border-[var(--border-editorial)] px-3 py-1.5 tracking-wider text-[var(--text-main)] font-medium cursor-pointer hover:border-black transition-colors`;
-        tag.textContent = label;
-        tag.onclick = () => {
-          const brandMatch = label.match(/^([^(]+)/);
-          document.getElementById('searchInput').value = brandMatch ? brandMatch[1].trim() : label;
-          filterProducts();
-        };
-        container.appendChild(tag);
-      });
-    }
-
-    /* ============================================================
-       WARENKORB
-       ============================================================ */
-    function addToCart(name, price, img, storeName) {
-      const existing = cart.find(item => item.name === name);
-      if (existing) {
-        existing.quantity = (existing.quantity || 1) + 1;
-      } else {
-        cart.push({ name, price, img, storeName, quantity: 1 });
-      }
-      persistCart();
-      showToast(name + ' hinzugefügt');
-    }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      persistCart();
-    }
-
-    function changeQuantity(index, delta) {
-      if (cart[index]) {
-        const n = (cart[index].quantity || 1) + delta;
-        if (n < 1) {
-          removeFromCart(index);
-          return;
-        }
-        cart[index].quantity = n;
-        persistCart();
-      }
-    }
-
-    function updateCartUI() {
-      const badge = document.getElementById('cart-count');
-      const container = document.getElementById('cart-container');
-      const summary = document.getElementById('cart-summary');
-      const totalEl = document.getElementById('cart-total');
-
-      const totalItems = cart.reduce((s, i) => s + (i.quantity || 1), 0);
-      badge.innerText = totalItems;
-      badge.classList.toggle('hidden', totalItems === 0);
-
-      if (cart.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihr Warenkorb ist derzeit leer.</p>';
-        summary.classList.add('hidden');
-        totalEl.innerText = '0 €';
-        return;
-      }
-
-      let total = 0;
-      container.innerHTML = cart.map((item, index) => {
-        const p = parseInt(String(item.price).replace(/\D/g, '')) || 0;
-        const sub = p * (item.quantity || 1);
-        total += sub;
-        return `
-          <div class="flex justify-between items-center p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]">
-            <div class="flex items-center space-x-4">
-              <img src="${item.img}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]" alt="${item.name}">
-              <div>
-                <p class="text-xs font-medium">${item.name}</p>
-                <p class="text-[10px] text-[var(--text-muted)]">${item.price} — ${item.storeName || 'Optiker'}</p>
-                <div class="flex items-center gap-2 mt-1">
-                  <button onclick="changeQuantity(${index}, -1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">-</button>
-                  <span class="text-xs">${item.quantity || 1}</span>
-                  <button onclick="changeQuantity(${index}, 1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">+</button>
-                </div>
-              </div>
-            </div>
-            <div class="flex items-center gap-4">
-              <span class="text-xs font-medium">${sub} €</span>
-              <button onclick="removeFromCart(${index})" class="text-lg text-[var(--text-muted)] hover:text-black">&times;</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      totalEl.innerText = total + ' €';
-      summary.classList.remove('hidden');
-    }
-
-    /* ============================================================
-       WUNSCHLISTE
-       ============================================================ */
-    function updateWishlistUI() {
-      const badge = document.getElementById('wishlist-count');
-      const container = document.getElementById('wishlist-container');
-      badge.innerText = wishlist.length;
-      badge.classList.toggle('hidden', wishlist.length === 0);
-
-      if (wishlist.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihre Wunschliste ist leer.</p>';
-      } else {
-        container.innerHTML = wishlist.map(item => `
-          <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex justify-between items-center">
-            <span class="text-xs font-medium">${item}</span>
-            <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">Gespeichert</span>
-          </div>
-        `).join('');
-      }
-    }
-
-    function shareWishlist() {
-      if (wishlist.length === 0) {
-        showToast('Wunschliste ist leer');
-        return;
-      }
-      window.open(`https://wa.me/?text=${encodeURIComponent('Meine LUXEVUE Auswahl: ' + wishlist.join(', '))}`, '_blank');
-    }
-
-    /* ============================================================
-       CHECKOUT
-       ============================================================ */
-    function renderCheckout() {
-      const container = document.getElementById('checkout-items');
-      const totalEl = document.getElementById('checkout-total');
-      let total = 0;
-      if (cart.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)]">Ihr Warenkorb ist leer.</p>';
-        totalEl.innerText = '0 €';
-        return;
-      }
-      container.innerHTML = cart.map(item => {
-        const p = parseInt(String(item.price).replace(/\D/g, '')) || 0;
-        const sub = p * (item.quantity || 1);
-        total += sub;
-        return `<div class="flex justify-between text-sm"><span>${item.name} (${item.quantity || 1}x)</span><span>${sub} €</span></div>`;
-      }).join('');
-      totalEl.innerText = total + ' €';
-    }
-
-    function placeOrder() {
-      const agb = document.getElementById('checkout-agb');
-      if (!agb.checked) {
-        showToast('Bitte akzeptieren Sie die AGB.');
-        return;
-      }
-      const firstname = document.getElementById('checkout-firstname').value.trim();
-      const lastname = document.getElementById('checkout-lastname').value.trim();
-      const email = document.getElementById('checkout-email').value.trim();
-      const address = document.getElementById('checkout-address').value.trim();
-      if (!firstname || !lastname || !email || !address) {
-        showToast('Bitte füllen Sie alle Felder aus.');
-        return;
-      }
-      if (!document.querySelector('input[name="payment"]:checked')) {
-        showToast('Bitte wählen Sie eine Zahlungsart.');
-        return;
-      }
-      showToast('Vielen Dank für Ihre Bestellung! Sie erhalten eine Bestätigung per E-Mail.');
-      cart = [];
-      persistCart();
-      navigateTo('home');
-    }
-
-    /* ============================================================
-       STORE LOCATOR
-       ============================================================ */
-    function renderStoreLocatorGrid(filteredStores) {
-      const container = document.getElementById('locator-grid');
-      const stores = filteredStores || STORE_DATABASE;
-      container.innerHTML = '';
-      if (stores.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-8 text-center">Keine passenden Partneroptiker gefunden.</p>';
-        return;
-      }
-      stores.forEach(s => {
-        const card = document.createElement('div');
-        card.className = 'p-6 bg-white border border-[var(--border-editorial)] flex flex-col justify-between space-y-4 hover:border-black transition-colors';
-        card.innerHTML = `
-          <div>
-            <span class="text-[9px] uppercase tracking-widest bg-[var(--surface-editorial)] px-2.5 py-1 text-[var(--text-muted)] border border-[var(--border-editorial)] font-semibold">${s.type}</span>
-            <h3 class="font-serif text-2xl font-light mt-3 mb-1">${s.name}</h3>
-            <p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${s.city}</p>
-          </div>
-          <div class="pt-4 border-t border-[var(--border-editorial)]/60 flex justify-between items-center">
-            <a href="${s.url}" target="_blank" rel="noopener" class="text-xs font-semibold underline hover:text-stone-600 flex items-center space-x-1">
-              <span>Website besuchen</span>
-              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-            </a>
-            <button onclick="navigateTo('account')" class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-[#1a1918] text-white hover:bg-stone-800 transition-colors">Termin</button>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function filterStoreLocator() {
-      const search = document.getElementById('locatorSearchInput').value.toLowerCase();
-      const cat = document.getElementById('locatorCategorySelect').value;
-      const filtered = STORE_DATABASE.filter(s => {
-        const mS = s.name.toLowerCase().includes(search) || s.city.toLowerCase().includes(search);
-        const mC = cat === '' || s.type === cat;
-        return mS && mC;
-      });
-      renderStoreLocatorGrid(filtered);
-    }
-
-    function resetStoreLocatorFilters() {
-      document.getElementById('locatorSearchInput').value = '';
-      document.getElementById('locatorCategorySelect').value = '';
-      renderStoreLocatorGrid();
-    }
-
-    function renderStoreDirectory() {
-      const list = document.getElementById('store-directory-list');
-      list.innerHTML = STORE_DATABASE.map(s => `
-        <div class="pb-3 border-b border-[var(--border-editorial)] flex justify-between items-center">
-          <div>
-            <strong class="font-medium">${s.name}</strong>
-            <span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span>
-          </div>
-          <a href="${s.url}" target="_blank" rel="noopener" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
-            <span>Website</span>
-            <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
-          </a>
-        </div>
-      `).join('');
-    }
-
-    /* ============================================================
-       KONFIGURATOR
-       ============================================================ */
-    function setConfigFrame(colorClass) {
-      document.getElementById('config-frame-preview').className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
-    }
-
-    function setConfigLens(lensClass) {
-      document.getElementById('config-lens-left').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
-      document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
-    }
-
-    /* ============================================================
-       HERO SLIDER
-       ============================================================ */
-    function setupHeroSlider() {
-      const container = document.getElementById('hero-slides');
-      const label = document.getElementById('hero-slide-label');
-      const desc = document.getElementById('hero-description');
-      container.innerHTML = '';
-
-      HERO_SLIDES.forEach((slide, i) => {
-        const img = document.createElement('img');
-        img.src = slide.img;
-        img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
-        img.alt = slide.label;
-        container.appendChild(img);
-      });
-
-      function updateSlide(index) {
-        const imgs = container.querySelectorAll('img');
-        imgs.forEach((img, i) => {
-          img.classList.toggle('opacity-100', i === index);
-          img.classList.toggle('opacity-0', i !== index);
-        });
-        if (label) label.textContent = HERO_SLIDES[index].label;
-        if (desc) desc.textContent = HERO_SLIDES[index].description;
-        currentBrand = HERO_SLIDES[index].label;
-        if (label) label.onclick = () => openBrandModal(currentBrand);
-        if (desc) desc.onclick = () => openBrandModal(currentBrand);
-      }
-
-      updateSlide(0);
-
-      const hero = document.getElementById('hero');
-
-      hero.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, { passive: true });
-
-      hero.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        const d = touchStartX - touchEndX;
-        if (Math.abs(d) > 50) {
-          if (d > 0) nextSlide();
-          else prevSlide();
-        }
-      }, { passive: true });
-
-      let mouseDown = false;
-      let mouseStartX = 0;
-
-      hero.addEventListener('mousedown', e => {
-        mouseDown = true;
-        mouseStartX = e.screenX;
-      });
-
-      hero.addEventListener('mouseup', e => {
-        if (mouseDown) {
-          const d = mouseStartX - e.screenX;
-          if (Math.abs(d) > 50) {
-            if (d > 0) nextSlide();
-            else prevSlide();
-          }
-          mouseDown = false;
-        }
-      });
-
-      hero.addEventListener('mouseleave', () => {
-        mouseDown = false;
-      });
-
-      function nextSlide() {
-        heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
-        updateSlide(heroSlideIndex);
-      }
-
-      function prevSlide() {
-        heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
-        updateSlide(heroSlideIndex);
-      }
-
-      let autoInterval = setInterval(nextSlide, 6000);
-
-      hero.addEventListener('touchstart', () => {
-        clearInterval(autoInterval);
-        autoInterval = setInterval(nextSlide, 6000);
-      }, { passive: true });
-
-      hero.addEventListener('mousedown', () => {
-        clearInterval(autoInterval);
-        autoInterval = setInterval(nextSlide, 6000);
-      });
-
-      if (label) label.onclick = () => openBrandModal(currentBrand);
-      if (desc) desc.onclick = () => openBrandModal(currentBrand);
-    }
-
-    /* ============================================================
-       NEWSLETTER & SCROLL-ANIMATIONEN
-       ============================================================ */
-    function subscribeNewsletter() {
-      const email = document.getElementById('newsletter-email').value;
-      if (!email.includes('@')) {
-        showToast('Gültige E-Mail erforderlich');
-        return;
-      }
-      showToast('Vielen Dank für Ihre Anmeldung.');
-      document.getElementById('newsletter-email').value = '';
-    }
-
-    function setupScrollAnimations() {
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) e.target.classList.add('visible');
-        });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    }
-
-    /* ============================================================
-       ZULETZT ANGESEHENE PRODUKTE
-       ============================================================ */
-    function renderRecentlyViewed() {
-      const section = document.getElementById('recently-viewed-section');
-      const container = document.getElementById('recently-viewed-container');
-      if (!section || !container) return;
-      if (recentlyViewed.length === 0) {
-        section.classList.add('hidden');
-        return;
-      }
-      section.classList.remove('hidden');
-      container.innerHTML = '';
-      recentlyViewed.forEach(pid => {
-        const p = PRODUCTS.find(x => String(x.id) === String(pid));
-        if (!p) return;
-        const card = document.createElement('div');
-        card.className = 'recent-card product-card group cursor-pointer bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-3';
-        card.innerHTML = `
-          <div class="img-zoom-container mb-2" onclick="openProductModal('${p.id}')">
-            <img src="${p.img}" alt="${p.name}" class="w-full h-32 object-cover" loading="lazy">
-          </div>
-          <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p>
-          <h4 class="font-serif text-sm font-light truncate">${p.name}</h4>
-          <p class="text-xs font-medium mt-1">${p.price}</p>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    /* ============================================================
-       INITIALISIERUNG
-       ============================================================ */
-    window.addEventListener('DOMContentLoaded', async function() {
-      document.body.classList.add('intro-active');
-      document.body.style.overflow = 'hidden';
-
-      // 1. Live-Daten laden (oder Fallback)
-      await loadLiveData();
-
-      // 2. Statische UI-Elemente rendern
-      renderCountryFilters();
-      setupHeroSlider();
-      renderStoreLocatorGrid();
-      renderStoreDirectory();
-      updateCartUI();
-      updateWishlistUI();
-      setupScrollAnimations();
-      navigateTo('home');
-
-      // 3. Produkte rendern (erst nachdem Daten geladen sind)
-      filterProducts();
-      renderRecentlyViewed();
-    });
-  </script>
-</body>
-</html>
+            wishlist = wishlist.filter(x =>
