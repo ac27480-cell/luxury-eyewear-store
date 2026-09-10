@@ -329,7 +329,7 @@
 
     <section class="mb-24">
       <div class="flex justify-between items-baseline mb-10 pb-4 border-b border-[var(--border-editorial)]">
-        <h2 class="text-3xl font-serif font-light tracking-wide">Kuratierte Auswahl</h2>
+        <h2 class="text-3xl font-serif font-light tracking-wide">Kuratisierte Auswahl</h2>
         <span class="text-xs tracking-widest uppercase text-[var(--text-muted)]">Direkte Bezugsquellen</span>
       </div>
       <div class="mb-8 flex items-center gap-4">
@@ -576,17 +576,8 @@
             <p id="modal-product-price" class="text-lg font-medium text-stone-800 mb-3"></p>
             <p id="modal-product-desc" class="text-sm text-[var(--text-muted)] leading-relaxed mb-5"></p>
             <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-sm mb-5">
-              <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)] block mb-1">Bezugsquelle</span>
-              <div class="flex justify-between items-center">
-                <div>
-                  <p class="font-medium" id="modal-product-store-name"></p>
-                  <p class="text-xs text-[var(--text-muted)]" id="modal-product-store-city"></p>
-                </div>
-                <a id="modal-product-store-url" href="#" target="_blank" rel="noopener" class="px-4 py-2 bg-[#1a1918] text-white text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-stone-800 transition-colors">
-                  <span>Zum Store</span>
-                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                </a>
-              </div>
+              <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)] block mb-2">Erhältlich bei:</span>
+              <div id="modal-product-stores-list" class="space-y-2"></div>
             </div>
             <div class="flex flex-col sm:flex-row gap-3">
               <button id="modal-product-addcart" class="flex-1 py-3.5 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">
@@ -648,8 +639,6 @@
   <script>
     /* ============================================================
        LIVE-DATENBANK-KONFIGURATION
-       Tragen Sie hier Ihre Sanity-Projekt-ID und den Datensatz ein.
-       Solange die Werte leer sind, werden die Beispieldaten genutzt.
        ============================================================ */
     const SANITY_CONFIG = {
       projectId: '', // z. B. 'abc12345'
@@ -664,12 +653,13 @@
       return `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}?query=${encodedQuery}`;
     }
 
+    // GROQ: Produkte laden und ALLE zugeordneten Stores mit auslesen
     const QUERY_PRODUCTS = `*[_type == "product"]{
       "id": _id,
       brand,
       name,
       price,
-      "storeId": store._ref,
+      "storeIds": stores[]->_id,
       "img": image.asset->url,
       desc,
       search
@@ -684,8 +674,7 @@
     }`;
 
     /* ============================================================
-       BILDER-PLATZHALTER
-       Reine Brillen-Skizze OHNE jeglichen Text.
+       BILDER-PLATZHALTER (textfrei)
        ============================================================ */
     const IMAGE_PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
       "<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'>" +
@@ -701,7 +690,7 @@
     );
 
     /* ============================================================
-       BRAND_DATA — Marken-Storys für das Marken-Modal
+       BRAND_DATA — Marken-Storys
        ============================================================ */
     const BRAND_DATA = {
       'Andy Wolf': { story: 'Andy Wolf steht für exklusive Brillenmanufaktur aus Österreich. Jede Fassung wird mit höchster Präzision und nachhaltigem Bio-Acetat in Hartberg gefertigt. Die geometrische Linienführung und die Liebe zum Detail machen jede Brille zu einem Unikat.', img: IMAGE_PLACEHOLDER },
@@ -712,57 +701,60 @@
     };
 
     /* ============================================================
-       FALLBACK-DATEN
+       STORES (korrigierte URLs + Plattform-Vielfalt)
        ============================================================ */
-    const FALLBACK_PRODUCTS = [
-      { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium' },
-      { id: 2, brand: 'MYKITA', name: 'Lite Tuva', price: '490 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Patentiertes schraubenloses Gelenk aus ultraleichtem Edelstahl, gefertigt in Berlin.', search: 'mykita lite tuva berlin specsberlin' },
-      { id: 3, brand: 'ic! berlin', name: 'Silk East', price: '450 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Federleichte Federedelstahl-Fassung ohne Schrauben und Lötstellen.', search: 'ic berlin silk ehler optik flensburg' },
-      { id: 4, brand: 'Lunor', name: 'Classic Round', price: '520 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Traditionelles Schwarzwälder Handwerk. Zeitlose Eleganz in Reinform.', search: 'lunor classic round schwarzwald bellevue hamburg' },
-      { id: 5, brand: 'CAZAL', name: 'Legends 607', price: '460 €', storeId: 'edeloptics', img: IMAGE_PLACEHOLDER, desc: 'Ikone des Eyewear-Designs von Cari Zalloni. Unverkennbarer Vintage-Charakter.', search: 'cazal legends 607 edel optics' },
-      { id: 6, brand: 'Götti Switzerland', name: 'Perspective ORIS', price: '510 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Schweizer Präzision aus dem 3D-Drucker. Minimalistisch und hochentwickelt.', search: 'gotti switzerland oris leidmann muenchen' },
-      { id: 7, brand: 'Klenze & Baum', name: 'Vespera 01', price: '480 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Münchner Designschmiede mit innovativem Tilting-Hinge Gelenksystem.', search: 'klenze und baum vespera specsberlin' },
-      { id: 8, brand: 'Rolf Spectacles', name: 'Eucalyptus 102', price: '720 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Echte Holzbrille aus den Tiroler Alpen. 100% naturbelassen ohne Metallschrauben.', search: 'rolf spectacles tirol holzbrille bellevue' },
-      { id: 9, brand: 'Reiz Germany', name: 'Mangan Series', price: '410 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Klassisches Acetat-Handwerk gefertigt in deutschen Manufakturen.', search: 'reiz germany mangan ehler optik flensburg' },
-      { id: 10, brand: 'Funk Eyewear', name: 'Dieter B.', price: '390 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Unkonventionelles Brillendesign aus der Kinzigtaler Manufaktur.', search: 'funk eyewear dieter brillenlaboratorium' },
-      { id: 11, brand: 'Hoffmann Natural Eyewear', name: 'Bespoke Horn 22', price: '850 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Meisterhafte Handarbeit aus echtem Büffelhorn. Jedes Stück ein Unikat.', search: 'hoffmann natural eyewear horn leidmann' },
-      { id: 12, brand: 'Matsuda', name: 'M3086 Titanium', price: '920 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Graveurskunst aus Sabae, Japan. Detaillierte Ziselierungen auf reinstem Titan.', search: 'matsuda japan sabae leidmann' },
-      { id: 13, brand: 'DITA Eyewear', name: 'Statesman Six', price: '890 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Japanische Präzision. Acetat-Titan-Hybridkonstruktion auf höchstem Niveau.', search: 'dita statesman japan leidmann muenchen' },
-      { id: 14, brand: 'Eyevan 7285', name: 'Model 338', price: '580 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Japanischer Eyewear-Kult seit 1972. Ästhetische Perfektion und Tragekomfort.', search: 'eyevan 7285 specsberlin japan' },
-      { id: 15, brand: 'Masunaga 1905', name: 'GMS-805', price: '640 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Hoflieferant des japanischen Kaiserhauses. Über 100 Jahre Manufaktur-Tradition.', search: 'masunaga 1905 gms bellevue hamburg' },
-      { id: 16, brand: 'Yuichi Toyama', name: 'U-129 Double Dutch', price: '530 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Moderne japanische Ästhetik inspiriert von traditioneller Fadenkunst.', search: 'yuichi toyama double dutch specsberlin' },
-      { id: 17, brand: 'Factory900', name: 'FA-240 Sculpted', price: '560 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Dreidimensionale Acetat-Skulpturen mit futuristischer Formensprache.', search: 'factory900 sabae brillenlaboratorium' },
-      { id: 18, brand: 'KameManNen', name: 'KMN-113', price: '490 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Eines der ältesten Brillenlabels Japans. Schildkröten-Symbolik für Ewigkeit.', search: 'kamemannen japan bellevue' },
-      { id: 19, brand: 'Jacques Marie Mage', name: 'Dealan Noir', price: '790 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Limitierte Auflage. 10mm Acetat mit charakteristischem Skulpturenschliff.', search: 'jmm jacques marie mage dealan leidmann' },
-      { id: 20, brand: 'Anne et Valentin', name: 'FANZINE Atelier', price: '430 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Farbenfroher Avantgarde-Stil aus Toulouse. Individueller Geometrie-Mix.', search: 'anne et valentin toulouse specsberlin' },
-      { id: 21, brand: 'Lafont Paris', name: 'Réédition Parisian', price: '360 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Pariser Chic und französisches Savoir-faire seit 1923.', search: 'lafont paris ehler optik flensburg' },
-      { id: 22, brand: 'Thierry Lasry', name: 'Sexxxy Cat-Eye', price: '440 €', storeId: 'edeloptics', img: IMAGE_PLACEHOLDER, desc: 'Futuristischer Vintage-Look, beliebt bei internationalen Celebrities.', search: 'thierry lasry paris edel optics' },
-      { id: 23, brand: 'Ahlem Eyewear', name: 'Place de la Concorde', price: '495 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Inspiration der Pariser Architektur, handgefertigt in Oyonnax, Frankreich.', search: 'ahlem paris oyonnax leidmann' },
-      { id: 24, brand: 'Lucas de Staël', name: 'Monsieur Leather', price: '880 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Pariser Atelierfassung überzogen mit edlem Rindsleder und Granitstein.', search: 'lucas de stael paris leder stein bellevue' },
-      { id: 25, brand: 'Res/Rei', name: 'Philosophia', price: '370 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: 'Handmade in Italy. Fokus auf nachhaltiges Acetat und lebendige Farben.', search: 'res rei italy brillenlaboratorium' },
-      { id: 26, brand: 'L.G.R', name: 'Reunion Explorer', price: '420 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Afrikanische Abenteuer-Inspiration vereint mit italienischer Handwerkskunst.', search: 'lgr reunion leidmann' },
-      { id: 27, brand: 'Tavat Eyewear', name: 'SoupCan Round', price: '495 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Sandgestrahltes Uhrengehäuse-Konzept, gefertigt in den italienischen Alpen.', search: 'tavat soupcan specsberlin' },
-      { id: 28, brand: 'Movitra', name: 'Bruno Rotating', price: '540 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Patentierter Drehmechanismus aus Mailand zum Schutz der Gläser.', search: 'movitra bruno mailand bellevue' },
-      { id: 29, brand: 'Oliver Peoples', name: 'Gregory Peck', price: '360 €', storeId: 'misterspex', img: IMAGE_PLACEHOLDER, desc: 'Klassischer Hollywood-Intellektuellen-Look aus Sunset Boulevard, L.A.', search: 'oliver peoples gregory peck misterspex' },
-      { id: 30, brand: 'Garrett Leight (GLCO)', name: 'Hampton Sun', price: '330 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Entspannter Venice Beach Lifestyle mit kalifornischem Spirit.', search: 'garrett leight glco hampton specsberlin' },
-      { id: 31, brand: 'Moscot (NYC)', name: 'Lemtosh Original', price: '320 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Die Legende aus der Lower East Side in New York City seit 1915.', search: 'moscot lemtosh new york specsberlin' },
-      { id: 32, brand: 'Barton Perreira', name: 'Roxbury Aviator', price: '510 €', storeId: 'leidmann', img: IMAGE_PLACEHOLDER, desc: 'Luxuriöse Ästhetik entworfen von Patty Perreira in Kalifornien.', search: 'barton perreira leidmann' },
-      { id: 33, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', storeId: 'bellevue', img: IMAGE_PLACEHOLDER, desc: 'Dänischer Minimalismus. Schraubenloses Titandraht-Design mit maximalem Tragekomfort.', search: 'lindberg titan daenemark bellevue hamburg' },
-      { id: 34, brand: 'Ørgreen Optics', name: 'Quantum High-Tech', price: '480 €', storeId: 'ehler', img: IMAGE_PLACEHOLDER, desc: 'Kopenhagener Design aus Reintitan mit unverwechselbaren Farbkombinationen.', search: 'orgreen optics kopenhagen ehler optik' },
-      { id: 35, brand: 'ProDesign Denmark', name: 'Essential 12', price: '290 €', storeId: 'optikerbode', img: IMAGE_PLACEHOLDER, desc: 'Funktionales skandinavisches Brillendesign mit klaren Strukturen.', search: 'prodesign denmark optiker bode' },
-      { id: 36, brand: 'Cutler and Gross', name: '1386 Bold King', price: '470 €', storeId: 'specsberlin', img: IMAGE_PLACEHOLDER, desc: 'Britischer Statement-Style aus Knightsbridge, London.', search: 'cutler and gross london specsberlin' },
-      { id: 37, brand: 'Cubitts', name: 'Judd Round', price: '240 €', storeId: 'brillenlab', img: IMAGE_PLACEHOLDER, desc: "Traditionelles Brillenhandwerk aus King's Cross, London.", search: 'cubitts london brillenlaboratorium' }
-    ];
-
     const FALLBACK_STORES = [
       { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
-      { id: 'leidmann', name: "Leidmann", type: "Boutique / Fachgeschäft", city: "München", url: "https://www.leidmann.de" },
+      { id: 'leidmann', name: "Leidmann", type: "Boutique / Fachgeschäft", city: "München", url: "https://leidmann.de" },
       { id: 'specsberlin', name: "specs.berlin", type: "Boutique / Fachgeschäft", city: "Berlin", url: "https://specs.berlin" },
-      { id: 'bellevue', name: "Bellevue Optical", type: "Boutique / Fachgeschäft", city: "Hamburg", url: "https://www.bellevue-optical.de" },
+      { id: 'bellevue', name: "Bellevue Optical", type: "Boutique / Fachgeschäft", city: "Hamburg", url: "https://bellevue-hamburg.de" },
       { id: 'ehler', name: "Ehler Optik", type: "Fachgeschäft", city: "Flensburg", url: "https://www.ehler-optik.de" },
-      { id: 'optikerbode', name: "Optiker Bode", type: "Fachgeschäft-Netzwerk", city: "Deutschlandweit", url: "https://www.optikerbode.de" },
+      { id: 'optikerbode', name: "Optiker Bode", type: "Fachgeschäft-Netzwerk", city: "Deutschlandweit", url: "https://www.optiker-bode.de" },
       { id: 'edeloptics', name: "Edel-Optics", type: "Online-Shop", city: "Hamburg / Online", url: "https://www.edel-optics.de" },
       { id: 'misterspex', name: "Mister Spex", type: "Omnichannel / Online", city: "Berlin / Online", url: "https://www.misterspex.de" }
+    ];
+
+    /* ============================================================
+       PRODUKTE mit storeIds-Array (mehrere Bezugsquellen)
+       ============================================================ */
+    const FALLBACK_PRODUCTS = [
+      { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeIds: ['brillenlab', 'optikerbode'], img: IMAGE_PLACEHOLDER, desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium optiker bode' },
+      { id: 2, brand: 'MYKITA', name: 'Lite Tuva', price: '490 €', storeIds: ['specsberlin', 'leidmann', 'bellevue'], img: IMAGE_PLACEHOLDER, desc: 'Patentiertes schraubenloses Gelenk aus ultraleichtem Edelstahl, gefertigt in Berlin.', search: 'mykita lite tuva berlin specsberlin leidmann bellevue' },
+      { id: 3, brand: 'ic! berlin', name: 'Silk East', price: '450 €', storeIds: ['ehler', 'bellevue'], img: IMAGE_PLACEHOLDER, desc: 'Federleichte Federedelstahl-Fassung ohne Schrauben und Lötstellen.', search: 'ic berlin silk ehler optik flensburg bellevue' },
+      { id: 4, brand: 'Lunor', name: 'Classic Round', price: '520 €', storeIds: ['bellevue', 'optikerbode'], img: IMAGE_PLACEHOLDER, desc: 'Traditionelles Schwarzwälder Handwerk. Zeitlose Eleganz in Reinform.', search: 'lunor classic round schwarzwald bellevue optiker bode' },
+      { id: 5, brand: 'CAZAL', name: 'Legends 607', price: '460 €', storeIds: ['edeloptics', 'optikerbode'], img: IMAGE_PLACEHOLDER, desc: 'Ikone des Eyewear-Designs von Cari Zalloni. Unverkennbarer Vintage-Charakter.', search: 'cazal legends 607 edel optics optiker bode' },
+      { id: 6, brand: 'Götti Switzerland', name: 'Perspective ORIS', price: '510 €', storeIds: ['leidmann', 'bellevue'], img: IMAGE_PLACEHOLDER, desc: 'Schweizer Präzision aus dem 3D-Drucker. Minimalistisch und hochentwickelt.', search: 'gotti switzerland oris leidmann bellevue' },
+      { id: 7, brand: 'Klenze & Baum', name: 'Vespera 01', price: '480 €', storeIds: ['specsberlin'], img: IMAGE_PLACEHOLDER, desc: 'Münchner Designschmiede mit innovativem Tilting-Hinge Gelenksystem.', search: 'klenze und baum vespera specsberlin' },
+      { id: 8, brand: 'Rolf Spectacles', name: 'Eucalyptus 102', price: '720 €', storeIds: ['bellevue'], img: IMAGE_PLACEHOLDER, desc: 'Echte Holzbrille aus den Tiroler Alpen. 100% naturbelassen ohne Metallschrauben.', search: 'rolf spectacles tirol holzbrille bellevue' },
+      { id: 9, brand: 'Reiz Germany', name: 'Mangan Series', price: '410 €', storeIds: ['ehler'], img: IMAGE_PLACEHOLDER, desc: 'Klassisches Acetat-Handwerk gefertigt in deutschen Manufakturen.', search: 'reiz germany mangan ehler optik flensburg' },
+      { id: 10, brand: 'Funk Eyewear', name: 'Dieter B.', price: '390 €', storeIds: ['brillenlab'], img: IMAGE_PLACEHOLDER, desc: 'Unkonventionelles Brillendesign aus der Kinzigtaler Manufaktur.', search: 'funk eyewear dieter brillenlaboratorium' },
+      { id: 11, brand: 'Hoffmann Natural Eyewear', name: 'Bespoke Horn 22', price: '850 €', storeIds: ['leidmann'], img: IMAGE_PLACEHOLDER, desc: 'Meisterhafte Handarbeit aus echtem Büffelhorn. Jedes Stück ein Unikat.', search: 'hoffmann natural eyewear horn leidmann' },
+      { id: 12, brand: 'Matsuda', name: 'M3086 Titanium', price: '920 €', storeIds: ['leidmann'], img: IMAGE_PLACEHOLDER, desc: 'Graveurskunst aus Sabae, Japan. Detaillierte Ziselierungen auf reinstem Titan.', search: 'matsuda japan sabae leidmann' },
+      { id: 13, brand: 'DITA Eyewear', name: 'Statesman Six', price: '890 €', storeIds: ['leidmann', 'edeloptics', 'optikerbode'], img: IMAGE_PLACEHOLDER, desc: 'Japanische Präzision. Acetat-Titan-Hybridkonstruktion auf höchstem Niveau.', search: 'dita statesman japan leidmann edel optics optiker bode' },
+      { id: 14, brand: 'Eyevan 7285', name: 'Model 338', price: '580 €', storeIds: ['specsberlin', 'leidmann'], img: IMAGE_PLACEHOLDER, desc: 'Japanischer Eyewear-Kult seit 1972. Ästhetische Perfektion und Tragekomfort.', search: 'eyevan 7285 specsberlin leidmann japan' },
+      { id: 15, brand: 'Masunaga 1905', name: 'GMS-805', price: '640 €', storeIds: ['bellevue', 'leidmann'], img: IMAGE_PLACEHOLDER, desc: 'Hoflieferant des japanischen Kaiserhauses. Über 100 Jahre Manufaktur-Tradition.', search: 'masunaga 1905 gms bellevue leidmann' },
+      { id: 16, brand: 'Yuichi Toyama', name: 'U-129 Double Dutch', price: '530 €', storeIds: ['specsberlin'], img: IMAGE_PLACEHOLDER, desc: 'Moderne japanische Ästhetik inspiriert von traditioneller Fadenkunst.', search: 'yuichi toyama double dutch specsberlin' },
+      { id: 17, brand: 'Factory900', name: 'FA-240 Sculpted', price: '560 €', storeIds: ['brillenlab'], img: IMAGE_PLACEHOLDER, desc: 'Dreidimensionale Acetat-Skulpturen mit futuristischer Formensprache.', search: 'factory900 sabae brillenlaboratorium' },
+      { id: 18, brand: 'KameManNen', name: 'KMN-113', price: '490 €', storeIds: ['bellevue', 'specsberlin'], img: IMAGE_PLACEHOLDER, desc: 'Eines der ältesten Brillenlabels Japans. Schildkröten-Symbolik für Ewigkeit.', search: 'kamemannen japan bellevue specsberlin' },
+      { id: 19, brand: 'Jacques Marie Mage', name: 'Dealan Noir', price: '790 €', storeIds: ['leidmann', 'specsberlin', 'bellevue'], img: IMAGE_PLACEHOLDER, desc: 'Limitierte Auflage. 10mm Acetat mit charakteristischem Skulpturenschliff.', search: 'jmm jacques marie mage dealan leidmann specsberlin bellevue' },
+      { id: 20, brand: 'Anne et Valentin', name: 'FANZINE Atelier', price: '430 €', storeIds: ['specsberlin'], img: IMAGE_PLACEHOLDER, desc: 'Farbenfroher Avantgarde-Stil aus Toulouse. Individueller Geometrie-Mix.', search: 'anne et valentin toulouse specsberlin' },
+      { id: 21, brand: 'Lafont Paris', name: 'Réédition Parisian', price: '360 €', storeIds: ['ehler'], img: IMAGE_PLACEHOLDER, desc: 'Pariser Chic und französisches Savoir-faire seit 1923.', search: 'lafont paris ehler optik flensburg' },
+      { id: 22, brand: 'Thierry Lasry', name: 'Sexxxy Cat-Eye', price: '440 €', storeIds: ['edeloptics'], img: IMAGE_PLACEHOLDER, desc: 'Futuristischer Vintage-Look, beliebt bei internationalen Celebrities.', search: 'thierry lasry paris edel optics' },
+      { id: 23, brand: 'Ahlem Eyewear', name: 'Place de la Concorde', price: '495 €', storeIds: ['leidmann', 'specsberlin'], img: IMAGE_PLACEHOLDER, desc: 'Inspiration der Pariser Architektur, handgefertigt in Oyonnax, Frankreich.', search: 'ahlem paris oyonnax leidmann specsberlin' },
+      { id: 24, brand: 'Lucas de Staël', name: 'Monsieur Leather', price: '880 €', storeIds: ['bellevue'], img: IMAGE_PLACEHOLDER, desc: 'Pariser Atelierfassung überzogen mit edlem Rindsleder und Granitstein.', search: 'lucas de stael paris leder stein bellevue' },
+      { id: 25, brand: 'Res/Rei', name: 'Philosophia', price: '370 €', storeIds: ['brillenlab'], img: IMAGE_PLACEHOLDER, desc: 'Handmade in Italy. Fokus auf nachhaltiges Acetat und lebendige Farben.', search: 'res rei italy brillenlaboratorium' },
+      { id: 26, brand: 'L.G.R', name: 'Reunion Explorer', price: '420 €', storeIds: ['leidmann'], img: IMAGE_PLACEHOLDER, desc: 'Afrikanische Abenteuer-Inspiration vereint mit italienischer Handwerkskunst.', search: 'lgr reunion leidmann' },
+      { id: 27, brand: 'Tavat Eyewear', name: 'SoupCan Round', price: '495 €', storeIds: ['specsberlin'], img: IMAGE_PLACEHOLDER, desc: 'Sandgestrahltes Uhrengehäuse-Konzept, gefertigt in den italienischen Alpen.', search: 'tavat soupcan specsberlin' },
+      { id: 28, brand: 'Movitra', name: 'Bruno Rotating', price: '540 €', storeIds: ['bellevue'], img: IMAGE_PLACEHOLDER, desc: 'Patentierter Drehmechanismus aus Mailand zum Schutz der Gläser.', search: 'movitra bruno mailand bellevue' },
+      { id: 29, brand: 'Oliver Peoples', name: 'Gregory Peck', price: '360 €', storeIds: ['misterspex'], img: IMAGE_PLACEHOLDER, desc: 'Klassischer Hollywood-Intellektuellen-Look aus Sunset Boulevard, L.A.', search: 'oliver peoples gregory peck misterspex' },
+      { id: 30, brand: 'Garrett Leight (GLCO)', name: 'Hampton Sun', price: '330 €', storeIds: ['specsberlin', 'bellevue'], img: IMAGE_PLACEHOLDER, desc: 'Entspannter Venice Beach Lifestyle mit kalifornischem Spirit.', search: 'garrett leight glco hampton specsberlin bellevue' },
+      { id: 31, brand: 'Moscot (NYC)', name: 'Lemtosh Original', price: '320 €', storeIds: ['specsberlin'], img: IMAGE_PLACEHOLDER, desc: 'Die Legende aus der Lower East Side in New York City seit 1915.', search: 'moscot lemtosh new york specsberlin' },
+      { id: 32, brand: 'Barton Perreira', name: 'Roxbury Aviator', price: '510 €', storeIds: ['leidmann'], img: IMAGE_PLACEHOLDER, desc: 'Luxuriöse Ästhetik entworfen von Patty Perreira in Kalifornien.', search: 'barton perreira leidmann' },
+      { id: 33, brand: 'Lindberg', name: 'Air Titanium Rim', price: '620 €', storeIds: ['bellevue', 'leidmann', 'optikerbode'], img: IMAGE_PLACEHOLDER, desc: 'Dänischer Minimalismus. Schraubenloses Titandraht-Design mit maximalem Tragekomfort.', search: 'lindberg titan daenemark bellevue leidmann optiker bode' },
+      { id: 34, brand: 'Ørgreen Optics', name: 'Quantum High-Tech', price: '480 €', storeIds: ['ehler'], img: IMAGE_PLACEHOLDER, desc: 'Kopenhagener Design aus Reintitan mit unverwechselbaren Farbkombinationen.', search: 'orgreen optics kopenhagen ehler optik' },
+      { id: 35, brand: 'ProDesign Denmark', name: 'Essential 12', price: '290 €', storeIds: ['optikerbode'], img: IMAGE_PLACEHOLDER, desc: 'Funktionales skandinavisches Brillendesign mit klaren Strukturen.', search: 'prodesign denmark optiker bode' },
+      { id: 36, brand: 'Cutler and Gross', name: '1386 Bold King', price: '470 €', storeIds: ['specsberlin', 'optikerbode'], img: IMAGE_PLACEHOLDER, desc: 'Britischer Statement-Style aus Knightsbridge, London.', search: 'cutler and gross london specsberlin optiker bode' },
+      { id: 37, brand: 'Cubitts', name: 'Judd Round', price: '240 €', storeIds: ['brillenlab'], img: IMAGE_PLACEHOLDER, desc: "Traditionelles Brillenhandwerk aus King's Cross, London.", search: 'cubitts london brillenlaboratorium' }
     ];
 
     /* ============================================================
@@ -792,6 +784,7 @@
 
         PRODUCTS = (resProducts.result || []).map(p => ({
           ...p,
+          storeIds: p.storeIds || [],
           img: p.img || IMAGE_PLACEHOLDER
         }));
         STORE_DATABASE = resStores.result || [];
@@ -893,8 +886,15 @@
     document.getElementById('intro-overlay').addEventListener('click', dismissIntro);
     document.getElementById('intro-overlay').addEventListener('touchstart', dismissIntro);
 
+    /* Einzelnen Store holen */
     function getStoreInfo(storeId) {
       return STORE_DATABASE.find(s => s.id === storeId) || { name: 'Zertifizierter Optiker', url: '#', city: 'Fachhandel', type: 'Fachgeschäft' };
+    }
+
+    /* ALLE Stores eines Produkts holen */
+    function getStoresForProduct(product) {
+      const ids = product.storeIds || (product.storeId ? [product.storeId] : []);
+      return ids.map(id => getStoreInfo(id)).filter(s => s && s.name);
     }
 
     function showToast(msg) {
@@ -918,21 +918,46 @@
       if (pageId === 'checkout') renderCheckout();
     }
 
+    /* ============================================================
+       PRODUKT-MODAL (zeigt ALLE Bezugsquellen)
+       ============================================================ */
     function openProductModal(productId) {
       const p = PRODUCTS.find(x => String(x.id) === String(productId));
       if (!p) { showToast('Produkt nicht gefunden'); return; }
-      const store = getStoreInfo(p.storeId);
+      const stores = getStoresForProduct(p);
+
       document.getElementById('modal-product-img').src = p.img;
       document.getElementById('modal-product-brand').innerText = p.brand;
       document.getElementById('modal-product-name').innerText = p.name;
       document.getElementById('modal-product-price').innerText = p.price;
       document.getElementById('modal-product-desc').innerText = p.desc;
-      document.getElementById('modal-product-store-name').innerText = store.name;
-      document.getElementById('modal-product-store-city').innerText = store.type + ' — ' + store.city;
-      document.getElementById('modal-product-store-url').href = store.url;
+
+      // Mehrere Stores im Modal rendern
+      const storesList = document.getElementById('modal-product-stores-list');
+      if (stores.length === 0) {
+        storesList.innerHTML = '<p class="text-xs text-[var(--text-muted)] italic">Keine Bezugsquelle verfügbar.</p>';
+      } else {
+        storesList.innerHTML = stores.map(store => `
+          <div class="flex justify-between items-center py-2 border-b border-[var(--border-editorial)]/40 last:border-0">
+            <div>
+              <p class="font-medium text-sm text-stone-900">${store.name}</p>
+              <p class="text-xs text-[var(--text-muted)]">${store.type} — ${store.city}</p>
+            </div>
+            <a href="${store.url}" target="_blank" rel="noopener" class="px-3 py-2 bg-[#1a1918] text-white text-[10px] uppercase tracking-wider flex items-center gap-2 hover:bg-stone-800 transition-colors">
+              <span>Zum Store</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </a>
+          </div>
+        `).join('');
+      }
 
       const addBtn = document.getElementById('modal-product-addcart');
-      addBtn.onclick = function(e) { e.stopPropagation(); addToCart(p.name, p.price, p.img, store.name); closeProductModal(); };
+      addBtn.onclick = function(e) {
+        e.stopPropagation();
+        const primaryStoreName = stores.length > 0 ? stores[0].name : 'Optiker';
+        addToCart(p.name, p.price, p.img, primaryStoreName);
+        closeProductModal();
+      };
 
       const wishBtn = document.getElementById('modal-product-wishlist');
       const icon = wishBtn.querySelector('i');
@@ -980,6 +1005,9 @@
       if (brand) { closeBrandModal(); navigateTo('home'); document.getElementById('searchInput').value = brand; filterProducts(); setTimeout(() => { document.getElementById('product-list').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300); }
     }
 
+    /* ============================================================
+       PRODUKTE RENDERN (mit MEHREREN Store-Links pro Karte)
+       ============================================================ */
     function renderProducts(query = '', maxPrice = 1000) {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
@@ -993,7 +1021,15 @@
       }
 
       items.forEach(p => {
-        const store = getStoreInfo(p.storeId);
+        const stores = getStoresForProduct(p);
+        const storeLinksHtml = stores.length > 0
+          ? stores.map(store => `
+              <a href="${store.url}" target="_blank" rel="noopener" onclick="event.stopPropagation();" class="text-xs text-stone-800 hover:text-black font-semibold flex items-center space-x-1 underline decoration-stone-400">
+                <span>${store.name}</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+              </a>`).join('')
+          : '<span class="text-xs text-[var(--text-muted)] italic">Keine Bezugsquelle verfügbar</span>';
+
         const card = document.createElement('div');
         card.className = 'product-card group cursor-pointer';
         card.innerHTML = `
@@ -1007,18 +1043,12 @@
             </div>
             <p class="text-xs font-medium">${p.price}</p>
           </div>
-          <div class="my-3 py-2 px-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]/70 flex justify-between items-center text-[11px]">
-            <div>
-              <span class="text-[var(--text-muted)] block text-[9px] uppercase tracking-wider">Erhältlich bei:</span>
-              <span class="font-medium text-stone-900">${store.name}</span> <span class="text-[var(--text-muted)]">(${store.city})</span>
-            </div>
-            <a href="${store.url}" target="_blank" rel="noopener" onclick="event.stopPropagation();" class="text-xs text-stone-800 hover:text-black font-semibold flex items-center space-x-1 underline decoration-stone-400">
-              <span>Store</span>
-              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-            </a>
+          <div class="my-3 py-2 px-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]/70 text-[11px]">
+            <span class="text-[var(--text-muted)] block text-[9px] uppercase tracking-wider mb-1">Erhältlich bei:</span>
+            <div class="flex flex-wrap gap-x-4 gap-y-1">${storeLinksHtml}</div>
           </div>
           <div class="mt-4 pt-3 border-t border-[var(--border-editorial)]/50 flex space-x-3">
-            <button data-name="${p.name}" data-price="${p.price}" data-img="${p.img}" data-store="${store.name}" class="add-to-cart-btn flex-1 py-2.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest hover:bg-stone-800 transition-colors">In den Warenkorb</button>
+            <button data-name="${p.name}" data-price="${p.price}" data-img="${p.img}" class="add-to-cart-btn flex-1 py-2.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest hover:bg-stone-800 transition-colors">In den Warenkorb</button>
             <button data-name="${p.name}" class="wishlist-btn px-3 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors"><i class="fa-regular fa-heart"></i></button>
           </div>
         `;
@@ -1026,7 +1056,13 @@
       });
 
       document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) { e.stopPropagation(); addToCart(this.dataset.name, this.dataset.price, this.dataset.img, this.dataset.store); });
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const p = PRODUCTS.find(x => x.name === this.dataset.name);
+          const stores = p ? getStoresForProduct(p) : [];
+          const storeName = stores.length > 0 ? stores[0].name : 'Optiker';
+          addToCart(this.dataset.name, this.dataset.price, this.dataset.img, storeName);
+        });
       });
       document.querySelectorAll('.wishlist-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
