@@ -34,21 +34,23 @@
       overflow-x: hidden;
     }
 
-    h1,
-    h2,
-    h3,
-    .font-serif {
+    h1, h2, h3, .font-serif {
       font-family: var(--font-serif);
     }
 
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    .img-zoom-container { overflow: hidden; }
+    .img-zoom-container {
+      overflow: hidden;
+      transition: box-shadow 0.35s ease;
+    }
     .img-zoom-container img {
       transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
     }
-    .product-card:hover .img-zoom-container img { transform: scale(1.04); }
+    .product-card:hover .img-zoom-container img {
+      transform: scale(1.04);
+    }
 
     .filter-btn {
       transition: all 0.25s ease;
@@ -76,8 +78,26 @@
     }
     .nav-btn:active { opacity: 0.6; }
 
-    .hero-label-click { cursor: pointer; transition: opacity 0.3s ease; }
+    .hero-label-click {
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+      position: relative;
+    }
     .hero-label-click:hover { opacity: 0.7; }
+    .hero-label-click::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -3px;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .hero-label-click:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
 
     .payment-option {
       display: flex;
@@ -127,6 +147,53 @@
     }
     .modal-card .overflow-y-auto::-webkit-scrollbar { width: 4px; }
     .modal-card .overflow-y-auto::-webkit-scrollbar-thumb { background-color: var(--border-editorial); }
+
+    /* ===== SKELETON LOADER ===== */
+    @keyframes skeleton-shimmer {
+      0%   { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
+    .skeleton {
+      background: linear-gradient(
+        90deg,
+        var(--surface-editorial) 0%,
+        #ebe7de 40%,
+        var(--surface-editorial) 80%
+      );
+      background-size: 800px 100%;
+      animation: skeleton-shimmer 1.6s infinite linear;
+    }
+    .skeleton-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .skeleton-img { width: 100%; aspect-ratio: 1 / 1; }
+    .skeleton-line { height: 0.75rem; }
+    .skeleton-line.short { width: 40%; }
+    .skeleton-line.medium { width: 65%; }
+    .skeleton-line.tall { height: 1.5rem; }
+
+    /* ===== PAGE TRANSITIONS ===== */
+    .page-content {
+      animation: page-in 0.4s cubic-bezier(0.25, 1, 0.5, 1) both;
+    }
+    .page-content.hidden { animation: none; }
+    @keyframes page-in {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    #productModal.flex .modal-card,
+    #brandModal.flex .modal-card {
+      animation: modal-in 0.35s cubic-bezier(0.25, 1, 0.5, 1) both;
+    }
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    #productModal, #brandModal { transition: opacity 0.3s ease; }
 
     /* ===== INTRO OVERLAY ===== */
     #intro-overlay {
@@ -255,8 +322,118 @@
       color: var(--text-main);
       text-decoration: underline;
       text-decoration-color: var(--border-editorial);
+      transition: text-decoration-color 0.25s ease, color 0.25s ease;
     }
     .legal-content a:hover { text-decoration-color: var(--text-main); }
+
+    /* ===== MICRO-INTERACTIONS ===== */
+    button:not(:disabled):active {
+      transform: translateY(1px) scale(0.985);
+    }
+    button {
+      transition: background-color 0.2s ease, color 0.2s ease,
+                  border-color 0.2s ease, transform 0.12s ease,
+                  opacity 0.2s ease;
+    }
+
+    .product-card {
+      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+    }
+    .product-card:hover .img-zoom-container {
+      box-shadow: 0 12px 32px -12px rgba(26, 25, 24, 0.25);
+    }
+
+    .store-card {
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                  border-color 0.2s ease;
+    }
+    .store-card:hover {
+      transform: translateY(-3px);
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 2px;
+      background: var(--border-editorial);
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px; height: 14px;
+      background: var(--text-main);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 14px; height: 14px;
+      background: var(--text-main);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* ===== EMPTY STATES ===== */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1.5rem;
+      text-align: center;
+      grid-column: 1 / -1;
+    }
+    .empty-state .empty-icon {
+      font-size: 2.5rem;
+      color: var(--text-muted);
+      opacity: 0.35;
+      margin-bottom: 1.25rem;
+    }
+    .empty-state .empty-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+    .empty-state .empty-text {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      max-width: 24rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .empty-state .empty-cta {
+      padding: 0.75rem 1.75rem;
+      background: var(--text-main);
+      color: #fff;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.2s ease;
+    }
+    .empty-state .empty-cta:hover {
+      background: #2f2c29;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -308,7 +485,7 @@
   <!-- ===== HERO ===== -->
   <section id="hero" class="relative h-[75vh] min-h-[500px] bg-stone-900 text-white overflow-hidden fade-in touch-manipulation">
     <div id="hero-slides" class="absolute inset-0"></div>
-    <div class="absolute inset-0 bg-black/50 z-10"></div>
+    <div class="absolute inset-0 z-10" style="background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.65) 100%);"></div>
     <div class="relative z-20 max-w-7xl mx-auto h-full flex flex-col justify-end px-6 lg:px-12 pb-16">
       <p class="text-[11px] uppercase tracking-[0.35em] text-stone-300 mb-3">Independent Eyewear & Curated Retailers</p>
       <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-light leading-[1.1] max-w-3xl">
@@ -395,8 +572,8 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16" id="product-list"></div>
-      <div id="loading-indicator" class="text-center py-12 text-xs text-[var(--text-muted)] tracking-widest uppercase">
-        <i class="fa-solid fa-spinner fa-spin mr-2"></i> Lade Produkte...
+      <div id="loading-indicator" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16 mt-0" aria-hidden="true">
+        <!-- Skeletons werden per JS eingefügt -->
       </div>
     </section>
 
@@ -1010,9 +1187,13 @@
       return `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}?query=${encodedQuery}`;
     }
 
+    /* ============================================================
+       QUERIES (Stufe 2 – Brand als Reference aufgelöst, Store-Geo)
+       ============================================================ */
     const QUERY_PRODUCTS = `*[_type == "product"]{
       "id": _id,
-      brand,
+      "brand": brand->name,
+      "brandSlug": brand->slug.current,
       name,
       price,
       "storeIds": stores[]->_id,
@@ -1023,14 +1204,25 @@
 
     const QUERY_STORES = `*[_type == "store"]{
       "id": _id,
+      "slug": slug.current,
       name,
       type,
       city,
-      url
+      url,
+      "lat": location.lat,
+      "lng": location.lng
+    }`;
+
+    const QUERY_BRANDS = `*[_type == "brand"]{
+      "name": name,
+      "slug": slug.current,
+      country,
+      story,
+      "img": logo.asset->url
     }`;
 
     /* ============================================================
-       PREIS-UTILITIES  (robust gegen "380 €", "1.200 €", 380, "380,00 €")
+       PREIS-UTILITIES
        ============================================================ */
     function parsePrice(value) {
       if (typeof value === 'number' && isFinite(value)) return Math.round(value);
@@ -1040,10 +1232,8 @@
       const lastComma = s.lastIndexOf(',');
       const lastDot = s.lastIndexOf('.');
       if (lastComma > lastDot) {
-        // Deutsches Format: Punkt = Tausender, Komma = Dezimal
         s = s.replace(/\./g, '').replace(',', '.');
       } else if (lastDot > lastComma) {
-        // US-Format: Komma = Tausender, Punkt = Dezimal
         s = s.replace(/,/g, '');
       }
       const n = parseFloat(s);
@@ -1056,7 +1246,26 @@
     }
 
     /* ============================================================
-       BILDER-PLATZHALTER (textfrei)
+       SANITY IMAGE-URL-BUILDER (Stufe 2)
+       ============================================================ */
+    function getSanityImageUrl(url, opts = {}) {
+      if (!url || typeof url !== 'string') return IMAGE_PLACEHOLDER;
+      if (!url.includes('cdn.sanity.io')) return url;
+      try {
+        const u = new URL(url);
+        if (opts.width) u.searchParams.set('w', String(opts.width));
+        if (opts.height) u.searchParams.set('h', String(opts.height));
+        u.searchParams.set('fit', opts.fit || 'crop');
+        u.searchParams.set('auto', 'format');
+        u.searchParams.set('q', String(opts.quality || 80));
+        return u.toString();
+      } catch {
+        return url;
+      }
+    }
+
+    /* ============================================================
+       BILDER-PLATZHALTER
        ============================================================ */
     const IMAGE_PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
       "<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'>" +
@@ -1072,7 +1281,7 @@
     );
 
     /* ============================================================
-       BRAND_DATA — Marken-Storys für das Marken-Modal
+       BRAND_DATA — lokale Fallback-Marken
        ============================================================ */
     const BRAND_DATA = {
       'Andy Wolf': {
@@ -1155,44 +1364,65 @@
     ];
 
     /* ============================================================
-       LIVE-DATEN LADEN
+       LIVE-DATEN LADEN (Stufe 2 – mit BRANDS)
        ============================================================ */
     let PRODUCTS = [];
     let STORE_DATABASE = [];
+    let BRANDS = {};
 
     async function loadLiveData() {
-      const loadingEl = document.getElementById('loading-indicator');
       const urlProducts = getSanityUrl(QUERY_PRODUCTS);
       const urlStores = getSanityUrl(QUERY_STORES);
+      const urlBrands = getSanityUrl(QUERY_BRANDS);
 
       if (!urlProducts) {
         console.info('LUXEVUE: Keine Sanity-Konfiguration gefunden. Nutze lokale Beispieldaten.');
         PRODUCTS = FALLBACK_PRODUCTS;
         STORE_DATABASE = FALLBACK_STORES;
-        if (loadingEl) loadingEl.style.display = 'none';
+        BRANDS = BRAND_DATA;
+        hideSkeletons();
         return;
       }
 
       try {
-        const [resProducts, resStores] = await Promise.all([
+        const [resProducts, resStores, resBrands] = await Promise.all([
           fetch(urlProducts).then(r => r.json()),
-          fetch(urlStores).then(r => r.json())
+          fetch(urlStores).then(r => r.json()),
+          fetch(urlBrands).then(r => r.json())
         ]);
 
         PRODUCTS = (resProducts.result || []).map(p => ({
           ...p,
+          price: p.price ?? 0,
           storeIds: p.storeIds || [],
           img: p.img || IMAGE_PLACEHOLDER
         }));
+
         STORE_DATABASE = resStores.result || [];
 
-        console.info(`LUXEVUE: ${PRODUCTS.length} Produkte und ${STORE_DATABASE.length} Stores live geladen.`);
+        BRANDS = {};
+        (resBrands.result || []).forEach(b => {
+          if (!b.name) return;
+          BRANDS[b.name] = {
+            story: b.story || '',
+            img: b.img || IMAGE_PLACEHOLDER,
+            country: b.country || '',
+            slug: b.slug || ''
+          };
+        });
+
+        Object.keys(BRAND_DATA).forEach(k => {
+          if (!BRANDS[k]) BRANDS[k] = BRAND_DATA[k];
+        });
+
+        console.info(`LUXEVUE: ${PRODUCTS.length} Produkte, ${STORE_DATABASE.length} Stores, ${Object.keys(BRANDS).length} Marken live geladen.`);
       } catch (err) {
         console.error('LUXEVUE: Fehler beim Laden der Live-Daten. Nutze lokale Beispieldaten.', err);
         PRODUCTS = FALLBACK_PRODUCTS;
         STORE_DATABASE = FALLBACK_STORES;
+        BRANDS = BRAND_DATA;
       } finally {
-        if (loadingEl) loadingEl.style.display = 'none';
+        hideSkeletons();
       }
     }
 
@@ -1201,32 +1431,55 @@
        ============================================================ */
     function createHeroSVG(accentColor, bgColor, label) {
       const svg =
-        "<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'>" +
+        "<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000' viewBox='0 0 1600 1000'>" +
         "<rect width='100%' height='100%' fill='" + bgColor + "'/>" +
-        "<g stroke='" + accentColor + "' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'>" +
-        "<path d='M 220,300 C 220,240 340,240 340,300 C 340,360 220,360 220,300 Z' stroke-dasharray='6,4'/>" +
-        "<path d='M 460,300 C 460,240 580,240 580,300 C 580,360 460,360 460,300 Z' stroke-dasharray='6,4'/>" +
-        "<path d='M 340,285 C 380,270 420,270 460,285'/>" +
-        "<path d='M 220,285 L 140,270'/>" +
-        "<path d='M 580,285 L 660,270'/>" +
-        "<circle cx='280' cy='300' r='45' stroke='" + accentColor + "' stroke-width='3'/>" +
-        "<circle cx='520' cy='300' r='45' stroke='" + accentColor + "' stroke-width='3'/>" +
-        "<path d='M 325,280 Q 400,265 475,280' stroke='" + accentColor + "' stroke-width='3'/>" +
-        "<path d='M 235,280 L 150,260' stroke='" + accentColor + "' stroke-width='3'/>" +
-        "<path d='M 565,280 L 650,260' stroke='" + accentColor + "' stroke-width='3'/>" +
+        "<g stroke='" + accentColor + "' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'>" +
+        "<circle cx='580' cy='500' r='90' stroke='" + accentColor + "' stroke-width='4'/>" +
+        "<circle cx='1020' cy='500' r='90' stroke='" + accentColor + "' stroke-width='4'/>" +
+        "<path d='M 665,470 Q 800,440 935,470' stroke='" + accentColor + "' stroke-width='4'/>" +
+        "<path d='M 495,470 L 340,440' stroke='" + accentColor + "' stroke-width='4'/>" +
+        "<path d='M 1105,470 L 1260,440' stroke='" + accentColor + "' stroke-width='4'/>" +
         "</g>" +
-        "<text x='50%' y='440' font-family='Georgia, serif' font-size='16' font-style='italic' " +
-        "fill='" + accentColor + "' text-anchor='middle' letter-spacing='2'>" + label + "</text>" +
+        "<text x='50%' y='760' font-family='Georgia, serif' font-size='28' font-style='italic' " +
+        "fill='" + accentColor + "' text-anchor='middle' letter-spacing='4'>" + label + "</text>" +
         "</svg>";
       return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
     }
 
+    /* ============================================================
+       HERO-SLIDES (Stufe 3 – upload-ready mit focal)
+       ============================================================ */
     const HERO_SLIDES = [
-      { label: 'Andy Wolf', description: 'Handgefertigt in Österreich – nachhaltiges Bio-Acetat und geometrische Linienführung für zeitlose Eleganz.', img: createHeroSVG('#c9a87c', '#2a2826', 'ANDY WOLF') },
-      { label: 'MYKITA', description: 'Berliner Ingenieurskunst – das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl.', img: createHeroSVG('#b8860b', '#1a1918', 'MYKITA') },
-      { label: 'Lindberg', description: 'Dänischer Minimalismus – schraubenloses Titandraht-Design für maximalen Tragekomfort.', img: createHeroSVG('#8a7a6a', '#2f2b27', 'LINDBERG') },
-      { label: 'Jacques Marie Mage', description: 'Limitierte Auflagen – 10mm Acetat mit charakteristischem Skulpturenschliff aus Frankreich.', img: createHeroSVG('#a68b66', '#1e1c1a', 'JACQUES MARIE MAGE') },
-      { label: 'DITA Eyewear', description: 'Japanische Präzision – Acetat-Titan-Hybridkonstruktion auf höchstem handwerklichem Niveau.', img: createHeroSVG('#6b5d4e', '#242220', 'DITA') }
+      {
+        label: 'Andy Wolf',
+        description: 'Handgefertigt in Österreich – nachhaltiges Bio-Acetat und geometrische Linienführung für zeitlose Eleganz.',
+        img: createHeroSVG('#c9a87c', '#2a2826', 'ANDY WOLF'),
+        focal: 'center'
+      },
+      {
+        label: 'MYKITA',
+        description: 'Berliner Ingenieurskunst – das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl.',
+        img: createHeroSVG('#b8860b', '#1a1918', 'MYKITA'),
+        focal: 'center'
+      },
+      {
+        label: 'Lindberg',
+        description: 'Dänischer Minimalismus – schraubenloses Titandraht-Design für maximalen Tragekomfort.',
+        img: createHeroSVG('#8a7a6a', '#2f2b27', 'LINDBERG'),
+        focal: 'center'
+      },
+      {
+        label: 'Jacques Marie Mage',
+        description: 'Limitierte Auflagen – 10mm Acetat mit charakteristischem Skulpturenschliff aus Frankreich.',
+        img: createHeroSVG('#a68b66', '#1e1c1a', 'JACQUES MARIE MAGE'),
+        focal: 'center'
+      },
+      {
+        label: 'DITA Eyewear',
+        description: 'Japanische Präzision – Acetat-Titan-Hybridkonstruktion auf höchstem handwerklichem Niveau.',
+        img: createHeroSVG('#6b5d4e', '#242220', 'DITA'),
+        focal: 'center'
+      }
     ];
 
     const INDEPENDENT_LABELS = {
@@ -1279,10 +1532,9 @@
     let introDone = false;
     let searchTimeout;
 
-    // ===== ROUTING STATE =====
-    let currentPageId = 'home';      // die zuletzt aktive Seite (hinter evtl. Modal)
-    let pageBeforeModal = 'home';    // wohin closeProductModal zurückführt
-    let lastFocusedElement = null;   // Fokus-Restore für Modals
+    let currentPageId = 'home';
+    let pageBeforeModal = 'home';
+    let lastFocusedElement = null;
 
     /* ============================================================
        PERSISTENZ
@@ -1299,6 +1551,44 @@
 
     function persistRecent() {
       localStorage.setItem('luxevue_recent', JSON.stringify(recentlyViewed));
+    }
+
+    /* ============================================================
+       SKELETON LOADER
+       ============================================================ */
+    function renderSkeletons(count = 6) {
+      const container = document.getElementById('loading-indicator');
+      if (!container) return;
+      container.innerHTML = Array.from({ length: count }).map(() => `
+        <div class="skeleton-card">
+          <div class="skeleton skeleton-img"></div>
+          <div class="skeleton skeleton-line short"></div>
+          <div class="skeleton skeleton-line tall"></div>
+          <div class="skeleton skeleton-line medium"></div>
+        </div>
+      `).join('');
+      container.style.display = '';
+    }
+
+    function hideSkeletons() {
+      const container = document.getElementById('loading-indicator');
+      if (!container) return;
+      container.style.display = 'none';
+    }
+
+    /* ============================================================
+       EMPTY-STATE HELPER
+       ============================================================ */
+    function renderEmptyState(container, { icon, title, text, ctaLabel, ctaAction }) {
+      if (!container) return;
+      container.innerHTML = `
+        <div class="empty-state">
+          <i class="${icon} empty-icon"></i>
+          <p class="empty-title">${title}</p>
+          <p class="empty-text">${text}</p>
+          ${ctaLabel ? `<button class="empty-cta" ${ctaAction ? `onclick="${ctaAction}"` : ''}>${ctaLabel}</button>` : ''}
+        </div>
+      `;
     }
 
     /* ============================================================
@@ -1364,7 +1654,7 @@
       if (location.hash === '#' + pageId) {
         applyRoute();
       } else {
-        location.hash = pageId; // löst hashchange → applyRoute aus
+        location.hash = pageId;
       }
     }
 
@@ -1372,22 +1662,18 @@
       const hash = location.hash.slice(1) || 'home';
       const [route, param] = hash.split('/');
 
-      // Deep-Link auf Produkt: #product/5
       if (route === 'product' && param) {
-        // Seite hinter dem Modal beibehalten
         showPage(pageBeforeModal || currentPageId || 'home');
         const found = PRODUCTS.find(x => String(x.id) === String(param));
         if (found) {
           openProductModalInternal(found);
         } else {
-          // Produkt (noch) nicht gefunden → auf Home umleiten
           showToast('Produkt nicht gefunden');
           location.replace('#' + (currentPageId || 'home'));
         }
         return;
       }
 
-      // Alle Modals schließen, wenn keine Produkt-Route aktiv ist
       hideProductModalInternal();
       hideBrandModalInternal();
 
@@ -1405,10 +1691,14 @@
       if (!page) return;
       page.classList.remove('hidden');
 
+      // Animation neu triggern
+      page.style.animation = 'none';
+      void page.offsetWidth;
+      page.style.animation = '';
+
       const hero = document.getElementById('hero');
       if (hero) hero.classList.toggle('hidden', pageId !== 'home');
 
-      // Seitenspezifisches Re-Rendering
       if (pageId === 'cart') updateCartUI();
       if (pageId === 'checkout') renderCheckout();
       if (pageId === 'wishlist') updateWishlistUI();
@@ -1421,7 +1711,7 @@
     window.addEventListener('hashchange', applyRoute);
 
     /* ============================================================
-       MODAL-HELFER (Fokus, ESC, ARIA, Backdrop)
+       MODAL-HELFER
        ============================================================ */
     function getFocusableIn(container) {
       return Array.from(container.querySelectorAll(
@@ -1434,7 +1724,6 @@
       modalEl.classList.remove('hidden');
       modalEl.classList.add('flex');
       document.body.style.overflow = 'hidden';
-      // Fokus in das Modal setzen
       const target = focusSelector
         ? modalEl.querySelector(focusSelector)
         : getFocusableIn(modalEl)[0];
@@ -1451,7 +1740,6 @@
       lastFocusedElement = null;
     }
 
-    // Globaler Keydown-Handler: ESC schließt Modals, Tab macht Fokus-Trap
     document.addEventListener('keydown', (e) => {
       const productModal = document.getElementById('productModal');
       const brandModal = document.getElementById('brandModal');
@@ -1484,7 +1772,6 @@
       }
     }
 
-    // Backdrop-Klick schließt Modal (nur wenn direkt auf das Overlay geklickt wird)
     document.getElementById('productModal').addEventListener('click', (e) => {
       if (e.target.id === 'productModal') closeProductModal();
     });
@@ -1496,9 +1783,7 @@
        PRODUKT-MODAL
        ============================================================ */
     function openProductModal(productId) {
-      // Merken, von welcher Seite aus geöffnet wurde
       pageBeforeModal = currentPageId || 'home';
-      // Hash setzen → applyRoute() öffnet das Modal
       if (location.hash === '#product/' + productId) {
         applyRoute();
       } else {
@@ -1509,10 +1794,11 @@
     function openProductModalInternal(p) {
       const stores = getStoresForProduct(p);
 
-      document.getElementById('modal-product-img').src = p.img;
+      document.getElementById('modal-product-img').src =
+        getSanityImageUrl(p.img, { width: 1000, height: 1000, fit: 'max' });
       document.getElementById('modal-product-brand').innerText = p.brand;
       document.getElementById('modal-product-name').innerText = p.name;
-      document.getElementById('modal-product-price').innerText = p.price;
+      document.getElementById('modal-product-price').innerText = formatPrice(p.price);
       document.getElementById('modal-product-desc').innerText = p.desc;
 
       const storesList = document.getElementById('modal-product-stores-list');
@@ -1562,7 +1848,6 @@
         persistWishlist();
       };
 
-      // Zuletzt angesehen
       if (!recentlyViewed.includes(p.id)) {
         recentlyViewed.unshift(p.id);
         recentlyViewed = recentlyViewed.slice(0, 6);
@@ -1581,7 +1866,6 @@
     }
 
     function closeProductModal() {
-      // Zurück zur vorherigen Seite (Hash-Update → applyRoute schließt das Modal)
       const target = pageBeforeModal || 'home';
       if (location.hash === '#' + target) {
         applyRoute();
@@ -1591,17 +1875,18 @@
     }
 
     /* ============================================================
-       MARKEN-MODAL
+       MARKEN-MODAL (Stufe 2 – nutzt BRANDS)
        ============================================================ */
     function openBrandModal(brandName) {
-      const data = BRAND_DATA[brandName];
+      const data = BRANDS[brandName] || BRAND_DATA[brandName];
       if (!data) {
         showToast('Informationen zu dieser Marke folgen in Kürze.');
         return;
       }
       document.getElementById('brand-modal-name').innerText = brandName;
-      document.getElementById('brand-modal-story').innerText = data.story;
-      document.getElementById('brand-modal-img').src = data.img;
+      document.getElementById('brand-modal-story').innerText = data.story || '';
+      document.getElementById('brand-modal-img').src =
+        getSanityImageUrl(data.img, { width: 800, height: 600, fit: 'max' });
       document.getElementById('brand-modal-name').dataset.brand = brandName;
       openModal(document.getElementById('brandModal'));
     }
@@ -1631,7 +1916,7 @@
     }
 
     /* ============================================================
-       PRODUKTE RENDERN
+       PRODUKTE RENDERN (Stufe 2 – Sanity-Bilder)
        ============================================================ */
     function renderProducts(query = '', maxPrice = 1000) {
       const container = document.getElementById('product-list');
@@ -1644,7 +1929,14 @@
       items = items.filter(p => parsePrice(p.price) <= maxPrice);
 
       if (items.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-12 text-center">Keine passenden Brillenmodelle gefunden.</p>';
+        renderEmptyState(container, {
+          icon: 'fa-solid fa-glasses',
+          title: 'Keine Modelle gefunden',
+          text: 'Passen Sie Suche oder Preisrahmen an – oder entdecken Sie die gesamte Kollektion.',
+          ctaLabel: 'Filter zurücksetzen',
+          ctaAction: 'resetProductFilters()'
+        });
+        hideSkeletons();
         return;
       }
 
@@ -1662,14 +1954,14 @@
         card.className = 'product-card group cursor-pointer';
         card.innerHTML = `
           <div class="img-zoom-container bg-[var(--surface-editorial)] mb-5 border border-[var(--border-editorial)] relative" onclick="openProductModal('${p.id}')">
-            <img src="${p.img}" alt="${p.name}" class="w-full h-80 object-cover" loading="lazy">
+            <img src="${getSanityImageUrl(p.img, { width: 800, height: 800 })}" alt="${p.name}" class="w-full h-80 object-cover" loading="lazy">
           </div>
           <div class="flex justify-between items-start mb-2">
             <div>
               <p class="text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">${p.brand}</p>
               <h3 class="font-serif text-xl font-light">${p.name}</h3>
             </div>
-            <p class="text-xs font-medium">${p.price}</p>
+            <p class="text-xs font-medium">${formatPrice(p.price)}</p>
           </div>
           <div class="my-3 py-2 px-3 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]/70 text-[11px]">
             <span class="text-[var(--text-muted)] block text-[9px] uppercase tracking-wider mb-1">Erhältlich bei:</span>
@@ -1710,6 +2002,8 @@
           persistWishlist();
         });
       });
+
+      hideSkeletons();
     }
 
     function filterProducts() {
@@ -1722,6 +2016,14 @@
     function debouncedSearch() {
       clearTimeout(searchTimeout);
       searchTimeout = setTimeout(filterProducts, 300);
+    }
+
+    function resetProductFilters() {
+      document.getElementById('searchInput').value = '';
+      const slider = document.getElementById('price-range');
+      slider.value = slider.max;
+      document.getElementById('price-output').innerText = slider.max + ' €';
+      filterProducts();
     }
 
     /* ============================================================
@@ -1803,7 +2105,13 @@
       badge.classList.toggle('hidden', totalItems === 0);
 
       if (cart.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihr Warenkorb ist derzeit leer.</p>';
+        renderEmptyState(container, {
+          icon: 'fa-solid fa-bag-shopping',
+          title: 'Ihr Warenkorb ist leer',
+          text: 'Entdecken Sie unsere kuratierte Auswahl unabhängiger Manufakturen.',
+          ctaLabel: 'Zur Kollektion',
+          ctaAction: "navigateTo('home')"
+        });
         summary.classList.add('hidden');
         totalEl.innerText = '0 €';
         return;
@@ -1817,10 +2125,10 @@
         return `
           <div class="flex justify-between items-center p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]">
             <div class="flex items-center space-x-4">
-              <img src="${item.img}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]" alt="${item.name}">
+              <img src="${getSanityImageUrl(item.img, { width: 96, height: 96 })}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]" alt="${item.name}">
               <div>
                 <p class="text-xs font-medium">${item.name}</p>
-                <p class="text-[10px] text-[var(--text-muted)]">${item.price} — ${item.storeName || 'Optiker'}</p>
+                <p class="text-[10px] text-[var(--text-muted)]">${formatPrice(item.price)} — ${item.storeName || 'Optiker'}</p>
                 <div class="flex items-center gap-2 mt-1">
                   <button onclick="changeQuantity(${index}, -1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">-</button>
                   <span class="text-xs">${item.quantity || 1}</span>
@@ -1850,7 +2158,13 @@
       badge.classList.toggle('hidden', wishlist.length === 0);
 
       if (wishlist.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihre Wunschliste ist leer.</p>';
+        renderEmptyState(container, {
+          icon: 'fa-regular fa-heart',
+          title: 'Noch keine Favoriten',
+          text: 'Merken Sie sich Brillen mit dem Herz-Symbol, um sie hier wiederzufinden.',
+          ctaLabel: 'Zur Kollektion',
+          ctaAction: "navigateTo('home')"
+        });
       } else {
         container.innerHTML = wishlist.map(item => `
           <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex justify-between items-center">
@@ -1915,260 +2229,25 @@
     }
 
     /* ============================================================
-       STORE LOCATOR
+       STORE LOCATOR (Stufe 3 – store-card + Empty-State)
        ============================================================ */
     function renderStoreLocatorGrid(filteredStores) {
       const container = document.getElementById('locator-grid');
       const stores = filteredStores || STORE_DATABASE;
       container.innerHTML = '';
       if (stores.length === 0) {
-        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-8 text-center">Keine passenden Partneroptiker gefunden.</p>';
+        renderEmptyState(container, {
+          icon: 'fa-solid fa-location-dot',
+          title: 'Keine Partner gefunden',
+          text: 'Versuchen Sie eine andere Stadt oder setzen Sie die Filter zurück.',
+          ctaLabel: 'Filter zurücksetzen',
+          ctaAction: 'resetStoreLocatorFilters()'
+        });
         return;
       }
       stores.forEach(s => {
         const card = document.createElement('div');
-        card.className = 'p-6 bg-white border border-[var(--border-editorial)] flex flex-col justify-between space-y-4 hover:border-black transition-colors';
+        card.className = 'store-card p-6 bg-white border border-[var(--border-editorial)] flex flex-col justify-between space-y-4 hover:border-black';
         card.innerHTML = `
           <div>
-            <span class="text-[9px] uppercase tracking-widest bg-[var(--surface-editorial)] px-2.5 py-1 text-[var(--text-muted)] border border-[var(--border-editorial)] font-semibold">${s.type}</span>
-            <h3 class="font-serif text-2xl font-light mt-3 mb-1">${s.name}</h3>
-            <p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${s.city}</p>
-          </div>
-          <div class="pt-4 border-t border-[var(--border-editorial)]/60 flex justify-between items-center">
-            <a href="${s.url}" target="_blank" rel="noopener" class="text-xs font-semibold underline hover:text-stone-600 flex items-center space-x-1">
-              <span>Website besuchen</span>
-              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-            </a>
-            <button onclick="navigateTo('account')" class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-[#1a1918] text-white hover:bg-stone-800 transition-colors">Termin</button>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function filterStoreLocator() {
-      const search = document.getElementById('locatorSearchInput').value.toLowerCase();
-      const cat = document.getElementById('locatorCategorySelect').value;
-      const filtered = STORE_DATABASE.filter(s => {
-        const mS = s.name.toLowerCase().includes(search) || s.city.toLowerCase().includes(search);
-        const mC = cat === '' || s.type === cat;
-        return mS && mC;
-      });
-      renderStoreLocatorGrid(filtered);
-    }
-
-    function resetStoreLocatorFilters() {
-      document.getElementById('locatorSearchInput').value = '';
-      document.getElementById('locatorCategorySelect').value = '';
-      renderStoreLocatorGrid();
-    }
-
-    function renderStoreDirectory() {
-      const list = document.getElementById('store-directory-list');
-      list.innerHTML = STORE_DATABASE.map(s => `
-        <div class="pb-3 border-b border-[var(--border-editorial)] flex justify-between items-center">
-          <div>
-            <strong class="font-medium">${s.name}</strong>
-            <span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span>
-          </div>
-          <a href="${s.url}" target="_blank" rel="noopener" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
-            <span>Website</span>
-            <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
-          </a>
-        </div>
-      `).join('');
-    }
-
-    /* ============================================================
-       KONFIGURATOR
-       ============================================================ */
-    function setConfigFrame(colorClass) {
-      document.getElementById('config-frame-preview').className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
-    }
-
-    function setConfigLens(lensClass) {
-      document.getElementById('config-lens-left').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
-      document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
-    }
-
-    /* ============================================================
-       HERO SLIDER
-       ============================================================ */
-    function setupHeroSlider() {
-      const container = document.getElementById('hero-slides');
-      const label = document.getElementById('hero-slide-label');
-      const desc = document.getElementById('hero-description');
-      container.innerHTML = '';
-
-      HERO_SLIDES.forEach((slide, i) => {
-        const img = document.createElement('img');
-        img.src = slide.img;
-        img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
-        img.alt = slide.label;
-        container.appendChild(img);
-      });
-
-      function updateSlide(index) {
-        const imgs = container.querySelectorAll('img');
-        imgs.forEach((img, i) => {
-          img.classList.toggle('opacity-100', i === index);
-          img.classList.toggle('opacity-0', i !== index);
-        });
-        if (label) label.textContent = HERO_SLIDES[index].label;
-        if (desc) desc.textContent = HERO_SLIDES[index].description;
-        currentBrand = HERO_SLIDES[index].label;
-        if (label) label.onclick = () => openBrandModal(currentBrand);
-        if (desc) desc.onclick = () => openBrandModal(currentBrand);
-      }
-
-      updateSlide(0);
-
-      const hero = document.getElementById('hero');
-
-      hero.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, { passive: true });
-
-      hero.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        const d = touchStartX - touchEndX;
-        if (Math.abs(d) > 50) {
-          if (d > 0) nextSlide();
-          else prevSlide();
-        }
-      }, { passive: true });
-
-      let mouseDown = false;
-      let mouseStartX = 0;
-
-      hero.addEventListener('mousedown', e => {
-        mouseDown = true;
-        mouseStartX = e.screenX;
-      });
-
-      hero.addEventListener('mouseup', e => {
-        if (mouseDown) {
-          const d = mouseStartX - e.screenX;
-          if (Math.abs(d) > 50) {
-            if (d > 0) nextSlide();
-            else prevSlide();
-          }
-          mouseDown = false;
-        }
-      });
-
-      hero.addEventListener('mouseleave', () => {
-        mouseDown = false;
-      });
-
-      function nextSlide() {
-        heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
-        updateSlide(heroSlideIndex);
-      }
-
-      function prevSlide() {
-        heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
-        updateSlide(heroSlideIndex);
-      }
-
-      let autoInterval = setInterval(nextSlide, 6000);
-
-      hero.addEventListener('touchstart', () => {
-        clearInterval(autoInterval);
-        autoInterval = setInterval(nextSlide, 6000);
-      }, { passive: true });
-
-      hero.addEventListener('mousedown', () => {
-        clearInterval(autoInterval);
-        autoInterval = setInterval(nextSlide, 6000);
-      });
-
-      if (label) label.onclick = () => openBrandModal(currentBrand);
-      if (desc) desc.onclick = () => openBrandModal(currentBrand);
-    }
-
-    /* ============================================================
-       NEWSLETTER & SCROLL-ANIMATIONEN
-       ============================================================ */
-    function subscribeNewsletter() {
-      const email = document.getElementById('newsletter-email').value;
-      if (!email.includes('@')) {
-        showToast('Gültige E-Mail erforderlich');
-        return;
-      }
-      showToast('Vielen Dank für Ihre Anmeldung.');
-      document.getElementById('newsletter-email').value = '';
-    }
-
-    function setupScrollAnimations() {
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) e.target.classList.add('visible');
-        });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    }
-
-    /* ============================================================
-       ZULETZT ANGESEHENE PRODUKTE
-       ============================================================ */
-    function renderRecentlyViewed() {
-      const section = document.getElementById('recently-viewed-section');
-      const container = document.getElementById('recently-viewed-container');
-      if (!section || !container) return;
-      if (recentlyViewed.length === 0) {
-        section.classList.add('hidden');
-        return;
-      }
-      section.classList.remove('hidden');
-      container.innerHTML = '';
-      recentlyViewed.forEach(pid => {
-        const p = PRODUCTS.find(x => String(x.id) === String(pid));
-        if (!p) return;
-        const card = document.createElement('div');
-        card.className = 'recent-card product-card group cursor-pointer bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-3';
-        card.innerHTML = `
-          <div class="img-zoom-container mb-2" onclick="openProductModal('${p.id}')">
-            <img src="${p.img}" alt="${p.name}" class="w-full h-32 object-cover" loading="lazy">
-          </div>
-          <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p>
-          <h4 class="font-serif text-sm font-light truncate">${p.name}</h4>
-          <p class="text-xs font-medium mt-1">${p.price}</p>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    /* ============================================================
-       INITIALISIERUNG
-       ============================================================ */
-    window.addEventListener('DOMContentLoaded', async function() {
-      document.body.classList.add('intro-active');
-      document.body.style.overflow = 'hidden';
-
-      // 1. Live-Daten laden (oder Fallback)
-      await loadLiveData();
-
-      // 2. Statische UI-Elemente rendern
-      renderCountryFilters();
-      setupHeroSlider();
-      renderStoreLocatorGrid();
-      renderStoreDirectory();
-      updateCartUI();
-      updateWishlistUI();
-      setupScrollAnimations();
-
-      // 3. Initiale Route anwenden (berücksichtigt vorhandenen Hash)
-      if (!location.hash) {
-        // Sauber initialisieren ohne History-Eintrag zu erzeugen
-        history.replaceState(null, '', '#home');
-      }
-      applyRoute();
-
-      // 4. Produkte rendern (erst nachdem Daten geladen sind)
-      filterProducts();
-      renderRecentlyViewed();
-    });
-  </script>
-</body>
-</html>
+            <span class="text-[9px] uppercase tracking-wid
