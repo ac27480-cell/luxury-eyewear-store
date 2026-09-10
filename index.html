@@ -1699,4 +1699,476 @@
           const name = this.dataset.name;
           const icon = this.querySelector('i');
           if (wishlist.includes(name)) {
-            wishlist = wishlist.filter(x =>
+            wishlist = wishlist.filter(x => x !== name);
+            icon.className = 'fa-regular fa-heart';
+            showToast('Entfernt');
+          } else {
+            wishlist.push(name);
+            icon.className = 'fa-solid fa-heart text-rose-600';
+            showToast('Gespeichert');
+          }
+          persistWishlist();
+        });
+      });
+    }
+
+    function filterProducts() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const maxPrice = parseInt(document.getElementById('price-range').value);
+      document.getElementById('price-output').innerText = maxPrice + ' €';
+      renderProducts(q, maxPrice);
+    }
+
+    function debouncedSearch() {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(filterProducts, 300);
+    }
+
+    /* ============================================================
+       LÄNDERFILTER
+       ============================================================ */
+    function renderCountryFilters() {
+      const bar = document.getElementById('country-filter-bar');
+      bar.innerHTML = '';
+      Object.keys(INDEPENDENT_LABELS).forEach((country, index) => {
+        const btn = document.createElement('button');
+        btn.className = `filter-btn text-[10px] uppercase border border-[var(--border-editorial)] px-4 py-2 hover:border-black transition-colors whitespace-nowrap ${index === 0 ? 'active' : ''}`;
+        btn.textContent = country;
+        btn.onclick = () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderLabelTags(country);
+        };
+        bar.appendChild(btn);
+      });
+      renderLabelTags(Object.keys(INDEPENDENT_LABELS)[0]);
+    }
+
+    function renderLabelTags(country) {
+      const container = document.getElementById('selected-country-labels');
+      container.innerHTML = '';
+      const bgColorClass = COUNTRY_COLORS[country] || 'bg-[var(--surface-editorial)]';
+      INDEPENDENT_LABELS[country].forEach(label => {
+        const tag = document.createElement('span');
+        tag.className = `text-[10px] ${bgColorClass} border border-[var(--border-editorial)] px-3 py-1.5 tracking-wider text-[var(--text-main)] font-medium cursor-pointer hover:border-black transition-colors`;
+        tag.textContent = label;
+        tag.onclick = () => {
+          const brandMatch = label.match(/^([^(]+)/);
+          document.getElementById('searchInput').value = brandMatch ? brandMatch[1].trim() : label;
+          filterProducts();
+        };
+        container.appendChild(tag);
+      });
+    }
+
+    /* ============================================================
+       WARENKORB
+       ============================================================ */
+    function addToCart(name, price, img, storeName) {
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.quantity = (existing.quantity || 1) + 1;
+      } else {
+        cart.push({ name, price, img, storeName, quantity: 1 });
+      }
+      persistCart();
+      showToast(name + ' hinzugefügt');
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      persistCart();
+    }
+
+    function changeQuantity(index, delta) {
+      if (cart[index]) {
+        const n = (cart[index].quantity || 1) + delta;
+        if (n < 1) {
+          removeFromCart(index);
+          return;
+        }
+        cart[index].quantity = n;
+        persistCart();
+      }
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cart-count');
+      const container = document.getElementById('cart-container');
+      const summary = document.getElementById('cart-summary');
+      const totalEl = document.getElementById('cart-total');
+
+      const totalItems = cart.reduce((s, i) => s + (i.quantity || 1), 0);
+      badge.innerText = totalItems;
+      badge.classList.toggle('hidden', totalItems === 0);
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihr Warenkorb ist derzeit leer.</p>';
+        summary.classList.add('hidden');
+        totalEl.innerText = '0 €';
+        return;
+      }
+
+      let total = 0;
+      container.innerHTML = cart.map((item, index) => {
+        const p = parsePrice(item.price);
+        const sub = p * (item.quantity || 1);
+        total += sub;
+        return `
+          <div class="flex justify-between items-center p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]">
+            <div class="flex items-center space-x-4">
+              <img src="${item.img}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]" alt="${item.name}">
+              <div>
+                <p class="text-xs font-medium">${item.name}</p>
+                <p class="text-[10px] text-[var(--text-muted)]">${item.price} — ${item.storeName || 'Optiker'}</p>
+                <div class="flex items-center gap-2 mt-1">
+                  <button onclick="changeQuantity(${index}, -1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">-</button>
+                  <span class="text-xs">${item.quantity || 1}</span>
+                  <button onclick="changeQuantity(${index}, 1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="text-xs font-medium">${formatPrice(sub)}</span>
+              <button onclick="removeFromCart(${index})" class="text-lg text-[var(--text-muted)] hover:text-black" aria-label="Entfernen">&times;</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      totalEl.innerText = formatPrice(total);
+      summary.classList.remove('hidden');
+    }
+
+    /* ============================================================
+       WUNSCHLISTE
+       ============================================================ */
+    function updateWishlistUI() {
+      const badge = document.getElementById('wishlist-count');
+      const container = document.getElementById('wishlist-container');
+      badge.innerText = wishlist.length;
+      badge.classList.toggle('hidden', wishlist.length === 0);
+
+      if (wishlist.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihre Wunschliste ist leer.</p>';
+      } else {
+        container.innerHTML = wishlist.map(item => `
+          <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex justify-between items-center">
+            <span class="text-xs font-medium">${item}</span>
+            <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">Gespeichert</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    function shareWishlist() {
+      if (wishlist.length === 0) {
+        showToast('Wunschliste ist leer');
+        return;
+      }
+      window.open(`https://wa.me/?text=${encodeURIComponent('Meine LUXEVUE Auswahl: ' + wishlist.join(', '))}`, '_blank');
+    }
+
+    /* ============================================================
+       CHECKOUT
+       ============================================================ */
+    function renderCheckout() {
+      const container = document.getElementById('checkout-items');
+      const totalEl = document.getElementById('checkout-total');
+      let total = 0;
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)]">Ihr Warenkorb ist leer.</p>';
+        totalEl.innerText = '0 €';
+        return;
+      }
+      container.innerHTML = cart.map(item => {
+        const p = parsePrice(item.price);
+        const sub = p * (item.quantity || 1);
+        total += sub;
+        return `<div class="flex justify-between text-sm"><span>${item.name} (${item.quantity || 1}x)</span><span>${formatPrice(sub)}</span></div>`;
+      }).join('');
+      totalEl.innerText = formatPrice(total);
+    }
+
+    function placeOrder() {
+      const agb = document.getElementById('checkout-agb');
+      if (!agb.checked) {
+        showToast('Bitte akzeptieren Sie die AGB.');
+        return;
+      }
+      const firstname = document.getElementById('checkout-firstname').value.trim();
+      const lastname = document.getElementById('checkout-lastname').value.trim();
+      const email = document.getElementById('checkout-email').value.trim();
+      const address = document.getElementById('checkout-address').value.trim();
+      if (!firstname || !lastname || !email || !address) {
+        showToast('Bitte füllen Sie alle Felder aus.');
+        return;
+      }
+      if (!document.querySelector('input[name="payment"]:checked')) {
+        showToast('Bitte wählen Sie eine Zahlungsart.');
+        return;
+      }
+      showToast('Vielen Dank für Ihre Bestellung! Sie erhalten eine Bestätigung per E-Mail.');
+      cart = [];
+      persistCart();
+      navigateTo('home');
+    }
+
+    /* ============================================================
+       STORE LOCATOR
+       ============================================================ */
+    function renderStoreLocatorGrid(filteredStores) {
+      const container = document.getElementById('locator-grid');
+      const stores = filteredStores || STORE_DATABASE;
+      container.innerHTML = '';
+      if (stores.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-8 text-center">Keine passenden Partneroptiker gefunden.</p>';
+        return;
+      }
+      stores.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'p-6 bg-white border border-[var(--border-editorial)] flex flex-col justify-between space-y-4 hover:border-black transition-colors';
+        card.innerHTML = `
+          <div>
+            <span class="text-[9px] uppercase tracking-widest bg-[var(--surface-editorial)] px-2.5 py-1 text-[var(--text-muted)] border border-[var(--border-editorial)] font-semibold">${s.type}</span>
+            <h3 class="font-serif text-2xl font-light mt-3 mb-1">${s.name}</h3>
+            <p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${s.city}</p>
+          </div>
+          <div class="pt-4 border-t border-[var(--border-editorial)]/60 flex justify-between items-center">
+            <a href="${s.url}" target="_blank" rel="noopener" class="text-xs font-semibold underline hover:text-stone-600 flex items-center space-x-1">
+              <span>Website besuchen</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </a>
+            <button onclick="navigateTo('account')" class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-[#1a1918] text-white hover:bg-stone-800 transition-colors">Termin</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterStoreLocator() {
+      const search = document.getElementById('locatorSearchInput').value.toLowerCase();
+      const cat = document.getElementById('locatorCategorySelect').value;
+      const filtered = STORE_DATABASE.filter(s => {
+        const mS = s.name.toLowerCase().includes(search) || s.city.toLowerCase().includes(search);
+        const mC = cat === '' || s.type === cat;
+        return mS && mC;
+      });
+      renderStoreLocatorGrid(filtered);
+    }
+
+    function resetStoreLocatorFilters() {
+      document.getElementById('locatorSearchInput').value = '';
+      document.getElementById('locatorCategorySelect').value = '';
+      renderStoreLocatorGrid();
+    }
+
+    function renderStoreDirectory() {
+      const list = document.getElementById('store-directory-list');
+      list.innerHTML = STORE_DATABASE.map(s => `
+        <div class="pb-3 border-b border-[var(--border-editorial)] flex justify-between items-center">
+          <div>
+            <strong class="font-medium">${s.name}</strong>
+            <span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span>
+          </div>
+          <a href="${s.url}" target="_blank" rel="noopener" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
+            <span>Website</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
+          </a>
+        </div>
+      `).join('');
+    }
+
+    /* ============================================================
+       KONFIGURATOR
+       ============================================================ */
+    function setConfigFrame(colorClass) {
+      document.getElementById('config-frame-preview').className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
+    }
+
+    function setConfigLens(lensClass) {
+      document.getElementById('config-lens-left').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
+      document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
+    }
+
+    /* ============================================================
+       HERO SLIDER
+       ============================================================ */
+    function setupHeroSlider() {
+      const container = document.getElementById('hero-slides');
+      const label = document.getElementById('hero-slide-label');
+      const desc = document.getElementById('hero-description');
+      container.innerHTML = '';
+
+      HERO_SLIDES.forEach((slide, i) => {
+        const img = document.createElement('img');
+        img.src = slide.img;
+        img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
+        img.alt = slide.label;
+        container.appendChild(img);
+      });
+
+      function updateSlide(index) {
+        const imgs = container.querySelectorAll('img');
+        imgs.forEach((img, i) => {
+          img.classList.toggle('opacity-100', i === index);
+          img.classList.toggle('opacity-0', i !== index);
+        });
+        if (label) label.textContent = HERO_SLIDES[index].label;
+        if (desc) desc.textContent = HERO_SLIDES[index].description;
+        currentBrand = HERO_SLIDES[index].label;
+        if (label) label.onclick = () => openBrandModal(currentBrand);
+        if (desc) desc.onclick = () => openBrandModal(currentBrand);
+      }
+
+      updateSlide(0);
+
+      const hero = document.getElementById('hero');
+
+      hero.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      hero.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        const d = touchStartX - touchEndX;
+        if (Math.abs(d) > 50) {
+          if (d > 0) nextSlide();
+          else prevSlide();
+        }
+      }, { passive: true });
+
+      let mouseDown = false;
+      let mouseStartX = 0;
+
+      hero.addEventListener('mousedown', e => {
+        mouseDown = true;
+        mouseStartX = e.screenX;
+      });
+
+      hero.addEventListener('mouseup', e => {
+        if (mouseDown) {
+          const d = mouseStartX - e.screenX;
+          if (Math.abs(d) > 50) {
+            if (d > 0) nextSlide();
+            else prevSlide();
+          }
+          mouseDown = false;
+        }
+      });
+
+      hero.addEventListener('mouseleave', () => {
+        mouseDown = false;
+      });
+
+      function nextSlide() {
+        heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
+        updateSlide(heroSlideIndex);
+      }
+
+      function prevSlide() {
+        heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
+        updateSlide(heroSlideIndex);
+      }
+
+      let autoInterval = setInterval(nextSlide, 6000);
+
+      hero.addEventListener('touchstart', () => {
+        clearInterval(autoInterval);
+        autoInterval = setInterval(nextSlide, 6000);
+      }, { passive: true });
+
+      hero.addEventListener('mousedown', () => {
+        clearInterval(autoInterval);
+        autoInterval = setInterval(nextSlide, 6000);
+      });
+
+      if (label) label.onclick = () => openBrandModal(currentBrand);
+      if (desc) desc.onclick = () => openBrandModal(currentBrand);
+    }
+
+    /* ============================================================
+       NEWSLETTER & SCROLL-ANIMATIONEN
+       ============================================================ */
+    function subscribeNewsletter() {
+      const email = document.getElementById('newsletter-email').value;
+      if (!email.includes('@')) {
+        showToast('Gültige E-Mail erforderlich');
+        return;
+      }
+      showToast('Vielen Dank für Ihre Anmeldung.');
+      document.getElementById('newsletter-email').value = '';
+    }
+
+    function setupScrollAnimations() {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) e.target.classList.add('visible');
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    /* ============================================================
+       ZULETZT ANGESEHENE PRODUKTE
+       ============================================================ */
+    function renderRecentlyViewed() {
+      const section = document.getElementById('recently-viewed-section');
+      const container = document.getElementById('recently-viewed-container');
+      if (!section || !container) return;
+      if (recentlyViewed.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+      section.classList.remove('hidden');
+      container.innerHTML = '';
+      recentlyViewed.forEach(pid => {
+        const p = PRODUCTS.find(x => String(x.id) === String(pid));
+        if (!p) return;
+        const card = document.createElement('div');
+        card.className = 'recent-card product-card group cursor-pointer bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-3';
+        card.innerHTML = `
+          <div class="img-zoom-container mb-2" onclick="openProductModal('${p.id}')">
+            <img src="${p.img}" alt="${p.name}" class="w-full h-32 object-cover" loading="lazy">
+          </div>
+          <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p>
+          <h4 class="font-serif text-sm font-light truncate">${p.name}</h4>
+          <p class="text-xs font-medium mt-1">${p.price}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    /* ============================================================
+       INITIALISIERUNG
+       ============================================================ */
+    window.addEventListener('DOMContentLoaded', async function() {
+      document.body.classList.add('intro-active');
+      document.body.style.overflow = 'hidden';
+
+      // 1. Live-Daten laden (oder Fallback)
+      await loadLiveData();
+
+      // 2. Statische UI-Elemente rendern
+      renderCountryFilters();
+      setupHeroSlider();
+      renderStoreLocatorGrid();
+      renderStoreDirectory();
+      updateCartUI();
+      updateWishlistUI();
+      setupScrollAnimations();
+
+      // 3. Initiale Route anwenden (berücksichtigt vorhandenen Hash)
+      if (!location.hash) {
+        // Sauber initialisieren ohne History-Eintrag zu erzeugen
+        history.replaceState(null, '', '#home');
+      }
+      applyRoute();
+
+      // 4. Produkte rendern (erst nachdem Daten geladen sind)
+      filterProducts();
+      renderRecentlyViewed();
+    });
+  </script>
+</body>
+</html>
