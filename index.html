@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LUXEVUE — Independent Eyewear</title>
 
-  <!-- High-End Webfonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -117,13 +116,14 @@
     .modal-card .overflow-y-auto::-webkit-scrollbar { width: 4px; }
     .modal-card .overflow-y-auto::-webkit-scrollbar-thumb { background-color: var(--border-editorial); }
 
-    /* ===== EDITORIAL INPUTS ===== */
+    /* ===== EDITORIAL INPUTS (feiner) ===== */
     .editorial-input {
       width: 100%;
       background: transparent;
       border: none;
-      border-bottom: 1px solid var(--border-editorial);
-      padding: 0.75rem 0;
+      /* 0.5px Unterstrich – auf Retina echte Haarlinie */
+      border-bottom: 0.5px solid rgba(232, 228, 220, 0.75);
+      padding: 0.65rem 0;
       font-size: 0.9rem;
       font-family: var(--font-sans);
       font-weight: 300;
@@ -134,11 +134,11 @@
       appearance: none;
       -webkit-appearance: none;
     }
-    .editorial-input:hover { border-bottom-color: #cfc9bd; }
+    .editorial-input:hover { border-bottom-color: rgba(115, 112, 107, 0.4); }
     .editorial-input:focus { border-bottom-color: var(--text-main); }
     .editorial-input::placeholder {
       color: var(--text-muted);
-      opacity: 0.45;
+      opacity: 0.4;
       font-style: italic;
       font-family: var(--font-serif);
       font-size: 1rem;
@@ -149,13 +149,13 @@
       font-size: 0.9rem;
     }
     .editorial-input[type="date"]::-webkit-calendar-picker-indicator {
-      opacity: 0.35;
+      opacity: 0.3;
       cursor: pointer;
       transition: opacity 0.2s ease;
     }
-    .editorial-input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+    .editorial-input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 0.9; }
 
-    /* ===== MOBILE MENU ===== */
+    /* ===== MOBILE MENU (feiner, dezenter) ===== */
     #mobile-menu {
       opacity: 0;
       visibility: hidden;
@@ -178,10 +178,14 @@
     #mobile-menu.menu-open .mobile-menu-link:nth-child(3) { animation-delay: 0.22s; }
     #mobile-menu.menu-open .mobile-menu-link:nth-child(4) { animation-delay: 0.28s; }
     @keyframes menu-item-in {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .mobile-menu-link { opacity: 0; }
+    .mobile-menu-link {
+      opacity: 0;
+      /* feine 0.5px Trennlinie, weich abgesetzt */
+      border-bottom: 0.5px solid rgba(232, 228, 220, 0.55);
+    }
     #mobile-menu.menu-open .mobile-menu-link { opacity: 1; }
 
     /* ===== SKELETON LOADER ===== */
@@ -461,41 +465,41 @@
     </div>
   </header>
 
-  <!-- ===== MOBILE MENU (Full-Screen Editorial) ===== -->
+  <!-- ===== MOBILE MENU (Full-Screen, feiner) ===== -->
   <div id="mobile-menu" class="fixed inset-0 z-50 hidden md:hidden" role="dialog" aria-modal="true" aria-label="Hauptnavigation">
     <div class="absolute inset-0 bg-[var(--bg-editorial)]"></div>
     <div class="menu-panel relative h-full flex flex-col px-8 pb-10 overflow-y-auto no-scrollbar">
       <!-- Top bar -->
-      <div class="flex items-center justify-between mb-20">
+      <div class="flex items-center justify-between mb-16">
         <span class="text-2xl font-serif tracking-[0.25em] uppercase font-light">LUXEVUE</span>
         <button id="mobile-menu-close" aria-label="Menü schließen"
-                class="text-3xl text-[var(--text-muted)] hover:text-black transition-colors p-2 -mr-2 leading-none">
+                class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors p-2 -mr-2 leading-none font-light">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
       <!-- Navigation -->
       <nav class="flex flex-col">
-        <button onclick="navigateToMobile('home')" class="mobile-menu-link group text-left py-6 border-b border-[var(--border-editorial)] flex items-baseline justify-between">
-          <span class="text-3xl font-serif font-light group-hover:italic transition-all duration-300">Kollektion</span>
-          <span class="text-[10px] tracking-[0.3em] text-[var(--text-muted)]">01</span>
+        <button onclick="navigateToMobile('home')" class="mobile-menu-link group text-left py-5 flex items-baseline justify-between">
+          <span class="text-2xl font-serif font-light group-hover:italic transition-all duration-300">Kollektion</span>
+          <span class="text-[9px] tracking-[0.35em] text-[var(--text-muted)] opacity-60">01</span>
         </button>
-        <button onclick="navigateToMobile('locator')" class="mobile-menu-link group text-left py-6 border-b border-[var(--border-editorial)] flex items-baseline justify-between">
-          <span class="text-3xl font-serif font-light group-hover:italic transition-all duration-300">Store-Finder</span>
-          <span class="text-[10px] tracking-[0.3em] text-[var(--text-muted)]">02</span>
+        <button onclick="navigateToMobile('locator')" class="mobile-menu-link group text-left py-5 flex items-baseline justify-between">
+          <span class="text-2xl font-serif font-light group-hover:italic transition-all duration-300">Store-Finder</span>
+          <span class="text-[9px] tracking-[0.35em] text-[var(--text-muted)] opacity-60">02</span>
         </button>
-        <button onclick="navigateToMobile('configurator')" class="mobile-menu-link group text-left py-6 border-b border-[var(--border-editorial)] flex items-baseline justify-between">
-          <span class="text-3xl font-serif font-light group-hover:italic transition-all duration-300">Konfigurator</span>
-          <span class="text-[10px] tracking-[0.3em] text-[var(--text-muted)]">03</span>
+        <button onclick="navigateToMobile('configurator')" class="mobile-menu-link group text-left py-5 flex items-baseline justify-between">
+          <span class="text-2xl font-serif font-light group-hover:italic transition-all duration-300">Konfigurator</span>
+          <span class="text-[9px] tracking-[0.35em] text-[var(--text-muted)] opacity-60">03</span>
         </button>
-        <button onclick="navigateToMobile('account')" class="mobile-menu-link group text-left py-6 border-b border-[var(--border-editorial)] flex items-baseline justify-between">
-          <span class="text-3xl font-serif font-light group-hover:italic transition-all duration-300">Stores & Optiker</span>
-          <span class="text-[10px] tracking-[0.3em] text-[var(--text-muted)]">04</span>
+        <button onclick="navigateToMobile('account')" class="mobile-menu-link group text-left py-5 flex items-baseline justify-between">
+          <span class="text-2xl font-serif font-light group-hover:italic transition-all duration-300">Stores & Optiker</span>
+          <span class="text-[9px] tracking-[0.35em] text-[var(--text-muted)] opacity-60">04</span>
         </button>
       </nav>
 
       <!-- Footer -->
-      <div class="mt-auto pt-12 text-[10px] uppercase tracking-[0.3em] text-[var(--text-muted)]">
+      <div class="mt-auto pt-12 text-[10px] uppercase tracking-[0.3em] text-[var(--text-muted)] opacity-70">
         <p class="mb-1">Independent Eyewear</p>
         <p class="italic font-serif text-sm normal-case tracking-normal text-[var(--text-muted)]">Kuratiert & handgefertigt weltweit</p>
       </div>
@@ -814,7 +818,7 @@
     </div>
   </section>
 
-  <!-- ===== PAGE: STORES & OPTIKER (Refined) ===== -->
+  <!-- ===== PAGE: STORES & OPTIKER ===== -->
   <section id="page-account" class="page-content hidden max-w-6xl mx-auto px-6 lg:px-12 py-16">
     <div class="mb-14 pb-6 border-b border-[var(--border-editorial)]">
       <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-3">Fachhandel & Beratung</p>
@@ -1432,7 +1436,7 @@
       const toggle = document.getElementById('mobile-menu-toggle');
       if (!menu) return;
       menu.classList.remove('hidden');
-      void menu.offsetWidth; // reflow
+      void menu.offsetWidth;
       menu.classList.add('menu-open');
       if (toggle) toggle.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
@@ -2020,13 +2024,13 @@
       renderStoreLocatorGrid();
     }
 
-    /* ===== STORE DIRECTORY (refined) ===== */
+    /* ===== STORE DIRECTORY ===== */
     function renderStoreDirectory() {
       const list = document.getElementById('store-directory-list');
       if (!list) return;
       list.innerHTML = STORE_DATABASE.map(s => `
         <a href="${s.url}" target="_blank" rel="noopener"
-           class="group flex justify-between items-center py-4 border-b border-[var(--border-editorial)] last:border-0 hover:pl-1 transition-all duration-300">
+           class="group flex justify-between items-center py-4 border-b border-[var(--border-editorial)]/60 last:border-0 hover:pl-1 transition-all duration-300">
           <div class="pr-4">
             <strong class="font-medium text-sm text-stone-900 block group-hover:text-black transition-colors">${s.name}</strong>
             <span class="block text-[10px] text-[var(--text-muted)] mt-1 tracking-wider">
