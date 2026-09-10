@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LUXEVUE — Independent Eyewear</title>
 
+  <!-- High-End Webfonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -23,6 +24,7 @@
       --text-muted: #73706b;
       --gold-accent: #c9a87c;
     }
+
     body {
       background-color: var(--bg-editorial);
       color: var(--text-main);
@@ -31,33 +33,73 @@
       margin: 0;
       overflow-x: hidden;
     }
-    h1, h2, h3, .font-serif { font-family: var(--font-serif); }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .img-zoom-container { overflow: hidden; }
-    .img-zoom-container img { transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
-    .product-card:hover .img-zoom-container img { transform: scale(1.04); }
-    .filter-btn { transition: all 0.25s ease; letter-spacing: 0.12em; }
+
+    h1,
+    h2,
+    h3,
+    .font-serif {
+      font-family: var(--font-serif);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .img-zoom-container {
+      overflow: hidden;
+    }
+    .img-zoom-container img {
+      transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .product-card:hover .img-zoom-container img {
+      transform: scale(1.04);
+    }
+
+    .filter-btn {
+      transition: all 0.25s ease;
+      letter-spacing: 0.12em;
+    }
     .filter-btn.active {
       background-color: var(--text-main);
       color: #ffffff;
       border-color: var(--text-main);
     }
+
     .fade-in {
       opacity: 0;
       transform: translateY(16px);
       transition: opacity 0.8s ease, transform 0.8s ease;
     }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-    #toast { transition: opacity 0.3s ease, transform 0.3s ease; }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #toast {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
     .nav-btn {
       cursor: pointer;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
     }
-    .nav-btn:active { opacity: 0.6; }
-    .hero-label-click { cursor: pointer; transition: opacity 0.3s ease; }
-    .hero-label-click:hover { opacity: 0.7; }
+    .nav-btn:active {
+      opacity: 0.6;
+    }
+
+    .hero-label-click {
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+    .hero-label-click:hover {
+      opacity: 0.7;
+    }
+
     .payment-option {
       display: flex;
       align-items: center;
@@ -68,7 +110,9 @@
       transition: background-color 0.2s ease;
       cursor: pointer;
     }
-    .payment-option:hover { background-color: #e8e4dc; }
+    .payment-option:hover {
+      background-color: #e8e4dc;
+    }
     .payment-option input[type="radio"] {
       accent-color: var(--text-main);
       width: 16px;
@@ -89,6 +133,7 @@
       letter-spacing: 0.02em;
       color: var(--text-main);
     }
+
     .modal-overlay {
       background-color: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(4px);
@@ -100,14 +145,24 @@
       border: 1px solid var(--border-editorial);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     }
-    @media (min-width: 640px) { .modal-card { width: 75%; } }
-    @media (min-width: 1024px) { .modal-card { width: 50%; } }
+    @media (min-width: 640px) {
+      .modal-card { width: 75%; }
+    }
+    @media (min-width: 1024px) {
+      .modal-card { width: 50%; }
+    }
     .modal-card .overflow-y-auto {
       scrollbar-width: thin;
       scrollbar-color: var(--border-editorial) transparent;
     }
-    .modal-card .overflow-y-auto::-webkit-scrollbar { width: 4px; }
-    .modal-card .overflow-y-auto::-webkit-scrollbar-thumb { background-color: var(--border-editorial); }
+    .modal-card .overflow-y-auto::-webkit-scrollbar {
+      width: 4px;
+    }
+    .modal-card .overflow-y-auto::-webkit-scrollbar-thumb {
+      background-color: var(--border-editorial);
+    }
+
+    /* ===== INTRO OVERLAY ===== */
     #intro-overlay {
       position: fixed;
       inset: 0;
@@ -129,6 +184,7 @@
       visibility: hidden;
       pointer-events: none;
     }
+
     .intro-title {
       font-family: var(--font-serif);
       font-weight: 300;
@@ -156,21 +212,30 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+
     .intro-sub {
       font-size: clamp(0.7rem, 1.5vw, 1rem);
       letter-spacing: 0.35em;
       text-transform: uppercase;
       color: #b5a58a;
       margin-top: 1rem;
-      transition: opacity 1.2s ease 0.3s, transform 1.2s ease 0.3s, filter 1.2s ease 0.3s;
+      transition: opacity 1.2s ease 0.3s,
+                  transform 1.2s ease 0.3s,
+                  filter 1.2s ease 0.3s;
       opacity: 1;
       transform: translateY(0);
       filter: blur(0px);
     }
-    .intro-sub.dissolve { opacity: 0; transform: translateY(16px); filter: blur(6px); }
+    .intro-sub.dissolve {
+      opacity: 0;
+      transform: translateY(16px);
+      filter: blur(6px);
+    }
+
     #intro-overlay.dissolve-bg {
       background: radial-gradient(circle at 50% 40%, #3a3430 0%, #1a1918 60%, #0f0e0d 100%);
     }
+
     .intro-hint {
       position: absolute;
       bottom: 3rem;
@@ -184,12 +249,25 @@
       opacity: 0.6;
       transition: opacity 1s ease 0.6s;
     }
-    .intro-hint.dissolve { opacity: 0; }
-    @keyframes pulse-hint {
-      0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
-      50% { opacity: 0.9; transform: translateX(-50%) scale(1.02); }
+    .intro-hint.dissolve {
+      opacity: 0;
     }
-    body.intro-active { overflow: hidden; }
+    @keyframes pulse-hint {
+      0%,
+      100% {
+        opacity: 0.3;
+        transform: translateX(-50%) scale(1);
+      }
+      50% {
+        opacity: 0.9;
+        transform: translateX(-50%) scale(1.02);
+      }
+    }
+
+    body.intro-active {
+      overflow: hidden;
+    }
+
     .hero-description {
       font-size: 0.9rem;
       line-height: 1.4;
@@ -198,11 +276,19 @@
       transition: opacity 0.8s ease;
       cursor: pointer;
     }
-    .hero-description:hover { opacity: 0.7; }
-    @media (min-width: 768px) {
-      .hero-description { font-size: 1.1rem; max-width: 60%; }
+    .hero-description:hover {
+      opacity: 0.7;
     }
-    .recent-card { min-width: 200px; }
+    @media (min-width: 768px) {
+      .hero-description {
+        font-size: 1.1rem;
+        max-width: 60%;
+      }
+    }
+
+    .recent-card {
+      min-width: 200px;
+    }
   </style>
 </head>
 <body>
@@ -250,7 +336,7 @@
     </div>
   </header>
 
-  <!-- ===== HERO ===== -->
+  <!-- ===== HERO – INTERAKTIVE MANUFAKTUREN-SLIDESHOW ===== -->
   <section id="hero" class="relative h-[75vh] min-h-[500px] bg-stone-900 text-white overflow-hidden fade-in touch-manipulation">
     <div id="hero-slides" class="absolute inset-0"></div>
     <div class="absolute inset-0 bg-black/50 z-10"></div>
@@ -332,16 +418,19 @@
         <h2 class="text-3xl font-serif font-light tracking-wide">Kuratisierte Auswahl</h2>
         <span class="text-xs tracking-widest uppercase text-[var(--text-muted)]">Direkte Bezugsquellen</span>
       </div>
+
       <div class="mb-8 flex items-center gap-4">
         <label for="price-range" class="text-[10px] uppercase tracking-widest text-[var(--text-muted)] whitespace-nowrap">Preis bis: <span id="price-output">1000 €</span></label>
         <input type="range" id="price-range" min="100" max="1000" value="1000" step="50" class="w-full h-1 bg-stone-300 appearance-none cursor-pointer" oninput="filterProducts()">
       </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16" id="product-list"></div>
       <div id="loading-indicator" class="text-center py-12 text-xs text-[var(--text-muted)] tracking-widest uppercase">
         <i class="fa-solid fa-spinner fa-spin mr-2"></i> Lade Produkte...
       </div>
     </section>
 
+    <!-- ===== INSPIRATION & EDITORIAL SEKTION ===== -->
     <section class="mb-24 py-16 px-6 lg:px-12 bg-white border border-[var(--border-editorial)] fade-in">
       <div class="max-w-4xl mx-auto text-center mb-16">
         <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-3">Inspiration & Perspektiven</p>
@@ -509,12 +598,36 @@
       <div>
         <h2 class="text-sm font-semibold uppercase tracking-wider mb-4">Zahlungsart</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <label class="payment-option"><input type="radio" name="payment" value="creditcard" checked /><i class="fa-regular fa-credit-card payment-icon"></i><span class="payment-label">Kreditkarte</span></label>
-          <label class="payment-option"><input type="radio" name="payment" value="paypal" /><i class="fa-brands fa-paypal payment-icon"></i><span class="payment-label">PayPal</span></label>
-          <label class="payment-option"><input type="radio" name="payment" value="klarna" /><i class="fa-regular fa-clock payment-icon"></i><span class="payment-label">Klarna</span></label>
-          <label class="payment-option"><input type="radio" name="payment" value="applepay" /><i class="fa-brands fa-apple payment-icon"></i><span class="payment-label">Apple Pay</span></label>
-          <label class="payment-option"><input type="radio" name="payment" value="googlepay" /><i class="fa-brands fa-google-pay payment-icon"></i><span class="payment-label">Google Pay</span></label>
-          <label class="payment-option"><input type="radio" name="payment" value="vorkasse" /><i class="fa-regular fa-building-columns payment-icon"></i><span class="payment-label">Vorkasse</span></label>
+          <label class="payment-option">
+            <input type="radio" name="payment" value="creditcard" checked />
+            <i class="fa-regular fa-credit-card payment-icon"></i>
+            <span class="payment-label">Kreditkarte</span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="payment" value="paypal" />
+            <i class="fa-brands fa-paypal payment-icon"></i>
+            <span class="payment-label">PayPal</span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="payment" value="klarna" />
+            <i class="fa-regular fa-clock payment-icon"></i>
+            <span class="payment-label">Klarna</span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="payment" value="applepay" />
+            <i class="fa-brands fa-apple payment-icon"></i>
+            <span class="payment-label">Apple Pay</span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="payment" value="googlepay" />
+            <i class="fa-brands fa-google-pay payment-icon"></i>
+            <span class="payment-label">Google Pay</span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="payment" value="vorkasse" />
+            <i class="fa-solid fa-vault payment-icon"></i>
+            <span class="payment-label">Vorkasse</span>
+          </label>
         </div>
       </div>
       <div>
@@ -624,7 +737,7 @@
           <i class="fa-regular fa-clock" title="Klarna"></i>
           <i class="fa-brands fa-apple" title="Apple Pay"></i>
           <i class="fa-brands fa-google-pay" title="Google Pay"></i>
-          <i class="fa-regular fa-building-columns" title="Vorkasse"></i>
+          <i class="fa-solid fa-vault" title="Vorkasse"></i>
         </div>
         <p class="text-[10px] text-[var(--text-muted)] mt-3 leading-relaxed">
           Sichere Zahlung mit Ihren bevorzugten Methoden.
@@ -636,9 +749,14 @@
     </div>
   </footer>
 
+  <!-- ============================================================ -->
+  <!-- JAVASCRIPT -->
+  <!-- ============================================================ -->
   <script>
     /* ============================================================
        LIVE-DATENBANK-KONFIGURATION
+       Tragen Sie hier Ihre Sanity-Projekt-ID und den Datensatz ein.
+       Solange die Werte leer sind, werden die Beispieldaten genutzt.
        ============================================================ */
     const SANITY_CONFIG = {
       projectId: '', // z. B. 'abc12345'
@@ -653,7 +771,6 @@
       return `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}?query=${encodedQuery}`;
     }
 
-    // GROQ: Produkte laden und ALLE zugeordneten Stores mit auslesen
     const QUERY_PRODUCTS = `*[_type == "product"]{
       "id": _id,
       brand,
@@ -690,18 +807,33 @@
     );
 
     /* ============================================================
-       BRAND_DATA — Marken-Storys
+       BRAND_DATA — Marken-Storys für das Marken-Modal
        ============================================================ */
     const BRAND_DATA = {
-      'Andy Wolf': { story: 'Andy Wolf steht für exklusive Brillenmanufaktur aus Österreich. Jede Fassung wird mit höchster Präzision und nachhaltigem Bio-Acetat in Hartberg gefertigt. Die geometrische Linienführung und die Liebe zum Detail machen jede Brille zu einem Unikat.', img: IMAGE_PLACEHOLDER },
-      'MYKITA': { story: 'MYKITA vereint Berliner Ingenieurskunst mit avantgardistischem Design. Das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl ist ein Meilenstein der Eyewear-Entwicklung. Gefertigt im Herzen der Hauptstadt.', img: IMAGE_PLACEHOLDER },
-      'Lindberg': { story: 'Lindberg – dänischer Minimalismus in Reinform. Die schraubenlosen Titandraht-Designs sind federleicht und bieten maximalen Tragekomfort. Jede Brille ist ein Ausdruck skandinavischer Ästhetik und handwerklicher Perfektion.', img: IMAGE_PLACEHOLDER },
-      'Jacques Marie Mage': { story: 'Jacques Marie Mage – limitierte Auflagen aus Frankreich. Mit 10mm Acetat und charakteristischem Skulpturenschliff kreiert das Atelier zeitlose Meisterwerke, die Kunst und Handwerk vereinen. Jedes Modell ist ein Statement.', img: IMAGE_PLACEHOLDER },
-      'DITA Eyewear': { story: 'DITA Eyewear – japanische Präzision und amerikanisches Design. Die Acetat-Titan-Hybridkonstruktionen werden auf höchstem handwerklichem Niveau gefertigt und stehen für Langlebigkeit und zeitlosen Stil.', img: IMAGE_PLACEHOLDER }
+      'Andy Wolf': {
+        story: 'Andy Wolf steht für exklusive Brillenmanufaktur aus Österreich. Jede Fassung wird mit höchster Präzision und nachhaltigem Bio-Acetat in Hartberg gefertigt. Die geometrische Linienführung und die Liebe zum Detail machen jede Brille zu einem Unikat.',
+        img: IMAGE_PLACEHOLDER
+      },
+      'MYKITA': {
+        story: 'MYKITA vereint Berliner Ingenieurskunst mit avantgardistischem Design. Das patentierte, schraubenlose Gelenk aus ultraleichtem Edelstahl ist ein Meilenstein der Eyewear-Entwicklung. Gefertigt im Herzen der Hauptstadt.',
+        img: IMAGE_PLACEHOLDER
+      },
+      'Lindberg': {
+        story: 'Lindberg – dänischer Minimalismus in Reinform. Die schraubenlosen Titandraht-Designs sind federleicht und bieten maximalen Tragekomfort. Jede Brille ist ein Ausdruck skandinavischer Ästhetik und handwerklicher Perfektion.',
+        img: IMAGE_PLACEHOLDER
+      },
+      'Jacques Marie Mage': {
+        story: 'Jacques Marie Mage – limitierte Auflagen aus Frankreich. Mit 10mm Acetat und charakteristischem Skulpturenschliff kreiert das Atelier zeitlose Meisterwerke, die Kunst und Handwerk vereinen. Jedes Modell ist ein Statement.',
+        img: IMAGE_PLACEHOLDER
+      },
+      'DITA Eyewear': {
+        story: 'DITA Eyewear – japanische Präzision und amerikanisches Design. Die Acetat-Titan-Hybridkonstruktionen werden auf höchstem handwerklichem Niveau gefertigt und stehen für Langlebigkeit und zeitlosen Stil.',
+        img: IMAGE_PLACEHOLDER
+      }
     };
 
     /* ============================================================
-       STORES (korrigierte URLs + Plattform-Vielfalt)
+       STORES — mit korrigierten URLs und Plattform-Vielfalt
        ============================================================ */
     const FALLBACK_STORES = [
       { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
@@ -715,7 +847,7 @@
     ];
 
     /* ============================================================
-       PRODUKTE mit storeIds-Array (mehrere Bezugsquellen)
+       PRODUKTE — mit storeIds-Array (mehrere Bezugsquellen)
        ============================================================ */
     const FALLBACK_PRODUCTS = [
       { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeIds: ['brillenlab', 'optikerbode'], img: IMAGE_PLACEHOLDER, desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium optiker bode' },
@@ -833,13 +965,31 @@
     ];
 
     const INDEPENDENT_LABELS = {
-      "Deutschland / Ö / CH": ["MYKITA (Berlin)", "ic! berlin", "Lunor (Schwarzwald)", "CAZAL", "Andy Wolf (Österreich)", "Götti Switzerland", "Klenze & Baum", "Rolf Spectacles", "Reiz Germany", "Funk Eyewear", "Hoffmann Natural Eyewear"],
-      "Japan": ["Matsuda", "DITA Eyewear", "Eyevan 7285", "Masunaga 1905", "Yuichi Toyama", "Takahiro Miyashita", "Nackymade", "Factory900", "KameManNen", "Boston Club"],
-      "Frankreich": ["Jacques Marie Mage (Atelier/Design)", "Anne et Valentin", "Lafont Paris", "Thierry Lasry", "Ahlem Eyewear", "Morel France", "J.F. Rey", "Sabine Be", "Lucas de Staël"],
-      "Italien": ["Res/Rei", "L.G.R", "Tavat Eyewear", "Movitra", "Kubeora", "Haffmans & Neumeister (Collab)", "NATIVE SONS"],
-      "USA / Nordamerika": ["Oliver Peoples", "Garrett Leight (GLCO)", "Salt Optics", "Barton Perreira", "Moscot (NYC)", "Robert Marc NYC", "Talla Eyewear"],
-      "Dänemark & Skandinavien": ["Lindberg", "Ørgreen Optics", "ProDesign Denmark", "Fleye Copenhagen", "Kaibosh (Norwegen)"],
-      "Großbritannien": ["Cutler and Gross", "Oliver Goldsmith", "Tom Davies", "Cubitts"]
+      "Deutschland / Ö / CH": [
+        "MYKITA (Berlin)", "ic! berlin", "Lunor (Schwarzwald)", "CAZAL", "Andy Wolf (Österreich)",
+        "Götti Switzerland", "Klenze & Baum", "Rolf Spectacles", "Reiz Germany", "Funk Eyewear", "Hoffmann Natural Eyewear"
+      ],
+      "Japan": [
+        "Matsuda", "DITA Eyewear", "Eyevan 7285", "Masunaga 1905", "Yuichi Toyama",
+        "Takahiro Miyashita", "Nackymade", "Factory900", "KameManNen", "Boston Club"
+      ],
+      "Frankreich": [
+        "Jacques Marie Mage (Atelier/Design)", "Anne et Valentin", "Lafont Paris", "Thierry Lasry",
+        "Ahlem Eyewear", "Morel France", "J.F. Rey", "Sabine Be", "Lucas de Staël"
+      ],
+      "Italien": [
+        "Res/Rei", "L.G.R", "Tavat Eyewear", "Movitra", "Kubeora", "Haffmans & Neumeister (Collab)", "NATIVE SONS"
+      ],
+      "USA / Nordamerika": [
+        "Oliver Peoples", "Garrett Leight (GLCO)", "Salt Optics", "Barton Perreira",
+        "Moscot (NYC)", "Robert Marc NYC", "Talla Eyewear"
+      ],
+      "Dänemark & Skandinavien": [
+        "Lindberg", "Ørgreen Optics", "ProDesign Denmark", "Fleye Copenhagen", "Kaibosh (Norwegen)"
+      ],
+      "Großbritannien": [
+        "Cutler and Gross", "Oliver Goldsmith", "Tom Davies", "Cubitts"
+      ]
     };
 
     const COUNTRY_COLORS = {
@@ -862,36 +1012,62 @@
     let introDone = false;
     let searchTimeout;
 
-    function persistCart() { localStorage.setItem('luxevue_cart', JSON.stringify(cart)); updateCartUI(); }
-    function persistWishlist() { localStorage.setItem('luxevue_wishlist', JSON.stringify(wishlist)); updateWishlistUI(); }
-    function persistRecent() { localStorage.setItem('luxevue_recent', JSON.stringify(recentlyViewed)); }
+    /* ============================================================
+       PERSISTENZ
+       ============================================================ */
+    function persistCart() {
+      localStorage.setItem('luxevue_cart', JSON.stringify(cart));
+      updateCartUI();
+    }
 
+    function persistWishlist() {
+      localStorage.setItem('luxevue_wishlist', JSON.stringify(wishlist));
+      updateWishlistUI();
+    }
+
+    function persistRecent() {
+      localStorage.setItem('luxevue_recent', JSON.stringify(recentlyViewed));
+    }
+
+    /* ============================================================
+       INTRO
+       ============================================================ */
     function dismissIntro() {
       if (introDone) return;
       introDone = true;
+
       const overlay = document.getElementById('intro-overlay');
       const title = document.getElementById('intro-title');
       const sub = document.getElementById('intro-sub');
       const hint = document.getElementById('intro-hint');
+
       title.classList.add('dissolve');
       sub.classList.add('dissolve');
       hint.classList.add('dissolve');
       overlay.classList.add('dissolve-bg');
+
       setTimeout(() => {
         overlay.classList.add('hidden');
         document.body.classList.remove('intro-active');
         document.body.style.overflow = '';
       }, 1700);
     }
+
     document.getElementById('intro-overlay').addEventListener('click', dismissIntro);
     document.getElementById('intro-overlay').addEventListener('touchstart', dismissIntro);
 
-    /* Einzelnen Store holen */
+    /* ============================================================
+       HILFSFUNKTIONEN
+       ============================================================ */
     function getStoreInfo(storeId) {
-      return STORE_DATABASE.find(s => s.id === storeId) || { name: 'Zertifizierter Optiker', url: '#', city: 'Fachhandel', type: 'Fachgeschäft' };
+      return STORE_DATABASE.find(s => s.id === storeId) || {
+        name: 'Zertifizierter Optiker',
+        url: '#',
+        city: 'Fachhandel',
+        type: 'Fachgeschäft'
+      };
     }
 
-    /* ALLE Stores eines Produkts holen */
     function getStoresForProduct(product) {
       const ids = product.storeIds || (product.storeId ? [product.storeId] : []);
       return ids.map(id => getStoreInfo(id)).filter(s => s && s.name);
@@ -908,22 +1084,41 @@
       }, 2500);
     }
 
+    /* ============================================================
+       NAVIGATION — Erst rendern, dann ganz nach oben scrollen
+       ============================================================ */
     function navigateTo(pageId) {
       document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
       const page = document.getElementById('page-' + pageId);
-      if (page) { page.classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      if (!page) return;
+
+      page.classList.remove('hidden');
+
+      // Hero nur auf der Startseite anzeigen
       const hero = document.getElementById('hero');
       if (hero) hero.classList.toggle('hidden', pageId !== 'home');
+
+      // Inhalte rendern, BEVOR gescrollt wird
       if (pageId === 'cart') updateCartUI();
       if (pageId === 'checkout') renderCheckout();
+      if (pageId === 'wishlist') updateWishlistUI();
+
+      // Erst nach dem Rendern ganz nach oben – ohne Smooth, damit nichts nachspringt
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      });
     }
 
     /* ============================================================
-       PRODUKT-MODAL (zeigt ALLE Bezugsquellen)
+       PRODUKT-MODAL
        ============================================================ */
     function openProductModal(productId) {
       const p = PRODUCTS.find(x => String(x.id) === String(productId));
-      if (!p) { showToast('Produkt nicht gefunden'); return; }
+      if (!p) {
+        showToast('Produkt nicht gefunden');
+        return;
+      }
+
       const stores = getStoresForProduct(p);
 
       document.getElementById('modal-product-img').src = p.img;
@@ -932,7 +1127,6 @@
       document.getElementById('modal-product-price').innerText = p.price;
       document.getElementById('modal-product-desc').innerText = p.desc;
 
-      // Mehrere Stores im Modal rendern
       const storesList = document.getElementById('modal-product-stores-list');
       if (stores.length === 0) {
         storesList.innerHTML = '<p class="text-xs text-[var(--text-muted)] italic">Keine Bezugsquelle verfügbar.</p>';
@@ -961,15 +1155,32 @@
 
       const wishBtn = document.getElementById('modal-product-wishlist');
       const icon = wishBtn.querySelector('i');
-      if (wishlist.includes(p.name)) { icon.className = 'fa-solid fa-heart text-rose-600'; } else { icon.className = 'fa-regular fa-heart'; }
+      if (wishlist.includes(p.name)) {
+        icon.className = 'fa-solid fa-heart text-rose-600';
+      } else {
+        icon.className = 'fa-regular fa-heart';
+      }
       wishBtn.onclick = function(e) {
         e.stopPropagation();
-        if (wishlist.includes(p.name)) { wishlist = wishlist.filter(x => x !== p.name); icon.className = 'fa-regular fa-heart'; showToast('Von Favoriten entfernt'); }
-        else { wishlist.push(p.name); icon.className = 'fa-solid fa-heart text-rose-600'; showToast('Zu Favoriten hinzugefügt'); }
+        if (wishlist.includes(p.name)) {
+          wishlist = wishlist.filter(x => x !== p.name);
+          icon.className = 'fa-regular fa-heart';
+          showToast('Von Favoriten entfernt');
+        } else {
+          wishlist.push(p.name);
+          icon.className = 'fa-solid fa-heart text-rose-600';
+          showToast('Zu Favoriten hinzugefügt');
+        }
         persistWishlist();
       };
 
-      if (!recentlyViewed.includes(p.id)) { recentlyViewed.unshift(p.id); recentlyViewed = recentlyViewed.slice(0, 6); persistRecent(); renderRecentlyViewed(); }
+      // Zuletzt angesehen
+      if (!recentlyViewed.includes(p.id)) {
+        recentlyViewed.unshift(p.id);
+        recentlyViewed = recentlyViewed.slice(0, 6);
+        persistRecent();
+        renderRecentlyViewed();
+      }
 
       document.getElementById('productModal').classList.remove('hidden');
       document.getElementById('productModal').classList.add('flex');
@@ -982,9 +1193,15 @@
       document.body.style.overflow = '';
     }
 
+    /* ============================================================
+       MARKEN-MODAL
+       ============================================================ */
     function openBrandModal(brandName) {
       const data = BRAND_DATA[brandName];
-      if (!data) { showToast('Informationen zu dieser Marke folgen in Kürze.'); return; }
+      if (!data) {
+        showToast('Informationen zu dieser Marke folgen in Kürze.');
+        return;
+      }
       document.getElementById('brand-modal-name').innerText = brandName;
       document.getElementById('brand-modal-story').innerText = data.story;
       document.getElementById('brand-modal-img').src = data.img;
@@ -1002,18 +1219,32 @@
 
     function filterByBrand() {
       const brand = document.getElementById('brand-modal-name').dataset.brand;
-      if (brand) { closeBrandModal(); navigateTo('home'); document.getElementById('searchInput').value = brand; filterProducts(); setTimeout(() => { document.getElementById('product-list').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300); }
+      if (brand) {
+        closeBrandModal();
+        navigateTo('home');
+        document.getElementById('searchInput').value = brand;
+        filterProducts();
+        setTimeout(() => {
+          document.getElementById('product-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
+      }
     }
 
     /* ============================================================
-       PRODUKTE RENDERN (mit MEHREREN Store-Links pro Karte)
+       PRODUKTE RENDERN
        ============================================================ */
     function renderProducts(query = '', maxPrice = 1000) {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
+
       let items = PRODUCTS;
-      if (query) { items = items.filter(p => (p.brand + ' ' + p.name + ' ' + (p.search || '')).toLowerCase().includes(query)); }
-      items = items.filter(p => { const priceNum = parseInt(String(p.price).replace(/\D/g, '')) || 0; return priceNum <= maxPrice; });
+      if (query) {
+        items = items.filter(p => (p.brand + ' ' + p.name + ' ' + (p.search || '')).toLowerCase().includes(query));
+      }
+      items = items.filter(p => {
+        const priceNum = parseInt(String(p.price).replace(/\D/g, '')) || 0;
+        return priceNum <= maxPrice;
+      });
 
       if (items.length === 0) {
         container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-12 text-center">Keine passenden Brillenmodelle gefunden.</p>';
@@ -1064,13 +1295,21 @@
           addToCart(this.dataset.name, this.dataset.price, this.dataset.img, storeName);
         });
       });
+
       document.querySelectorAll('.wishlist-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
           e.stopPropagation();
           const name = this.dataset.name;
           const icon = this.querySelector('i');
-          if (wishlist.includes(name)) { wishlist = wishlist.filter(x => x !== name); icon.className = 'fa-regular fa-heart'; showToast('Entfernt'); }
-          else { wishlist.push(name); icon.className = 'fa-solid fa-heart text-rose-600'; showToast('Gespeichert'); }
+          if (wishlist.includes(name)) {
+            wishlist = wishlist.filter(x => x !== name);
+            icon.className = 'fa-regular fa-heart';
+            showToast('Entfernt');
+          } else {
+            wishlist.push(name);
+            icon.className = 'fa-solid fa-heart text-rose-600';
+            showToast('Gespeichert');
+          }
           persistWishlist();
         });
       });
@@ -1083,8 +1322,14 @@
       renderProducts(q, maxPrice);
     }
 
-    function debouncedSearch() { clearTimeout(searchTimeout); searchTimeout = setTimeout(filterProducts, 300); }
+    function debouncedSearch() {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(filterProducts, 300);
+    }
 
+    /* ============================================================
+       LÄNDERFILTER
+       ============================================================ */
     function renderCountryFilters() {
       const bar = document.getElementById('country-filter-bar');
       bar.innerHTML = '';
@@ -1092,7 +1337,11 @@
         const btn = document.createElement('button');
         btn.className = `filter-btn text-[10px] uppercase border border-[var(--border-editorial)] px-4 py-2 hover:border-black transition-colors whitespace-nowrap ${index === 0 ? 'active' : ''}`;
         btn.textContent = country;
-        btn.onclick = () => { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderLabelTags(country); };
+        btn.onclick = () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderLabelTags(country);
+        };
         bar.appendChild(btn);
       });
       renderLabelTags(Object.keys(INDEPENDENT_LABELS)[0]);
@@ -1106,83 +1355,196 @@
         const tag = document.createElement('span');
         tag.className = `text-[10px] ${bgColorClass} border border-[var(--border-editorial)] px-3 py-1.5 tracking-wider text-[var(--text-main)] font-medium cursor-pointer hover:border-black transition-colors`;
         tag.textContent = label;
-        tag.onclick = () => { const brandMatch = label.match(/^([^(]+)/); document.getElementById('searchInput').value = brandMatch ? brandMatch[1].trim() : label; filterProducts(); };
+        tag.onclick = () => {
+          const brandMatch = label.match(/^([^(]+)/);
+          document.getElementById('searchInput').value = brandMatch ? brandMatch[1].trim() : label;
+          filterProducts();
+        };
         container.appendChild(tag);
       });
     }
 
+    /* ============================================================
+       WARENKORB
+       ============================================================ */
     function addToCart(name, price, img, storeName) {
       const existing = cart.find(item => item.name === name);
-      if (existing) { existing.quantity = (existing.quantity || 1) + 1; }
-      else { cart.push({ name, price, img, storeName, quantity: 1 }); }
+      if (existing) {
+        existing.quantity = (existing.quantity || 1) + 1;
+      } else {
+        cart.push({ name, price, img, storeName, quantity: 1 });
+      }
       persistCart();
       showToast(name + ' hinzugefügt');
     }
-    function removeFromCart(index) { cart.splice(index, 1); persistCart(); }
-    function changeQuantity(index, delta) { if (cart[index]) { const n = (cart[index].quantity || 1) + delta; if (n < 1) { removeFromCart(index); return; } cart[index].quantity = n; persistCart(); } }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      persistCart();
+    }
+
+    function changeQuantity(index, delta) {
+      if (cart[index]) {
+        const n = (cart[index].quantity || 1) + delta;
+        if (n < 1) {
+          removeFromCart(index);
+          return;
+        }
+        cart[index].quantity = n;
+        persistCart();
+      }
+    }
 
     function updateCartUI() {
       const badge = document.getElementById('cart-count');
       const container = document.getElementById('cart-container');
       const summary = document.getElementById('cart-summary');
       const totalEl = document.getElementById('cart-total');
+
       const totalItems = cart.reduce((s, i) => s + (i.quantity || 1), 0);
       badge.innerText = totalItems;
       badge.classList.toggle('hidden', totalItems === 0);
-      if (cart.length === 0) { container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihr Warenkorb ist derzeit leer.</p>'; summary.classList.add('hidden'); totalEl.innerText = '0 €'; return; }
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihr Warenkorb ist derzeit leer.</p>';
+        summary.classList.add('hidden');
+        totalEl.innerText = '0 €';
+        return;
+      }
+
       let total = 0;
       container.innerHTML = cart.map((item, index) => {
         const p = parseInt(String(item.price).replace(/\D/g, '')) || 0;
-        const sub = p * (item.quantity || 1); total += sub;
-        return `<div class="flex justify-between items-center p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]"><div class="flex items-center space-x-4"><img src="${item.img}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]" alt="${item.name}"><div><p class="text-xs font-medium">${item.name}</p><p class="text-[10px] text-[var(--text-muted)]">${item.price} — ${item.storeName || 'Optiker'}</p><div class="flex items-center gap-2 mt-1"><button onclick="changeQuantity(${index}, -1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">-</button><span class="text-xs">${item.quantity || 1}</span><button onclick="changeQuantity(${index}, 1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">+</button></div></div></div><div class="flex items-center gap-4"><span class="text-xs font-medium">${sub} €</span><button onclick="removeFromCart(${index})" class="text-lg text-[var(--text-muted)] hover:text-black">&times;</button></div></div>`;
+        const sub = p * (item.quantity || 1);
+        total += sub;
+        return `
+          <div class="flex justify-between items-center p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)]">
+            <div class="flex items-center space-x-4">
+              <img src="${item.img}" class="w-12 h-12 object-cover border border-[var(--border-editorial)]" alt="${item.name}">
+              <div>
+                <p class="text-xs font-medium">${item.name}</p>
+                <p class="text-[10px] text-[var(--text-muted)]">${item.price} — ${item.storeName || 'Optiker'}</p>
+                <div class="flex items-center gap-2 mt-1">
+                  <button onclick="changeQuantity(${index}, -1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">-</button>
+                  <span class="text-xs">${item.quantity || 1}</span>
+                  <button onclick="changeQuantity(${index}, 1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="text-xs font-medium">${sub} €</span>
+              <button onclick="removeFromCart(${index})" class="text-lg text-[var(--text-muted)] hover:text-black">&times;</button>
+            </div>
+          </div>
+        `;
       }).join('');
+
       totalEl.innerText = total + ' €';
       summary.classList.remove('hidden');
     }
 
+    /* ============================================================
+       WUNSCHLISTE
+       ============================================================ */
     function updateWishlistUI() {
       const badge = document.getElementById('wishlist-count');
       const container = document.getElementById('wishlist-container');
       badge.innerText = wishlist.length;
       badge.classList.toggle('hidden', wishlist.length === 0);
-      container.innerHTML = wishlist.length === 0 ? '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihre Wunschliste ist leer.</p>' : wishlist.map(item => `<div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex justify-between items-center"><span class="text-xs font-medium">${item}</span><span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">Gespeichert</span></div>`).join('');
+
+      if (wishlist.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihre Wunschliste ist leer.</p>';
+      } else {
+        container.innerHTML = wishlist.map(item => `
+          <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex justify-between items-center">
+            <span class="text-xs font-medium">${item}</span>
+            <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)]">Gespeichert</span>
+          </div>
+        `).join('');
+      }
     }
 
-    function shareWishlist() { if (wishlist.length === 0) { showToast('Wunschliste ist leer'); return; } window.open(`https://wa.me/?text=${encodeURIComponent('Meine LUXEVUE Auswahl: ' + wishlist.join(', '))}`, '_blank'); }
+    function shareWishlist() {
+      if (wishlist.length === 0) {
+        showToast('Wunschliste ist leer');
+        return;
+      }
+      window.open(`https://wa.me/?text=${encodeURIComponent('Meine LUXEVUE Auswahl: ' + wishlist.join(', '))}`, '_blank');
+    }
 
+    /* ============================================================
+       CHECKOUT
+       ============================================================ */
     function renderCheckout() {
       const container = document.getElementById('checkout-items');
       const totalEl = document.getElementById('checkout-total');
       let total = 0;
-      if (cart.length === 0) { container.innerHTML = '<p class="text-xs text-[var(--text-muted)]">Ihr Warenkorb ist leer.</p>'; totalEl.innerText = '0 €'; return; }
-      container.innerHTML = cart.map(item => { const p = parseInt(String(item.price).replace(/\D/g, '')) || 0; const sub = p * (item.quantity || 1); total += sub; return `<div class="flex justify-between text-sm"><span>${item.name} (${item.quantity || 1}x)</span><span>${sub} €</span></div>`; }).join('');
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)]">Ihr Warenkorb ist leer.</p>';
+        totalEl.innerText = '0 €';
+        return;
+      }
+      container.innerHTML = cart.map(item => {
+        const p = parseInt(String(item.price).replace(/\D/g, '')) || 0;
+        const sub = p * (item.quantity || 1);
+        total += sub;
+        return `<div class="flex justify-between text-sm"><span>${item.name} (${item.quantity || 1}x)</span><span>${sub} €</span></div>`;
+      }).join('');
       totalEl.innerText = total + ' €';
     }
 
     function placeOrder() {
       const agb = document.getElementById('checkout-agb');
-      if (!agb.checked) { showToast('Bitte akzeptieren Sie die AGB.'); return; }
+      if (!agb.checked) {
+        showToast('Bitte akzeptieren Sie die AGB.');
+        return;
+      }
       const firstname = document.getElementById('checkout-firstname').value.trim();
       const lastname = document.getElementById('checkout-lastname').value.trim();
       const email = document.getElementById('checkout-email').value.trim();
       const address = document.getElementById('checkout-address').value.trim();
-      if (!firstname || !lastname || !email || !address) { showToast('Bitte füllen Sie alle Felder aus.'); return; }
-      if (!document.querySelector('input[name="payment"]:checked')) { showToast('Bitte wählen Sie eine Zahlungsart.'); return; }
+      if (!firstname || !lastname || !email || !address) {
+        showToast('Bitte füllen Sie alle Felder aus.');
+        return;
+      }
+      if (!document.querySelector('input[name="payment"]:checked')) {
+        showToast('Bitte wählen Sie eine Zahlungsart.');
+        return;
+      }
       showToast('Vielen Dank für Ihre Bestellung! Sie erhalten eine Bestätigung per E-Mail.');
       cart = [];
       persistCart();
       navigateTo('home');
     }
 
+    /* ============================================================
+       STORE LOCATOR
+       ============================================================ */
     function renderStoreLocatorGrid(filteredStores) {
       const container = document.getElementById('locator-grid');
       const stores = filteredStores || STORE_DATABASE;
       container.innerHTML = '';
-      if (stores.length === 0) { container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-8 text-center">Keine passenden Partneroptiker gefunden.</p>'; return; }
+      if (stores.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-8 text-center">Keine passenden Partneroptiker gefunden.</p>';
+        return;
+      }
       stores.forEach(s => {
         const card = document.createElement('div');
         card.className = 'p-6 bg-white border border-[var(--border-editorial)] flex flex-col justify-between space-y-4 hover:border-black transition-colors';
-        card.innerHTML = `<div><span class="text-[9px] uppercase tracking-widest bg-[var(--surface-editorial)] px-2.5 py-1 text-[var(--text-muted)] border border-[var(--border-editorial)] font-semibold">${s.type}</span><h3 class="font-serif text-2xl font-light mt-3 mb-1">${s.name}</h3><p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${s.city}</p></div><div class="pt-4 border-t border-[var(--border-editorial)]/60 flex justify-between items-center"><a href="${s.url}" target="_blank" rel="noopener" class="text-xs font-semibold underline hover:text-stone-600 flex items-center space-x-1"><span>Website besuchen</span><i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i></a><button onclick="navigateTo('account')" class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-[#1a1918] text-white hover:bg-stone-800 transition-colors">Termin</button></div>`;
+        card.innerHTML = `
+          <div>
+            <span class="text-[9px] uppercase tracking-widest bg-[var(--surface-editorial)] px-2.5 py-1 text-[var(--text-muted)] border border-[var(--border-editorial)] font-semibold">${s.type}</span>
+            <h3 class="font-serif text-2xl font-light mt-3 mb-1">${s.name}</h3>
+            <p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${s.city}</p>
+          </div>
+          <div class="pt-4 border-t border-[var(--border-editorial)]/60 flex justify-between items-center">
+            <a href="${s.url}" target="_blank" rel="noopener" class="text-xs font-semibold underline hover:text-stone-600 flex items-center space-x-1">
+              <span>Website besuchen</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </a>
+            <button onclick="navigateTo('account')" class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-[#1a1918] text-white hover:bg-stone-800 transition-colors">Termin</button>
+          </div>
+        `;
         container.appendChild(card);
       });
     }
@@ -1190,50 +1552,177 @@
     function filterStoreLocator() {
       const search = document.getElementById('locatorSearchInput').value.toLowerCase();
       const cat = document.getElementById('locatorCategorySelect').value;
-      renderStoreLocatorGrid(STORE_DATABASE.filter(s => { const mS = s.name.toLowerCase().includes(search) || s.city.toLowerCase().includes(search); const mC = cat === '' || s.type === cat; return mS && mC; }));
+      const filtered = STORE_DATABASE.filter(s => {
+        const mS = s.name.toLowerCase().includes(search) || s.city.toLowerCase().includes(search);
+        const mC = cat === '' || s.type === cat;
+        return mS && mC;
+      });
+      renderStoreLocatorGrid(filtered);
     }
-    function resetStoreLocatorFilters() { document.getElementById('locatorSearchInput').value = ''; document.getElementById('locatorCategorySelect').value = ''; renderStoreLocatorGrid(); }
+
+    function resetStoreLocatorFilters() {
+      document.getElementById('locatorSearchInput').value = '';
+      document.getElementById('locatorCategorySelect').value = '';
+      renderStoreLocatorGrid();
+    }
 
     function renderStoreDirectory() {
       const list = document.getElementById('store-directory-list');
-      list.innerHTML = STORE_DATABASE.map(s => `<div class="pb-3 border-b border-[var(--border-editorial)] flex justify-between items-center"><div><strong class="font-medium">${s.name}</strong><span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span></div><a href="${s.url}" target="_blank" rel="noopener" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1"><span>Website</span><i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i></a></div>`).join('');
+      list.innerHTML = STORE_DATABASE.map(s => `
+        <div class="pb-3 border-b border-[var(--border-editorial)] flex justify-between items-center">
+          <div>
+            <strong class="font-medium">${s.name}</strong>
+            <span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span>
+          </div>
+          <a href="${s.url}" target="_blank" rel="noopener" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
+            <span>Website</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
+          </a>
+        </div>
+      `).join('');
     }
 
-    function setConfigFrame(colorClass) { document.getElementById('config-frame-preview').className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`; }
-    function setConfigLens(lensClass) { document.getElementById('config-lens-left').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`; document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`; }
+    /* ============================================================
+       KONFIGURATOR
+       ============================================================ */
+    function setConfigFrame(colorClass) {
+      document.getElementById('config-frame-preview').className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
+    }
 
+    function setConfigLens(lensClass) {
+      document.getElementById('config-lens-left').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
+      document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
+    }
+
+    /* ============================================================
+       HERO SLIDER
+       ============================================================ */
     function setupHeroSlider() {
       const container = document.getElementById('hero-slides');
       const label = document.getElementById('hero-slide-label');
       const desc = document.getElementById('hero-description');
       container.innerHTML = '';
-      HERO_SLIDES.forEach((slide, i) => { const img = document.createElement('img'); img.src = slide.img; img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`; img.alt = slide.label; container.appendChild(img); });
-      function updateSlide(index) { const imgs = container.querySelectorAll('img'); imgs.forEach((img, i) => { img.classList.toggle('opacity-100', i === index); img.classList.toggle('opacity-0', i !== index); }); if (label) label.textContent = HERO_SLIDES[index].label; if (desc) desc.textContent = HERO_SLIDES[index].description; currentBrand = HERO_SLIDES[index].label; if (label) label.onclick = () => openBrandModal(currentBrand); if (desc) desc.onclick = () => openBrandModal(currentBrand); }
+
+      HERO_SLIDES.forEach((slide, i) => {
+        const img = document.createElement('img');
+        img.src = slide.img;
+        img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
+        img.alt = slide.label;
+        container.appendChild(img);
+      });
+
+      function updateSlide(index) {
+        const imgs = container.querySelectorAll('img');
+        imgs.forEach((img, i) => {
+          img.classList.toggle('opacity-100', i === index);
+          img.classList.toggle('opacity-0', i !== index);
+        });
+        if (label) label.textContent = HERO_SLIDES[index].label;
+        if (desc) desc.textContent = HERO_SLIDES[index].description;
+        currentBrand = HERO_SLIDES[index].label;
+        if (label) label.onclick = () => openBrandModal(currentBrand);
+        if (desc) desc.onclick = () => openBrandModal(currentBrand);
+      }
+
       updateSlide(0);
+
       const hero = document.getElementById('hero');
-      hero.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
-      hero.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; const d = touchStartX - touchEndX; if (Math.abs(d) > 50) { if (d > 0) nextSlide(); else prevSlide(); } }, { passive: true });
-      let mouseDown = false, mouseStartX = 0;
-      hero.addEventListener('mousedown', e => { mouseDown = true; mouseStartX = e.screenX; });
-      hero.addEventListener('mouseup', e => { if (mouseDown) { const d = mouseStartX - e.screenX; if (Math.abs(d) > 50) { if (d > 0) nextSlide(); else prevSlide(); } mouseDown = false; } });
-      hero.addEventListener('mouseleave', () => { mouseDown = false; });
-      function nextSlide() { heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length; updateSlide(heroSlideIndex); }
-      function prevSlide() { heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length; updateSlide(heroSlideIndex); }
+
+      hero.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      hero.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        const d = touchStartX - touchEndX;
+        if (Math.abs(d) > 50) {
+          if (d > 0) nextSlide();
+          else prevSlide();
+        }
+      }, { passive: true });
+
+      let mouseDown = false;
+      let mouseStartX = 0;
+
+      hero.addEventListener('mousedown', e => {
+        mouseDown = true;
+        mouseStartX = e.screenX;
+      });
+
+      hero.addEventListener('mouseup', e => {
+        if (mouseDown) {
+          const d = mouseStartX - e.screenX;
+          if (Math.abs(d) > 50) {
+            if (d > 0) nextSlide();
+            else prevSlide();
+          }
+          mouseDown = false;
+        }
+      });
+
+      hero.addEventListener('mouseleave', () => {
+        mouseDown = false;
+      });
+
+      function nextSlide() {
+        heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
+        updateSlide(heroSlideIndex);
+      }
+
+      function prevSlide() {
+        heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
+        updateSlide(heroSlideIndex);
+      }
+
       let autoInterval = setInterval(nextSlide, 6000);
-      hero.addEventListener('touchstart', () => { clearInterval(autoInterval); autoInterval = setInterval(nextSlide, 6000); }, { passive: true });
-      hero.addEventListener('mousedown', () => { clearInterval(autoInterval); autoInterval = setInterval(nextSlide, 6000); });
+
+      hero.addEventListener('touchstart', () => {
+        clearInterval(autoInterval);
+        autoInterval = setInterval(nextSlide, 6000);
+      }, { passive: true });
+
+      hero.addEventListener('mousedown', () => {
+        clearInterval(autoInterval);
+        autoInterval = setInterval(nextSlide, 6000);
+      });
+
       if (label) label.onclick = () => openBrandModal(currentBrand);
       if (desc) desc.onclick = () => openBrandModal(currentBrand);
     }
 
-    function subscribeNewsletter() { const email = document.getElementById('newsletter-email').value; if (!email.includes('@')) { showToast('Gültige E-Mail erforderlich'); return; } showToast('Vielen Dank für Ihre Anmeldung.'); document.getElementById('newsletter-email').value = ''; }
-    function setupScrollAnimations() { const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 }); document.querySelectorAll('.fade-in').forEach(el => observer.observe(el)); }
+    /* ============================================================
+       NEWSLETTER & SCROLL-ANIMATIONEN
+       ============================================================ */
+    function subscribeNewsletter() {
+      const email = document.getElementById('newsletter-email').value;
+      if (!email.includes('@')) {
+        showToast('Gültige E-Mail erforderlich');
+        return;
+      }
+      showToast('Vielen Dank für Ihre Anmeldung.');
+      document.getElementById('newsletter-email').value = '';
+    }
 
+    function setupScrollAnimations() {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) e.target.classList.add('visible');
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    /* ============================================================
+       ZULETZT ANGESEHENE PRODUKTE
+       ============================================================ */
     function renderRecentlyViewed() {
       const section = document.getElementById('recently-viewed-section');
       const container = document.getElementById('recently-viewed-container');
       if (!section || !container) return;
-      if (recentlyViewed.length === 0) { section.classList.add('hidden'); return; }
+      if (recentlyViewed.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
       section.classList.remove('hidden');
       container.innerHTML = '';
       recentlyViewed.forEach(pid => {
@@ -1241,17 +1730,29 @@
         if (!p) return;
         const card = document.createElement('div');
         card.className = 'recent-card product-card group cursor-pointer bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-3';
-        card.innerHTML = `<div class="img-zoom-container mb-2" onclick="openProductModal('${p.id}')"><img src="${p.img}" alt="${p.name}" class="w-full h-32 object-cover" loading="lazy"></div><p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p><h4 class="font-serif text-sm font-light truncate">${p.name}</h4><p class="text-xs font-medium mt-1">${p.price}</p>`;
+        card.innerHTML = `
+          <div class="img-zoom-container mb-2" onclick="openProductModal('${p.id}')">
+            <img src="${p.img}" alt="${p.name}" class="w-full h-32 object-cover" loading="lazy">
+          </div>
+          <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p>
+          <h4 class="font-serif text-sm font-light truncate">${p.name}</h4>
+          <p class="text-xs font-medium mt-1">${p.price}</p>
+        `;
         container.appendChild(card);
       });
     }
 
+    /* ============================================================
+       INITIALISIERUNG
+       ============================================================ */
     window.addEventListener('DOMContentLoaded', async function() {
       document.body.classList.add('intro-active');
       document.body.style.overflow = 'hidden';
 
+      // 1. Live-Daten laden (oder Fallback)
       await loadLiveData();
 
+      // 2. Statische UI-Elemente rendern
       renderCountryFilters();
       setupHeroSlider();
       renderStoreLocatorGrid();
@@ -1261,6 +1762,7 @@
       setupScrollAnimations();
       navigateTo('home');
 
+      // 3. Produkte rendern (erst nachdem Daten geladen sind)
       filterProducts();
       renderRecentlyViewed();
     });
