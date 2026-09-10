@@ -2250,4 +2250,251 @@
         card.className = 'store-card p-6 bg-white border border-[var(--border-editorial)] flex flex-col justify-between space-y-4 hover:border-black';
         card.innerHTML = `
           <div>
-            <span class="text-[9px] uppercase tracking-wid
+            <span class="text-[9px] uppercase tracking-widest bg-[var(--surface-editorial)] px-2.5 py-1 text-[var(--text-muted)] border border-[var(--border-editorial)] font-semibold">${s.type}</span>
+            <h3 class="font-serif text-2xl font-light mt-3 mb-1">${s.name}</h3>
+            <p class="text-xs text-[var(--text-muted)]"><i class="fa-solid fa-location-dot mr-1"></i> ${s.city}</p>
+          </div>
+          <div class="pt-4 border-t border-[var(--border-editorial)]/60 flex justify-between items-center">
+            <a href="${s.url}" target="_blank" rel="noopener" class="text-xs font-semibold underline hover:text-stone-600 flex items-center space-x-1">
+              <span>Website besuchen</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </a>
+            <button onclick="navigateTo('account')" class="text-[10px] uppercase tracking-wider px-3 py-1.5 bg-[#1a1918] text-white hover:bg-stone-800 transition-colors">Termin</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterStoreLocator() {
+      const search = document.getElementById('locatorSearchInput').value.toLowerCase();
+      const cat = document.getElementById('locatorCategorySelect').value;
+      const filtered = STORE_DATABASE.filter(s => {
+        const mS = s.name.toLowerCase().includes(search) || s.city.toLowerCase().includes(search);
+        const mC = cat === '' || s.type === cat;
+        return mS && mC;
+      });
+      renderStoreLocatorGrid(filtered);
+    }
+
+    function resetStoreLocatorFilters() {
+      document.getElementById('locatorSearchInput').value = '';
+      document.getElementById('locatorCategorySelect').value = '';
+      renderStoreLocatorGrid();
+    }
+
+    function renderStoreDirectory() {
+      const list = document.getElementById('store-directory-list');
+      list.innerHTML = STORE_DATABASE.map(s => `
+        <div class="pb-3 border-b border-[var(--border-editorial)] flex justify-between items-center">
+          <div>
+            <strong class="font-medium">${s.name}</strong>
+            <span class="block text-[10px] text-[var(--text-muted)]">${s.type} • ${s.city}</span>
+          </div>
+          <a href="${s.url}" target="_blank" rel="noopener" class="px-3 py-1 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] text-[10px] font-semibold hover:bg-stone-900 hover:text-white transition-colors flex items-center space-x-1">
+            <span>Website</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
+          </a>
+        </div>
+      `).join('');
+    }
+
+    /* ============================================================
+       KONFIGURATOR
+       ============================================================ */
+    function setConfigFrame(colorClass) {
+      document.getElementById('config-frame-preview').className = `w-48 h-24 border-4 rounded-3xl transition-all duration-300 flex items-center justify-around ${colorClass}`;
+    }
+
+    function setConfigLens(lensClass) {
+      document.getElementById('config-lens-left').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
+      document.getElementById('config-lens-right').className = `w-16 h-16 rounded-full transition-all duration-300 ${lensClass}`;
+    }
+
+    /* ============================================================
+       HERO SLIDER (Stufe 3 – Sanity-Bilder + Ken Burns)
+       ============================================================ */
+    function setupHeroSlider() {
+      const container = document.getElementById('hero-slides');
+      const label = document.getElementById('hero-slide-label');
+      const desc = document.getElementById('hero-description');
+      container.innerHTML = '';
+
+      HERO_SLIDES.forEach((slide, i) => {
+        const img = document.createElement('img');
+        img.src = getSanityImageUrl(slide.img, { width: 1600, height: 1000, fit: 'crop' });
+        img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out ${i === 0 ? 'opacity-100' : 'opacity-0'}`;
+        img.style.objectPosition = slide.focal || 'center';
+        img.style.transform = 'scale(1.02)';
+        img.style.transition = 'opacity 1s ease-out, transform 8s ease-out';
+        img.alt = slide.label;
+        container.appendChild(img);
+      });
+
+      function updateSlide(index) {
+        const imgs = container.querySelectorAll('img');
+        imgs.forEach((img, i) => {
+          img.classList.toggle('opacity-100', i === index);
+          img.classList.toggle('opacity-0', i !== index);
+          img.style.transform = i === index ? 'scale(1.06)' : 'scale(1.02)';
+        });
+        if (label) label.textContent = HERO_SLIDES[index].label;
+        if (desc) desc.textContent = HERO_SLIDES[index].description;
+        currentBrand = HERO_SLIDES[index].label;
+        if (label) label.onclick = () => openBrandModal(currentBrand);
+        if (desc) desc.onclick = () => openBrandModal(currentBrand);
+      }
+
+      updateSlide(0);
+
+      const hero = document.getElementById('hero');
+
+      hero.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      hero.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        const d = touchStartX - touchEndX;
+        if (Math.abs(d) > 50) {
+          if (d > 0) nextSlide();
+          else prevSlide();
+        }
+      }, { passive: true });
+
+      let mouseDown = false;
+      let mouseStartX = 0;
+
+      hero.addEventListener('mousedown', e => {
+        mouseDown = true;
+        mouseStartX = e.screenX;
+      });
+
+      hero.addEventListener('mouseup', e => {
+        if (mouseDown) {
+          const d = mouseStartX - e.screenX;
+          if (Math.abs(d) > 50) {
+            if (d > 0) nextSlide();
+            else prevSlide();
+          }
+          mouseDown = false;
+        }
+      });
+
+      hero.addEventListener('mouseleave', () => {
+        mouseDown = false;
+      });
+
+      function nextSlide() {
+        heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
+        updateSlide(heroSlideIndex);
+      }
+
+      function prevSlide() {
+        heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
+        updateSlide(heroSlideIndex);
+      }
+
+      let autoInterval = setInterval(nextSlide, 6000);
+
+      hero.addEventListener('touchstart', () => {
+        clearInterval(autoInterval);
+        autoInterval = setInterval(nextSlide, 6000);
+      }, { passive: true });
+
+      hero.addEventListener('mousedown', () => {
+        clearInterval(autoInterval);
+        autoInterval = setInterval(nextSlide, 6000);
+      });
+
+      if (label) label.onclick = () => openBrandModal(currentBrand);
+      if (desc) desc.onclick = () => openBrandModal(currentBrand);
+    }
+
+    /* ============================================================
+       NEWSLETTER & SCROLL-ANIMATIONEN
+       ============================================================ */
+    function subscribeNewsletter() {
+      const email = document.getElementById('newsletter-email').value;
+      if (!email.includes('@')) {
+        showToast('Gültige E-Mail erforderlich');
+        return;
+      }
+      showToast('Vielen Dank für Ihre Anmeldung.');
+      document.getElementById('newsletter-email').value = '';
+    }
+
+    function setupScrollAnimations() {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) e.target.classList.add('visible');
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    /* ============================================================
+       ZULETZT ANGESEHENE (Stufe 2 – Sanity-Bilder)
+       ============================================================ */
+    function renderRecentlyViewed() {
+      const section = document.getElementById('recently-viewed-section');
+      const container = document.getElementById('recently-viewed-container');
+      if (!section || !container) return;
+      if (recentlyViewed.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+      section.classList.remove('hidden');
+      container.innerHTML = '';
+      recentlyViewed.forEach(pid => {
+        const p = PRODUCTS.find(x => String(x.id) === String(pid));
+        if (!p) return;
+        const card = document.createElement('div');
+        card.className = 'recent-card product-card group cursor-pointer bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-3';
+        card.innerHTML = `
+          <div class="img-zoom-container mb-2" onclick="openProductModal('${p.id}')">
+            <img src="${getSanityImageUrl(p.img, { width: 400, height: 300 })}" alt="${p.name}" class="w-full h-32 object-cover" loading="lazy">
+          </div>
+          <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p>
+          <h4 class="font-serif text-sm font-light truncate">${p.name}</h4>
+          <p class="text-xs font-medium mt-1">${formatPrice(p.price)}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    /* ============================================================
+       INITIALISIERUNG
+       ============================================================ */
+    window.addEventListener('DOMContentLoaded', async function() {
+      document.body.classList.add('intro-active');
+      document.body.style.overflow = 'hidden';
+
+      // 1. Skeletons direkt anzeigen, damit User sofort visuelles Feedback hat
+      renderSkeletons(6);
+
+      // 2. Live-Daten laden (oder Fallback)
+      await loadLiveData();
+
+      // 3. Statische UI-Elemente rendern
+      renderCountryFilters();
+      setupHeroSlider();
+      renderStoreLocatorGrid();
+      renderStoreDirectory();
+      updateCartUI();
+      updateWishlistUI();
+      setupScrollAnimations();
+
+      // 4. Initiale Route anwenden
+      if (!location.hash) {
+        history.replaceState(null, '', '#home');
+      }
+      applyRoute();
+
+      // 5. Produkte rendern
+      filterProducts();
+      renderRecentlyViewed();
+    });
+  </script>
+</body>
+</html>
