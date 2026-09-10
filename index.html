@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LUXEVUE — Independent Eyewear</title>
 
+  <!-- High-End Webfonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -159,34 +160,6 @@
     }
     .modal-card .overflow-y-auto::-webkit-scrollbar-thumb {
       background-color: var(--border-editorial);
-    }
-
-    /* ===== MOBILE NAVIGATION ===== */
-    #mobileNav {
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    #mobileNav.hidden-menu {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-    #mobileNav .mobile-nav-panel {
-      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-      transform: translateX(100%);
-    }
-    #mobileNav.open .mobile-nav-panel {
-      transform: translateX(0);
-    }
-
-    /* ===== COOKIE BANNER ===== */
-    #cookieBanner {
-      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
-      transform: translateY(100%);
-      opacity: 0;
-    }
-    #cookieBanner.visible {
-      transform: translateY(0);
-      opacity: 1;
     }
 
     /* ===== INTRO OVERLAY ===== */
@@ -362,15 +335,6 @@
     .legal-content a:hover {
       text-decoration-color: var(--text-main);
     }
-
-    /* Fokus-Sichtbarkeit für Barrierefreiheit */
-    button:focus-visible,
-    a:focus-visible,
-    input:focus-visible,
-    select:focus-visible {
-      outline: 2px solid var(--text-main);
-      outline-offset: 2px;
-    }
   </style>
 </head>
 <body>
@@ -383,30 +347,8 @@
   </div>
 
   <!-- Toast -->
-  <div id="toast" role="status" aria-live="polite" class="fixed top-6 left-1/2 -translate-x-1/2 bg-[#1a1918] text-white text-xs tracking-wider uppercase px-5 py-3 rounded-none shadow-2xl z-50 pointer-events-none opacity-0 transition-all duration-300">
+  <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 bg-[#1a1918] text-white text-xs tracking-wider uppercase px-5 py-3 rounded-none shadow-2xl z-50 pointer-events-none opacity-0 transition-all duration-300">
     <span id="toast-msg">Hinweis</span>
-  </div>
-
-  <!-- ===== MOBILE NAVIGATION OVERLAY ===== -->
-  <div id="mobileNav" class="fixed inset-0 z-50 hidden-menu md:hidden" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
-    <div class="absolute inset-0 bg-black/50" onclick="closeMobileNav()"></div>
-    <div class="mobile-nav-panel absolute top-0 right-0 h-full w-72 max-w-[85%] bg-[var(--bg-editorial)] border-l border-[var(--border-editorial)] shadow-2xl flex flex-col">
-      <div class="flex items-center justify-between p-6 border-b border-[var(--border-editorial)]">
-        <span class="text-lg font-serif tracking-[0.2em] uppercase font-light">Menü</span>
-        <button onclick="closeMobileNav()" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors p-2 nav-btn" aria-label="Menü schließen">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <nav class="flex flex-col p-6 space-y-1 text-sm uppercase tracking-widest">
-        <button onclick="mobileNavigate('home')" class="text-left py-3 hover:text-black transition-colors nav-btn text-[var(--text-muted)]">Kollektion</button>
-        <button onclick="mobileNavigate('locator')" class="text-left py-3 hover:text-black transition-colors nav-btn text-[var(--text-muted)]">Store-Finder</button>
-        <button onclick="mobileNavigate('configurator')" class="text-left py-3 hover:text-black transition-colors nav-btn text-[var(--text-muted)]">Konfigurator</button>
-        <button onclick="mobileNavigate('account')" class="text-left py-3 hover:text-black transition-colors nav-btn text-[var(--text-muted)]">Stores & Optiker</button>
-      </nav>
-      <div class="mt-auto p-6 border-t border-[var(--border-editorial)] text-[10px] uppercase tracking-widest text-[var(--text-muted)]">
-        © 2026 LUXEVUE
-      </div>
-    </div>
   </div>
 
   <!-- ===== HEADER ===== -->
@@ -423,23 +365,20 @@
           <button onclick="navigateTo('account')" class="nav-btn hover:text-black transition-colors">Stores & Optiker</button>
         </nav>
         <div class="flex items-center space-x-5 border-l border-[var(--border-editorial)] pl-6">
-          <button onclick="navigateTo('wishlist')" class="relative p-1 hover:opacity-70 transition-opacity nav-btn" aria-label="Wunschliste öffnen">
+          <button onclick="navigateTo('wishlist')" class="relative p-1 hover:opacity-70 transition-opacity nav-btn" aria-label="Wunschliste">
             <i class="fa-regular fa-heart text-lg"></i>
             <span id="wishlist-count" class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
           </button>
-          <button onclick="navigateTo('cart')" class="relative p-1 hover:opacity-70 transition-opacity nav-btn" aria-label="Warenkorb öffnen">
+          <button onclick="navigateTo('cart')" class="relative p-1 hover:opacity-70 transition-opacity nav-btn" aria-label="Warenkorb">
             <i class="fa-solid fa-bag-shopping text-lg"></i>
             <span id="cart-count" class="absolute -top-1.5 -right-2 bg-stone-800 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
-          </button>
-          <button onclick="openMobileNav()" class="md:hidden p-1 hover:opacity-70 transition-opacity nav-btn" aria-label="Menü öffnen">
-            <i class="fa-solid fa-bars text-lg"></i>
           </button>
         </div>
       </div>
     </div>
     <div class="max-w-7xl mx-auto mt-4 pt-3 border-t border-[var(--border-editorial)]/40 flex items-center">
       <i class="fa-solid fa-magnifying-glass text-xs text-[var(--text-muted)] mr-3"></i>
-      <input type="text" id="searchInput" onkeyup="debouncedSearch()" placeholder="Suchen nach Marke, Optiker, Stadt oder Stil..." class="w-full bg-transparent text-xs tracking-wide focus:outline-none placeholder:text-[var(--text-muted)]/60" aria-label="Produktsuche" />
+      <input type="text" id="searchInput" onkeyup="debouncedSearch()" placeholder="Suchen nach Marke, Optiker, Stadt oder Stil..." class="w-full bg-transparent text-xs tracking-wide focus:outline-none placeholder:text-[var(--text-muted)]/60" />
     </div>
   </header>
 
@@ -461,10 +400,10 @@
   </section>
 
   <!-- ===== MARKEN-PORTRAIT MODAL ===== -->
-  <div id="brandModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay" role="dialog" aria-modal="true" aria-labelledby="brand-modal-name">
+  <div id="brandModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
     <div class="modal-card rounded-none max-h-[90vh] overflow-y-auto">
       <div class="sticky top-0 z-10 flex justify-end p-4 bg-[var(--bg-editorial)] border-b border-[var(--border-editorial)]">
-        <button onclick="closeBrandModal()" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors" aria-label="Modal schließen">&times;</button>
+        <button onclick="closeBrandModal()" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors">&times;</button>
       </div>
       <div class="p-6 md:p-8">
         <div class="grid md:grid-cols-2 gap-8">
@@ -526,22 +465,9 @@
         <span class="text-xs tracking-widest uppercase text-[var(--text-muted)]">Direkte Bezugsquellen</span>
       </div>
 
-      <div class="mb-8 flex flex-col md:flex-row md:items-center gap-4">
-        <div class="flex items-center gap-4 flex-1">
-          <label for="price-range" class="text-[10px] uppercase tracking-widest text-[var(--text-muted)] whitespace-nowrap">Preis bis: <span id="price-output">1000 €</span></label>
-          <input type="range" id="price-range" min="100" max="1000" value="1000" step="50" class="w-full h-1 bg-stone-300 appearance-none cursor-pointer" oninput="filterProducts()" aria-label="Preis-Filter">
-        </div>
-        <div class="flex items-center gap-3">
-          <label for="sortSelect" class="text-[10px] uppercase tracking-widest text-[var(--text-muted)] whitespace-nowrap">Sortieren:</label>
-          <select id="sortSelect" onchange="filterProducts()" class="text-[11px] uppercase tracking-wider bg-white border border-[var(--border-editorial)] px-3 py-2 focus:outline-none cursor-pointer" aria-label="Sortierung">
-            <option value="default">Empfohlen</option>
-            <option value="price-asc">Preis aufsteigend</option>
-            <option value="price-desc">Preis absteigend</option>
-            <option value="name-asc">Name A–Z</option>
-            <option value="name-desc">Name Z–A</option>
-            <option value="brand-asc">Marke A–Z</option>
-          </select>
-        </div>
+      <div class="mb-8 flex items-center gap-4">
+        <label for="price-range" class="text-[10px] uppercase tracking-widest text-[var(--text-muted)] whitespace-nowrap">Preis bis: <span id="price-output">1000 €</span></label>
+        <input type="range" id="price-range" min="100" max="1000" value="1000" step="50" class="w-full h-1 bg-stone-300 appearance-none cursor-pointer" oninput="filterProducts()">
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16" id="product-list"></div>
@@ -550,6 +476,7 @@
       </div>
     </section>
 
+    <!-- ===== INSPIRATION & EDITORIAL SEKTION ===== -->
     <section class="mb-24 py-16 px-6 lg:px-12 bg-white border border-[var(--border-editorial)] fade-in">
       <div class="max-w-4xl mx-auto text-center mb-16">
         <p class="text-[10px] uppercase tracking-[0.35em] text-[var(--text-muted)] mb-3">Inspiration & Perspektiven</p>
@@ -693,14 +620,9 @@
         <span>Gesamtsumme</span>
         <span id="cart-total">0 €</span>
       </div>
-      <div class="flex flex-col sm:flex-row gap-3">
-        <button onclick="navigateTo('home')" class="flex-1 py-5 border border-[var(--border-editorial)] text-xs uppercase tracking-[0.2em] hover:bg-stone-200 transition-colors">
-          <i class="fa-solid fa-arrow-left mr-2"></i> Weiter einkaufen
-        </button>
-        <button onclick="navigateTo('checkout')" class="flex-1 py-5 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">
-          Zur Kasse
-        </button>
-      </div>
+      <button onclick="navigateTo('checkout')" class="w-full py-5 bg-[#1a1918] text-white text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors">
+        Zur Kasse
+      </button>
     </div>
   </section>
 
@@ -1075,10 +997,10 @@
   </section>
 
   <!-- ===== PRODUKT-MODAL ===== -->
-  <div id="productModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-product-name">
+  <div id="productModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
     <div class="modal-card rounded-none max-h-[90vh] overflow-y-auto">
       <div class="sticky top-0 z-10 flex justify-end p-4 bg-[var(--bg-editorial)] border-b border-[var(--border-editorial)]">
-        <button onclick="closeProductModal()" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors" aria-label="Modal schließen">&times;</button>
+        <button onclick="closeProductModal()" class="text-2xl text-[var(--text-muted)] hover:text-black transition-colors">&times;</button>
       </div>
       <div class="p-6 md:p-8">
         <div class="grid md:grid-cols-2 gap-8">
@@ -1127,19 +1049,19 @@
         <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Newsletter</h4>
         <p class="text-[var(--text-muted)] mb-4">Exklusive Einblicke in neue Kollektionen.</p>
         <div class="flex border-b border-black/20 pb-1">
-          <input type="email" id="newsletter-email" placeholder="E-Mail Adresse" class="bg-transparent flex-1 text-xs focus:outline-none" aria-label="E-Mail Adresse für Newsletter" />
+          <input type="email" id="newsletter-email" placeholder="E-Mail Adresse" class="bg-transparent flex-1 text-xs focus:outline-none" />
           <button onclick="subscribeNewsletter()" class="uppercase tracking-widest text-[10px] font-semibold">Anmelden</button>
         </div>
       </div>
       <div>
         <h4 class="uppercase tracking-[0.2em] font-semibold mb-4 text-[11px]">Zahlungsarten</h4>
         <div class="flex flex-wrap gap-4 text-3xl text-[var(--text-muted)]">
-          <i class="fa-regular fa-credit-card" title="Kreditkarte" aria-label="Kreditkarte"></i>
-          <i class="fa-brands fa-paypal" title="PayPal" aria-label="PayPal"></i>
-          <i class="fa-regular fa-clock" title="Klarna" aria-label="Klarna"></i>
-          <i class="fa-brands fa-apple" title="Apple Pay" aria-label="Apple Pay"></i>
-          <i class="fa-brands fa-google-pay" title="Google Pay" aria-label="Google Pay"></i>
-          <i class="fa-solid fa-vault" title="Vorkasse" aria-label="Vorkasse"></i>
+          <i class="fa-regular fa-credit-card" title="Kreditkarte"></i>
+          <i class="fa-brands fa-paypal" title="PayPal"></i>
+          <i class="fa-regular fa-clock" title="Klarna"></i>
+          <i class="fa-brands fa-apple" title="Apple Pay"></i>
+          <i class="fa-brands fa-google-pay" title="Google Pay"></i>
+          <i class="fa-solid fa-vault" title="Vorkasse"></i>
         </div>
         <p class="text-[10px] text-[var(--text-muted)] mt-3 leading-relaxed">
           Sichere Zahlung mit Ihren bevorzugten Methoden.
@@ -1150,26 +1072,6 @@
       © 2026 LUXEVUE. Alle Rechte vorbehalten.
     </div>
   </footer>
-
-  <!-- ===== COOKIE BANNER ===== -->
-  <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 z-40 bg-[#1a1918] text-white shadow-2xl border-t border-stone-700" role="dialog" aria-label="Cookie-Hinweis">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex flex-col md:flex-row md:items-center gap-4">
-      <div class="flex-1">
-        <p class="text-[11px] uppercase tracking-widest mb-1 text-stone-300">
-          <i class="fa-solid fa-cookie-bite mr-2"></i> Datenschutz & Cookies
-        </p>
-        <p class="text-xs leading-relaxed text-stone-400">
-          Wir verwenden LocalStorage, um Ihren Warenkorb, Ihre Wunschliste und zuletzt angesehene Produkte zu speichern. Weitere Informationen finden Sie in unserer
-          <a onclick="navigateTo('datenschutz')" class="text-white underline decoration-stone-500 hover:decoration-white cursor-pointer">Datenschutzerklärung</a>.
-        </p>
-      </div>
-      <div class="flex gap-3 flex-shrink-0">
-        <button onclick="acceptCookies()" class="px-6 py-3 bg-[#fcfbf9] text-[#1a1918] text-[10px] uppercase tracking-widest font-semibold hover:bg-stone-200 transition-colors">
-          Verstanden
-        </button>
-      </div>
-    </div>
-  </div>
 
   <!-- ============================================================ -->
   <!-- JAVASCRIPT -->
@@ -1227,7 +1129,7 @@
     );
 
     /* ============================================================
-       BRAND_DATA
+       BRAND_DATA — Marken-Storys für das Marken-Modal
        ============================================================ */
     const BRAND_DATA = {
       'Andy Wolf': {
@@ -1253,7 +1155,7 @@
     };
 
     /* ============================================================
-       STORES
+       STORES — mit korrigierten URLs und Plattform-Vielfalt
        ============================================================ */
     const FALLBACK_STORES = [
       { id: 'brillenlab', name: "Brillenlaboratorium", type: "Online-Shop", city: "Flensburg / Online", url: "https://brillenlaboratorium.shop" },
@@ -1267,7 +1169,7 @@
     ];
 
     /* ============================================================
-       PRODUKTE — mit storeIds-Array
+       PRODUKTE — mit storeIds-Array (mehrere Bezugsquellen)
        ============================================================ */
     const FALLBACK_PRODUCTS = [
       { id: 1, brand: 'Andy Wolf', name: '5086 Col. A', price: '380 €', storeIds: ['brillenlab', 'optikerbode'], img: IMAGE_PLACEHOLDER, desc: 'Handgefertigt in Österreich. Nachhaltiges Bio-Acetat mit geometrischer Linienführung.', search: 'andy wolf 5086 achensee hartberg wien brillenlaboratorium optiker bode' },
@@ -1431,8 +1333,6 @@
     let touchEndX = 0;
     let introDone = false;
     let searchTimeout;
-    let currentPageId = 'home';
-    let lastFocusedElement = null;
 
     /* ============================================================
        PERSISTENZ
@@ -1449,56 +1349,6 @@
 
     function persistRecent() {
       localStorage.setItem('luxevue_recent', JSON.stringify(recentlyViewed));
-    }
-
-    /* ============================================================
-       MOBILE NAVIGATION
-       ============================================================ */
-    function openMobileNav() {
-      const nav = document.getElementById('mobileNav');
-      lastFocusedElement = document.activeElement;
-      nav.classList.remove('hidden-menu');
-      // Nach kurzem Delay die Klasse "open" setzen für Slide-In-Animation
-      setTimeout(() => nav.classList.add('open'), 10);
-      document.body.style.overflow = 'hidden';
-      // Fokus auf den ersten Nav-Link setzen
-      setTimeout(() => {
-        const firstLink = nav.querySelector('nav button');
-        if (firstLink) firstLink.focus();
-      }, 100);
-    }
-
-    function closeMobileNav() {
-      const nav = document.getElementById('mobileNav');
-      nav.classList.remove('open');
-      document.body.style.overflow = '';
-      setTimeout(() => nav.classList.add('hidden-menu'), 350);
-      if (lastFocusedElement) lastFocusedElement.focus();
-    }
-
-    function mobileNavigate(pageId) {
-      closeMobileNav();
-      setTimeout(() => navigateTo(pageId), 350);
-    }
-
-    /* ============================================================
-       COOKIE BANNER
-       ============================================================ */
-    function checkCookieConsent() {
-      const consent = localStorage.getItem('luxevue_cookie_consent');
-      if (!consent) {
-        // Banner nach kurzer Verzögerung einblenden
-        setTimeout(() => {
-          const banner = document.getElementById('cookieBanner');
-          if (banner) banner.classList.add('visible');
-        }, 500);
-      }
-    }
-
-    function acceptCookies() {
-      localStorage.setItem('luxevue_cookie_consent', 'accepted');
-      const banner = document.getElementById('cookieBanner');
-      if (banner) banner.classList.remove('visible');
     }
 
     /* ============================================================
@@ -1557,40 +1407,9 @@
     }
 
     /* ============================================================
-       MODAL-FOKUS-VERWALTUNG (Barrierefreiheit)
-       ============================================================ */
-    function trapFocus(e, modalElement) {
-      if (e.key !== 'Tab') return;
-      const focusableElements = modalElement.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      if (focusableElements.length === 0) return;
-      const first = focusableElements[0];
-      const last = focusableElements[focusableElements.length - 1];
-
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
-
-    function focusFirstElement(modalElement) {
-      const focusable = modalElement.querySelector(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      if (focusable) {
-        setTimeout(() => focusable.focus(), 50);
-      }
-    }
-
-    /* ============================================================
-       NAVIGATION
+       NAVIGATION — Erst rendern, dann ganz nach oben scrollen
        ============================================================ */
     function navigateTo(pageId) {
-      currentPageId = pageId;
       document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
       const page = document.getElementById('page-' + pageId);
       if (!page) return;
@@ -1623,7 +1442,6 @@
       }
 
       const stores = getStoresForProduct(p);
-      lastFocusedElement = document.activeElement;
 
       document.getElementById('modal-product-img').src = p.img;
       document.getElementById('modal-product-brand').innerText = p.brand;
@@ -1678,6 +1496,7 @@
         persistWishlist();
       };
 
+      // Zuletzt angesehen
       if (!recentlyViewed.includes(p.id)) {
         recentlyViewed.unshift(p.id);
         recentlyViewed = recentlyViewed.slice(0, 6);
@@ -1685,19 +1504,15 @@
         renderRecentlyViewed();
       }
 
-      const modal = document.getElementById('productModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      document.getElementById('productModal').classList.remove('hidden');
+      document.getElementById('productModal').classList.add('flex');
       document.body.style.overflow = 'hidden';
-      focusFirstElement(modal);
     }
 
     function closeProductModal() {
-      const modal = document.getElementById('productModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+      document.getElementById('productModal').classList.add('hidden');
+      document.getElementById('productModal').classList.remove('flex');
       document.body.style.overflow = '';
-      if (lastFocusedElement) lastFocusedElement.focus();
     }
 
     /* ============================================================
@@ -1709,24 +1524,19 @@
         showToast('Informationen zu dieser Marke folgen in Kürze.');
         return;
       }
-      lastFocusedElement = document.activeElement;
       document.getElementById('brand-modal-name').innerText = brandName;
       document.getElementById('brand-modal-story').innerText = data.story;
       document.getElementById('brand-modal-img').src = data.img;
       document.getElementById('brand-modal-name').dataset.brand = brandName;
-      const modal = document.getElementById('brandModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      document.getElementById('brandModal').classList.remove('hidden');
+      document.getElementById('brandModal').classList.add('flex');
       document.body.style.overflow = 'hidden';
-      focusFirstElement(modal);
     }
 
     function closeBrandModal() {
-      const modal = document.getElementById('brandModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+      document.getElementById('brandModal').classList.add('hidden');
+      document.getElementById('brandModal').classList.remove('flex');
       document.body.style.overflow = '';
-      if (lastFocusedElement) lastFocusedElement.focus();
     }
 
     function filterByBrand() {
@@ -1743,32 +1553,8 @@
     }
 
     /* ============================================================
-       PRODUKTE RENDERN (mit Sortierung)
+       PRODUKTE RENDERN
        ============================================================ */
-    function sortProducts(items, sortKey) {
-      const sorted = [...items];
-      switch (sortKey) {
-        case 'price-asc':
-          sorted.sort((a, b) => (parseInt(String(a.price).replace(/\D/g, '')) || 0) - (parseInt(String(b.price).replace(/\D/g, '')) || 0));
-          break;
-        case 'price-desc':
-          sorted.sort((a, b) => (parseInt(String(b.price).replace(/\D/g, '')) || 0) - (parseInt(String(a.price).replace(/\D/g, '')) || 0));
-          break;
-        case 'name-asc':
-          sorted.sort((a, b) => a.name.localeCompare(b.name, 'de'));
-          break;
-        case 'name-desc':
-          sorted.sort((a, b) => b.name.localeCompare(a.name, 'de'));
-          break;
-        case 'brand-asc':
-          sorted.sort((a, b) => a.brand.localeCompare(b.brand, 'de'));
-          break;
-        default:
-          break;
-      }
-      return sorted;
-    }
-
     function renderProducts(query = '', maxPrice = 1000) {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
@@ -1781,12 +1567,6 @@
         const priceNum = parseInt(String(p.price).replace(/\D/g, '')) || 0;
         return priceNum <= maxPrice;
       });
-
-      // Sortierung anwenden
-      const sortSelect = document.getElementById('sortSelect');
-      if (sortSelect) {
-        items = sortProducts(items, sortSelect.value);
-      }
 
       if (items.length === 0) {
         container.innerHTML = '<p class="text-xs text-[var(--text-muted)] col-span-3 py-12 text-center">Keine passenden Brillenmodelle gefunden.</p>';
@@ -1822,7 +1602,7 @@
           </div>
           <div class="mt-4 pt-3 border-t border-[var(--border-editorial)]/50 flex space-x-3">
             <button data-name="${p.name}" data-price="${p.price}" data-img="${p.img}" class="add-to-cart-btn flex-1 py-2.5 bg-[#1a1918] text-white text-[10px] uppercase tracking-widest hover:bg-stone-800 transition-colors">In den Warenkorb</button>
-            <button data-name="${p.name}" class="wishlist-btn px-3 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors" aria-label="Zur Wunschliste hinzufügen"><i class="fa-regular fa-heart"></i></button>
+            <button data-name="${p.name}" class="wishlist-btn px-3 border border-[var(--border-editorial)] text-stone-600 hover:text-rose-600 transition-colors"><i class="fa-regular fa-heart"></i></button>
           </div>
         `;
         container.appendChild(card);
@@ -1921,13 +1701,8 @@
     }
 
     function removeFromCart(index) {
-      const item = cart[index];
-      if (!item) return;
-      if (confirm(`"${item.name}" wirklich aus dem Warenkorb entfernen?`)) {
-        cart.splice(index, 1);
-        persistCart();
-        showToast('Artikel entfernt');
-      }
+      cart.splice(index, 1);
+      persistCart();
     }
 
     function changeQuantity(index, delta) {
@@ -1953,16 +1728,7 @@
       badge.classList.toggle('hidden', totalItems === 0);
 
       if (cart.length === 0) {
-        container.innerHTML = `
-          <div class="py-16 text-center">
-            <i class="fa-solid fa-bag-shopping text-5xl text-[var(--border-editorial)] mb-6"></i>
-            <p class="text-sm text-[var(--text-muted)] tracking-wider mb-2">Ihr Warenkorb ist derzeit leer.</p>
-            <p class="text-xs text-[var(--text-muted)] mb-8">Entdecken Sie unsere kuratierten Brillenmanufakturen.</p>
-            <button onclick="navigateTo('home')" class="px-8 py-4 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors">
-              Jetzt Brillen entdecken
-            </button>
-          </div>
-        `;
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihr Warenkorb ist derzeit leer.</p>';
         summary.classList.add('hidden');
         totalEl.innerText = '0 €';
         return;
@@ -1981,15 +1747,15 @@
                 <p class="text-xs font-medium">${item.name}</p>
                 <p class="text-[10px] text-[var(--text-muted)]">${item.price} — ${item.storeName || 'Optiker'}</p>
                 <div class="flex items-center gap-2 mt-1">
-                  <button onclick="changeQuantity(${index}, -1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors" aria-label="Menge reduzieren">−</button>
+                  <button onclick="changeQuantity(${index}, -1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">-</button>
                   <span class="text-xs">${item.quantity || 1}</span>
-                  <button onclick="changeQuantity(${index}, 1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors" aria-label="Menge erhöhen">+</button>
+                  <button onclick="changeQuantity(${index}, 1)" class="text-xs border border-[var(--border-editorial)] px-2 py-0.5 hover:bg-black hover:text-white transition-colors">+</button>
                 </div>
               </div>
             </div>
             <div class="flex items-center gap-4">
               <span class="text-xs font-medium">${sub} €</span>
-              <button onclick="removeFromCart(${index})" class="text-lg text-[var(--text-muted)] hover:text-black" aria-label="Artikel entfernen">&times;</button>
+              <button onclick="removeFromCart(${index})" class="text-lg text-[var(--text-muted)] hover:text-black">&times;</button>
             </div>
           </div>
         `;
@@ -2009,16 +1775,7 @@
       badge.classList.toggle('hidden', wishlist.length === 0);
 
       if (wishlist.length === 0) {
-        container.innerHTML = `
-          <div class="py-16 text-center">
-            <i class="fa-regular fa-heart text-5xl text-[var(--border-editorial)] mb-6"></i>
-            <p class="text-sm text-[var(--text-muted)] tracking-wider mb-2">Ihre Wunschliste ist leer.</p>
-            <p class="text-xs text-[var(--text-muted)] mb-8">Speichern Sie Brillen, die Sie später ansehen möchten.</p>
-            <button onclick="navigateTo('home')" class="px-8 py-4 bg-[#1a1918] text-white text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors">
-              Zur Kollektion
-            </button>
-          </div>
-        `;
+        container.innerHTML = '<p class="text-xs text-[var(--text-muted)] tracking-wider">Ihre Wunschliste ist leer.</p>';
       } else {
         container.innerHTML = wishlist.map(item => `
           <div class="p-4 bg-[var(--surface-editorial)] border border-[var(--border-editorial)] flex justify-between items-center">
@@ -2185,4 +1942,152 @@
         if (label) label.textContent = HERO_SLIDES[index].label;
         if (desc) desc.textContent = HERO_SLIDES[index].description;
         currentBrand = HERO_SLIDES[index].label;
-        if (label
+        if (label) label.onclick = () => openBrandModal(currentBrand);
+        if (desc) desc.onclick = () => openBrandModal(currentBrand);
+      }
+
+      updateSlide(0);
+
+      const hero = document.getElementById('hero');
+
+      hero.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      hero.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        const d = touchStartX - touchEndX;
+        if (Math.abs(d) > 50) {
+          if (d > 0) nextSlide();
+          else prevSlide();
+        }
+      }, { passive: true });
+
+      let mouseDown = false;
+      let mouseStartX = 0;
+
+      hero.addEventListener('mousedown', e => {
+        mouseDown = true;
+        mouseStartX = e.screenX;
+      });
+
+      hero.addEventListener('mouseup', e => {
+        if (mouseDown) {
+          const d = mouseStartX - e.screenX;
+          if (Math.abs(d) > 50) {
+            if (d > 0) nextSlide();
+            else prevSlide();
+          }
+          mouseDown = false;
+        }
+      });
+
+      hero.addEventListener('mouseleave', () => {
+        mouseDown = false;
+      });
+
+      function nextSlide() {
+        heroSlideIndex = (heroSlideIndex + 1) % HERO_SLIDES.length;
+        updateSlide(heroSlideIndex);
+      }
+
+      function prevSlide() {
+        heroSlideIndex = (heroSlideIndex - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
+        updateSlide(heroSlideIndex);
+      }
+
+      let autoInterval = setInterval(nextSlide, 6000);
+
+      hero.addEventListener('touchstart', () => {
+        clearInterval(autoInterval);
+        autoInterval = setInterval(nextSlide, 6000);
+      }, { passive: true });
+
+      hero.addEventListener('mousedown', () => {
+        clearInterval(autoInterval);
+        autoInterval = setInterval(nextSlide, 6000);
+      });
+
+      if (label) label.onclick = () => openBrandModal(currentBrand);
+      if (desc) desc.onclick = () => openBrandModal(currentBrand);
+    }
+
+    /* ============================================================
+       NEWSLETTER & SCROLL-ANIMATIONEN
+       ============================================================ */
+    function subscribeNewsletter() {
+      const email = document.getElementById('newsletter-email').value;
+      if (!email.includes('@')) {
+        showToast('Gültige E-Mail erforderlich');
+        return;
+      }
+      showToast('Vielen Dank für Ihre Anmeldung.');
+      document.getElementById('newsletter-email').value = '';
+    }
+
+    function setupScrollAnimations() {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) e.target.classList.add('visible');
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    /* ============================================================
+       ZULETZT ANGESEHENE PRODUKTE
+       ============================================================ */
+    function renderRecentlyViewed() {
+      const section = document.getElementById('recently-viewed-section');
+      const container = document.getElementById('recently-viewed-container');
+      if (!section || !container) return;
+      if (recentlyViewed.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+      section.classList.remove('hidden');
+      container.innerHTML = '';
+      recentlyViewed.forEach(pid => {
+        const p = PRODUCTS.find(x => String(x.id) === String(pid));
+        if (!p) return;
+        const card = document.createElement('div');
+        card.className = 'recent-card product-card group cursor-pointer bg-[var(--surface-editorial)] border border-[var(--border-editorial)] p-3';
+        card.innerHTML = `
+          <div class="img-zoom-container mb-2" onclick="openProductModal('${p.id}')">
+            <img src="${p.img}" alt="${p.name}" class="w-full h-32 object-cover" loading="lazy">
+          </div>
+          <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">${p.brand}</p>
+          <h4 class="font-serif text-sm font-light truncate">${p.name}</h4>
+          <p class="text-xs font-medium mt-1">${p.price}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    /* ============================================================
+       INITIALISIERUNG
+       ============================================================ */
+    window.addEventListener('DOMContentLoaded', async function() {
+      document.body.classList.add('intro-active');
+      document.body.style.overflow = 'hidden';
+
+      // 1. Live-Daten laden (oder Fallback)
+      await loadLiveData();
+
+      // 2. Statische UI-Elemente rendern
+      renderCountryFilters();
+      setupHeroSlider();
+      renderStoreLocatorGrid();
+      renderStoreDirectory();
+      updateCartUI();
+      updateWishlistUI();
+      setupScrollAnimations();
+      navigateTo('home');
+
+      // 3. Produkte rendern (erst nachdem Daten geladen sind)
+      filterProducts();
+      renderRecentlyViewed();
+    });
+  </script>
+</body>
+</html>
